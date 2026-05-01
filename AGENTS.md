@@ -18,22 +18,29 @@ Both environments can run in parallel without port conflicts.
 
 ---
 
-## Starting Dev or Stable — no PowerShell
+## Starting and stopping Dev or Stable
 
-Use the shell scripts at this workspace root. Both work under Git Bash / WSL / any POSIX shell:
+All workspace-root scripts are `sh` (Git Bash on Windows, WSL, any POSIX shell). There is **no PowerShell**. Run them in a VS Code terminal (`bash` profile) so `ng serve` output stays visible.
 
 ```sh
-# Start the Dev environment (backend + frontend)
+# Start (backend daemonised via api.sh, then ng serve in foreground)
 ./start-dev.sh
-
-# Start the Stable environment (backend + frontend)
 ./start-stable.sh
+
+# Stop (backend + frontend)
+./stop-dev.sh
+./stop-stable.sh
+
+# Roll Stable forward to origin/main (stop → ff-pull → conditional npm install → start)
+./update-stable.sh
 ```
 
-Each script:
+Each start script:
 1. Changes into the respective checkout folder.
 2. Passes `PORT` env var to `./api.sh start` — starts the .NET backend and waits for the health check.
 3. Generates a temporary proxy config (`.proxy-{dev,stable}.tmp.json`) in this workspace root and passes it to `ng serve` together with `--port`.
+
+Shared plumbing lives in `start.sh`, `stop.sh`, and `_lib.sh` (port-listener helpers); the `*-dev.sh` / `*-stable.sh` files are thin wrappers that only set env vars.
 
 To control only the backend of one checkout independently, call `api.sh` directly from within that checkout:
 
@@ -67,13 +74,7 @@ The override mechanism:
 
 ### Bringing Stable up to `origin/main`
 
-Use the workspace-root script `Update-Stable.ps1` to roll Stable forward:
-
-```powershell
-.\Update-Stable.ps1
-```
-
-It performs, in order: preflight (must be on `main`, worktree clean) → stop Stable → `git pull --ff-only origin main` → `npm install` (only if `package-lock.json` changed) → start Stable. Aborts before touching anything if Stable is dirty or not fast-forwardable.
+Use `./update-stable.sh` (workspace root). It performs, in order: preflight (must be on `main`, worktree clean) → stop Stable → `git pull --ff-only origin main` → `npm install` (only if `package-lock.json` changed) → start Stable. Aborts before touching anything if Stable is dirty or not fast-forwardable.
 
 ---
 
