@@ -65,6 +65,16 @@ The override mechanism:
 - When a feature is done and merged, Stable is updated via a sync (fast-forward or reset to main).
 - Any change made directly inside `agent-taskboard-stable/` will be lost on the next sync.
 
+### Bringing Stable up to `origin/main`
+
+Use the workspace-root script `Update-Stable.ps1` to roll Stable forward:
+
+```powershell
+.\Update-Stable.ps1
+```
+
+It performs, in order: preflight (must be on `main`, worktree clean) → stop Stable → `git pull --ff-only origin main` → `npm install` (only if `package-lock.json` changed) → start Stable. Aborts before touching anything if Stable is dirty or not fast-forwardable.
+
 ---
 
 ## Shell policy
