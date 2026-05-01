@@ -29,4 +29,5 @@ cat > "${PROXY_CONF}" <<EOF
 EOF
 
 echo "Starting STABLE frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
-exec npm start --prefix frontend -- --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
+cd frontend
+exec npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
