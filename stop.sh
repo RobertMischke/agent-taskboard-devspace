@@ -24,6 +24,20 @@ echo "--- Backend ---"
 kill_port "${BACKEND_PORT}"
 
 echo "--- Frontend ---"
+FE_PID_FILE="${TARGET_DIR}/.frontend.pid"
+if [[ -f "${FE_PID_FILE}" ]]; then
+  fe_pid="$(tr -d ' \r\n' < "${FE_PID_FILE}" 2>/dev/null || true)"
+  if [[ -n "${fe_pid}" ]] && [[ "${fe_pid}" =~ ^[0-9]+$ ]]; then
+    if is_windows; then
+      taskkill //F //T //PID "${fe_pid}" >/dev/null 2>&1 || true
+    else
+      kill -TERM "${fe_pid}" 2>/dev/null || true
+      sleep 0.3
+      kill -KILL "${fe_pid}" 2>/dev/null || true
+    fi
+  fi
+  rm -f "${FE_PID_FILE}"
+fi
 kill_port "${FRONTEND_PORT}"
 
 echo "Done."

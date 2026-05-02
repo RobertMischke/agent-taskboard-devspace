@@ -69,5 +69,7 @@ else
 fi
 
 # ─── start ───────────────────────────────────────────────────────────────────
+# Detach the frontend so update-stable.sh exits cleanly while ng serve
+# keeps running in the background. Backend is already daemonised by api.sh.
 
-exec "${ROOT_DIR}/start-stable.sh"
+DETACH=1 exec "${ROOT_DIR}/start-stable.sh"

@@ -34,6 +34,32 @@ cat > "${PROXY_CONF}" <<EOF
 }
 EOF
 
-echo "Starting frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
 cd "${TARGET_DIR}/frontend"
-exec npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
+
+# DETACH=1 → run ng serve in the background, survive parent shell exit, log to file.
+# Default → exec in foreground (so output streams into the user's VS Code terminal).
+if [[ "${DETACH:-0}" == "1" ]]; then
+  FE_LOG="${TARGET_DIR}/.frontend.log"
+  FE_PID_FILE="${TARGET_DIR}/.frontend.pid"
+  : > "${FE_LOG}"
+  echo "Starting frontend (detached) on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
+  echo "  log: ${FE_LOG}"
+  nohup npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}" \
+    > "${FE_LOG}" 2>&1 &
+  FE_PID=$!
+  disown "${FE_PID}" 2>/dev/null || true
+  echo "${FE_PID}" > "${FE_PID_FILE}"
+  # Wait for the port to come up (ng serve takes ~30s) so callers know it's ready.
+  for _ in $(seq 1 60); do
+    sleep 1
+    if [[ -n "$(listener_pid "${FRONTEND_PORT}")" ]]; then
+      echo "Frontend listening on :${FRONTEND_PORT} (PID: ${FE_PID})."
+      exit 0
+    fi
+  done
+  echo "WARN: Frontend did not become ready within 60s. Tail log: ${FE_LOG}" >&2
+  exit 1
+else
+  echo "Starting frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
+  exec npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
+fi
