@@ -44,7 +44,10 @@ if [[ "${DETACH:-0}" == "1" ]]; then
   : > "${FE_LOG}"
   echo "Starting frontend (detached) on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
   echo "  log: ${FE_LOG}"
-  nohup npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}" \
+  # Pass the project name explicitly: angular.json now declares multiple
+  # applications (frontend + next-gen-chat-mockup), so a bare `ng serve`
+  # aborts with "Cannot determine project for command".
+  nohup npx ng serve frontend --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}" \
     > "${FE_LOG}" 2>&1 &
   FE_PID=$!
   disown "${FE_PID}" 2>/dev/null || true
@@ -61,5 +64,5 @@ if [[ "${DETACH:-0}" == "1" ]]; then
   exit 1
 else
   echo "Starting frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
-  exec npx ng serve --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
+  exec npx ng serve frontend --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
 fi
