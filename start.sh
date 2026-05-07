@@ -20,6 +20,22 @@ fi
 echo "=== ${CHECKOUT} — backend :${BACKEND_PORT}, frontend :${FRONTEND_PORT} ==="
 
 cd "${TARGET_DIR}"
+
+# Self-heal half-installed npm CLI shims (claude, gemini) before the backend
+# boots. A broken claude.exe stub used to silently drain the entire 2-ready
+# lane through 3a-failed-pickup; this hard pre-flight stops the start instead.
+# See ${TARGET_DIR}/docs/agent-contract-pattern.md (worked example: pickup-failed)
+# and ${TARGET_DIR}/docs/loop-inventory.md.
+if [[ -x "${TARGET_DIR}/tools/check-cli-shims.sh" ]]; then
+  echo "--- CLI health ---"
+  if ! "${TARGET_DIR}/tools/check-cli-shims.sh"; then
+    echo "ERROR: CLI shim check failed. Aborting startup before backend." >&2
+    echo "       Inspect ${TARGET_DIR}/tools/check-cli-shims.sh output above," >&2
+    echo "       fix the underlying npm install, then re-run." >&2
+    exit 1
+  fi
+fi
+
 echo "--- Backend ---"
 PORT=${BACKEND_PORT} ./api.sh start
 
