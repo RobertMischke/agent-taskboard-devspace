@@ -1,5 +1,24 @@
 # AGENTS.md — Devspace Root
 
+This workspace contains several sibling projects. Use this map first to avoid broad filesystem or `AGENTS.md` lookups.
+
+| Folder | Project / role | Notes |
+|--------|----------------|-------|
+| `agent-taskboard-dev/` | Agent Task Processor / Agent Software Studio dev checkout | Main active development checkout. Do feature work here. Has its own `AGENTS.md`, backend, frontend, docs, scenarios, and scripts. |
+| `agent-taskboard-stable/` | Agent Task Processor stable/reference checkout | Read-only reference checkout. Do not develop or commit here. Has its own `AGENTS.md`. |
+| `agent-taskboard-orchestrator-chat/` | Agent Task Processor orchestrator-chat checkout | Separate checkout/branch for orchestrator-chat work. Has its own `AGENTS.md`, backend, frontend, docs, scenarios, and solution file. |
+| `agent-studio-marketing/` | Agent Studio for Software marketing workspace | German-first marketing, positioning, pricing, product-fit, and website-planning documents. Has its own `AGENTS.md` and `README.md`. |
+| `agent-studio-for-software-website/` | Agent Studio for Software website repo | Website repository checkout. Inspect locally before assuming framework or contents. |
+| `cli-source-references/` | External CLI / agent source references | Reference-only source checkouts for Codex, opencode, Copilot, Claude Code adjacent tools, and orchestration examples. Do not treat as product code. |
+| `scenario-click-counter/` | Scenario fixture / small workspace | Small scenario workspace, currently containing `workspace/`. |
+| `agent-taskboard-devspace/` | Nested/local copy of this devspace | Do not confuse with the current workspace root. Enter only if explicitly asked to work in that nested copy. |
+
+For project-specific rules, read the `AGENTS.md` inside the target project after choosing the folder from this map. Do not recursively scan every child `AGENTS.md` by default.
+
+---
+
+## Agent Task Processor Dev / Stable
+
 This workspace contains two side-by-side checkouts of Agent Task Processor:
 
 | Checkout | Folder | Purpose |
@@ -87,9 +106,12 @@ Use `./update-stable.sh` (workspace root). It performs, in order: preflight (mus
 
 ## Do not touch child AGENTS.md files from the devspace root
 
-Instructions for agents working inside a checkout live exclusively in:
+Instructions for agents working inside a project live in that project's own instruction file. Known child instruction files include:
 
 - `agent-taskboard-dev/AGENTS.md`
 - `agent-taskboard-stable/AGENTS.md`
+- `agent-taskboard-orchestrator-chat/AGENTS.md`
+- `agent-taskboard-orchestrator-chat/frontend/AGENTS.md`
+- `agent-studio-marketing/AGENTS.md`
 
-Changes to those files must be made from within the respective checkout, not from this root.
+Changes to those files must be made from within the respective project, not from this root.
