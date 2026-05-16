@@ -36,6 +36,22 @@ if [[ -x "${TARGET_DIR}/tools/check-cli-shims.sh" ]]; then
   fi
 fi
 
+echo "--- Update service ---"
+# Standalone update-service (port 5039 by default). ADR-0021 / ADR-0031:
+# this is the one .NET process that must outlive the main backend — it owns
+# the stop-stable / pull / restart / verify pipeline, so anything that stops
+# the backend (a crash, a manual ./api.sh stop, a verification failure) must
+# leave update-service running. We start it here, but stop.sh deliberately
+# does NOT take it down; use ./update-service.sh stop explicitly when you
+# really want to take it offline (e.g. before pruning the workspace).
+#
+# Idempotent: the script's listener check skips the start when the port is
+# already bound, so calling this from both checkouts is safe.
+if [[ -x "${TARGET_DIR}/update-service.sh" ]]; then
+  ( cd "${TARGET_DIR}" && ./update-service.sh start ) || \
+    echo "WARN: update-service start failed; continuing with backend." >&2
+fi
+
 echo "--- Backend ---"
 PORT=${BACKEND_PORT} ./api.sh start
 
