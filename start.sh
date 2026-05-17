@@ -23,16 +23,28 @@ cd "${TARGET_DIR}"
 
 # Self-heal half-installed npm CLI shims (claude, gemini) before the backend
 # boots. A broken claude.exe stub used to silently drain the entire 2-ready
-# lane through 3a-failed-pickup; this hard pre-flight stops the start instead.
+# lane through 3a-failed-pickup; this pre-flight repairs what it can.
 # See ${TARGET_DIR}/docs/agent-contract-pattern.md (worked example: pickup-failed)
 # and ${TARGET_DIR}/docs/loop-inventory.md.
+#
+# Set ATP_CLI_SHIM_STRICT=1 to abort the boot when the shim is unrepairable
+# (the old behaviour). The default is now a loud warning that lets the rest
+# of the stack come up — without this, a Windows machine that never had
+# claude globally installed (or whose npm cache got corrupted between a
+# stop+start cycle, e.g. during an update-service-driven restart) gets stuck
+# unable to boot stable, even though only claude-backed jobs are affected.
 if [[ -x "${TARGET_DIR}/tools/check-cli-shims.sh" ]]; then
   echo "--- CLI health ---"
   if ! "${TARGET_DIR}/tools/check-cli-shims.sh"; then
-    echo "ERROR: CLI shim check failed. Aborting startup before backend." >&2
-    echo "       Inspect ${TARGET_DIR}/tools/check-cli-shims.sh output above," >&2
-    echo "       fix the underlying npm install, then re-run." >&2
-    exit 1
+    if [[ "${ATP_CLI_SHIM_STRICT:-0}" == "1" ]]; then
+      echo "ERROR: CLI shim check failed (strict mode). Aborting startup before backend." >&2
+      echo "       Inspect ${TARGET_DIR}/tools/check-cli-shims.sh output above," >&2
+      echo "       fix the underlying npm install, then re-run." >&2
+      exit 1
+    fi
+    echo "WARN: CLI shim check failed. Boot continuing without claude available;" >&2
+    echo "      claude-backed jobs will fail at pickup until the shim is repaired." >&2
+    echo "      Set ATP_CLI_SHIM_STRICT=1 to make this fatal again." >&2
   fi
 fi
 
