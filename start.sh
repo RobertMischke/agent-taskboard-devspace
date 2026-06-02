@@ -96,16 +96,32 @@ if [[ "${DETACH:-0}" == "1" ]]; then
   FE_PID=$!
   disown "${FE_PID}" 2>/dev/null || true
   echo "${FE_PID}" > "${FE_PID_FILE}"
-  # Wait for the port to come up (ng serve takes ~30s) so callers know it's ready.
-  for _ in $(seq 1 60); do
+  # Wait for the port to come up so callers know it's ready. This app's COLD
+  # ng-serve compile (main.js ~5 MB) routinely takes longer than a minute, so
+  # wait generously (override via FE_READY_TIMEOUT).
+  FE_READY_TIMEOUT="${FE_READY_TIMEOUT:-240}"
+  for _ in $(seq 1 "${FE_READY_TIMEOUT}"); do
     sleep 1
     if [[ -n "$(listener_pid "${FRONTEND_PORT}")" ]]; then
       echo "Frontend listening on :${FRONTEND_PORT} (PID: ${FE_PID})."
       exit 0
     fi
+    # Fail FAST on a real compile error (e.g. a missing dependency after a
+    # pull that skipped `npm install`) instead of waiting the full window —
+    # ng serve stays alive in watch mode after a failed build, so the port
+    # would never come up and the timeout below would be the only signal.
+    if grep -q "bundle generation failed" "${FE_LOG}" 2>/dev/null; then
+      echo "ERROR: Frontend build FAILED (see ${FE_LOG})." >&2
+      echo "       Most likely a missing dependency — run 'npm install' in ${TARGET_DIR}/frontend and retry." >&2
+      exit 1
+    fi
   done
-  echo "WARN: Frontend did not become ready within 60s. Tail log: ${FE_LOG}" >&2
-  exit 1
+  # No build error, just slow: do NOT fail the restart over ng-serve compile
+  # time. The frontend is detached (nohup + disown) and the browser SPA
+  # reconnects once it finishes compiling, and the backend — health-checked
+  # above — is the service this (re)start actually delivers.
+  echo "WARN: Frontend not yet listening on :${FRONTEND_PORT} after ${FE_READY_TIMEOUT}s (no build error); ng serve (PID ${FE_PID}) is detached and should come up. Not failing the restart. Tail log: ${FE_LOG}" >&2
+  exit 0
 else
   echo "Starting frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
   exec npx ng serve frontend --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"

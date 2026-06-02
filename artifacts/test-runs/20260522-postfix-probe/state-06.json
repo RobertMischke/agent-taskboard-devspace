@@ -1,0 +1,13 @@
+{
+  "seq": 6,
+  "note": "auto pickup armed",
+  "ts": "2026-05-22T15:48:59.791Z",
+  "railOpen": false,
+  "project": "Playwright Test",
+  "lanes": {
+    "backlog": 0,
+    "active": 0,
+    "decide": 0
+  },
+  "url": "/"
+}

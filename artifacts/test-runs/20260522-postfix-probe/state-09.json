@@ -1,0 +1,13 @@
+{
+  "seq": 9,
+  "note": "steered via orchestrator",
+  "ts": "2026-05-22T15:49:41.449Z",
+  "railOpen": true,
+  "project": "Playwright Test",
+  "lanes": {
+    "backlog": 0,
+    "active": 5,
+    "decide": 0
+  },
+  "url": "/"
+}

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(PYTHONIOENCODING=utf-8 python -u C:/Users/rmisc/AppData/Local/Temp/watch_and_auto_update.py)"
+    ]
+  }
+}

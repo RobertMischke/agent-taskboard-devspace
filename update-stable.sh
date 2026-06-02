@@ -106,16 +106,18 @@ echo "  HEAD now: ${head_now}"
 
 # ─── npm install if lock changed ─────────────────────────────────────────────
 
-lock_after=""
-if [[ -f "${LOCK}" ]]; then
-  lock_after="$(git hash-object "${LOCK}")"
-fi
-
-if [[ "${lock_before}" != "${lock_after}" ]]; then
-  section "package-lock.json changed — running npm install"
-  ( cd "${FRONTEND}" && npm install )
-else
-  echo "  npm     : package-lock.json unchanged, skipping install"
+# Always run npm install (idempotent: fast when the dep tree already matches
+# the lock, installs anything missing otherwise). The previous "only if
+# package-lock.json changed in this pull" optimisation skipped installs when
+# node_modules had drifted from the lock (a dependency added in a commit window
+# a prior update skipped), which left the frontend build failing on a missing
+# module after a successful-looking update (the 2026-06-02 @microsoft/signalr
+# incident). npm install IS the cheap check-and-fix; abort if it fails so a
+# broken dep tree is never carried into the restart.
+section "npm install (frontend deps)"
+if ! ( cd "${FRONTEND}" && npm install ); then
+  echo "ERROR: npm install failed — aborting before restart so a broken dep tree is not deployed." >&2
+  exit 1
 fi
 
 # ─── start ───────────────────────────────────────────────────────────────────

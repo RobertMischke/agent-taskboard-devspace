@@ -1,0 +1,13 @@
+{
+  "seq": 5,
+  "note": "task created, dialog closed",
+  "ts": "2026-05-21T07:25:08.088Z",
+  "railOpen": false,
+  "project": "Runbook",
+  "lanes": {
+    "backlog": 201,
+    "active": 24,
+    "decide": 18
+  },
+  "url": "/"
+}

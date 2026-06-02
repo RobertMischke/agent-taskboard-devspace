@@ -1,0 +1,13 @@
+{
+  "seq": 7,
+  "note": "lane-poll",
+  "ts": "2026-05-22T15:49:19.933Z",
+  "railOpen": false,
+  "project": "Playwright Test",
+  "lanes": {
+    "backlog": 0,
+    "active": 4,
+    "decide": 0
+  },
+  "url": "/"
+}

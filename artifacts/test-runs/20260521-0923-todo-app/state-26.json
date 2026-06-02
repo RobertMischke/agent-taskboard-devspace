@@ -1,0 +1,13 @@
+{
+  "seq": 26,
+  "note": "lane-poll",
+  "ts": "2026-05-21T07:31:33.879Z",
+  "railOpen": true,
+  "project": "Runbook",
+  "lanes": {
+    "backlog": 201,
+    "active": 33,
+    "decide": 34
+  },
+  "url": "/"
+}

@@ -1,0 +1,41 @@
+=== TODO-app probe 2026-05-21T07:25:04.607Z ===
+[09:25:05] shot-01 app booted, default tab
+[09:25:06] shot-02 picked Runbook project
+[09:25:06] shot-03 create dialog open
+[09:25:07] shot-04 dialog filled
+[09:25:08] shot-05 task created, dialog closed
+[09:25:08] auto-toggle clicked (was "manual")
+[09:25:08] shot-06 auto pickup armed
+[09:25:28] shot-07 lane-poll
+[09:25:49] shot-08 lane-poll
+[09:25:50] shot-09 steered via orchestrator
+[09:26:11] shot-10 lane-poll
+[09:26:31] shot-11 lane-poll
+[09:26:51] shot-12 lane-poll
+[09:27:11] shot-13 lane-poll
+[09:27:31] shot-14 lane-poll
+[09:27:52] shot-15 lane-poll
+[09:28:12] shot-16 lane-poll
+[09:28:32] shot-17 lane-poll
+[09:28:52] shot-18 lane-poll
+[09:29:12] shot-19 lane-poll
+[09:29:32] shot-20 lane-poll
+[09:29:53] shot-21 lane-poll
+[09:30:13] shot-22 lane-poll
+[09:30:33] shot-23 lane-poll
+[09:30:53] shot-24 lane-poll
+[09:31:13] shot-25 lane-poll
+[09:31:33] shot-26 lane-poll
+[09:31:54] shot-27 lane-poll
+[09:32:14] shot-28 lane-poll
+[09:32:34] shot-29 lane-poll
+[09:32:54] shot-30 lane-poll
+[09:33:15] shot-31 lane-poll
+[09:33:35] shot-32 lane-poll
+[09:33:55] shot-33 lane-poll
+[09:34:15] shot-34 lane-poll
+[09:34:36] shot-35 lane-poll
+[09:34:56] shot-36 lane-poll
+[09:35:16] shot-37 lane-poll
+[09:35:16] shot-38 TIMEOUT/end-of-window
+[09:35:16] finished: completed=false seq=38

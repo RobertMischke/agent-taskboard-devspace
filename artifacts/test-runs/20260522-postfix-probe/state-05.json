@@ -1,0 +1,13 @@
+{
+  "seq": 5,
+  "note": "task created, dialog closed",
+  "ts": "2026-05-22T15:48:58.266Z",
+  "railOpen": false,
+  "project": "Playwright Test",
+  "lanes": {
+    "backlog": 0,
+    "active": 0,
+    "decide": 0
+  },
+  "url": "/"
+}

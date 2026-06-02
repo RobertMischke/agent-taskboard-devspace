@@ -1,0 +1,1440 @@
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }[]' is not assignable to type 'NavItem[]'.
+  Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }' is not assignable to type 'NavItem'.
+    Types of property 'children' are incompatible.
+      Type '{ id: string; label: string; }[]' is not assignable to type 'NavChild[]'.
+        Property 'path' is missing in type '{ id: string; label: string; }' but required in type 'NavChild'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1119:13:
+[37m      1119 │ export const [32mnavItems[37m: NavItem[] = sitePages.map((page) => ({
+           ╵              [32m~~~~~~~~[0m
+
+  'path' is declared here.
+
+    src/app/site-content.ts:4:2:
+[37m      4 │   [32mpath[37m: string;
+        ╵   [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }[]' is not assignable to type 'NavItem[]'.
+  Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }' is not assignable to type 'NavItem'.
+    Types of property 'children' are incompatible.
+      Type '{ id: string; label: string; }[]' is not assignable to type 'NavChild[]'.
+        Property 'path' is missing in type '{ id: string; label: string; }' but required in type 'NavChild'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1140:13:
+[37m      1140 │ export const [32mnavItems[37m: NavItem[] = sitePages.map((page) => ({
+           ╵              [32m~~~~~~~~[0m
+
+  'path' is declared here.
+
+    src/app/site-content.ts:4:2:
+[37m      4 │   [32mpath[37m: string;
+        ╵   [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }[]' is not assignable to type 'NavItem[]'.
+  Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }' is not assignable to type 'NavItem'.
+    Types of property 'children' are incompatible.
+      Type '{ id: string; label: string; }[]' is not assignable to type 'NavChild[]'.
+        Property 'path' is missing in type '{ id: string; label: string; }' but required in type 'NavChild'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1159:13:
+[37m      1159 │ export const [32mnavItems[37m: NavItem[] = sitePages.map((page) => ({
+           ╵              [32m~~~~~~~~[0m
+
+  'path' is declared here.
+
+    src/app/site-content.ts:4:2:
+[37m      4 │   [32mpath[37m: string;
+        ╵   [32m~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }[]' is not assignable to type 'NavItem[]'.
+  Type '{ id: string; label: string; path: string; icon: string; children: { id: string; label: string; }[]; }' is not assignable to type 'NavItem'.
+    Types of property 'children' are incompatible.
+      Type '{ id: string; label: string; }[]' is not assignable to type 'NavChild[]'.
+        Property 'path' is missing in type '{ id: string; label: string; }' but required in type 'NavChild'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1297:13:
+[37m      1297 │ export const [32mnavItems[37m: NavItem[] = sitePages.map((page) => ({
+           ╵              [32m~~~~~~~~[0m
+
+  'path' is declared here.
+
+    src/app/site-content.ts:4:2:
+[37m      4 │   [32mpath[37m: string;
+        ╵   [32m~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: All imports are unused[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/capture-card.component.ts:7:2:
+[37m      7 │   [32mimports[37m: [LucideDynamicIcon],
+        ╵   [32m~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: All imports are unused[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/capture-card.component.ts:7:2:
+[37m      7 │   [32mimports[37m: [LucideDynamicIcon],
+        ╵   [32m~~~~~~~[0m
+
+[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'list-plus'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31mComponent update failed: Unable to resolve icon 'list-plus'
+Error: Unable to resolve icon 'list-plus'
+    at LucideDynamicIcon.icon.ngDevMode.debugName [as computation] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:142817:15)
+    at Object.producerRecomputeValue (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:306:25)
+    at producerUpdateValueVersion (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:107:8)
+    at _LucideDynamicIcon.computed2 [as icon] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:269:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:20703:25
+    at Object.fn (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3530:5)
+    at runEffect (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:398:10)
+    at Object.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3454:7)
+    at runEffectsInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9131:17)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9230:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mComponent update failed: Unable to resolve icon 'list-plus'
+Error: Unable to resolve icon 'list-plus'
+    at LucideDynamicIcon.icon.ngDevMode.debugName [as computation] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:142817:15)
+    at Object.producerRecomputeValue (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:306:25)
+    at producerUpdateValueVersion (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:107:8)
+    at _LucideDynamicIcon.computed2 [as icon] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:269:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:20703:25
+    at Object.fn (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3530:5)
+    at runEffect (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:398:10)
+    at Object.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3454:7)
+    at runEffectsInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9131:17)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9230:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'list-plus'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; imageSrc: string; imageAlt: string; rows: never[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:100:6:
+[37m      100 │ const [32mhomeCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:113:6:
+[37m      113 │ const [32msubscriptionCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; imageSrc: string; imageAlt: string; imageCaption: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:133:6:
+[37m      133 │ const [32mtaskDetailCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:153:6:
+[37m      153 │ const [32mproductCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:173:6:
+[37m      173 │ const [32mcomparisonCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:193:6:
+[37m      193 │ const [32mopenSourceCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:213:6:
+[37m      213 │ const [32mdocsCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:228:6:
+[37m      228 │ const [32mqualityCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:248:6:
+[37m      248 │ const [32msecurityCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:268:6:
+[37m      268 │ const [32mtokenCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:288:6:
+[37m      288 │ const [32mdriftCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:308:6:
+[37m      308 │ const [32mchatCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:323:6:
+[37m      323 │ const [32mworkspaceCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:338:6:
+[37m      338 │ const [32mpatternsCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:353:6:
+[37m      353 │ const [32mexternalCliCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:373:6:
+[37m      373 │ const [32maboutCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; icon: string; title: string; description: string; metrics: { value: string; label: string; }[]; rows: { label: string; text: string; state: string; }[]; }' but required in type 'Capture'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:388:6:
+[37m      388 │ const [32mhireCapture[37m: Capture = {
+          ╵       [32m~~~~~~~~~~~[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:21:2:
+[37m      21 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:423:6:
+[37m      423 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:440:6:
+[37m      440 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:452:6:
+[37m      452 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:469:6:
+[37m      469 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:486:6:
+[37m      486 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:513:6:
+[37m      513 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:525:6:
+[37m      525 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:542:6:
+[37m      542 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:575:6:
+[37m      575 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:594:6:
+[37m      594 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:607:6:
+[37m      607 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:625:6:
+[37m      625 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:638:6:
+[37m      638 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:655:6:
+[37m      655 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:668:6:
+[37m      668 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:681:6:
+[37m      681 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:694:6:
+[37m      694 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:724:6:
+[37m      724 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:737:6:
+[37m      737 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:749:6:
+[37m      749 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:762:6:
+[37m      762 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:856:6:
+[37m      856 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:878:6:
+[37m      878 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:900:6:
+[37m      900 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:919:6:
+[37m      919 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:939:6:
+[37m      939 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:957:6:
+[37m      957 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:977:6:
+[37m      977 │       [32m{[37m
+          ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1011:6:
+[37m      1011 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1032:6:
+[37m      1032 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1052:6:
+[37m      1052 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1074:6:
+[37m      1074 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1092:6:
+[37m      1092 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1129:6:
+[37m      1129 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1150:6:
+[37m      1150 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1170:6:
+[37m      1170 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1206:6:
+[37m      1206 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1227:6:
+[37m      1227 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; subhead: string; body: string; paragraphs: string[]; quote: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1247:6:
+[37m      1247 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1281:6:
+[37m      1281 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1293:6:
+[37m      1293 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1305:6:
+[37m      1305 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1424:6:
+[37m      1424 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1437:6:
+[37m      1437 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1454:6:
+[37m      1454 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1467:6:
+[37m      1467 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; cards: { title: string; text: string; icon: string; }[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1479:6:
+[37m      1479 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1513:6:
+[37m      1513 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1526:6:
+[37m      1526 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1538:6:
+[37m      1538 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; capture: Capture; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1565:6:
+[37m      1565 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1578:6:
+[37m      1578 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'eyebrow' is missing in type '{ id: string; label: string; title: string; body: string; bullets: string[]; }' but required in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1590:6:
+[37m      1590 │       [32m{[37m
+           ╵       [32m^[0m
+
+  'eyebrow' is declared here.
+
+    src/app/site-content.ts:47:2:
+[37m      47 │   [32meyebrow[37m: string;
+         ╵   [32m~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; external: true; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:406:2:
+[37m      406 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; external: true; }; capture: Capture; sections: ({ ...; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:496:2:
+[37m      496 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 1 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:556:2:
+[37m      556 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; parentId: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | { ...; })[]; competitorItems: { ...; }[]; c...' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:703:2:
+[37m      703 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 2 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:835:2:
+[37m      835 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 1 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:989:2:
+[37m      989 │   [32m{[37m
+          ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1106:2:
+[37m      1106 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1182:2:
+[37m      1182 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; capture: Capture; sections: { id: string; label: string; title: string; body: string; bullets: string[]; }[]; patternItems: ({ ...; } | { ...; })[]; bestPracticeItems: { ...; }[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1258:2:
+[37m      1258 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; parentId: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 1 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1397:2:
+[37m      1397 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1486:2:
+[37m      1486 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; path: string; icon: string; title: string; lead: string; summary: string; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ id: string; ... 4 more ...; capture: Capture; } | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1538:2:
+[37m      1538 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; parentId: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 1 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1406:2:
+[37m      1406 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2741: Property 'navLabel' is missing in type '{ id: string; parentId: string; path: string; icon: string; title: string; lead: string; summary: string; primaryAction: { label: string; path: string; icon: string; }; secondaryAction: { label: string; path: string; icon: string; }; capture: Capture; sections: ({ ...; } | ... 1 more ... | { ...; })[]; }' but required in type 'SitePage'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1406:2:
+[37m      1406 │   [32m{[37m
+           ╵   [32m^[0m
+
+  'navLabel' is declared here.
+
+    src/app/site-content.ts:74:2:
+[37m      74 │   [32mnavLabel[37m: string;
+         ╵   [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31mComponent update failed: Unable to resolve icon 'asterisk'
+Error: Unable to resolve icon 'asterisk'
+    at LucideDynamicIcon.icon.ngDevMode.debugName [as computation] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:142817:15)
+    at Object.producerRecomputeValue (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:306:25)
+    at producerUpdateValueVersion (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:107:8)
+    at _LucideDynamicIcon.computed2 [as icon] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:269:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:20703:25
+    at Object.fn (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3530:5)
+    at runEffect (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:398:10)
+    at Object.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3454:7)
+    at runEffectsInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9131:17)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9230:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'asterisk'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31mComponent update failed: NG0950: Input "capture" is required but no value is available yet. Find more at https://v21.angular.dev/errors/NG0950
+Error: NG0950: Input "capture" is required but no value is available yet. Find more at https://v21.angular.dev/errors/NG0950
+    at _CaptureCardComponent.inputValueFn [as capture] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:23123:13)
+    at CaptureCardComponent_Template (http://127.0.0.1:4184/@ng/component?c=src%2Fapp%2Fcapture-card.component.ts%40CaptureCardComponent&t=1779659970416:118:45)
+    at executeTemplate (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:8546:5)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9210:7)
+    at recreate (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20414:5)
+    at executeWithInvalidateFallback (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20424:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20419:20
+    at NoopNgZone.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3141:15)
+    at recreateLView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20419:10)
+    at recreateMatchingLViews (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20368:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mComponent update failed: Unable to resolve icon 'asterisk'
+Error: Unable to resolve icon 'asterisk'
+    at LucideDynamicIcon.icon.ngDevMode.debugName [as computation] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:142817:15)
+    at Object.producerRecomputeValue (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:306:25)
+    at producerUpdateValueVersion (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:107:8)
+    at _LucideDynamicIcon.computed2 [as icon] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:269:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:20703:25
+    at Object.fn (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3530:5)
+    at runEffect (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:398:10)
+    at Object.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3454:7)
+    at runEffectsInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9131:17)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9230:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'asterisk'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31mComponent update failed: Unable to resolve icon 'asterisk'
+Error: Unable to resolve icon 'asterisk'
+    at LucideDynamicIcon.icon.ngDevMode.debugName [as computation] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:142817:15)
+    at Object.producerRecomputeValue (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:306:25)
+    at producerUpdateValueVersion (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:107:8)
+    at _LucideDynamicIcon.computed2 [as icon] (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:269:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/@lucide_angular.js?v=f05f131b:20703:25
+    at Object.fn (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3530:5)
+    at runEffect (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:398:10)
+    at Object.run (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:3454:7)
+    at runEffectsInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9131:17)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9230:5)
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'asterisk'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31mERROR Error: Unable to resolve icon 'circle-star'
+    at Object.LucideDynamicIcon.icon.ngDevMode.debugName (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:142819:15)
+    at Object.producerRecomputeValue (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:941:25)
+    at producerUpdateValueVersion (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:742:8)
+    at _LucideDynamicIcon.computed2 (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:904:5)
+    at eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\@lucide_angular.js:20705:25)
+    at Object.eval (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4168:5)
+    at runEffect (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:1033:10)
+    at Object.run (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:4092:7)
+    at runEffectsInView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9633:17)
+    at refreshView (C:\Projects\agent-taskboard-devspace\agent-studio-for-software-website\04-angular-static-final\.angular\cache\21.2.12\agent-studio-site-v04\vite\deps_ssr\chunk-W5QESNM3.js:9732:5)[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:20:
+[37m      1551 │         title: 'Let'[32ms[37m Talk',
+           ╵                     [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18004: No value exists in scope for the shorthand property 's'. Either declare one or provide an initializer.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:20:
+[37m      1551 │         title: 'Let'[32ms[37m Talk',
+           ╵                     [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 's' does not exist in type 'PageSection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:20:
+[37m      1551 │         title: 'Let'[32ms[37m Talk',
+           ╵                     [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:22:
+[37m      1551 │         title: 'Let's [32mTalk[37m',
+           ╵                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18004: No value exists in scope for the shorthand property 'Talk'. Either declare one or provide an initializer.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:22:
+[37m      1551 │         title: 'Let's [32mTalk[37m',
+           ╵                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:26:
+[37m      1551 │         title: 'Let's Talk[32m',[37m
+           ╵                           [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1002: Unterminated string literal.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1551:28:
+[37m      1551 │         title: 'Let's Talk',[32m[37m
+           ╵                             [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ':' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1552:8:
+[37m      1552 │         [32mbody[37m:
+           ╵         [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'body'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1552:8:
+[37m      1552 │         [32mbody[37m:
+           ╵         [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ',' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1552:12:
+[37m      1552 │         body[32m:[37m
+           ╵             [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS1005: ':' expected.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/site-content.ts:1553:183:
+[37m      1553 │ ...me to talk. This is separate from hiring, but connected to it.'[32m,[37m
+           ╵                                                                   [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mUnterminated string literal[0m
+
+    src/app/site-content.ts:1314:48:
+[37m      1314 │                 title: 'Let', s, Talk, ',: body,[32m[37m
+           ╵                                                 [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mUnterminated string literal[0m
+
+    src/app/site-content.ts:1314:48:
+[37m      1314 │                 title: 'Let', s, Talk, ',: body,[32m[37m
+           ╵                                                 [32m^[0m
+
+[39m[22m
+[1m[31mComponent update failed: ctx_r3.showHomeScreenshot is not a function
+TypeError: ctx_r3.showHomeScreenshot is not a function
+    at PageComponent_Conditional_4_Template (http://127.0.0.1:4184/@ng/component?c=src%2Fapp%2Fpage.component.ts%40PageComponent&t=1779661415783:785:54)
+    at executeTemplate (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:8546:5)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9210:7)
+    at detectChangesInView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9350:5)
+    at detectChangesInViewIfAttached (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9333:3)
+    at detectChangesInEmbeddedViews (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9304:7)
+    at refreshView (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:9231:5)
+    at recreate (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20414:5)
+    at executeWithInvalidateFallback (http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20424:5)
+    at http://127.0.0.1:4184/@fs/C:/Projects/agent-taskboard-devspace/agent-studio-for-software-website/04-angular-static-final/.angular/cache/21.2.12/agent-studio-site-v04/vite/deps/chunk-A7HD4W5G.js?v=f05f131b:20419:20
+Please consider reporting the error at https://github.com/angular/angular-cli/issues[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: LucideDynamicIcon is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:9:12:
+[37m      9 │   imports: [[32mLucideDynamicIcon[37m, RouterLink, RouterLinkActive, Router...
+        ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: LucideDynamicIcon is not used within the template of App[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.ts:9:12:
+[37m      9 │   imports: [[32mLucideDynamicIcon[37m, RouterLink, RouterLinkActive, Router...
+        ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31mERROR: Bad Request ("http://localhost:4184/api/projects").
+Header "host" with value "localhost:4184" is not allowed.
+
+For more information, see https://angular.dev/best-practices/security#preventing-server-side-request-forgery-ssrf[39m[22m

@@ -1,0 +1,13 @@
+{
+  "seq": 4,
+  "note": "dialog filled",
+  "ts": "2026-05-22T15:48:57.250Z",
+  "railOpen": false,
+  "project": "Playwright Test",
+  "lanes": {
+    "backlog": 0,
+    "active": 0,
+    "decide": 0
+  },
+  "url": "/"
+}

@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [chromium] › e2e\exploratory\todo-app-full-test.spec.ts:77:5 › full lifecycle: create → steer → complete (runbook project) (10.2m)
+
+  Slow test file: [chromium] › e2e\exploratory\todo-app-full-test.spec.ts (10.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 passed (10.2m)

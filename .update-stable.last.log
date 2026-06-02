@@ -1,0 +1,240 @@
+
+==================================================
+  Preflight
+==================================================
+  Branch  : main
+  Worktree: clean
+
+==================================================
+  Waiting for stable to be quiescent (timeout 1800s)
+==================================================
+  Stable runner is quiescent; safe to update.
+=== Stopping agent-taskboard-stable (backend :5031, frontend :4011) ===
+--- Backend ---
+Stopping API (PID: 93036)...
+API stopped.
+  Port 5031 is free.
+--- Frontend ---
+  Port 4011 occupied by PID 86200 — stopping it...
+  Port 4011 is now free.
+Done.
+
+==================================================
+  Pulling origin/main
+==================================================
+From https://github.com/RobertMischke/agent-taskboard
+ * branch            main       -> FETCH_HEAD
+From https://github.com/RobertMischke/agent-taskboard
+ * branch            main       -> FETCH_HEAD
+Updating bb76f6a..a28954e
+Fast-forward
+ AGENTS.md                                          |  66 +++---
+ README.md                                          |  32 +--
+ ROADMAP.md                                         |   4 +-
+ backend.Tests/RegressionRadarServiceTests.cs       | 187 +++++++++++++++
+ backend/Endpoints/AdminConfigEndpoints.cs          |   7 +
+ backend/Endpoints/EndpointMapping.cs               |   1 +
+ .../Endpoints/Jobs/JobRegressionRadarEndpoints.cs  |  20 ++
+ backend/Program.cs                                 |  11 +
+ backend/Services/Jobs/JobMutationService.cs        |  61 +++++
+ .../RegressionRadar/RegressionRadarModels.cs       |  56 +++++
+ .../RegressionRadar/RegressionRadarService.cs      | 261 +++++++++++++++++++++
+ docs/architecture-decisions.md                     |  20 ++
+ docs/wiki/README.md                                |  89 +++++++
+ docs/wiki/common-problems/README.md                |  28 +++
+ frontend/src/app/app.config.ts                     |  34 +--
+ frontend/src/app/app.spec.ts                       |  98 ++++----
+ frontend/src/app/app.ts                            |  16 +-
+ .../chat/conversation-projection.fixtures.ts       |   2 +-
+ .../app/components/chat/conversation-projection.ts |   2 +-
+ .../src/app/concept-docs/concept-doc-registry.ts   |   2 +-
+ .../create-task-dialog.component.html}             |   0
+ .../create-task-dialog.component.spec.ts}          |  88 +++----
+ .../create-task-dialog.component.ts}               |   8 +-
+ .../filters-dropdown/filters-dropdown.component.ts |   2 +-
+ .../kanban-filter-sidesheet.component.html         |   4 +-
+ .../kanban-filter-sidesheet.component.ts           |   2 +-
+ .../project-tabs/project-chip-view-model.ts        |   2 +-
+ .../project-tabs/project-tabs.component.spec.ts    |   2 +-
+ .../board/components/ready-lane-split.util.ts      |   2 +-
+ .../board/components/review-grouping.util.spec.ts  |   2 +-
+ .../board/components/review-grouping.util.ts       |   2 +-
+ .../task-card-view-model.ts}                       |   2 +-
+ .../task-card.component.html}                      |  15 +-
+ .../task-card.component.scss}                      |  16 ++
+ .../task-card.component.spec.ts}                   |   6 +-
+ .../task-card.component.ts}                        |  56 ++++-
+ .../task-column.html}                              |   6 +-
+ .../task-column.scss}                              |   0
+ .../task-column.spec.ts}                           |   4 +-
+ .../job-column.ts => task-column/task-column.ts}   |   8 +-
+ frontend/src/app/features/board/index.ts           |   8 +-
+ .../board/state/board-filters.service.spec.ts      |   4 +-
+ .../features/board/state/board-filters.service.ts  |   4 +-
+ .../board/state/board-mutations.service.ts         |   4 +-
+ ...form.service.ts => create-task-form.service.ts} |   6 +-
+ .../components/cli-admin-panel/cli-admin-panel.ts  |   4 +-
+ .../cli/components/cli-console/cli-console.ts      |   2 +-
+ .../cli-sessions-panel/cli-sessions-panel.ts       |   4 +-
+ .../components/cli-usage-sheet/cli-usage-sheet.ts  |   4 +-
+ frontend/src/app/features/cli/models/cli.model.ts  |   2 +-
+ .../e2e-cleanup-dialog.component.html              |   8 +-
+ .../activity-log-view/activity-log-view.ts         |   2 +-
+ .../components/activity-log.parser.spec.ts         |   2 +-
+ .../job-detail/components/activity-log.parser.ts   |   2 +-
+ .../chat-model-badge/chat-model-badge.component.ts |   4 +-
+ .../cli-config-card/cli-config-card.component.ts   |   2 +-
+ .../command-deck/command-deck.component.spec.ts    |  92 ++++----
+ .../command-deck/command-deck.component.ts         |   4 +-
+ .../detail-header/detail-header.component.html     |  44 +++-
+ .../detail-header/detail-header.component.scss     |  20 ++
+ .../detail-header/detail-header.component.ts       |  46 +++-
+ .../hygiene-strip/hygiene-strip.component.html     |   2 +-
+ .../hygiene-strip/hygiene-strip.component.ts       |   2 +-
+ .../log-overlay/log-overlay.component.ts           |   2 +-
+ .../prompt-pane/files-pane/files-pane.component.ts |   4 +-
+ .../overview-pane/overview-pane.component.html     |   5 +
+ .../overview-pane/overview-pane.component.ts       |   5 +-
+ .../prompt-pane/prompt-pane.component.ts           |   4 +-
+ .../code-review-panel.component.spec.ts            |   2 +-
+ .../code-review-panel.component.ts                 |   4 +-
+ .../model-badge-menu-builders.spec.ts              |   2 +-
+ .../protocol-pane/model-badge-menu-builders.ts     |   2 +-
+ .../protocol-pane/protocol-pane-view-model.ts      |   2 +-
+ .../protocol-pane/protocol-pane.component.ts       |   4 +-
+ .../components/protocol-pane/protocol-verdict.ts   |   2 +-
+ .../review-evidence-panel.component.ts             |   2 +-
+ .../run-git-viewer/run-git-viewer.component.ts     |   4 +-
+ .../run-timeline/run-timeline.component.ts         |   4 +-
+ .../protocol-pane/watchdog-state.spec.ts           |   2 +-
+ .../components/protocol-pane/watchdog-state.ts     |   2 +-
+ .../triage-panel/triage-panel.component.html       |   2 +-
+ frontend/src/app/features/job-detail/index.ts      |   4 +-
+ .../job-detail/services/git-pane.service.ts        |   4 +-
+ .../job-detail/services/run-outcome.util.spec.ts   |   2 +-
+ .../job-detail/services/run-outcome.util.ts        |   2 +-
+ ...ifacts.service.ts => task-artifacts.service.ts} |   4 +-
+ ...ail-formatters.ts => task-detail-formatters.ts} |   2 +-
+ .../job-detail/state/lane-pager.service.ts         |   2 +-
+ ...ection.service.ts => task-selection.service.ts} |   4 +-
+ .../state/triage-controller.service.spec.ts        |   4 +-
+ .../job-detail/state/triage-controller.service.ts  |   6 +-
+ .../{job-detail.html => task-detail.html}          |   0
+ .../{job-detail.scss => task-detail.scss}          |   0
+ .../{job-detail.spec.ts => task-detail.spec.ts}    | 100 ++++----
+ .../job-detail/{job-detail.ts => task-detail.ts}   |  16 +-
+ .../global-orchestrator-card.ts                    |   2 +-
+ .../orchestrator-feed/orchestrator-feed.html       |   2 +-
+ .../orchestrator-feed/orchestrator-feed.ts         |   2 +-
+ .../orchestrator-side-sheet.component.spec.ts      |  80 +++----
+ .../orchestrator-side-sheet.component.ts           |   4 +-
+ frontend/src/app/features/polling/index.ts         |   2 +-
+ .../services/claude-session-poll.service.ts        |   6 +-
+ .../polling/services/cli-output-poll.service.ts    |   4 +-
+ .../polling/services/run-timeline-poll.service.ts  |   4 +-
+ .../polling/services/screenshots-poll.service.ts   |   4 +-
+ .../services/session-events-poll.service.ts        |   4 +-
+ ...kground-poller.ts => task-background-poller.ts} |   2 +-
+ .../project-chat-list.component.ts                 |   2 +-
+ .../components/autonomy-slider/autonomy-slider.ts  |   2 +-
+ .../components/project-detail/project-detail.html  |   6 +-
+ .../components/project-detail/project-detail.ts    |   4 +-
+ .../project-drift-overview-section.ts              |   2 +-
+ .../project-drift-section/project-drift-section.ts |   2 +-
+ .../project-observability-panel.component.html     |  10 +-
+ .../project-product-runtime-panel.component.html   |   8 +-
+ .../project-steering-docs-section.ts               |   2 +-
+ .../project-supervisor-section.html                |   2 +-
+ .../project-workspace-section.html                 |   2 +-
+ .../project-workspace-section.ts                   |   4 +-
+ .../project-token-usage-panel.component.html       |  14 +-
+ .../project-token-usage-panel.component.ts         |   2 +-
+ .../quota/components/header-quota/header-quota.ts  |   2 +-
+ .../quota/components/quota-strip/quota-strip.ts    |   4 +-
+ .../src/app/features/quota/models/quota.model.ts   |   2 +-
+ .../features/quota/services/quota-api.service.ts   | 136 +++++------
+ .../components/regression-radar.component.html     | 111 +++++++++
+ .../components/regression-radar.component.scss     | 247 +++++++++++++++++++
+ .../components/regression-radar.component.ts       | 100 ++++++++
+ .../src/app/features/regression-radar/index.ts     |   5 +
+ .../models/regression-radar.model.ts               |  27 +++
+ .../workspace-screenshots/workspace-screenshots.ts |   2 +-
+ .../shell/components/status-bar/status-bar.ts      |   6 +-
+ .../workspace-create-dialog.component.ts           |   2 +-
+ .../shell/state/project-drag-drop.service.ts       |   4 +-
+ .../shell/state/workspace-manager.service.ts       |   2 +-
+ .../activity-tab-view.component.html               |   4 +-
+ .../activity-tab-view.component.ts                 |   4 +-
+ .../diff-tab-view/diff-tab-view.component.ts       |   4 +-
+ .../project-hub-view/project-hub-view.component.ts |   4 +-
+ .../studio-shell/studio-shell.component.html       |   4 +-
+ .../studio-shell/studio-shell.component.ts         |  38 ++-
+ .../studio-shell/studio-shell.menu-builders.ts     |  20 +-
+ .../cli-usage-detail-modal.ts                      |   2 +-
+ .../token-summary-block/token-summary-block.ts     |   2 +-
+ .../usage-hover-panel/usage-hover-panel.ts         |   2 +-
+ .../workspace-token-timeline.ts                    |   2 +-
+ .../features/tokens/services/tokens-api.service.ts | 240 +++++++++----------
+ .../verbose-debug-overlay.component.spec.ts        |   1 +
+ .../verbose-debug-overlay.component.ts             |   2 +-
+ frontend/src/app/models/error-dialog.model.ts      |  34 +--
+ .../src/app/models/{job.model.ts => task.model.ts} |   1 +
+ .../src/app/services/client-defaults.service.ts    |   4 +-
+ frontend/src/app/services/client.service.ts        |   2 +-
+ frontend/src/app/services/format.util.ts           |   2 +-
+ frontend/src/app/services/tag-registry.store.ts    |   2 +-
+ ...service.ts => task-completion-sound.service.ts} |   4 +-
+ .../services/{job.service.ts => task.service.ts}   |  14 +-
+ ...ext-gen-chat-workbench-prototype.component.html |   8 +-
+ 158 files changed, 2187 insertions(+), 741 deletions(-)
+ create mode 100644 backend.Tests/RegressionRadarServiceTests.cs
+ create mode 100644 backend/Endpoints/Jobs/JobRegressionRadarEndpoints.cs
+ create mode 100644 backend/Services/RegressionRadar/RegressionRadarModels.cs
+ create mode 100644 backend/Services/RegressionRadar/RegressionRadarService.cs
+ create mode 100644 docs/wiki/README.md
+ create mode 100644 docs/wiki/common-problems/README.md
+ rename frontend/src/app/features/board/components/{create-job-dialog/create-job-dialog.component.html => create-task-dialog/create-task-dialog.component.html} (100%)
+ rename frontend/src/app/features/board/components/{create-job-dialog/create-job-dialog.component.spec.ts => create-task-dialog/create-task-dialog.component.spec.ts} (94%)
+ rename frontend/src/app/features/board/components/{create-job-dialog/create-job-dialog.component.ts => create-task-dialog/create-task-dialog.component.ts} (98%)
+ rename frontend/src/app/features/board/components/{job-card/job-card-view-model.ts => task-card/task-card-view-model.ts} (99%)
+ rename frontend/src/app/features/board/components/{job-card/job-card.component.html => task-card/task-card.component.html} (95%)
+ rename frontend/src/app/features/board/components/{job-card/job-card.component.scss => task-card/task-card.component.scss} (98%)
+ rename frontend/src/app/features/board/components/{job-card/job-card.component.spec.ts => task-card/task-card.component.spec.ts} (99%)
+ rename frontend/src/app/features/board/components/{job-card/job-card.component.ts => task-card/task-card.component.ts} (91%)
+ rename frontend/src/app/features/board/components/{job-column/job-column.html => task-column/task-column.html} (96%)
+ rename frontend/src/app/features/board/components/{job-column/job-column.scss => task-column/task-column.scss} (100%)
+ rename frontend/src/app/features/board/components/{job-column/job-column.spec.ts => task-column/task-column.spec.ts} (96%)
+ rename frontend/src/app/features/board/components/{job-column/job-column.ts => task-column/task-column.ts} (99%)
+ rename frontend/src/app/features/board/state/{create-job-form.service.ts => create-task-form.service.ts} (98%)
+ rename frontend/src/app/features/job-detail/services/{job-artifacts.service.ts => task-artifacts.service.ts} (90%)
+ rename frontend/src/app/features/job-detail/services/{job-detail-formatters.ts => task-detail-formatters.ts} (97%)
+ rename frontend/src/app/features/job-detail/state/{job-selection.service.ts => task-selection.service.ts} (99%)
+ rename frontend/src/app/features/job-detail/{job-detail.html => task-detail.html} (100%)
+ rename frontend/src/app/features/job-detail/{job-detail.scss => task-detail.scss} (100%)
+ rename frontend/src/app/features/job-detail/{job-detail.spec.ts => task-detail.spec.ts} (95%)
+ rename frontend/src/app/features/job-detail/{job-detail.ts => task-detail.ts} (99%)
+ rename frontend/src/app/features/polling/services/{job-background-poller.ts => task-background-poller.ts} (98%)
+ create mode 100644 frontend/src/app/features/regression-radar/components/regression-radar.component.html
+ create mode 100644 frontend/src/app/features/regression-radar/components/regression-radar.component.scss
+ create mode 100644 frontend/src/app/features/regression-radar/components/regression-radar.component.ts
+ create mode 100644 frontend/src/app/features/regression-radar/index.ts
+ create mode 100644 frontend/src/app/features/regression-radar/models/regression-radar.model.ts
+ rename frontend/src/app/models/{job.model.ts => task.model.ts} (99%)
+ rename frontend/src/app/services/{job-completion-sound.service.ts => task-completion-sound.service.ts} (97%)
+ rename frontend/src/app/services/{job.service.ts => task.service.ts} (98%)
+  HEAD now: a28954e feat: add context menu Copy Name/ID/Key and populate task key field
+  npm     : package-lock.json unchanged, skipping install
+=== agent-taskboard-stable — backend :5031, frontend :4011 ===
+--- CLI health ---
+--- Update service ---
+UpdateService already listening on :5039 (PID: 80520).
+--- Backend ---
+Starting API on http://127.0.0.1:5031...
+API process started with PID: 467961. Waiting for health check...
+API listener PID: 69288
+API is successfully started and healthy!
+--- Frontend ---
+  Port 4011 is free.
+Starting frontend (detached) on :4011 -> backend :5031 ...
+  log: /c/Projects/agent-taskboard-devspace/agent-taskboard-stable/.frontend.log
+Frontend listening on :4011 (PID: 468041).

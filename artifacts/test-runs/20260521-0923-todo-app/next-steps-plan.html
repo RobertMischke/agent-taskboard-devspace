@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Agent Software Studio — next-steps plan (from 2026-05-21 todo probe)</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --surface: #181825;
+    --surface-2: #1e1e2e;
+    --fg: #e2e8f0;
+    --fg-dim: #94a3b8;
+    --fg-strong: #f8fafc;
+    --accent: #d97757;
+    --high: #f38ba8;
+    --med: #f9e2af;
+    --low: #89b4fa;
+    --done: #4ade80;
+    --border: rgba(255,255,255,0.10);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.55;
+  }
+  header {
+    padding: 32px 48px 18px;
+    background: linear-gradient(135deg, #181825 0%, #1e1e2e 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  h1 { margin: 0 0 6px; font-size: 22px; color: var(--fg-strong); font-weight: 700; }
+  header p { margin: 0; color: var(--fg-dim); font-size: 13px; }
+  header a { color: var(--accent); }
+  main { padding: 28px 48px 64px; max-width: 1240px; }
+  h2 {
+    margin: 32px 0 14px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-strong);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--fg-dim);
+    margin-bottom: 20px;
+  }
+  .legend .pill { padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); }
+  .pill.high   { color: #1a1a1a; background: var(--high); border-color: var(--high); }
+  .pill.med    { color: #1a1a1a; background: var(--med);  border-color: var(--med); }
+  .pill.low    { color: #1a1a1a; background: var(--low);  border-color: var(--low); }
+  .pill.done   { color: #1a1a1a; background: var(--done); border-color: var(--done); }
+  .lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .lane {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 12px 18px;
+    min-height: 240px;
+  }
+  .lane-head {
+    display: flex; align-items: baseline; gap: 8px;
+    padding: 0 4px 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .lane-head h3 {
+    margin: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-strong);
+  }
+  .lane-head .count { color: var(--fg-dim); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .card:last-child { margin-bottom: 0; }
+  .card-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 8px; margin-bottom: 4px;
+  }
+  .card-id { font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: var(--fg-dim); }
+  .card-title { font-size: 13px; color: var(--fg-strong); font-weight: 600; line-height: 1.35; margin: 0 0 6px; }
+  .card-body  { font-size: 12px; color: var(--fg); line-height: 1.5; }
+  .card-meta  { font-size: 11px; color: var(--fg-dim); margin-top: 6px; }
+  .badge { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+  .badge.bug { background: rgba(243, 139, 168, 0.20); color: #f38ba8; }
+  .badge.ux  { background: rgba(56, 189, 248, 0.20); color: #89b4fa; }
+  .badge.feature { background: rgba(167, 139, 250, 0.20); color: #c4b5fd; }
+  .badge.dx  { background: rgba(74, 222, 128, 0.20); color: var(--done); }
+  .acc {
+    display: block;
+    font-size: 11px;
+    color: var(--fg-dim);
+    margin-top: 6px;
+  }
+  .acc::before { content: "✓ "; color: var(--done); }
+  ul.steps {
+    margin: 6px 0 0;
+    padding-left: 16px;
+    font-size: 11.5px;
+    color: var(--fg);
+  }
+  ul.steps li { margin: 2px 0; }
+  .footer-meta { color: var(--fg-dim); font-size: 11px; margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--border); }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 11px; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 3px; color: var(--fg-strong); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Next-steps plan — Agent Software Studio</h1>
+  <p>
+    Source: exploratory probe <a href="observations.md">observations.md</a>
+    · run dir <code>artifacts/test-runs/20260521-0923-todo-app/</code>
+    · 2026-05-21
+  </p>
+</header>
+
+<main>
+  <h2>Legend</h2>
+  <div class="legend">
+    <span class="pill high">HIGH — blocks operator trust or workflow</span>
+    <span class="pill med">MED — friction, easy to live with for a sprint</span>
+    <span class="pill low">LOW — polish</span>
+    <span class="pill done">DONE — already shipped this session</span>
+    <span style="margin-left:8px">tags:</span>
+    <span class="badge bug">bug</span>
+    <span class="badge ux">ux</span>
+    <span class="badge feature">feature</span>
+    <span class="badge dx">dx</span>
+  </div>
+
+  <h2>Backlog by priority</h2>
+  <div class="lanes">
+
+    <!-- ============== LANE: HIGH ============== -->
+    <div class="lane">
+      <div class="lane-head">
+        <h3 style="color: var(--high)">High</h3>
+        <span class="count">4 items</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F1</span>
+          <span class="badge bug">bug</span>
+        </div>
+        <p class="card-title">Aspect-runner falls through to "concerns" silently</p>
+        <div class="card-body">
+          All four aspect verdicts (requirement-fit, code-quality, documentation-impact, tests-and-evidence)
+          returned "concerns" with the boilerplate
+          <code>No [[ASPECT_VERDICT]] sentinel was found in the model reply</code>. Auto-review tags
+          are then meaningless — every task ships with three "concerns" tags regardless of real quality.
+        </div>
+        <ul class="steps">
+          <li>Audit the aspect-runner prompt → does it still ask the model for the <code>[[ASPECT_VERDICT]] pass|concerns|fail</code> sentinel?</li>
+          <li>Check whether Sonnet 4.6 reliably emits the sentinel; tighten the prompt with an example reply.</li>
+          <li>If the parser changed, document it. Add an integration test that runs one real aspect end-to-end and asserts a non-fallback verdict.</li>
+          <li>Until fixed, tag fallback verdicts as <code>review:unparseable</code> not <code>quality:concerns</code> so the UI distinguishes "no real verdict" from "model has a concern".</li>
+        </ul>
+        <span class="acc">Acceptance: a fresh task with a clean deliverable lands in 5-human-review with at least one aspect = <code>pass</code>, no default-fallback boilerplate body.</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F2</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title">New task is invisible after creation</p>
+        <div class="card-body">
+          On a project with 200+ cards in Backlog, the brand-new task lands somewhere in the column with
+          no highlight, no scroll-to, no toast linking to it. Operator has zero feedback that the task
+          went where they wanted.
+        </div>
+        <ul class="steps">
+          <li>After create-task: 800 ms pulse highlight on the new card + scroll-into-view in its target lane.</li>
+          <li>Confirmation toast bottom-right: "Created "<i>title</i>" in Ready. <span style="color: var(--accent)">Open →</span>".</li>
+          <li>If the new card is below the fold, the lane shows a "1 new card" jump-chip at the top.</li>
+        </ul>
+        <span class="acc">Acceptance: after submit, the operator's eye lands on the new card within 1 s without scrolling manually.</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F3</span>
+          <span class="badge ux">ux</span> <span class="badge bug">perf</span>
+        </div>
+        <p class="card-title">Large boards (200+ cards/lane) have no virtualisation</p>
+        <div class="card-body">
+          BACKLOG renders all 201 cards in DOM at once. Lane has no in-place filter, no
+          "recent first" sort, no condensed mode that fits more on screen.
+        </div>
+        <ul class="steps">
+          <li>Virtualise the lane body (reuse pattern from <code>&lt;app-chat&gt;</code>'s virtual mode).</li>
+          <li>Per-lane mini search field in the lane head when the lane has &gt; N cards.</li>
+          <li>Stash a "compact card" mode at the lane level so a tall lane fits on one screen.</li>
+        </ul>
+        <span class="acc">Acceptance: lane with 500 cards renders &lt; 100 ms after project switch; first 20 cards scrolled into view without DOM stalls.</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F4</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title">Orchestrator rail clips lane cards instead of reflowing</p>
+        <div class="card-body">
+          With the rail open at default width (~640 px), each lane gets only ~80 px. Cards
+          stay full width and clip; the operator has to scroll horizontally inside every lane
+          to see anything.
+        </div>
+        <ul class="steps">
+          <li>When orchestrator rail is open AND viewport &lt; threshold: auto-engage <i>Compact</i> card mode.</li>
+          <li>Hide lane-group head/labels in compact mode to reclaim vertical space too.</li>
+          <li>Provide a one-click "snap rail to 33% width" affordance on the rail's resize handle.</li>
+        </ul>
+        <span class="acc">Acceptance: opening the orchestrator rail never produces clipped card content on a 1600×900 viewport.</span>
+      </div>
+
+    </div>
+
+    <!-- ============== LANE: MEDIUM ============== -->
+    <div class="lane">
+      <div class="lane-head">
+        <h3 style="color: var(--med)">Medium</h3>
+        <span class="count">5 items</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F5</span>
+          <span class="badge feature">feature</span>
+        </div>
+        <p class="card-title">"Pick this task next" / expedite affordance</p>
+        <div class="card-body">
+          Backend <code>POST /api/jobs/{id}/move-to-top</code> already exists. UI doesn't surface
+          it. New tasks sit behind every existing fixture/queue item.
+        </div>
+        <ul class="steps">
+          <li>Add a card overflow menu item "Pick next" (visible on cards in Ready lane).</li>
+          <li>After "Pick next": card lifts to position 1 with a brief pulse + lane reorders.</li>
+        </ul>
+        <span class="acc">Acceptance: from card overflow → "Pick next" → next runner cycle picks it up.</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F6</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title">Auto-toggle state change has no announcement</p>
+        <div class="card-body">
+          Flipping manual ⇄ auto on the titlebar chip only changes a tiny dot + label.
+          Operator can flip it by accident and not notice.
+        </div>
+        <ul class="steps">
+          <li>Short toast: "Runbook · auto-pickup enabled (2 slots)" / "...paused".</li>
+          <li>Brief animation on the project chip (e.g. accent ring) when the value changes.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F7</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title">Stale chat errors look indistinguishable from live ones</p>
+        <div class="card-body">
+          The orchestrator chat showed two-day-old red error bubbles
+          ("claude-code\bin\claude.exe ... not found") from sessions where the npm wrapper was missing.
+          The actual run just now spawned Claude fine. The operator can't tell.
+        </div>
+        <ul class="steps">
+          <li>Dim or muted-style error bubbles older than one super-phase boundary.</li>
+          <li>Add a "Clear history before <i>session N</i>" affordance to the orchestrator chat head.</li>
+          <li>Optional: when an aspect/runtime issue is resolved (e.g. shim now works), emit a workbench event marking prior errors as "resolved" so the chat can fade them.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F8</span>
+          <span class="badge bug">bug</span>
+        </div>
+        <p class="card-title">Claude tries <code>New-Item</code> on Windows, gets exit 127, retries</p>
+        <div class="card-body">
+          Cli-output log shows every Windows session starts with one wasted tool call
+          where Claude reaches for PowerShell's <code>New-Item -ItemType Directory</code>,
+          gets a bash shell that doesn't recognise it, exit 127. Then Claude self-corrects
+          to <code>mkdir -p</code>. Burns one tool call + ~10 s per directory-creation pattern.
+        </div>
+        <ul class="steps">
+          <li>Add a one-line shell hint to Claude's system prompt: "Shell is git-bash. Use POSIX commands (<code>mkdir -p</code>, <code>cp</code>, <code>rm</code>) — PowerShell verbs are not available."</li>
+          <li>Alternatively: spawn Claude inside a thin wrapper that maps PowerShell verbs to POSIX equivalents.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F9</span>
+          <span class="badge dx">dx</span>
+        </div>
+        <p class="card-title">Lane-group testids drift from state IDs</p>
+        <div class="card-body">
+          DOM uses <code>lane-group-backlog</code> / <code>active</code> / <code>decide</code>
+          while job states are <code>2-ready</code>, <code>3-progress</code>, <code>4-auto-review</code>,
+          <code>5-human-review</code>. Automation has to guess the mapping.
+        </div>
+        <ul class="steps">
+          <li>Add per-lane testids matching the state id, e.g. <code>lane-state-2-ready</code> alongside the lane-group id.</li>
+          <li>Document the mapping in <code>docs/frontend-testids.md</code>.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============== LANE: LOW + DONE ============== -->
+    <div class="lane">
+      <div class="lane-head">
+        <h3 style="color: var(--low)">Low / Done</h3>
+        <span class="count">2 + 3 items</span>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F10</span>
+          <span class="badge dx">dx</span>
+        </div>
+        <p class="card-title">Add <code>data-testid</code> to Create dialog submit</p>
+        <div class="card-body">
+          E2E selector currently relies on visible text "Create". Breaks under i18n or label change.
+        </div>
+        <ul class="steps">
+          <li>Add <code>data-testid="create-submit"</code> to the Create button.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-id">F11</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title">Welcome screen "+ New task" CTA visually small</p>
+        <div class="card-body">
+          Sits between project chips at body text size. Easy to overlook.
+        </div>
+        <ul class="steps">
+          <li>Promote to button styling with accent fill.</li>
+        </ul>
+      </div>
+
+      <!-- DONE THIS SESSION -->
+      <div class="card" style="border-color: rgba(74, 222, 128, 0.45);">
+        <div class="card-head">
+          <span class="card-id">prev-1</span>
+          <span class="badge dx">dx</span>
+        </div>
+        <p class="card-title" style="color: var(--done);">✓ Orchestrator inline-shell layout</p>
+        <div class="card-body">
+          Side-sheet moved inside studio-shell so titlebar/statusbar/activitybar wrap around it.
+          See <code>artifacts/test-runs/.../shell-with-orchestrator.png</code>.
+        </div>
+      </div>
+
+      <div class="card" style="border-color: rgba(74, 222, 128, 0.45);">
+        <div class="card-head">
+          <span class="card-id">prev-2</span>
+          <span class="badge ux">ux</span>
+        </div>
+        <p class="card-title" style="color: var(--done);">✓ Continuous chat with inline super-phase / phase dividers</p>
+        <div class="card-body">
+          Master-strip removed; phase dividers woven into chat. Tested live: Session 1 / 2 / 3
+          dividers correctly cut on &gt; 15 min idle. Phase metadata moved to tooltip + new
+          <i>Phases</i> tab in verbose-debug overlay.
+        </div>
+      </div>
+
+      <div class="card" style="border-color: rgba(74, 222, 128, 0.45);">
+        <div class="card-head">
+          <span class="card-id">prev-3</span>
+          <span class="badge bug">bug</span>
+        </div>
+        <p class="card-title" style="color: var(--done);">✓ Boot CLI-shim check accepts native installer</p>
+        <div class="card-body">
+          <code>check-cli-shims.sh</code> falls back to PATH-resolved <code>claude</code> when the npm shim is missing.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <h2>Probe details</h2>
+  <p style="font-size:13px; color:var(--fg-dim); max-width: 880px;">
+    Probe spec: <code>frontend/e2e/exploratory/todo-app-full-test.spec.ts</code>.
+    The agent (Claude Sonnet 4.6) ran for 44.7 s and produced
+    <a style="color:var(--accent)" href="file:///C:/Projects/Runbook/App/scratch/playwright-probe-todo/index.html">scratch/playwright-probe-todo/index.html</a> — a 58-line, self-contained to-do app.
+    Manual verdict on the deliverable: PASS (verified in <code>final-todo-app.png</code>). The
+    automated aspect-runner verdict was three "concerns" tags due to F1, not real quality issues.
+    Total wall-clock from create → 5-human-review: ~8 minutes (most of it: queue wait behind
+    seeded e2e fixtures; once <code>move-to-top</code> bumped our task, the actual agent work
+    was ~45 s + ~30 s auto-review).
+  </p>
+
+  <p class="footer-meta">
+    Generated 2026-05-21 from <code>artifacts/test-runs/20260521-0923-todo-app/observations.md</code>.
+    Open this HTML directly in a browser to read alongside the screenshots in the same folder.
+  </p>
+</main>
+</body>
+</html>
