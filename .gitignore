@@ -1,3 +1,19 @@
 .proxy-dev.tmp.json
 .proxy-stable.tmp.json
 .dev-startup.log
+
+# scratch logs & temp artifacts
+_*
+*.log
+.codex-artifacts/
+
+# generated concept/report HTML at repo root
+/*.html
+
+# per-task git worktrees of the inner app repo (dev & stable stay tracked)
+/agent-taskboard-*/
+!/agent-taskboard-dev/
+!/agent-taskboard-stable/
+
+# API-managed shared workspace — never tracked in the root repo
+/agent-taskboard-workspace/
