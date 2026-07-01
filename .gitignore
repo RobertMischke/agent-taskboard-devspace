@@ -17,3 +17,7 @@ _*
 
 # API-managed shared workspace — never tracked in the root repo
 /agent-taskboard-workspace/
+
+# personal Claude Code settings & runtime state
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
