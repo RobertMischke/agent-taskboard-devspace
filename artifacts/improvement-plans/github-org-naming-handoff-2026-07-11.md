@@ -10,7 +10,8 @@
 | Lokale Remotes | dev, stable, runner, chat, token-economy, quality-studio, website-Meta — alle auf agent-orc, per `ls-remote` verifiziert |
 | agent-runner-Host | `runner.env` RUNNER_GIT_REMOTE + `~/agent-taskboard` origin auf `agent-orc/agent-studio`; Daemon-Restart bewusst verschoben (Quota-stallende Läufe nicht killen; Git-Redirects überbrücken) |
 | Referenz-Sweep | 30+ Dateien: PUBLISHING.md-Owner-Tabelle (nuget-Account `RobertMischke2` unverändert!), release.yml-Kommentare, Directory.Build.props RepositoryUrl (TE+Runner), package.json (Chat), READMEs, Website-HTMLs, sites.json, Registry-Urls. Historische .orchestrator-Logs bewusst NICHT umgeschrieben |
-| Offen (Robert) | nuget-Policy TE + npm-Trusted-Publisher CAC — beide zeigen jetzt direkt auf die Org (`agent-orc/token-economy`, `agent-orc/chat`) |
+| Org-Einrichtung | Profil (Name „Agent Orchestrator", Beschreibung, Blog agent-orchestrator.dev), `.github`-Repo mit `profile/README.md` (Studios/Libraries-Tabellen), Repo-Homepages (/studio, /runner, /chat), Beschreibung für chat, Topics auf allen 5 Public-Repos. Sweep-Kollateral behoben: `agent-studio-for-software-website` bleibt bei RobertMischke (sites.json zurückgedreht, f87669c) |
+| Offen (Robert) | nuget-Policy TE + npm-Trusted-Publisher CAC — beide zeigen jetzt direkt auf die Org (`agent-orc/token-economy`, `agent-orc/chat`). Repo-Pins auf der Org-Seite: UI-only („Customize pins"), keine API |
 
 Workspace-Repo (`agent-taskboard-workspace`) und devspace bleiben bewusst privat bei `RobertMischke`.
 
