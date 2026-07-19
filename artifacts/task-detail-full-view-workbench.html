@@ -1,0 +1,4284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Detail Full View Workbench</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-soft: #f0f3f7;
+      --surface-warm: #fff7ed;
+      --line: #d8dee7;
+      --line-strong: #b8c2cf;
+      --text: #172033;
+      --muted: #637083;
+      --muted-2: #8b96a8;
+      --blue: #2563eb;
+      --blue-soft: #e8f0ff;
+      --green: #138a4f;
+      --green-soft: #e8f7ee;
+      --red: #c7354a;
+      --red-soft: #fdecef;
+      --amber: #b56c13;
+      --amber-soft: #fff3da;
+      --violet: #7c3aed;
+      --violet-soft: #f1eafa;
+      --shadow: 0 14px 32px rgba(23, 32, 51, 0.08);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--surface-soft);
+      border-color: var(--line-strong);
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .tabbar {
+      height: 36px;
+      display: flex;
+      align-items: stretch;
+      gap: 1px;
+      padding: 0 8px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      overflow-x: auto;
+    }
+
+    .workspace-tab {
+      min-width: 122px;
+      max-width: 270px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+      border: 0;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .workspace-tab[data-active="true"] {
+      color: var(--text);
+      background: var(--surface);
+      border-left-color: var(--line);
+      border-right-color: var(--line);
+      box-shadow: inset 0 -2px 0 var(--blue);
+    }
+
+    .tab-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-actions {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 0 0 12px;
+      flex: 0 0 auto;
+    }
+
+    .state-select {
+      height: 28px;
+      min-width: 112px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 0 8px;
+      font-weight: 650;
+    }
+
+    .primary-action {
+      height: 28px;
+      padding: 0 11px;
+      font-weight: 760;
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: color-mix(in srgb, var(--red) 24%, transparent);
+    }
+
+    .primary-action[data-tone="ok"] {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: color-mix(in srgb, var(--green) 24%, transparent);
+    }
+
+    .primary-action[data-tone="warn"] {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: color-mix(in srgb, var(--amber) 24%, transparent);
+    }
+
+    .primary-action[data-tone="info"] {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: color-mix(in srgb, var(--blue) 24%, transparent);
+    }
+
+    .primary-action[data-tone="muted"] {
+      color: var(--muted);
+      background: var(--surface-soft);
+      border-color: var(--line);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 6;
+    }
+
+    .workbench-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: stretch;
+      gap: 12px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 86%, var(--surface-soft));
+    }
+
+    .scenario-left {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bench-label {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .scenario-tabs {
+      min-width: 0;
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .scenario-button {
+      min-width: 118px;
+      max-width: 170px;
+      min-height: 42px;
+      display: grid;
+      align-content: center;
+      gap: 2px;
+      padding: 5px 8px;
+      border-radius: 7px;
+      text-align: left;
+      background: var(--surface);
+    }
+
+    .scenario-button[aria-pressed="true"] {
+      border-color: color-mix(in srgb, var(--blue) 34%, var(--line));
+      background: var(--blue-soft);
+      box-shadow: inset 0 -2px 0 var(--blue);
+    }
+
+    .scenario-name,
+    .scenario-caption {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .scenario-name {
+      font-weight: 820;
+      font-size: 12px;
+    }
+
+    .scenario-caption {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .scenario-meta {
+      min-width: 320px;
+      max-width: 520px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      padding: 2px 0;
+    }
+
+    .scenario-note {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .decision-strip {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .decision-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 4px var(--red-soft);
+      flex: 0 0 auto;
+    }
+
+    .decision-strip[data-tone="ok"] .decision-dot {
+      background: var(--green);
+      box-shadow: 0 0 0 4px var(--green-soft);
+    }
+
+    .decision-strip[data-tone="warn"] .decision-dot {
+      background: var(--amber);
+      box-shadow: 0 0 0 4px var(--amber-soft);
+    }
+
+    .decision-strip[data-tone="info"] .decision-dot {
+      background: var(--blue);
+      box-shadow: 0 0 0 4px var(--blue-soft);
+    }
+
+    .decision-strip[data-tone="muted"] .decision-dot {
+      background: var(--muted-2);
+      box-shadow: 0 0 0 4px var(--surface-soft);
+    }
+
+    .decision-copy {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+
+    .decision-title {
+      font-weight: 820;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .decision-note {
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .token-summary {
+      min-width: 138px;
+      max-width: 190px;
+      display: grid;
+      gap: 1px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .token-summary[data-tone="danger"] {
+      border-color: color-mix(in srgb, var(--red) 24%, var(--line));
+      background: var(--red-soft);
+    }
+
+    .token-summary[data-tone="warn"] {
+      border-color: color-mix(in srgb, var(--amber) 24%, var(--line));
+      background: var(--amber-soft);
+    }
+
+    .token-summary[data-tone="ok"] {
+      border-color: color-mix(in srgb, var(--green) 24%, var(--line));
+      background: var(--green-soft);
+    }
+
+    .token-summary[data-tone="info"] {
+      border-color: color-mix(in srgb, var(--blue) 24%, var(--line));
+      background: var(--blue-soft);
+    }
+
+    .token-label {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .token-total {
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.05;
+      font-weight: 880;
+    }
+
+    .token-breakdown {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 680;
+    }
+
+    .token-inline {
+      min-width: 0;
+      max-width: 100%;
+      display: inline-flex;
+      align-items: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .task-card__token-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      flex: 0 0 auto;
+    }
+
+    .task-card__token-bubble {
+      min-width: 0;
+      height: 17px;
+      padding: 0 3px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 650;
+      line-height: 1;
+      letter-spacing: 0;
+      cursor: help;
+      color: var(--muted);
+      background: transparent;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .task-card__token-bubble:hover {
+      background: var(--surface-soft);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .task-card__token-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 1px;
+      width: 9px;
+      height: 9px;
+      flex: 0 0 auto;
+      color: currentColor;
+      opacity: 0.9;
+    }
+
+    .task-card__token-bars span {
+      width: 2px;
+      border-radius: 2px 2px 0 0;
+      background: currentColor;
+    }
+
+    .task-card__token-bars span:nth-child(1) { height: 3px; opacity: 0.55; }
+    .task-card__token-bars span:nth-child(2) { height: 6px; opacity: 0.75; }
+    .task-card__token-bars span:nth-child(3) { height: 9px; }
+
+    .task-card__token-label {
+      white-space: nowrap;
+    }
+
+    .task-card__token-bubble--neutral {
+      color: var(--muted-2);
+    }
+
+    .task-card__token-bubble--blue {
+      color: color-mix(in srgb, var(--blue) 76%, var(--muted));
+    }
+
+    .task-card__token-bubble--mauve {
+      color: color-mix(in srgb, #c084fc 78%, var(--muted));
+    }
+
+    .task-card__token-bubble--peach {
+      color: color-mix(in srgb, #fb923c 76%, var(--muted));
+    }
+
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 2px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface-soft);
+    }
+
+    .segment {
+      height: 28px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .segment[aria-pressed="true"] {
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: 0 1px 2px rgba(23, 32, 51, 0.12);
+    }
+
+    .layout {
+      min-width: 0;
+      display: grid;
+      gap: 8px;
+      padding: 8px;
+      align-items: stretch;
+      transition: grid-template-columns 160ms ease;
+    }
+
+    .panel {
+      min-width: 0;
+      min-height: calc(100vh - 98px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel[data-hidden="true"] {
+      display: none;
+    }
+
+    .panel-head {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .panel-head[data-accent="overview"] {
+      box-shadow: inset 0 -2px 0 var(--blue);
+    }
+
+    .panel-head[data-accent="protocol"] {
+      box-shadow: inset 0 -2px 0 var(--amber);
+    }
+
+    .panel-head[data-accent="commits"] {
+      box-shadow: inset 0 -2px 0 var(--green);
+    }
+
+    .panel-title {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 820;
+      overflow: hidden;
+    }
+
+    .panel-title span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .panel-actions {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex: 0 0 auto;
+    }
+
+    .panel-mode-tabs {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      align-self: stretch;
+      margin-left: 4px;
+      padding: 0 2px;
+      border: 0;
+      background: transparent;
+    }
+
+    .panel-mode-tabs button {
+      min-height: 40px;
+      padding: 0 1px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 760;
+      box-shadow: inset 0 -2px 0 transparent;
+    }
+
+    .panel-mode-tabs button[aria-pressed="true"] {
+      color: var(--text);
+      background: transparent;
+      box-shadow: inset 0 -2px 0 currentColor;
+    }
+
+    .icon-button {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      font-weight: 820;
+    }
+
+    .panel-body {
+      min-height: 0;
+      overflow: auto;
+      padding: 12px;
+    }
+
+    .overview-body {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      font-size: 15px;
+      line-height: 1.24;
+      font-weight: 800;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    h2 {
+      font-size: 14px;
+      line-height: 1.28;
+      font-weight: 820;
+    }
+
+    h3 {
+      font-size: 13px;
+      line-height: 1.26;
+      font-weight: 820;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .chip,
+    .pill {
+      min-height: 23px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 8px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .chip[data-tone="danger"],
+    .pill[data-tone="danger"] {
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: color-mix(in srgb, var(--red) 24%, transparent);
+    }
+
+    .chip[data-tone="ok"],
+    .pill[data-tone="ok"] {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: color-mix(in srgb, var(--green) 24%, transparent);
+    }
+
+    .chip[data-tone="warn"],
+    .pill[data-tone="warn"] {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: color-mix(in srgb, var(--amber) 24%, transparent);
+    }
+
+    .chip[data-tone="info"],
+    .pill[data-tone="info"] {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: color-mix(in srgb, var(--blue) 24%, transparent);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
+      gap: 7px 12px;
+      padding-top: 4px;
+      border-top: 1px solid var(--line);
+    }
+
+    .meta-key {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 780;
+    }
+
+    .meta-value {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-weight: 650;
+    }
+
+    .task-subnav {
+      min-height: 32px;
+      display: flex;
+      align-items: stretch;
+      gap: 18px;
+      padding: 0 1px;
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+    }
+
+    .task-subnav button {
+      min-height: 32px;
+      padding: 0 1px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 760;
+      white-space: nowrap;
+      box-shadow: inset 0 -2px 0 transparent;
+    }
+
+    .task-subnav button[aria-pressed="true"] {
+      color: var(--text);
+      background: transparent;
+      box-shadow: inset 0 -2px 0 var(--blue);
+    }
+
+    .task-context {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      padding: 4px 0 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .task-context-main {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+    }
+
+    .task-context .chips {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 1px;
+    }
+
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 680;
+    }
+
+    .status-strip span {
+      min-height: 20px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 6px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: var(--surface);
+      white-space: nowrap;
+    }
+
+    .run-summary {
+      display: grid;
+      gap: 7px;
+      padding: 10px 10px 11px;
+      border: 1px solid color-mix(in srgb, var(--red) 28%, var(--line));
+      border-radius: 6px;
+      background: var(--surface);
+    }
+
+    .run-summary[data-tone="ok"] {
+      border-color: color-mix(in srgb, var(--green) 28%, var(--line));
+    }
+
+    .run-summary[data-tone="warn"] {
+      border-color: color-mix(in srgb, var(--amber) 28%, var(--line));
+    }
+
+    .run-summary[data-tone="info"] {
+      border-color: color-mix(in srgb, var(--blue) 28%, var(--line));
+    }
+
+    .run-summary[data-tone="muted"] {
+      border-color: var(--line);
+    }
+
+    .run-summary-head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      margin: -10px -10px 1px;
+      padding: 8px 10px;
+      border-radius: 5px 5px 0 0;
+      background: var(--red-soft);
+    }
+
+    .run-summary[data-tone="ok"] .run-summary-head {
+      background: var(--green-soft);
+    }
+
+    .run-summary[data-tone="warn"] .run-summary-head {
+      background: var(--amber-soft);
+    }
+
+    .run-summary[data-tone="info"] .run-summary-head {
+      background: var(--blue-soft);
+    }
+
+    .run-summary[data-tone="muted"] .run-summary-head {
+      background: var(--surface-soft);
+    }
+
+    .run-decision {
+      min-width: 0;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 760;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .run-summary-table {
+      display: grid;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .run-summary-row {
+      min-height: 25px;
+      display: grid;
+      grid-template-columns: minmax(92px, 0.55fr) minmax(0, 1fr);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+    }
+
+    .run-summary-row:last-child {
+      border-bottom: 0;
+    }
+
+    .run-summary-key,
+    .run-summary-value {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      padding: 4px 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .run-summary-key {
+      color: var(--muted);
+      background: transparent;
+      font-size: 10px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .run-summary-value {
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 680;
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 6px;
+    }
+
+    .pipeline-shell {
+      display: grid;
+      gap: 7px;
+    }
+
+    .pipeline-toolbar {
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      padding: 5px 0 7px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .pipeline-toolbar h2 {
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    .pipeline-runs {
+      min-height: 25px;
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      align-items: center;
+      gap: 7px;
+      padding: 0 0 5px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10.5px;
+      font-weight: 650;
+    }
+
+    .pipeline-runs[data-empty="true"] {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .run-strip-title {
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .run-strip-summary {
+      white-space: nowrap;
+    }
+
+    .run-strip-list {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      overflow: hidden;
+    }
+
+    .pipeline-run {
+      min-width: 0;
+      min-width: 26px;
+      height: 20px;
+      display: inline-grid;
+      grid-template-columns: auto;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .pipeline-run[data-tone="ok"] {
+      color: var(--green);
+      border-color: color-mix(in srgb, var(--green) 24%, var(--line));
+      background: color-mix(in srgb, var(--green-soft) 50%, var(--surface));
+    }
+
+    .pipeline-run[data-tone="info"] {
+      color: var(--blue);
+      border-color: color-mix(in srgb, var(--blue) 22%, var(--line));
+      background: color-mix(in srgb, var(--blue-soft) 48%, var(--surface));
+    }
+
+    .pipeline-run[data-tone="warn"] {
+      color: var(--amber);
+      border-color: color-mix(in srgb, var(--amber) 22%, var(--line));
+      background: color-mix(in srgb, var(--amber-soft) 52%, var(--surface));
+    }
+
+    .pipeline-run[data-tone="danger"] {
+      color: var(--red);
+      border-color: color-mix(in srgb, var(--red) 22%, var(--line));
+      background: color-mix(in srgb, var(--red-soft) 58%, var(--surface));
+    }
+
+    .pipeline-run[data-current="true"] {
+      box-shadow: inset 0 -2px 0 currentColor;
+    }
+
+    .pipeline-run__label {
+      font-weight: 820;
+    }
+
+    .pipeline-run__status,
+    .pipeline-run__tokens {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .group {
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .group[data-tone="ok"] {
+      background: color-mix(in srgb, var(--green-soft) 34%, transparent);
+    }
+
+    .group[data-tone="danger"] {
+      background: color-mix(in srgb, var(--red-soft) 46%, transparent);
+    }
+
+    .group[data-tone="warn"] {
+      background: color-mix(in srgb, var(--amber-soft) 42%, transparent);
+    }
+
+    .group[data-tone="muted"] {
+      background: color-mix(in srgb, var(--surface-soft) 60%, transparent);
+    }
+
+    .group-head {
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 2px 4px;
+      border-bottom: 0;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .group-head:hover {
+      background: color-mix(in srgb, var(--surface-soft) 58%, transparent);
+    }
+
+    .group[data-tone="ok"] .group-head {
+      background: color-mix(in srgb, var(--green-soft) 64%, transparent);
+    }
+
+    .group[data-tone="danger"] .group-head {
+      background: color-mix(in srgb, var(--red-soft) 70%, transparent);
+    }
+
+    .group[data-tone="warn"] .group-head {
+      background: color-mix(in srgb, var(--amber-soft) 66%, transparent);
+    }
+
+    .group[data-tone="muted"] .group-head {
+      background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
+    }
+
+    .section-marker {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: transparent;
+      color: currentColor;
+      font-size: 11px;
+      font-weight: 720;
+      line-height: 1;
+    }
+
+    .group-name {
+      min-width: 0;
+      font-size: 11px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      font-weight: 760;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-meta {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 620;
+      opacity: 0.86;
+      white-space: nowrap;
+    }
+
+    .group-line {
+      height: 1px;
+      flex: 1;
+      background: currentColor;
+      opacity: 0.18;
+    }
+
+    .group[data-kind="pre"] .group-head {
+      color: var(--green);
+    }
+
+    .group[data-kind="agent"] .group-head {
+      color: var(--blue);
+    }
+
+    .group[data-kind="decision"] .group-head {
+      color: var(--violet);
+    }
+
+    .group[data-kind="tool"] .group-head {
+      color: #4b5563;
+    }
+
+    .group[data-kind="drift"] .group-head {
+      color: var(--amber);
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 25px 18px 14px minmax(0, 1fr) 42px auto 50px;
+      gap: 5px;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 4px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step-row:last-child {
+      border-bottom: 0;
+    }
+
+    .step-row[data-muted="true"] {
+      color: var(--muted-2);
+      background: #fbfbfc;
+    }
+
+    .step-row[data-status="passed"] {
+      background: color-mix(in srgb, var(--green-soft) 54%, var(--surface));
+    }
+
+    .step-row[data-dimmed="true"] {
+      opacity: 0.46;
+    }
+
+    .step-row[data-dimmed="true"][data-status="failed"],
+    .step-row[data-dimmed="true"][data-status="blocked"],
+    .step-row[data-dimmed="true"][data-status="running"] {
+      opacity: 1;
+    }
+
+    .step-row[data-active="true"] {
+      background: color-mix(in srgb, var(--blue-soft) 70%, var(--surface));
+    }
+
+    .step-row[data-status="running"] {
+      background: color-mix(in srgb, var(--amber-soft) 56%, var(--surface));
+    }
+
+    .step-row[data-status="blocked"],
+    .step-row[data-status="failed"] {
+      background: color-mix(in srgb, var(--red-soft) 66%, var(--surface));
+    }
+
+    .status-icon {
+      width: 14px;
+      height: 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-size: 0;
+      font-weight: 900;
+      color: transparent;
+      background: transparent;
+    }
+
+    .enable-slot {
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-enable,
+    .step-static {
+      width: 18px;
+      height: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--line) 76%, transparent);
+      background: transparent;
+      color: color-mix(in srgb, var(--muted) 72%, white);
+      line-height: 1;
+    }
+
+    .step-enable::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      transform: translateX(-3px);
+      opacity: 0.82;
+      transition: transform 120ms ease;
+    }
+
+    .step-enable:hover {
+      border-color: color-mix(in srgb, currentColor 28%, var(--line));
+    }
+
+    .step-enable[aria-pressed="true"] {
+      color: color-mix(in srgb, var(--green) 78%, var(--muted));
+      background: transparent;
+      border-color: color-mix(in srgb, var(--green) 18%, var(--line));
+    }
+
+    .step-enable[aria-pressed="true"]::before {
+      transform: translateX(3px);
+    }
+
+    .step-static {
+      color: color-mix(in srgb, var(--muted) 66%, white);
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .step-static[data-control="done"] {
+      color: var(--green);
+      background: transparent;
+      border-color: color-mix(in srgb, var(--green) 18%, var(--line));
+    }
+
+    .step-static[data-control="done"]::before {
+      content: "";
+      width: 7px;
+      height: 3px;
+      border-left: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-1px) rotate(-45deg);
+    }
+
+    .step-static[data-control="required"] {
+      border-color: transparent;
+    }
+
+    .step-static[data-control="required"]::before {
+      content: "*";
+      font-size: 11px;
+      font-weight: 750;
+      line-height: 1;
+      opacity: 0.58;
+      transform: translateY(1px);
+    }
+
+    .step-static[data-control="locked"]::before {
+      content: "";
+      width: 9px;
+      height: 7px;
+      position: absolute;
+      left: 4.5px;
+      bottom: 3px;
+      box-sizing: border-box;
+      border: 1.25px solid currentColor;
+      border-radius: 2px;
+      background: transparent;
+      opacity: 0.62;
+    }
+
+    .step-static[data-control="locked"]::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      left: 5.5px;
+      top: 2px;
+      box-sizing: border-box;
+      border: 1.25px solid currentColor;
+      border-bottom: 0;
+      border-radius: 5px 5px 0 0;
+      opacity: 0.62;
+    }
+
+    .step-static[data-control="locked"] {
+      width: 18px;
+      height: 18px;
+      color: color-mix(in srgb, var(--muted) 78%, var(--text));
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .step-kind {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 680;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .status-icon[data-status="passed"] {
+      color: var(--green);
+      background: transparent;
+    }
+
+    .status-icon[data-status="passed"]::before {
+      content: "";
+      width: 7px;
+      height: 3px;
+      border-left: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-1px) rotate(-45deg);
+    }
+
+    .status-icon[data-status="failed"] {
+      color: var(--red);
+      background: var(--red-soft);
+      font-size: 9px;
+    }
+
+    .status-icon[data-status="blocked"] {
+      color: transparent;
+      background: transparent;
+    }
+
+    .status-icon[data-status="pending"],
+    .status-icon[data-status="locked"] {
+      color: transparent;
+      background: transparent;
+    }
+
+    .status-icon[data-status="running"] {
+      color: var(--amber);
+      background: transparent;
+    }
+
+    .status-icon[data-status="running"]::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 7px solid currentColor;
+      opacity: 0.72;
+    }
+
+    .status-icon[data-status="disabled"],
+    .status-icon[data-status="skipped"] {
+      color: transparent;
+      background: transparent;
+    }
+
+    .step-main {
+      min-width: 0;
+      display: grid;
+      gap: 1px;
+    }
+
+    .step-name-line {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .step-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 620;
+    }
+
+    .step-run-count {
+      flex: 0 0 auto;
+      height: 15px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 4px;
+      border: 1px solid color-mix(in srgb, var(--blue) 18%, var(--line));
+      border-radius: 5px;
+      color: color-mix(in srgb, var(--blue) 78%, var(--muted));
+      background: color-mix(in srgb, var(--blue-soft) 42%, var(--surface));
+      font-size: 9.5px;
+      font-weight: 760;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .step-run-count[data-tone="ok"] {
+      color: var(--green);
+      border-color: color-mix(in srgb, var(--green) 18%, var(--line));
+      background: color-mix(in srgb, var(--green-soft) 42%, var(--surface));
+    }
+
+    .step-run-count[data-tone="warn"] {
+      color: var(--amber);
+      border-color: color-mix(in srgb, var(--amber) 18%, var(--line));
+      background: color-mix(in srgb, var(--amber-soft) 42%, var(--surface));
+    }
+
+    .step-run-count[data-tone="danger"] {
+      color: var(--red);
+      border-color: color-mix(in srgb, var(--red) 18%, var(--line));
+      background: color-mix(in srgb, var(--red-soft) 48%, var(--surface));
+    }
+
+    .step-detail {
+      display: none;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 10px;
+    }
+
+    .pipeline[data-details="true"] .step-detail,
+    .step-row[data-status="running"] .step-detail {
+      display: block;
+    }
+
+    .step-actions {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .step-duration {
+      min-width: 0;
+      color: color-mix(in srgb, var(--muted) 86%, var(--text));
+      font-size: 10px;
+      font-weight: 680;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .step-action {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 4px;
+      color: var(--muted);
+      background: var(--surface);
+      font-size: 9px;
+      font-weight: 820;
+      line-height: 1;
+    }
+
+    .step-action[data-action="details"],
+    .step-action[data-action="docs"] {
+      border-radius: 50%;
+      color: var(--blue);
+      background: var(--surface);
+      border-color: color-mix(in srgb, var(--blue) 18%, var(--line));
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 11px;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    .step-action[data-tone="warn"] {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: color-mix(in srgb, var(--amber) 24%, var(--line));
+    }
+
+    .step-action[data-tone="danger"] {
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: color-mix(in srgb, var(--red) 24%, var(--line));
+    }
+
+    .step-action[data-action="concerns"] {
+      position: relative;
+      background: transparent;
+    }
+
+    .step-action[data-action="concerns"]::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 9px solid currentColor;
+      opacity: 0.7;
+    }
+
+    .step-tokens {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 620;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .step-tokens .task-card__token-bubble {
+      height: 16px;
+      padding: 0 2px;
+      gap: 3px;
+      font-size: 9.5px;
+    }
+
+    .collapsed-summary {
+      min-height: 23px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 1px 4px 3px 25px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .group[data-tone="ok"] .collapsed-summary {
+      background: color-mix(in srgb, var(--green-soft) 42%, transparent);
+    }
+
+    .group[data-tone="danger"] .collapsed-summary {
+      background: color-mix(in srgb, var(--red-soft) 54%, transparent);
+    }
+
+    .group[data-tone="warn"] .collapsed-summary {
+      background: color-mix(in srgb, var(--amber-soft) 48%, transparent);
+    }
+
+    .group[data-tone="muted"] .collapsed-summary {
+      background: color-mix(in srgb, var(--surface-soft) 66%, transparent);
+    }
+
+    .protocol-body {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .blocker {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--red) 22%, var(--line));
+      background: var(--red-soft);
+    }
+
+    .blocker[data-tone="ok"] {
+      border-color: color-mix(in srgb, var(--green) 22%, var(--line));
+      background: var(--green-soft);
+    }
+
+    .blocker[data-tone="warn"] {
+      border-color: color-mix(in srgb, var(--amber) 22%, var(--line));
+      background: var(--amber-soft);
+    }
+
+    .blocker[data-tone="info"] {
+      border-color: color-mix(in srgb, var(--blue) 22%, var(--line));
+      background: var(--blue-soft);
+    }
+
+    .blocker[data-tone="muted"] {
+      border-color: var(--line);
+      background: var(--surface-soft);
+    }
+
+    .blocker-title {
+      font-weight: 820;
+      color: var(--red);
+    }
+
+    .blocker[data-tone="ok"] .blocker-title {
+      color: var(--green);
+    }
+
+    .blocker[data-tone="warn"] .blocker-title {
+      color: var(--amber);
+    }
+
+    .blocker[data-tone="info"] .blocker-title {
+      color: var(--blue);
+    }
+
+    .blocker[data-tone="muted"] .blocker-title {
+      color: var(--muted);
+    }
+
+    .blocker-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .generated {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .doc-section {
+      display: grid;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .doc-section:last-child {
+      border-bottom: 0;
+    }
+
+    .doc-section h2 {
+      font-size: 19px;
+      line-height: 1.25;
+    }
+
+    .doc-section ul {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding-left: 22px;
+      line-height: 1.45;
+    }
+
+    .doc-section li::marker {
+      color: #d46d4d;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: #f7f8fa;
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    .commit-body {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .release-card {
+      display: grid;
+      gap: 8px;
+      padding: 0 0 4px;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .commit-title {
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+      font-weight: 760;
+    }
+
+    .commit-chain {
+      display: grid;
+      gap: 4px;
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .commit-line {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .sha {
+      color: #dc4a37;
+      white-space: nowrap;
+    }
+
+    .branch {
+      color: var(--green);
+      font-weight: 760;
+    }
+
+    .file-list {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .file-row {
+      min-height: 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .file-row:last-child {
+      border-bottom: 0;
+    }
+
+    .file-path {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--blue);
+      font-weight: 710;
+    }
+
+    .file-stats {
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .diff-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .diff-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 36px;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .diff-lines {
+      display: grid;
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      overflow: auto;
+      max-height: 410px;
+    }
+
+    .diff-line {
+      display: grid;
+      grid-template-columns: 44px minmax(500px, 1fr);
+      min-height: 24px;
+      align-items: center;
+    }
+
+    .line-no {
+      padding: 0 8px;
+      color: var(--muted);
+      text-align: right;
+      border-right: 1px solid var(--line);
+    }
+
+    .line-text {
+      padding: 0 8px;
+      white-space: pre;
+    }
+
+    .diff-line[data-kind="add"] {
+      background: #e8f7ee;
+    }
+
+    .diff-line[data-kind="del"] {
+      background: #fdecef;
+    }
+
+    .empty-state {
+      display: grid;
+      gap: 7px;
+      align-content: center;
+      min-height: 140px;
+      padding: 18px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+    }
+
+    .empty-state strong {
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(23, 32, 51, 0.32);
+    }
+
+    .modal-backdrop[hidden] {
+      display: none;
+    }
+
+    .step-modal {
+      width: min(920px, 100%);
+      max-height: min(760px, calc(100vh - 40px));
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(23, 32, 51, 0.24);
+    }
+
+    .modal-head {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-title {
+      min-width: 0;
+      display: grid;
+      gap: 2px;
+    }
+
+    .modal-title strong,
+    .modal-title span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal-title span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 680;
+    }
+
+    .modal-body {
+      min-height: 0;
+      overflow: auto;
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .detail-stat {
+      display: grid;
+      gap: 3px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface-soft);
+    }
+
+    .detail-stat span {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 820;
+      text-transform: uppercase;
+    }
+
+    .detail-stat strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .detail-section {
+      display: grid;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail-section h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 840;
+    }
+
+    .detail-section:last-child {
+      border-bottom: 0;
+    }
+
+    .detail-copy {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.42;
+    }
+
+    .detail-block {
+      margin: 0;
+      max-height: 230px;
+      overflow: auto;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: color-mix(in srgb, var(--surface-soft) 72%, var(--surface));
+      color: var(--text);
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.48;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .detail-section[data-kind="prompt"] .detail-block {
+      border-color: color-mix(in srgb, var(--blue) 18%, var(--line));
+      background: color-mix(in srgb, var(--blue-soft) 38%, var(--surface));
+    }
+
+    .detail-list {
+      margin: 0;
+      padding-left: 17px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .detail-list li {
+      line-height: 1.42;
+    }
+
+    .run-history {
+      display: grid;
+      gap: 5px;
+    }
+
+    .run-history-row {
+      display: grid;
+      grid-template-columns: 42px 68px 54px 54px 86px 86px minmax(0, 1fr);
+      gap: 6px;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
+      font-size: 11px;
+    }
+
+    .run-history-row:last-child {
+      border-bottom: 0;
+    }
+
+    .run-history-row span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .run-history-row span:first-child {
+      font-weight: 820;
+    }
+
+    .run-history-row[data-tone="ok"] span:first-child,
+    .run-history-row[data-tone="ok"] span:nth-child(2) {
+      color: var(--green);
+    }
+
+    .run-history-row[data-tone="info"] span:first-child,
+    .run-history-row[data-tone="info"] span:nth-child(2) {
+      color: var(--blue);
+    }
+
+    .run-history-row[data-tone="warn"] span:first-child,
+    .run-history-row[data-tone="warn"] span:nth-child(2) {
+      color: var(--amber);
+    }
+
+    .run-history-row[data-tone="danger"] span:first-child,
+    .run-history-row[data-tone="danger"] span:nth-child(2) {
+      color: var(--red);
+    }
+
+    @media (max-width: 1120px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .workbench-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .scenario-meta {
+        min-width: 0;
+        max-width: none;
+      }
+
+      .toolbar-controls {
+        justify-content: flex-start;
+      }
+
+      .layout {
+        grid-template-columns: 1fr !important;
+      }
+
+      .panel {
+        min-height: 520px;
+      }
+
+    }
+
+    @media (max-width: 720px) {
+      .top-actions {
+        display: none;
+      }
+
+      .step-row {
+        grid-template-columns: 22px 16px 12px minmax(0, 1fr) 36px auto 44px;
+        gap: 4px;
+      }
+
+      .step-duration {
+        font-size: 9.5px;
+      }
+
+      .step-modal {
+        width: 100%;
+        max-height: calc(100vh - 16px);
+      }
+
+      .detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .run-history-row {
+        grid-template-columns: 42px 68px 54px 54px;
+      }
+
+      .run-history-row span:nth-child(5),
+      .run-history-row span:nth-child(6),
+      .run-history-row span:nth-child(7) {
+        grid-column: 1 / -1;
+        white-space: normal;
+      }
+
+      .segmented {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .toolbar-controls {
+        display: grid;
+      }
+
+      .blocker {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <nav class="tabbar" aria-label="Workspace tabs">
+      <button class="workspace-tab">
+        <span>AGT Board</span>
+        <span>x</span>
+      </button>
+      <button class="workspace-tab" data-active="true">
+        <span class="tab-title" id="workspaceTaskTitle">ASS-1760 API aufraeumen: /api/jobs -> /api/tasks</span>
+        <span>x</span>
+      </button>
+      <div class="top-actions">
+        <span class="pill" id="topStatePill" data-tone="danger">Escalated</span>
+        <button class="primary-action" id="topPrimaryAction">Continue (reissue)</button>
+        <button class="icon-button" title="More actions">...</button>
+      </div>
+    </nav>
+
+    <section class="workbench-bar" aria-label="Scenario workbench">
+      <div class="scenario-left">
+        <span class="bench-label">Workbench</span>
+        <div class="scenario-tabs" id="scenarioTabs"></div>
+      </div>
+      <div class="scenario-meta" id="scenarioMeta"></div>
+    </section>
+
+    <section class="toolbar" aria-label="Workbench controls">
+      <div class="decision-strip" id="decisionStrip" data-tone="danger">
+        <span class="decision-dot" aria-hidden="true"></span>
+        <span class="decision-copy">
+          <span class="decision-title" id="decisionTitle">Blocked: integration tests for merge endpoints could not be run</span>
+          <span class="decision-note" id="decisionNote">The main decision is visible before the user reads Protocol or commits.</span>
+        </span>
+      </div>
+      <div class="token-summary" id="tokenSummary" aria-label="Token usage">
+        <span class="token-label">Tokens</span>
+        <strong class="token-total" id="tokenTotal">47.6k</strong>
+        <span class="token-breakdown" id="tokenBreakdown">agent 47.6k - 2 runs</span>
+      </div>
+      <div class="toolbar-controls">
+        <div class="segmented" aria-label="Panel visibility">
+          <button class="segment panel-toggle" data-panel="overview" aria-pressed="true">Overview</button>
+          <button class="segment panel-toggle" data-panel="protocol" aria-pressed="true">Protocol</button>
+          <button class="segment panel-toggle" data-panel="commits" aria-pressed="true">Commits</button>
+        </div>
+        <div class="segmented" aria-label="Layout presets">
+          <button class="segment preset" data-preset="balanced" aria-pressed="true">Balanced</button>
+          <button class="segment preset" data-preset="review" aria-pressed="false">Review</button>
+          <button class="segment preset" data-preset="evidence" aria-pressed="false">Evidence</button>
+        </div>
+      </div>
+    </section>
+
+    <main class="layout" id="layout">
+      <section class="panel" id="overviewPanel" data-panel="overview" aria-label="Overview panel">
+        <header class="panel-head" data-accent="overview">
+          <span class="panel-title"><span>Overview</span></span>
+          <span class="panel-actions">
+            <button class="icon-button" title="Panel settings">i</button>
+            <button class="icon-button hide-panel" data-panel="overview" title="Hide panel">x</button>
+          </span>
+        </header>
+        <div class="panel-body overview-body">
+          <nav class="task-subnav" aria-label="Task detail tabs">
+            <button aria-pressed="true">Overview</button>
+            <button>Timeline</button>
+            <button>Evidence</button>
+            <button>Code Review</button>
+            <button>Files</button>
+          </nav>
+
+          <section class="task-context" aria-label="Task context">
+            <div class="task-context-main">
+              <h1 id="taskTitle">API aufraeumen: /api/jobs -> /api/tasks + watchPath hinter Projekt-Kuerzel kapseln</h1>
+              <div class="chips" id="taskChips"></div>
+            </div>
+          </section>
+
+          <section class="pipeline-shell" aria-label="Pipeline first">
+            <div class="pipeline-toolbar">
+              <h2>Pipeline</h2>
+            </div>
+            <div class="pipeline-runs" id="pipelineRuns" aria-label="Pipeline runs"></div>
+            <div class="pipeline" id="pipeline"></div>
+          </section>
+
+          <section class="run-summary" id="runSummary" aria-label="Current run summary">
+            <div class="run-summary-head">
+              <span class="run-decision" id="runSummaryDecision">Current state: Human decision needed</span>
+            </div>
+            <span id="runSummaryBody">Run #2 emitted TASK_BLOCKED after failing to verify integration tests. The top banner and highlighted pipeline rows point to the same problem.</span>
+            <div class="run-summary-table" id="runSummaryTable"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="protocolPanel" data-panel="protocol" aria-label="Protocol panel">
+        <header class="panel-head" data-accent="protocol">
+          <span class="panel-title"><span>Protocol</span></span>
+          <span class="panel-mode-tabs" aria-label="Protocol modes">
+            <button aria-pressed="true">Protocol</button>
+            <button>Activity</button>
+            <button>Trace</button>
+          </span>
+          <span class="panel-actions">
+            <button class="icon-button" title="Information">i</button>
+            <button class="icon-button" title="Expand panel">^</button>
+            <button class="icon-button hide-panel" data-panel="protocol" title="Hide panel">x</button>
+          </span>
+        </header>
+        <div class="panel-body">
+          <article class="protocol-body" id="protocolContent"></article>
+        </div>
+      </section>
+
+      <section class="panel" id="commitsPanel" data-panel="commits" aria-label="Commits panel">
+        <header class="panel-head" data-accent="commits">
+          <span class="panel-title"><span id="commitsTitle">2 task commits</span></span>
+          <span class="panel-mode-tabs" aria-label="Commit modes">
+            <button aria-pressed="true">Summary</button>
+            <button>Files</button>
+            <button>Diff</button>
+          </span>
+          <span class="panel-actions">
+            <button class="icon-button" title="Open externally">^</button>
+            <button class="icon-button hide-panel" data-panel="commits" title="Hide panel">x</button>
+          </span>
+        </header>
+        <div class="panel-body commit-body" id="commitsContent"></div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="stepModal" hidden>
+      <section class="step-modal" role="dialog" aria-modal="true" aria-labelledby="stepModalTitle" aria-describedby="stepModalSubtitle">
+        <header class="modal-head">
+          <div class="modal-title">
+            <strong id="stepModalTitle">Step details</strong>
+            <span id="stepModalSubtitle"></span>
+          </div>
+          <span class="panel-actions">
+            <button class="icon-button" id="closeStepModal" title="Close">x</button>
+          </span>
+        </header>
+        <div class="modal-body" id="stepModalBody"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const scenarioOrder = ["blocked", "running", "done", "empty", "sparse"];
+
+    const scenarios = {
+      blocked: {
+        label: "Blocked",
+        caption: "full data",
+        workspaceTitle: "ASS-1760 API aufraeumen: /api/jobs -> /api/tasks",
+        state: { label: "Escalated", tone: "danger", action: "Continue (reissue)" },
+        decision: {
+          tone: "danger",
+          title: "Blocked: integration tests for merge endpoints could not be run",
+          note: "Full data scenario: the same blocker is visible in banner, pipeline, protocol, and evidence."
+        },
+        meta: {
+          note: "Dense pipeline plus complete protocol and commit evidence.",
+          chips: [
+            { label: "Pipeline 26 steps", tone: "info" },
+            { label: "47.6k tokens", tone: "warn" },
+            { label: "Protocol full", tone: "ok" },
+            { label: "Commits 2", tone: "ok" },
+            { label: "Open items", tone: "danger" }
+          ]
+        },
+        tokens: {
+          total: "47.6k",
+          detail: "agent 47.6k - 2 runs",
+          tone: "warn",
+          rail: "47.6k"
+        },
+        status: {
+          lastActivity: "4d ago",
+          totalTime: "7h 53m",
+          owner: "Local Default",
+          agent: "Claude Code",
+          lane: "5e-escalated"
+        },
+        task: {
+          title: "API aufraeumen: /api/jobs -> /api/tasks + watchPath hinter Projekt-Kuerzel kapseln",
+          chips: [
+            { label: "ASS-1760" },
+            { label: "Escalated", tone: "danger" },
+            { label: "Agent Studio", tone: "info" },
+            { label: "Run #2" },
+            { label: "Restarted", tone: "warn" }
+          ]
+        },
+        run: {
+          tone: "danger",
+          pill: { label: "Human decision needed", tone: "danger" },
+          body: "Run #2 emitted TASK_BLOCKED after failing to verify integration tests. The top banner and highlighted pipeline rows point to the same problem.",
+          chips: [
+            { label: "Last activity: 4d ago" },
+            { label: "Claude Code, opus 4.8" },
+            { label: "47.6k tokens", tone: "warn" },
+            { label: "Local Default" },
+            { label: "5 ok", tone: "ok" },
+            { label: "1 fail", tone: "danger" },
+            { label: "Open items", tone: "warn" }
+          ]
+        },
+        pipelineRuns: [
+          { label: "Run #1", status: "merged", tone: "ok", tokens: "18.4k", duration: "42m", summary: "Produced task commits and merge evidence; reissue was requested because open items remained." },
+          { label: "Run #2", status: "blocked", tone: "danger", tokens: "29.2k", duration: "7h 11m", summary: "Reissued pipeline hit the integration-test path lookup blocker.", current: true }
+        ],
+        activeSteps: [
+          "Agent execution",
+          "Post-core orchestrator review",
+          "Build/test gate",
+          "Requirement fit",
+          "Code quality",
+          "Documentation impact",
+          "Tests and evidence",
+          "Final orchestrator review"
+        ],
+        pipeline: [
+          {
+            kind: "pre",
+            name: "Pre steps",
+            steps: [
+              { status: "passed", name: "Loop check", time: "12:34 AM", metric: "Completed in 2s" },
+              { status: "disabled", name: "Orchestrator prep", time: "-", detail: "Disabled by run policy" },
+              { status: "passed", name: "Reissue open-items check", time: "12:34 AM", metric: "1 open item carried forward" }
+            ]
+          },
+          {
+            kind: "agent",
+            name: "Core agent work",
+            steps: [
+              {
+                status: "failed",
+                name: "Agent execution",
+                time: "7h 53m",
+                detail: "Failed in current run",
+                metric: "2 runs - 47.6k tokens - failed",
+                runs: [
+                  { label: "Run #1", status: "passed", tone: "ok", tokens: "18.4k", duration: "42m", summary: "Completed the main API cleanup and produced merge evidence." },
+                  { label: "Run #2", status: "failed", tone: "danger", tokens: "29.2k", duration: "7h 11m", summary: "Reissue failed while verifying integration tests for merge endpoints." }
+                ]
+              }
+            ]
+          },
+          {
+            kind: "decision",
+            name: "Decision",
+            steps: [
+              { status: "pending", name: "Post-core orchestrator review", time: "-", detail: "Waiting for failed agent result" }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Tool",
+            steps: [
+              { status: "pending", name: "Build/test gate", time: "-", detail: "Tests were requested but did not complete" }
+            ]
+          },
+          {
+            kind: "aspect",
+            name: "Aspect",
+            steps: [
+              { status: "pending", name: "Requirement fit", time: "-", detail: "Prompt-backed review queued" },
+              { status: "pending", name: "Code quality", time: "-", detail: "Prompt-backed review queued" },
+              { status: "pending", name: "Documentation impact", time: "-", detail: "Prompt-backed review queued" },
+              { status: "pending", name: "Tests and evidence", time: "-", detail: "Blocked by missing project path" }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Integration tools",
+            steps: [
+              { status: "passed", name: "Worktree containment", time: "08:28 AM", metric: "Contained" },
+              { status: "passed", name: "Integrate merge", time: "12s", metric: "Merged after conflict resolution" },
+              { status: "passed", name: "Conflict resolution", time: "11s", metric: "Resolved" }
+            ]
+          },
+          {
+            kind: "decision",
+            name: "Final decision",
+            steps: [
+              { status: "pending", name: "Code-review quality grade", time: "-", detail: "Not started" },
+              { status: "blocked", name: "Final orchestrator review", time: "Escalate", detail: "Final verdict requires a human decision", metric: "Final verdict: escalate" }
+            ]
+          },
+          {
+            kind: "drift",
+            name: "Drift",
+            steps: [
+              { status: "disabled", name: "Drift: ADR / Code", time: "-", detail: "Disabled by config" },
+              { status: "disabled", name: "Drift: Software / Architecture", time: "-", detail: "Disabled by config" },
+              { status: "disabled", name: "Drift: Docs / Marketing", time: "-", detail: "Disabled by config" },
+              { status: "disabled", name: "Drift: Spec / Task / Job", time: "-", detail: "Disabled by config" }
+            ]
+          }
+        ],
+        protocol: {
+          banner: {
+            tone: "danger",
+            title: "Blocked",
+            text: "Open Items: integration tests for merge endpoints could not be run due to project file lookup failure.",
+            pill: "1 hr 34 min"
+          },
+          generated: "Generated by claude / claude-haiku-4-5 - 47.6k tokens - 16s",
+          sections: [
+            {
+              title: "What Was Done",
+              items: [
+                "Fixed <code>getting-started.md:87</code> documentation: changed <code>CreateJobRequest</code> to <code>CreateTaskRequest</code> in the job creation API example.",
+                "Identified stale reference in live instructional doc; research snapshot from 2026-05 was intentionally historical and did not need correction.",
+                "Attempted verification via integration tests but hit project file path resolution issues."
+              ]
+            },
+            {
+              title: "Open Items",
+              items: [
+                "Integration tests for merge endpoints could not be run because <code>backend.Tests/OrchestratorApi.Tests.csproj</code> was not found at the expected path.",
+                "Merge endpoint test suite still needs verification without <code>X-Client-Id</code> header requirement or with appropriate test setup.",
+                "Task escalated to human decision for next steps on test handling."
+              ]
+            },
+            {
+              title: "Notes",
+              items: [
+                "API refactor renamed <code>CreateJobRequest</code> to <code>CreateTaskRequest</code>, but instructional docs were not updated in sync.",
+                "The agent escalated after test discovery failed instead of proceeding further."
+              ]
+            }
+          ]
+        },
+        commits: {
+          title: "2 task commits",
+          release: { pill: { label: "Released to main", tone: "ok" }, title: "task/api-aufraeumen-apijobs---apitasks--watchpath-hinter-projekt-kuerzel-kapseln" },
+          chain: [
+            { sha: "c002d4a", text: "MERGED -> main", branch: "RELEASED" },
+            { sha: "2ebf1de", text: "docs: reference orchestrator concepts", branch: "ON MAIN" },
+            { sha: "58e80c0", text: "API aufraeumen: /api/jobs -> /api/tasks", branch: "ON MAIN" }
+          ],
+          files: [
+            [".agents/skills/", "4 +10/-9"],
+            ["backend/", "17 +20/-30"],
+            ["backend.Tests/", "17 +52/-52"],
+            ["docs/", "22 +1522/-35"],
+            ["frontend/", "167 +460/-460"],
+            ["tools/perf-report/", "3 +13/-13"],
+            ["AGENTS.md", "+5/-0"],
+            ["README.md", "+9/-9"]
+          ],
+          diff: {
+            title: ".agents/skills/job-api/SKILL.md",
+            pill: { label: "changed", tone: "warn" },
+            lines: [
+              ["", "41", "The ClientIdentityMiddleware rejects mutations without client identity."],
+              ["", "42", "Requests do not need the header but must be routed through the app API."],
+              ["del", "44", "- Use /api/tasks, not /api/jobs; /api/jobs is an alias."],
+              ["add", "44", "+ Use /api/tasks. The route is canonical; legacy aliases are compatibility only."],
+              ["del", "46", "- The watchPath key and path-versus-shortcode distinction is implicit."],
+              ["add", "46", "+ The raw watchPath key and project shortcode are different identities."],
+              ["", "48", "Common pitfall: the watchPath quirk still appears in older docs."]
+            ]
+          }
+        }
+      },
+      running: {
+        label: "Running",
+        caption: "live data",
+        workspaceTitle: "ASS-1812 Settings: theme toggle",
+        state: { label: "In Progress", tone: "info", action: "Watch live" },
+        decision: {
+          tone: "info",
+          title: "Running: agent execution is active",
+          note: "Live scenario: compact pipeline keeps the active row visible while Protocol is still being written."
+        },
+        meta: {
+          note: "Tests a task while the agent is still producing evidence.",
+          chips: [
+            { label: "Pipeline live", tone: "info" },
+            { label: "12.4k tokens", tone: "info" },
+            { label: "Protocol partial", tone: "warn" },
+            { label: "Commits none" },
+            { label: "Tokens rising", tone: "info" }
+          ]
+        },
+        tokens: {
+          total: "12.4k",
+          detail: "agent 12.4k - live",
+          tone: "info",
+          rail: "12.4k"
+        },
+        status: {
+          lastActivity: "now",
+          totalTime: "16s",
+          owner: "Local Default",
+          agent: "Claude Code",
+          lane: "core-agent"
+        },
+        task: {
+          title: "Settings page: add dark/light theme toggle and persist the choice",
+          chips: [
+            { label: "ASS-1812" },
+            { label: "In Progress", tone: "info" },
+            { label: "Agent Studio", tone: "info" },
+            { label: "Run #1" },
+            { label: "3 tools" }
+          ]
+        },
+        run: {
+          tone: "info",
+          pill: { label: "Agent executing", tone: "info" },
+          body: "The agent has read the settings component and theme service. No final verdict exists yet, so the compact pipeline must make the active row obvious without inventing evidence.",
+          chips: [
+            { label: "Last activity: now" },
+            { label: "Claude Code" },
+            { label: "12.4k tokens", tone: "info" },
+            { label: "read 3" },
+            { label: "search 2" },
+            { label: "shell 1" },
+            { label: "0 commits" }
+          ]
+        },
+        pipelineRuns: [
+          { label: "Run #1", status: "active", tone: "info", tokens: "12.4k", duration: "6m", summary: "Core agent work is currently reading theme service and settings spec.", current: true }
+        ],
+        activeSteps: ["Agent execution", "Build/test gate", "Requirement fit", "Code quality"],
+        pipeline: [
+          {
+            kind: "pre",
+            name: "Pre steps",
+            steps: [
+              { status: "passed", name: "Loop check", time: "11:01 AM", metric: "No duplicate run found" },
+              { status: "passed", name: "Context load", time: "11:01 AM", metric: "Settings module loaded" }
+            ]
+          },
+          {
+            kind: "agent",
+            name: "Core agent work",
+            steps: [
+              {
+                status: "running",
+                name: "Agent execution",
+                time: "6m",
+                detail: "Reading theme service and settings spec",
+                metric: "7 tool calls - 12.4k tokens",
+                runs: [
+                  { label: "Run #1", status: "active", tone: "info", tokens: "12.4k", duration: "6m", summary: "Reading settings component, theme service, and focused spec." }
+                ]
+              }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Tool",
+            steps: [
+              { status: "pending", name: "Build/test gate", time: "-", detail: "Waiting for code edits" }
+            ]
+          },
+          {
+            kind: "aspect",
+            name: "Aspect",
+            steps: [
+              { status: "locked", name: "Requirement fit", time: "-", detail: "Locked until agent finishes" },
+              { status: "locked", name: "Code quality", time: "-", detail: "Locked until agent finishes" },
+              { status: "locked", name: "Tests and evidence", time: "-", detail: "Locked until tests run" }
+            ]
+          },
+          {
+            kind: "decision",
+            name: "Final decision",
+            steps: [
+              { status: "locked", name: "Final orchestrator review", time: "-", detail: "No final state yet" }
+            ]
+          }
+        ],
+        protocol: {
+          banner: {
+            tone: "info",
+            title: "Active",
+            text: "The run is still in Core agent work. Protocol content is expected to be incomplete.",
+            pill: "live"
+          },
+          generated: "Streaming by claude / claude-haiku-4-5 - 12.4k tokens so far",
+          sections: [
+            {
+              title: "Recent Activity",
+              items: [
+                "Read <code>settings.component.ts</code> and <code>theme.service.ts</code>.",
+                "Searched for existing theme persistence behavior.",
+                "Started test discovery for <code>settings.component.spec.ts</code>."
+              ]
+            },
+            {
+              title: "Next",
+              items: [
+                "Wire the toggle into settings.",
+                "Persist selection on the document root.",
+                "Run the focused settings spec."
+              ]
+            }
+          ]
+        },
+        commits: {
+          title: "0 task commits",
+          empty: {
+            title: "No commits yet",
+            text: "The run is active. Commit evidence should stay empty until a real integration step produces it."
+          }
+        }
+      },
+      done: {
+        label: "Done",
+        caption: "released",
+        workspaceTitle: "ASS-1724 Wiki migration: memory docs",
+        state: { label: "Released", tone: "ok", action: "Open release" },
+        decision: {
+          tone: "ok",
+          title: "Done: task merged and released to main",
+          note: "Completion scenario: the compact pipeline should recede while final evidence remains easy to scan."
+        },
+        meta: {
+          note: "Full happy path with green pipeline and released commits.",
+          chips: [
+            { label: "Pipeline passed", tone: "ok" },
+            { label: "61.2k tokens", tone: "warn" },
+            { label: "Protocol final", tone: "ok" },
+            { label: "Commits 3", tone: "ok" },
+            { label: "No open items", tone: "ok" }
+          ]
+        },
+        tokens: {
+          total: "61.2k",
+          detail: "agent 61.2k - final",
+          tone: "warn",
+          rail: "61.2k"
+        },
+        status: {
+          lastActivity: "18m ago",
+          totalTime: "41s",
+          owner: "Docs Maintainers",
+          agent: "Claude Code",
+          lane: "released"
+        },
+        task: {
+          title: "DEV-Wiki migrieren: Projekt-Wissen aus Agent-Memory in docs/wiki ueberfuehren",
+          chips: [
+            { label: "ASS-1724" },
+            { label: "Released", tone: "ok" },
+            { label: "Agent Studio", tone: "info" },
+            { label: "Run #3" },
+            { label: "main", tone: "ok" }
+          ]
+        },
+        run: {
+          tone: "ok",
+          pill: { label: "Released to main", tone: "ok" },
+          body: "All required checks passed, documentation was migrated, and the release commit is present. This state should feel quiet, not celebratory.",
+          chips: [
+            { label: "Last activity: 18m ago" },
+            { label: "3 commits", tone: "ok" },
+            { label: "61.2k tokens", tone: "warn" },
+            { label: "tests pass", tone: "ok" },
+            { label: "0 warnings", tone: "ok" },
+            { label: "0 open items", tone: "ok" }
+          ]
+        },
+        pipelineRuns: [
+          { label: "Run #1", status: "open items", tone: "warn", tokens: "18.1k", duration: "14m", summary: "Initial migration found missing docs links and left follow-up items." },
+          { label: "Run #2", status: "verified", tone: "ok", tokens: "21.7k", duration: "18m", summary: "Reissued run fixed docs links and produced verification evidence." },
+          { label: "Run #3", status: "released", tone: "ok", tokens: "21.4k", duration: "9m", summary: "Final release pass confirmed commits on main.", current: true }
+        ],
+        activeSteps: [],
+        pipeline: [
+          {
+            kind: "pre",
+            name: "Pre steps",
+            steps: [
+              { status: "passed", name: "Loop check", time: "09:04 AM", metric: "Clean" },
+              { status: "passed", name: "Orchestrator prep", time: "09:05 AM", metric: "Prepared" }
+            ]
+          },
+          {
+            kind: "agent",
+            name: "Core agent work",
+            steps: [
+              {
+                status: "passed",
+                name: "Agent execution",
+                time: "18m",
+                metric: "42 files touched",
+                runs: [
+                  { label: "Run #1", status: "open items", tone: "warn", tokens: "18.1k", duration: "14m", summary: "Migrated core memory docs but found unresolved wiki links." },
+                  { label: "Run #2", status: "passed", tone: "ok", tokens: "21.7k", duration: "18m", summary: "Fixed cross-links and verified docs lint." },
+                  { label: "Run #3", status: "released", tone: "ok", tokens: "21.4k", duration: "9m", summary: "Prepared final release evidence and main commit confirmation." }
+                ]
+              }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Tool",
+            steps: [
+              { status: "passed", name: "Build/test gate", time: "2m 11s", metric: "docs lint and unit tests pass" }
+            ]
+          },
+          {
+            kind: "aspect",
+            name: "Aspect",
+            steps: [
+              { status: "passed", name: "Requirement fit", time: "38s", metric: "pass" },
+              { status: "passed", name: "Code quality", time: "41s", metric: "pass" },
+              { status: "passed", name: "Documentation impact", time: "33s", metric: "pass" },
+              { status: "passed", name: "Tests and evidence", time: "28s", metric: "pass" }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Integration tools",
+            steps: [
+              { status: "passed", name: "Worktree containment", time: "7s", metric: "Contained" },
+              { status: "passed", name: "Integrate merge", time: "14s", metric: "Merged" }
+            ]
+          },
+          {
+            kind: "decision",
+            name: "Final decision",
+            steps: [
+              { status: "passed", name: "Code-review quality grade", time: "A", metric: "Grade A" },
+              { status: "passed", name: "Final orchestrator review", time: "Release", metric: "Release approved" }
+            ]
+          }
+        ],
+        protocol: {
+          banner: {
+            tone: "ok",
+            title: "Released",
+            text: "All evidence is present and no human action is required.",
+            pill: "18m ago"
+          },
+          generated: "Generated by claude / claude-opus-4-8 - 61.2k tokens - 41s",
+          sections: [
+            {
+              title: "What Was Done",
+              items: [
+                "Moved project memory into <code>docs/wiki</code> with stable topic pages.",
+                "Added cross-links from the development guide.",
+                "Removed duplicated memory fragments after verification."
+              ]
+            },
+            {
+              title: "Verification",
+              items: [
+                "Documentation lint passed.",
+                "No broken internal wiki links were found.",
+                "Release commit is present on main."
+              ]
+            }
+          ]
+        },
+        commits: {
+          title: "3 task commits",
+          release: { pill: { label: "Released to main", tone: "ok" }, title: "task/wiki-migration-agent-memory-docs" },
+          chain: [
+            { sha: "a81fd9e", text: "MERGED -> main", branch: "RELEASED" },
+            { sha: "66ab120", text: "docs: add wiki migration pages", branch: "ON MAIN" },
+            { sha: "19fd02b", text: "docs: wire wiki index and references", branch: "ON MAIN" }
+          ],
+          files: [
+            ["docs/wiki/", "28 +1180/-0"],
+            ["docs/development/", "4 +92/-18"],
+            ["README.md", "+12/-2"]
+          ],
+          diff: {
+            title: "docs/wiki/index.md",
+            pill: { label: "changed", tone: "ok" },
+            lines: [
+              ["add", "12", "+ ## Project knowledge"],
+              ["add", "13", "+ The wiki now carries persistent project context from Agent Memory."],
+              ["add", "17", "+ - orchestration model"],
+              ["add", "18", "+ - task lifecycle"],
+              ["add", "19", "+ - integration rules"]
+            ]
+          }
+        }
+      },
+      empty: {
+        label: "Empty",
+        caption: "no run",
+        workspaceTitle: "ASS-1901 New task draft",
+        state: { label: "New", tone: "muted", action: "Start agent" },
+        decision: {
+          tone: "muted",
+          title: "No run yet: waiting for agent execution",
+          note: "Empty scenario: the configured pipeline remains visible even before protocol, commits, or run events exist."
+        },
+        meta: {
+          note: "Configured pipeline is visible, but no run has emitted activity yet.",
+          chips: [
+            { label: "Pipeline configured", tone: "info" },
+            { label: "0 tokens" },
+            { label: "Protocol empty" },
+            { label: "Commits empty" },
+            { label: "Prompt only", tone: "info" }
+          ]
+        },
+        tokens: {
+          total: "0",
+          detail: "no run yet",
+          tone: "muted",
+          rail: "0"
+        },
+        status: {
+          lastActivity: "not started",
+          totalTime: "-",
+          owner: "Product",
+          agent: "Unassigned",
+          lane: "pre-run"
+        },
+        task: {
+          title: "Add project hub git branch and worktree view",
+          chips: [
+            { label: "ASS-1901" },
+            { label: "In Preparation", tone: "warn" },
+            { label: "Agent Studio", tone: "info" },
+            { label: "Prompt" }
+          ]
+        },
+        run: {
+          tone: "muted",
+          pill: { label: "Not started" },
+          body: "The task has metadata and a prompt, but no agent run has emitted pipeline events yet.",
+          chips: [
+            { label: "Created: today" },
+            { label: "Runs 0" },
+            { label: "0 tokens" },
+            { label: "Configured steps visible", tone: "info" },
+            { label: "Artifacts 0" }
+          ]
+        },
+        pipelineRuns: [],
+        activeSteps: [],
+        pipeline: [],
+        protocol: {
+          empty: {
+            title: "No protocol yet",
+            text: "Protocol appears after the first agent message or orchestration event."
+          }
+        },
+        commits: {
+          title: "0 task commits",
+          empty: {
+            title: "No commit evidence",
+            text: "This task has not reached integration, so the evidence panel is intentionally empty."
+          }
+        }
+      },
+      sparse: {
+        label: "Sparse",
+        caption: "partial",
+        workspaceTitle: "AGT-1807 Pipeline imported from older task",
+        state: { label: "Partial", tone: "warn", action: "Open trace" },
+        decision: {
+          tone: "warn",
+          title: "Partial evidence: pipeline exists but artifacts are missing",
+          note: "Sparse scenario: tests how much context the compact pipeline can carry when Protocol and commits are incomplete."
+        },
+        meta: {
+          note: "Imported run with pipeline events, missing Protocol body, and no diff.",
+          chips: [
+            { label: "Pipeline partial", tone: "warn" },
+            { label: "18.9k tokens", tone: "warn" },
+            { label: "Protocol missing", tone: "danger" },
+            { label: "Diff unavailable", tone: "warn" },
+            { label: "1 warning", tone: "warn" }
+          ]
+        },
+        tokens: {
+          total: "18.9k",
+          detail: "recovered estimate",
+          tone: "warn",
+          rail: "18.9k"
+        },
+        status: {
+          lastActivity: "12d ago",
+          totalTime: "31m",
+          owner: "Orchestrator",
+          agent: "Recovered log",
+          lane: "partial-evidence"
+        },
+        task: {
+          title: "Regression radar: recover pipeline events from archived orchestration logs",
+          chips: [
+            { label: "AGT-1807" },
+            { label: "Partial", tone: "warn" },
+            { label: "Imported" },
+            { label: "Run #1" },
+            { label: "No artifacts", tone: "danger" }
+          ]
+        },
+        run: {
+          tone: "warn",
+          pill: { label: "Evidence incomplete", tone: "warn" },
+          body: "Pipeline events were recovered from the activity log, but Protocol and diff artifacts were not available. The UI should make that absence explicit.",
+          chips: [
+            { label: "Last activity: 12d ago" },
+            { label: "10 pipeline events", tone: "warn" },
+            { label: "18.9k tokens", tone: "warn" },
+            { label: "Protocol 0" },
+            { label: "Diff 0" },
+            { label: "Warnings 1", tone: "warn" }
+          ]
+        },
+        pipelineRuns: [
+          { label: "Run #1", status: "recovered", tone: "warn", tokens: "18.9k", duration: "31m", summary: "Imported from archived activity log; protocol and diff artifacts are missing.", current: true }
+        ],
+        activeSteps: ["Agent execution", "Build/test gate"],
+        pipeline: [
+          {
+            kind: "pre",
+            name: "Pre steps",
+            steps: [
+              { status: "passed", name: "Loop check", time: "10:14 AM", metric: "Recovered event" },
+              { status: "skipped", name: "Open-items check", time: "-", detail: "No archived event" }
+            ]
+          },
+          {
+            kind: "agent",
+            name: "Core agent work",
+            steps: [
+              {
+                status: "passed",
+                name: "Agent execution",
+                time: "31m",
+                metric: "Recovered from log",
+                runs: [
+                  { label: "Run #1", status: "recovered", tone: "warn", tokens: "18.9k", duration: "31m", summary: "Agent activity was recovered, but supporting artifacts were not captured." }
+                ]
+              }
+            ]
+          },
+          {
+            kind: "tool",
+            name: "Tool",
+            steps: [
+              { status: "blocked", name: "Build/test gate", time: "missing", detail: "Referenced artifact was not found", metric: "Artifact path missing" }
+            ]
+          },
+          {
+            kind: "aspect",
+            name: "Aspect",
+            steps: [
+              { status: "locked", name: "Requirement fit", time: "-", detail: "Review artifact missing" },
+              { status: "locked", name: "Code quality", time: "-", detail: "Review artifact missing" },
+              { status: "locked", name: "Tests and evidence", time: "-", detail: "Review artifact missing" }
+            ]
+          },
+          {
+            kind: "drift",
+            name: "Drift",
+            steps: [
+              { status: "disabled", name: "Drift: Docs / Marketing", time: "-", detail: "Disabled by config" }
+            ]
+          }
+        ],
+        protocol: {
+          empty: {
+            title: "Protocol body missing",
+            text: "Only pipeline activity was recovered. The workbench keeps the absence visible instead of filling the center panel with stale text."
+          }
+        },
+        commits: {
+          title: "1 task commit",
+          release: { pill: { label: "Unverified", tone: "warn" }, title: "task/recover-archived-pipeline-events" },
+          chain: [
+            { sha: "9bf01ac", text: "import recovered pipeline events", branch: "LOCAL" }
+          ],
+          files: [
+            ["docs/recovery/", "3 +84/-0"],
+            ["tools/import/", "2 +61/-9"]
+          ],
+          diff: null
+        }
+      }
+    };
+
+    const visible = {
+      overview: true,
+      protocol: true,
+      commits: true
+    };
+
+    const layout = document.getElementById("layout");
+    let currentScenarioKey = "blocked";
+    let pipelineFilter = "all";
+    let showMetrics = false;
+    const collapsedGroups = new Set();
+    const initializedCollapseScenarios = new Set();
+    const stepConfigOverrides = {};
+    let renderedStepLookup = new Map();
+
+    function scenario() {
+      return scenarios[currentScenarioKey];
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function escapeAttribute(value) {
+      return escapeHtml(value).replaceAll("'", "&#39;");
+    }
+
+    function chipHtml(chip, className = "chip") {
+      const tone = chip.tone ? ` data-tone="${escapeAttribute(chip.tone)}"` : "";
+      return `<span class="${className}"${tone}>${escapeHtml(chip.label)}</span>`;
+    }
+
+    function configuredTemplatePipeline() {
+      return [
+        {
+          kind: "pre",
+          name: "Pre steps",
+          steps: [
+            { status: "pending", name: "Loop check", time: "-", tokens: "0", detail: "Configured, not run yet", optional: false },
+            { status: "disabled", name: "Orchestrator prep", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "pending", name: "Reissue open-items check", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "agent",
+          name: "Core agent work",
+          steps: [
+            { status: "pending", name: "Agent execution", time: "-", tokens: "0", detail: "Required core step", optional: false }
+          ]
+        },
+        {
+          kind: "decision",
+          name: "Decision",
+          steps: [
+            { status: "pending", name: "Post-core orchestrator review", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "tool",
+          name: "Tool",
+          steps: [
+            { status: "pending", name: "Build/test gate", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "aspect",
+          name: "Aspect",
+          steps: [
+            { status: "pending", name: "Requirement fit", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Code quality", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "disabled", name: "Documentation impact", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "pending", name: "Tests and evidence", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "tool",
+          name: "Integration tools",
+          steps: [
+            { status: "pending", name: "Worktree containment", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Integrate merge", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "decision",
+          name: "Conflict decision",
+          steps: [
+            { status: "pending", name: "Conflict resolution", time: "-", tokens: "0", detail: "Configured, not run yet" }
+          ]
+        },
+        {
+          kind: "tool",
+          name: "Release tools",
+          steps: [
+            { status: "pending", name: "Git commit attribution", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Merge into Develop", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Frontend stylelint", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Regression radar", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "disabled", name: "Wiki maintenance", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "disabled", name: "Wiki learnings", time: "-", tokens: "0", detail: "Optional step is off" }
+          ]
+        },
+        {
+          kind: "decision",
+          name: "Final decision",
+          steps: [
+            { status: "pending", name: "Code-review quality grade", time: "-", tokens: "0", detail: "Configured, not run yet" },
+            { status: "pending", name: "Final orchestrator review", time: "-", tokens: "0", detail: "Required final step", optional: false }
+          ]
+        },
+        {
+          kind: "drift",
+          name: "Drift",
+          steps: [
+            { status: "disabled", name: "Drift: ADR / Code", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "disabled", name: "Drift: Software / Architecture", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "disabled", name: "Drift: Docs / Marketing", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "disabled", name: "Drift: Spec / Task / Job", time: "-", tokens: "0", detail: "Optional step is off" },
+            { status: "disabled", name: "Drift: Code Pattern (rule-based)", time: "-", tokens: "0", detail: "Optional step is off" }
+          ]
+        }
+      ];
+    }
+
+    function mergeWithConfiguredPipeline(groups) {
+      const eventByStepName = new Map();
+      (groups || []).forEach((group) => {
+        (group.steps || []).forEach((step) => {
+          if (!eventByStepName.has(step.name)) eventByStepName.set(step.name, step);
+        });
+      });
+
+      return configuredTemplatePipeline().map((group) => ({
+        ...group,
+        steps: group.steps.map((templateStep) => {
+          const eventStep = eventByStepName.get(templateStep.name);
+          if (eventStep) return { ...templateStep, ...eventStep };
+          return defaultStepForScenario(templateStep);
+        })
+      }));
+    }
+
+    function defaultStepForScenario(templateStep) {
+      if (currentScenarioKey === "done" && templateStep.status !== "disabled") {
+        return {
+          ...templateStep,
+          status: "passed",
+          metric: templateStep.metric || "pass"
+        };
+      }
+      return { ...templateStep };
+    }
+
+    function renderScenarioTabs() {
+      const root = document.getElementById("scenarioTabs");
+      root.innerHTML = scenarioOrder.map((key) => {
+        const item = scenarios[key];
+        return `
+          <button class="scenario-button" data-scenario="${key}" aria-pressed="${key === currentScenarioKey}">
+            <span class="scenario-name">${escapeHtml(item.label)}</span>
+            <span class="scenario-caption">${escapeHtml(item.caption)}</span>
+          </button>
+        `;
+      }).join("");
+
+      root.querySelectorAll(".scenario-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          currentScenarioKey = button.dataset.scenario;
+          renderWorkbench();
+        });
+      });
+    }
+
+    function renderScenarioMeta() {
+      const item = scenario();
+      document.getElementById("scenarioMeta").innerHTML = `
+        <div class="chips">${item.meta.chips.map((chip) => chipHtml(chip, "pill")).join("")}</div>
+        <div class="scenario-note">${escapeHtml(item.meta.note)}</div>
+      `;
+    }
+
+    function renderTopState() {
+      const item = scenario();
+      document.getElementById("workspaceTaskTitle").textContent = item.workspaceTitle;
+      const statePill = document.getElementById("topStatePill");
+      statePill.textContent = item.state.label;
+      statePill.dataset.tone = item.state.tone || "";
+      const action = document.getElementById("topPrimaryAction");
+      action.textContent = item.state.action;
+      action.dataset.tone = item.state.tone || "";
+
+      const strip = document.getElementById("decisionStrip");
+      strip.dataset.tone = item.decision.tone || "danger";
+      document.getElementById("decisionTitle").textContent = item.decision.title;
+      document.getElementById("decisionNote").textContent = item.decision.note;
+      renderTokenSummary();
+    }
+
+    function renderTokenSummary() {
+      const token = scenario().tokens || { total: "0", detail: "no token data", tone: "muted", rail: "0" };
+      const summary = document.getElementById("tokenSummary");
+      summary.dataset.tone = token.tone || "muted";
+      document.getElementById("tokenTotal").textContent = token.total;
+      document.getElementById("tokenBreakdown").textContent = token.detail;
+    }
+
+    function renderTaskContext() {
+      const item = scenario();
+      document.getElementById("taskTitle").textContent = item.task.title;
+      document.getElementById("taskChips").innerHTML = item.task.chips.map((chip) => chipHtml(chip)).join("");
+
+      const summary = document.getElementById("runSummary");
+      summary.dataset.tone = item.run.tone || "danger";
+      document.getElementById("runSummaryDecision").textContent = `Current state: ${item.run.pill.label}`;
+      document.getElementById("runSummaryBody").textContent = item.run.body;
+      document.getElementById("runSummaryTable").innerHTML = runSummaryRows(item).map((row) => `
+        <div class="run-summary-row"${row.kind ? ` data-kind="${escapeAttribute(row.kind)}"` : ""}>
+          <span class="run-summary-key">${escapeHtml(row.label)}</span>
+          <span class="run-summary-value">${row.html || escapeHtml(row.value)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderPipelineRuns() {
+      const root = document.getElementById("pipelineRuns");
+      const runs = scenario().pipelineRuns || [];
+      const count = runs.length;
+      const restartCount = Math.max(0, count - 1);
+      root.dataset.empty = String(count === 0);
+
+      if (!count) {
+        root.innerHTML = `
+          <span class="run-strip-title">Runs</span>
+          <span class="run-strip-summary">0 runs - configured pipeline only</span>
+        `;
+        return;
+      }
+
+      root.innerHTML = `
+        <span class="run-strip-title">Runs</span>
+        <span class="run-strip-summary">${count} ${plural(count, "run")}${restartCount ? ` | ${restartCount} ${plural(restartCount, "restart")}` : ""}</span>
+        <span class="run-strip-list">
+          ${runs.map((run) => runPillHtml(run)).join("")}
+        </span>
+      `;
+    }
+
+    function runSummaryRows(item) {
+      const status = item.status || {};
+      const token = item.tokens || {};
+      const chipLabels = (item.run.chips || []).map((chip) => chip.label);
+      const signalLabels = chipLabels.filter((label) => !isRunMetadataChip(label, status, token));
+      return [
+        { label: "Activity", value: activitySummary(status) },
+        { label: "Runs", value: pipelineRunSummary(item) },
+        { label: "Owner", value: status.owner || "-" },
+        { label: "Agent", value: status.agent || "-" },
+        { label: "Lane", value: status.lane || "-" },
+        { label: "Tokens", kind: "tokens", value: token.total || "-", html: token.total ? tokenSummaryInlineHtml(token) : "" },
+        { label: "Signals", value: signalLabels.length ? signalLabels.join(" | ") : "-" }
+      ];
+    }
+
+    function runPillHtml(run) {
+      const title = `${run.label}: ${run.status}${run.duration ? ` - ${run.duration}` : ""}${run.summary ? ` - ${run.summary}` : ""}`;
+      return `
+        <span class="pipeline-run"
+              data-tone="${escapeAttribute(run.tone || "muted")}"
+              data-current="${run.current ? "true" : "false"}"
+              title="${escapeAttribute(title)}">
+          <span class="pipeline-run__label">${escapeHtml(run.label.replace("Run ", ""))}</span>
+        </span>
+      `;
+    }
+
+    function pipelineRunSummary(item) {
+      const runs = item.pipelineRuns || [];
+      const count = runs.length;
+      if (!count) return "0 runs";
+      const current = runs.find((run) => run.current) || runs[count - 1];
+      const restarts = Math.max(0, count - 1);
+      return `${count} ${plural(count, "run")}${restarts ? ` | ${restarts} ${plural(restarts, "restart")}` : ""} | current ${current.label}`;
+    }
+
+    function plural(count, word) {
+      return count === 1 ? word : `${word}s`;
+    }
+
+    function tokenSummaryInlineHtml(token) {
+      const tier = tokenBubbleTier(token);
+      const total = parseTokenValue(token.total);
+      const title = `Token usage: ${token.total} total tokens${token.detail ? ` - ${token.detail}` : ""}`;
+      return `
+        <span class="token-inline">
+          <span class="task-card__token-wrap">
+            <span class="task-card__token-bubble task-card__token-bubble--${escapeAttribute(tier)}"
+                  data-token-tier="${escapeAttribute(tier)}"
+                  data-token-total="${escapeAttribute(total)}"
+                  title="${escapeAttribute(title)}"
+                  aria-label="${escapeAttribute(title)}">
+              <span class="task-card__token-bars" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </span>
+              <span class="task-card__token-label">${escapeHtml(token.total)}</span>
+            </span>
+          </span>
+        </span>
+      `;
+    }
+
+    function tokenBubbleTier(token) {
+      if (token.tone === "info") return "blue";
+      if (token.tone === "warn" || token.tone === "danger") return "peach";
+      const total = parseTokenValue(token.total);
+      if (total >= 5000000) return "peach";
+      if (total >= 500000) return "mauve";
+      if (total >= 50000) return "blue";
+      return "neutral";
+    }
+
+    function activitySummary(status) {
+      const activity = status.lastActivity || "-";
+      const total = status.totalTime || "";
+      if (!total || total === "-") return activity;
+      return `${activity} | total ${total}`;
+    }
+
+    function isRunMetadataChip(label, status, token) {
+      const value = String(label).toLowerCase();
+      return value.includes("last activity")
+        || value === String(status.owner || "").toLowerCase()
+        || value === String(status.agent || "").toLowerCase()
+        || value === String(status.lane || "").toLowerCase()
+        || value.includes("claude code")
+        || value.includes("local default")
+        || value.includes("docs maintainers")
+        || /^run #\d+/.test(value)
+        || /^runs?\s*\d+/.test(value)
+        || value === String(token.total || "").toLowerCase()
+        || value.includes("tokens");
+    }
+
+    function pipelineGroupsForScenario() {
+      return mergeWithConfiguredPipeline(scenario().pipeline || []);
+    }
+
+    function ensureDefaultCollapsedGroups() {
+      if (initializedCollapseScenarios.has(currentScenarioKey)) return;
+      pipelineGroupsForScenario().forEach((group) => {
+        if (!sectionHasActiveWork(group)) {
+          collapsedGroups.add(groupId(group));
+        }
+      });
+      initializedCollapseScenarios.add(currentScenarioKey);
+    }
+
+    function sectionHasActiveWork(group) {
+      const active = scenario().activeSteps || [];
+      return group.steps.some((step) => {
+        const effective = effectiveStep(group, step);
+        if (currentScenarioKey === "done" && effective.status === "passed" && parseTokenValue(stepTokens(group, effective)) > 0) return true;
+        return ["failed", "blocked", "running"].includes(effective.status) || active.includes(effective.name);
+      });
+    }
+
+    function toggleGroup(id) {
+      if (collapsedGroups.has(id)) {
+        collapsedGroups.delete(id);
+      } else {
+        collapsedGroups.add(id);
+      }
+      renderPipeline();
+    }
+
+    function renderPipeline() {
+      const root = document.getElementById("pipeline");
+      const groups = pipelineGroupsForScenario();
+      root.dataset.details = String(showMetrics);
+      renderedStepLookup = new Map();
+
+      if (!groups.length) {
+        root.innerHTML = `
+          <section class="empty-state">
+            <strong>No pipeline events</strong>
+            <span>This scenario has no run data yet. The panel still reserves the place where the pipeline will appear.</span>
+          </section>
+        `;
+        return;
+      }
+
+      root.innerHTML = groups.map((group) => `
+        <section class="group"
+                 data-kind="${group.kind}"
+                 data-tone="${escapeAttribute(groupTone(group))}"
+                 data-collapsed="${collapsedGroups.has(groupId(group))}">
+          <header class="group-head" data-group-id="${escapeAttribute(groupId(group))}" role="button" tabindex="0" aria-expanded="${!collapsedGroups.has(groupId(group))}" title="Toggle section">
+            <span class="section-marker">${collapsedGroups.has(groupId(group)) ? "+" : "-"}</span>
+            <span class="group-name">${escapeHtml(group.name)}</span>
+            <span class="group-line"></span>
+            <span class="group-meta">${escapeHtml(groupMeta(group))}</span>
+          </header>
+          ${collapsedGroups.has(groupId(group)) ? collapsedSummary(group) : group.steps.map((step) => {
+            const id = stepId(group, step);
+            const effective = effectiveStep(group, step);
+            const tokenLabel = stepTokenDisplay(group, effective);
+            const timing = stepTiming(group, effective);
+            renderedStepLookup.set(id, { group, step: effective });
+            return `
+            <div class="step-row"
+                 data-step-id="${escapeAttribute(id)}"
+                 data-status="${escapeAttribute(effective.status)}"
+                 data-muted="${["disabled", "skipped", "locked"].includes(effective.status)}"
+                 data-active="${effective.status === "blocked" || effective.status === "failed"}"
+                 data-dimmed="${isStepDimmed(effective)}"
+                 ${metricDetail(effective) ? `title="${escapeAttribute(metricDetail(effective))}"` : ""}>
+              <span class="enable-slot">${enableControlHtml(group, step, id)}</span>
+              <span class="step-kind" title="${escapeAttribute(kindLabel(group.kind))}">${escapeHtml(kindIcon(group.kind))}</span>
+              <span class="status-icon" data-status="${escapeAttribute(effective.status)}">${statusIcon(effective.status)}</span>
+              <span class="step-main">
+                <span class="step-name-line">
+                  <span class="step-name">${escapeHtml(effective.name)}</span>
+                  ${stepRunCountHtml(effective)}
+                </span>
+                <span class="step-detail">${escapeHtml(showMetrics ? metricDetail(effective) : statusDetail(effective))}</span>
+              </span>
+              <span class="step-duration" title="${escapeAttribute(timingTitle(timing))}">${escapeHtml(stepDurationDisplay(timing))}</span>
+              <span class="step-actions">${stepActionsHtml(group, effective, id)}</span>
+              <span class="step-tokens">${stepTokenHtml(tokenLabel)}</span>
+            </div>
+          `;
+          }).join("")}
+        </section>
+      `).join("");
+
+      root.querySelectorAll(".group-head").forEach((header) => {
+        header.addEventListener("click", () => toggleGroup(header.dataset.groupId));
+        header.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          toggleGroup(header.dataset.groupId);
+        });
+      });
+
+      root.querySelectorAll(".step-action").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          const id = event.currentTarget.closest(".step-row").dataset.stepId;
+          openStepModal(id, event.currentTarget.dataset.action);
+        });
+      });
+
+      root.querySelectorAll(".step-enable").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const id = event.currentTarget.dataset.stepId;
+          const pressed = event.currentTarget.getAttribute("aria-pressed") === "true";
+          stepConfigOverrides[id] = !pressed;
+          renderPipeline();
+        });
+      });
+    }
+
+    function groupId(group) {
+      return `${currentScenarioKey}:${group.kind}:${group.name}`;
+    }
+
+    function stepId(group, step) {
+      return `${currentScenarioKey}:${group.kind}:${group.name}:${step.name}`;
+    }
+
+    function isStepOptional(step) {
+      if (step.optional !== undefined) return step.optional;
+      return !["Loop check", "Agent execution", "Final orchestrator review"].includes(step.name);
+    }
+
+    function isStepConfigurable(step) {
+      return isStepOptional(step) && ["pending", "disabled"].includes(step.status);
+    }
+
+    function stepEnabled(group, step) {
+      if (!isStepConfigurable(step)) return step.status !== "disabled";
+      const id = stepId(group, step);
+      if (stepConfigOverrides[id] !== undefined) return stepConfigOverrides[id];
+      if (step.configEnabled !== undefined) return step.configEnabled;
+      return step.status !== "disabled";
+    }
+
+    function enableControlHtml(group, step, id) {
+      if (!isStepOptional(step)) {
+        return `<span class="step-static" data-control="required" title="Required step" aria-label="Required step"></span>`;
+      }
+      if (!isStepConfigurable(step)) {
+        const control = step.status === "passed" ? "done" : "locked";
+        return `<span class="step-static" data-control="${control}" title="${escapeAttribute(nonConfigurableStepTitle(step))}" aria-label="${escapeAttribute(nonConfigurableStepTitle(step))}"></span>`;
+      }
+      const enabled = stepEnabled(group, step);
+      const title = enabled ? "Disable optional step" : "Enable optional step";
+      return `<button class="step-enable" data-step-id="${escapeAttribute(id)}" aria-pressed="${enabled}" title="${title}" aria-label="${title}"></button>`;
+    }
+
+    function nonConfigurableStepTitle(step) {
+      if (step.status === "passed") return "Completed step cannot be disabled";
+      if (step.status === "running") return "Running step cannot be changed";
+      if (step.status === "failed" || step.status === "blocked") return "Recorded result cannot be disabled";
+      if (step.status === "locked") return "Locked step cannot be changed";
+      if (step.status === "skipped") return "Skipped step cannot be changed";
+      return "Step cannot be changed";
+    }
+
+    function effectiveStep(group, step) {
+      if (!stepEnabled(group, step)) {
+        return {
+          ...step,
+          status: "disabled",
+          time: "off",
+          tokens: "0",
+          detail: "Disabled for next run",
+          metric: "Optional step is disabled"
+        };
+      }
+
+      if (step.status === "disabled") {
+        return {
+          ...step,
+          status: "pending",
+          time: "-",
+          tokens: step.tokens || "0",
+          detail: "Enabled for next run",
+          metric: "Will run when the next agent run starts"
+        };
+      }
+
+      return step;
+    }
+
+    function kindLabel(kind) {
+      return {
+        pre: "Pre step",
+        agent: "Agent work",
+        decision: "Decision",
+        tool: "Tool",
+        aspect: "Prompted aspect review",
+        drift: "Drift check"
+      }[kind] || kind;
+    }
+
+    function kindIcon(kind) {
+      return {
+        pre: "P",
+        agent: "A",
+        decision: "D",
+        tool: "T",
+        aspect: "Q",
+        drift: "R"
+      }[kind] || "?";
+    }
+
+    function groupMeta(group) {
+      const steps = group.steps.map((step) => effectiveStep(group, step));
+      const tokenSum = formatTokenSum(steps.map((step) => stepTokens(group, step)));
+      return tokenSum === "0" ? `${steps.length} steps` : `${steps.length} steps - ${tokenSum}`;
+    }
+
+    function groupTone(group) {
+      const steps = group.steps.map((step) => effectiveStep(group, step));
+      const executable = steps.filter((step) => !["disabled", "skipped"].includes(step.status));
+      if (steps.some((step) => ["failed", "blocked"].includes(step.status))) return "danger";
+      if (steps.some((step) => step.status === "running")) return "warn";
+      if (executable.length && executable.every((step) => step.status === "passed")) return "ok";
+      if (!executable.length) return "muted";
+      return "neutral";
+    }
+
+    function collapsedSummary(group) {
+      const steps = group.steps.map((step) => effectiveStep(group, step));
+      const active = scenario().activeSteps || [];
+      const risk = steps.filter((step) => ["failed", "blocked", "running"].includes(step.status) || active.includes(step.name)).length;
+      const off = steps.filter((step) => step.status === "disabled").length;
+      const tokenSum = formatTokenSum(steps.map((step) => stepTokens(group, step)));
+      return `
+        <div class="collapsed-summary">
+          <span>${steps.length} steps hidden</span>
+          <span>${risk} active/risk</span>
+          <span>${off} off</span>
+          ${tokenSum === "0" ? "" : `<span>${escapeHtml(tokenSum)}</span>`}
+        </div>
+      `;
+    }
+
+    function stepTokens(group, step) {
+      if (step.tokens && parseTokenValue(step.tokens) > 0) return step.tokens;
+      if (step.name === "Agent execution") return scenario().tokens?.rail || "0";
+      if (["pending", "disabled", "locked", "skipped"].includes(step.status)) return "0";
+      const named = stepTokenEstimate(step.name);
+      if (named) return named;
+      if (group.kind === "aspect") return "1.2k";
+      if (group.kind === "decision") return step.status === "blocked" ? "1.6k" : "900";
+      if (group.kind === "pre") return "120";
+      if (group.kind === "tool") return "420";
+      return "0";
+    }
+
+    function stepTokenEstimate(name) {
+      return {
+        "Loop check": "120",
+        "Orchestrator prep": "160",
+        "Reissue open-items check": "120",
+        "Build/test gate": "650",
+        "Worktree containment": "180",
+        "Integrate merge": "240",
+        "Conflict resolution": "900",
+        "Git commit attribution": "160",
+        "Merge into Develop": "220",
+        "Frontend stylelint": "420",
+        "Regression radar": "520",
+        "Code-review quality grade": "900",
+        "Final orchestrator review": "1.6k"
+      }[name] || "";
+    }
+
+    function stepTokenDisplay(group, step) {
+      const value = stepTokens(group, step);
+      if (!hasStepRun(step) || parseTokenValue(value) <= 0) return "";
+      return value;
+    }
+
+    function stepTiming(group, step) {
+      if (!hasStepRun(step)) {
+        return { duration: "", startedAt: "", endedAt: "", source: "not-run" };
+      }
+
+      if ((step.runs || []).length) {
+        return aggregateRunTiming(step.runs, step.status);
+      }
+
+      const duration = step.duration || durationFromTime(step.time) || stepDurationEstimate(group, step);
+      const startedAt = step.startedAt || step.start || estimatedStepStart(group, step);
+      const endedAt = step.endedAt || step.end || estimatedStepEnd(startedAt, duration, step.status);
+      return { duration, startedAt, endedAt, source: step.duration || step.startedAt || step.endedAt ? "captured" : "estimated" };
+    }
+
+    function stepDurationDisplay(timing) {
+      return timing.duration || "";
+    }
+
+    function timingTitle(timing) {
+      if (!timing.duration) return "No duration captured yet";
+      const parts = [`Duration ${timing.duration}`];
+      if (timing.startedAt) parts.push(`Start ${timing.startedAt}`);
+      if (timing.endedAt) parts.push(`End ${timing.endedAt}`);
+      return parts.join(" | ");
+    }
+
+    function aggregateRunTiming(runs, status) {
+      const timings = runs.map((run, index) => runTiming(run, index, runs));
+      const totalMs = timings.reduce((sum, timing) => sum + parseDurationToMs(timing.duration), 0);
+      const first = timings[0] || {};
+      const last = timings[timings.length - 1] || {};
+      return {
+        duration: totalMs ? formatDurationFromMs(totalMs) : "",
+        startedAt: first.startedAt || "",
+        endedAt: status === "running" ? "running now" : last.endedAt || "",
+        source: "runs"
+      };
+    }
+
+    function runTiming(run, index, runs = []) {
+      const duration = run.duration || "";
+      const startedAt = run.startedAt || run.start || estimatedRunStart(index, runs);
+      const endedAt = run.endedAt || run.end || (run.status === "active" ? "running now" : estimatedStepEnd(startedAt, duration, run.status));
+      return { ...run, duration, startedAt, endedAt };
+    }
+
+    function estimatedRunStart(index, runs = []) {
+      const base = scenarioBaseDate();
+      const elapsed = runs.slice(0, index).reduce((sum, run) => sum + parseDurationToMs(run.duration), 0);
+      return formatDateTime(new Date(base.getTime() + elapsed));
+    }
+
+    function estimatedStepStart(group, step) {
+      const clock = clockTimeFromLabel(step.time);
+      if (clock) return `${scenarioDateLabel()} ${clock}`;
+      const index = stepOrderIndex(group, step);
+      return formatDateTime(addMinutes(scenarioBaseDate(), index * 2));
+    }
+
+    function estimatedStepEnd(startedAt, duration, status) {
+      if (!startedAt || !duration) return "";
+      if (status === "running" || status === "active") return "running now";
+      const parsedStart = parseDisplayedDate(startedAt);
+      const durationMs = parseDurationToMs(duration);
+      if (!parsedStart || !durationMs) return startedAt;
+      return formatDateTime(new Date(parsedStart.getTime() + durationMs));
+    }
+
+    function stepDurationEstimate(group, step) {
+      return {
+        "Loop check": "2s",
+        "Context load": "8s",
+        "Orchestrator prep": "18s",
+        "Reissue open-items check": "4s",
+        "Post-core orchestrator review": "22s",
+        "Build/test gate": step.status === "blocked" || step.status === "failed" ? "1m 42s" : "2m 11s",
+        "Requirement fit": "38s",
+        "Code quality": "41s",
+        "Documentation impact": "33s",
+        "Tests and evidence": step.status === "blocked" ? "1m 18s" : "28s",
+        "Worktree containment": "7s",
+        "Integrate merge": "14s",
+        "Conflict resolution": "11s",
+        "Git commit attribution": "9s",
+        "Merge into Develop": "14s",
+        "Frontend stylelint": "48s",
+        "Regression radar": "1m 4s",
+        "Code-review quality grade": "32s",
+        "Final orchestrator review": step.status === "blocked" ? "34s" : "16s"
+      }[step.name] || (group.kind === "aspect" ? "35s" : group.kind === "decision" ? "24s" : group.kind === "tool" ? "18s" : "6s");
+    }
+
+    function durationFromTime(value) {
+      const text = String(value || "").trim();
+      if (!text || text === "-" || text === "off") return "";
+      if (clockTimeFromLabel(text)) return "";
+      return parseDurationToMs(text) ? text : "";
+    }
+
+    function clockTimeFromLabel(value) {
+      const text = String(value || "").trim();
+      const match = text.match(/^(\d{1,2}:\d{2})(?:\s*)(AM|PM)$/i);
+      return match ? `${match[1]} ${match[2].toUpperCase()}` : "";
+    }
+
+    function stepOrderIndex(group, step) {
+      const names = configuredTemplatePipeline().flatMap((item) => item.steps.map((itemStep) => `${item.kind}:${item.name}:${itemStep.name}`));
+      const index = names.indexOf(`${group.kind}:${group.name}:${step.name}`);
+      return index >= 0 ? index : 0;
+    }
+
+    function scenarioBaseDate() {
+      return {
+        blocked: new Date(2026, 6, 1, 0, 34, 0),
+        running: new Date(2026, 6, 7, 11, 1, 0),
+        done: new Date(2026, 6, 7, 9, 4, 0),
+        empty: new Date(2026, 6, 7, 9, 0, 0),
+        sparse: new Date(2026, 5, 25, 10, 14, 0)
+      }[currentScenarioKey] || new Date(2026, 6, 7, 9, 0, 0);
+    }
+
+    function scenarioDateLabel() {
+      return formatDateOnly(scenarioBaseDate());
+    }
+
+    function addMinutes(date, minutes) {
+      return new Date(date.getTime() + minutes * 60000);
+    }
+
+    function parseDurationToMs(value) {
+      const text = String(value || "").toLowerCase();
+      let total = 0;
+      const pattern = /(\d+(?:\.\d+)?)\s*(ms|s|m|h|d)\b/g;
+      let match;
+      while ((match = pattern.exec(text)) !== null) {
+        const amount = Number.parseFloat(match[1]) || 0;
+        const unit = match[2];
+        total += amount * ({ ms: 1, s: 1000, m: 60000, h: 3600000, d: 86400000 }[unit] || 0);
+      }
+      return total;
+    }
+
+    function formatDurationFromMs(ms) {
+      if (!ms) return "";
+      const totalSeconds = Math.round(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      if (hours) return `${hours}h${minutes ? ` ${minutes}m` : ""}`;
+      if (minutes) return `${minutes}m${seconds ? ` ${seconds}s` : ""}`;
+      return `${seconds}s`;
+    }
+
+    function parseDisplayedDate(value) {
+      const parsed = Date.parse(value);
+      return Number.isNaN(parsed) ? null : new Date(parsed);
+    }
+
+    function formatDateOnly(date) {
+      return `${monthName(date)} ${date.getDate()}, ${date.getFullYear()}`;
+    }
+
+    function formatDateTime(date) {
+      let hours = date.getHours();
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const suffix = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12 || 12;
+      return `${formatDateOnly(date)} ${hours}:${minutes} ${suffix}`;
+    }
+
+    function monthName(date) {
+      return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][date.getMonth()];
+    }
+
+    function stepTokenHtml(tokenLabel) {
+      if (!tokenLabel) return "";
+      const token = { total: tokenLabel, detail: "pipeline step", tone: tokenToneForLabel(tokenLabel) };
+      return tokenSummaryInlineHtml(token);
+    }
+
+    function tokenToneForLabel(label) {
+      const value = parseTokenValue(label);
+      if (value >= 5000000) return "warn";
+      if (value >= 50000) return "info";
+      return "muted";
+    }
+
+    function hasStepRun(step) {
+      return ["passed", "failed", "blocked", "running"].includes(step.status);
+    }
+
+    function parseTokenValue(label) {
+      const value = String(label || "0").trim().toLowerCase();
+      const number = Number.parseFloat(value.replace(/[^0-9.]/g, "")) || 0;
+      if (value.endsWith("m")) return number * 1000000;
+      if (value.endsWith("k")) return number * 1000;
+      return number;
+    }
+
+    function formatTokenSum(labels) {
+      const total = labels.reduce((sum, label) => sum + parseTokenValue(label), 0);
+      if (total >= 1000000) return `${Number(total / 1000000).toFixed(total >= 10000000 ? 0 : 1)}m`;
+      if (total >= 1000) return `${Number(total / 1000).toFixed(total >= 100000 ? 0 : 1)}k`;
+      return String(Math.round(total));
+    }
+
+    function stepActionsHtml(group, step, id) {
+      const access = stepAccess(group, step);
+      const buttons = [];
+      const detailTitle = access.result ? "Step details with result" : "Step details";
+      buttons.push(actionButton(id, "details", "i", detailTitle));
+      if (access.concerns.length) buttons.push(actionButton(id, "concerns", "", "Concerns", access.concerns.length > 1 ? "danger" : "warn"));
+      return buttons.join("");
+    }
+
+    function stepRunCountHtml(step) {
+      const runs = step.runs || [];
+      if (runs.length <= 1) return "";
+      const tone = runToneForStatus(step.status);
+      const label = `${runs.length} runs`;
+      return `<span class="step-run-count" data-tone="${escapeAttribute(tone)}" title="${escapeAttribute(label)}">${escapeHtml(label)}</span>`;
+    }
+
+    function actionButton(id, action, label, title, tone = "") {
+      const toneAttribute = tone ? ` data-tone="${escapeAttribute(tone)}"` : "";
+      return `<button class="step-action" data-step-id="${escapeAttribute(id)}" data-action="${escapeAttribute(action)}" title="${escapeAttribute(title)}" aria-label="${escapeAttribute(title)}"${toneAttribute}>${escapeHtml(label)}</button>`;
+    }
+
+    function runToneForStatus(status) {
+      if (status === "passed") return "ok";
+      if (status === "running") return "info";
+      if (status === "blocked" || status === "failed") return "danger";
+      return "muted";
+    }
+
+    function stepAccess(group, step) {
+      return {
+        prompt: promptText(group, step),
+        docs: docsText(group, step),
+        result: resultText(group, step),
+        concerns: concernsForStep(group, step)
+      };
+    }
+
+    function promptText(group, step) {
+      if (step.prompt) return step.prompt;
+      if (group.kind === "agent") {
+        return `Execute the task using the repository instructions, keep the worktree contained, record evidence, and stop with a clear result. Preserve previous run context when this is a reissue.`;
+      }
+      if (group.kind === "pre") {
+        return `Prepare "${step.name}" before the agent run. Check whether the task can proceed, record any blocker, and keep the configured pipeline state visible.`;
+      }
+      if (step.name === "Build/test gate") {
+        return "Evaluate whether available test output is sufficient. If tests cannot run, produce an explicit blocker instead of treating absence as pass.";
+      }
+      if (group.kind === "tool") {
+        return `Run or verify "${step.name}" using captured task evidence. Return status, duration, token use if applicable, and any artifact paths that support the result.`;
+      }
+      if (group.kind === "aspect") {
+        return `Review "${step.name}" for this task. Return a concise pass/fail judgment, cite evidence, and list concerns that should block release.`;
+      }
+      if (group.kind === "decision") {
+        return `Decide whether the current task state can proceed. Consider pipeline status, test evidence, open items, and commit evidence before producing the verdict.`;
+      }
+      if (group.kind === "drift") {
+        return `Check "${step.name}" for terminology or documentation drift. Report whether the task changed project knowledge, architecture language, or task semantics.`;
+      }
+      return `Inspect "${step.name}" and return a structured step result with status, timing, evidence, concerns, and next action.`;
+    }
+
+    function docsText(group, step) {
+      if (step.docs) return step.docs;
+      if (step.name.includes("Documentation")) return "Docs: docs/wiki, docs/development, README.md. Check whether user-facing and agent-facing references stayed in sync.";
+      if (step.name.includes("Tests")) return "Docs: backend.Tests conventions, frontend test guide, and task evidence policy.";
+      if (group.kind === "decision") return "Docs: orchestrator final verdict contract and release policy.";
+      if (group.kind === "drift") return "Docs: drift rules for ADR, architecture, marketing, task, and job terminology.";
+      return "Docs: pipeline step contract, task lifecycle, and local project instructions.";
+    }
+
+    function resultText(group, step) {
+      if (step.result) return step.result;
+      if (step.status === "passed") return `${step.name} completed successfully. Evidence can be inspected from this detail layer.`;
+      if (step.status === "failed") return `${step.name} failed. The run should not proceed without resolving or explicitly escalating this result.`;
+      if (step.status === "blocked") return `${step.name} produced a blocker. Human review is required before release.`;
+      return "";
+    }
+
+    function concernsForStep(group, step) {
+      if (step.concerns) return step.concerns;
+      if (currentScenarioKey === "blocked" && step.name === "Tests and evidence") {
+        return [
+          "Integration tests could not be located at the expected project path.",
+          "Header setup for merge endpoint tests is still unresolved."
+        ];
+      }
+      if (currentScenarioKey === "blocked" && step.name === "Final orchestrator review") {
+        return ["Final verdict cannot release without verified test evidence."];
+      }
+      if (currentScenarioKey === "sparse" && step.name === "Build/test gate") {
+        return ["Referenced artifact is missing, so the recovered run cannot prove test status."];
+      }
+      if (step.status === "failed" || step.status === "blocked") return [statusDetail(step)];
+      return [];
+    }
+
+    function isStepDimmed(step) {
+      if (pipelineFilter === "attention") return !["failed", "blocked", "pending", "running"].includes(step.status);
+      if (pipelineFilter === "active") {
+        const active = scenario().activeSteps || [];
+        return !active.includes(step.name) && !["failed", "blocked", "running"].includes(step.status);
+      }
+      return false;
+    }
+
+    function statusIcon(status) {
+      if (status === "passed") return "";
+      if (status === "failed") return "x";
+      return "";
+    }
+
+    function statusDetail(step) {
+      if (step.detail) return step.detail;
+      return {
+        passed: "Completed",
+        failed: "Failed in current run",
+        blocked: "Needs human decision",
+        running: "Running now",
+        disabled: "Disabled by config",
+        skipped: "Skipped",
+        locked: "Locked until earlier step completes",
+        pending: "Waiting for earlier step"
+      }[step.status] || "Pending";
+    }
+
+    function metricDetail(step) {
+      if (step.metric) return step.metric;
+      if (step.status === "disabled") return "Disabled by config";
+      if (step.time === "-") return "";
+      if (step.status === "passed") return `Completed - ${step.time}`;
+      return statusDetail(step);
+    }
+
+    function openStepModal(id, action = "details") {
+      const record = renderedStepLookup.get(id);
+      if (!record) return;
+
+      const { group, step } = record;
+      const access = stepAccess(group, step);
+      const status = scenario().status || {};
+      const timing = stepTiming(group, step);
+      document.getElementById("stepModalTitle").textContent = step.name;
+      document.getElementById("stepModalSubtitle").textContent = `${kindLabel(group.kind)} - ${statusDetail(step)} - ${timing.duration || "no duration yet"}`;
+      document.getElementById("stepModalBody").innerHTML = `
+        <section class="detail-grid">
+          ${detailStat("Status", step.status)}
+          ${detailStat("Duration", timing.duration || "-")}
+          ${detailStat("Start", timing.startedAt || "-")}
+          ${detailStat("End", timing.endedAt || "-")}
+          ${detailStat("Tokens", stepTokenDisplay(group, step) || "-")}
+          ${detailStat("Owner", status.owner || "-")}
+          ${detailStat("Agent", status.agent || "-")}
+          ${detailStat("Run", stepRunModalLabel(step))}
+        </section>
+        ${runHistorySection(step)}
+        ${detailSection("Prompt", access.prompt || "No prompt is attached to this step.", "prompt")}
+        ${detailSection("Docs", access.docs || "No documentation link is attached to this step.")}
+        ${access.result ? detailSection("Result", access.result) : ""}
+        ${detailSection("Concerns", access.concerns.length ? access.concerns : ["No concerns recorded for this step."], "list")}
+        ${detailSection("Activity", `Last activity: ${status.lastActivity || "-"}\nAgent: ${status.agent || "-"}\nLane: ${status.lane || "-"}\nOpened from: ${action}`, "block")}
+      `;
+      document.getElementById("stepModal").hidden = false;
+      document.getElementById("closeStepModal").focus();
+    }
+
+    function detailStat(label, value) {
+      return `
+        <div class="detail-stat">
+          <span>${escapeHtml(label)}</span>
+          <strong>${escapeHtml(value)}</strong>
+        </div>
+      `;
+    }
+
+    function runHistorySection(step) {
+      const runs = step.runs || [];
+      if (!runs.length) return "";
+      return `
+        <section class="detail-section">
+          <h3>Run history</h3>
+          <div class="run-history">
+            ${runs.map((run, index) => {
+              const timing = runTiming(run, index, runs);
+              return `
+              <div class="run-history-row" data-tone="${escapeAttribute(run.tone || "muted")}">
+                <span>${escapeHtml(run.label)}</span>
+                <span>${escapeHtml(run.status || "-")}</span>
+                <span>${escapeHtml(timing.duration || "-")}</span>
+                <span>${escapeHtml(run.tokens || "-")}</span>
+                <span title="${escapeAttribute(timing.startedAt || "-")}">${escapeHtml(shortDateTime(timing.startedAt) || "-")}</span>
+                <span title="${escapeAttribute(timing.endedAt || "-")}">${escapeHtml(shortDateTime(timing.endedAt) || "-")}</span>
+                <span>${escapeHtml(run.summary || "")}</span>
+              </div>
+            `;
+            }).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function stepRunModalLabel(step) {
+      const runs = step.runs || [];
+      if (runs.length) return `${runs.length} ${plural(runs.length, "run")}`;
+      const scenarioRuns = scenario().pipelineRuns || [];
+      if (scenarioRuns.length) return (scenarioRuns.find((run) => run.current) || scenarioRuns[scenarioRuns.length - 1]).label;
+      return "no run";
+    }
+
+    function shortDateTime(value) {
+      const text = String(value || "");
+      if (text === "running now") return text;
+      const match = text.match(/\b\d{1,2}:\d{2}\s(?:AM|PM)\b/i);
+      return match ? match[0].toUpperCase() : text;
+    }
+
+    function detailSection(title, content, kind = "text") {
+      const kindAttribute = kind ? ` data-kind="${escapeAttribute(kind)}"` : "";
+      const body = detailSectionBody(content, kind);
+      return `
+        <section class="detail-section"${kindAttribute}>
+          <h3>${escapeHtml(title)}</h3>
+          ${body}
+        </section>
+      `;
+    }
+
+    function detailSectionBody(content, kind) {
+      if (kind === "prompt" || kind === "block") {
+        return `<pre class="detail-block">${escapeHtml(content)}</pre>`;
+      }
+      if (kind === "list") {
+        const items = Array.isArray(content) ? content : [content];
+        return `<ul class="detail-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+      }
+      return `<p class="detail-copy">${escapeHtml(content).replaceAll("\n", "<br>")}</p>`;
+    }
+
+    function closeStepModal() {
+      document.getElementById("stepModal").hidden = true;
+    }
+
+    function renderProtocol() {
+      const protocol = scenario().protocol;
+      const root = document.getElementById("protocolContent");
+
+      if (protocol.empty) {
+        root.innerHTML = `
+          <section class="empty-state">
+            <strong>${escapeHtml(protocol.empty.title)}</strong>
+            <span>${escapeHtml(protocol.empty.text)}</span>
+          </section>
+        `;
+        return;
+      }
+
+      root.innerHTML = `
+        <section class="blocker" data-tone="${escapeAttribute(protocol.banner.tone)}">
+          <span class="blocker-title">${escapeHtml(protocol.banner.title)}</span>
+          <span class="blocker-text">${escapeHtml(protocol.banner.text)}</span>
+          <span class="pill">${escapeHtml(protocol.banner.pill)}</span>
+        </section>
+
+        <div class="generated">${escapeHtml(protocol.generated)}</div>
+
+        ${protocol.sections.map((section) => `
+          <section class="doc-section">
+            <h2>${escapeHtml(section.title)}</h2>
+            <ul>
+              ${section.items.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </section>
+        `).join("")}
+      `;
+    }
+
+    function renderCommits() {
+      const commits = scenario().commits;
+      const root = document.getElementById("commitsContent");
+      document.getElementById("commitsTitle").textContent = commits.title;
+
+      if (commits.empty) {
+        root.innerHTML = `
+          <section class="empty-state">
+            <strong>${escapeHtml(commits.empty.title)}</strong>
+            <span>${escapeHtml(commits.empty.text)}</span>
+          </section>
+        `;
+        return;
+      }
+
+      const release = commits.release ? `
+        <section class="release-card">
+          <div class="commit-title">${escapeHtml(commits.release.title)}</div>
+          <div class="commit-chain">
+            ${commits.chain.map((line) => `
+              <div class="commit-line">
+                <span class="sha">${escapeHtml(line.sha)}</span>
+                <span class="branch">${escapeHtml(line.branch)}</span>
+                <span>${escapeHtml(line.text)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      ` : "";
+
+      const files = commits.files?.length ? `
+        <section class="file-list" aria-label="Changed file groups">
+          ${commits.files.map(([path, stats]) => `
+            <div class="file-row">
+              <span class="file-path">${escapeHtml(path)}</span>
+              <span class="file-stats">${escapeHtml(stats)}</span>
+            </div>
+          `).join("")}
+        </section>
+      ` : "";
+
+      const diff = commits.diff ? `
+        <section class="diff-card">
+          <header class="diff-head">
+            <span>${escapeHtml(commits.diff.title)}</span>
+            ${chipHtml(commits.diff.pill, "pill")}
+          </header>
+          <div class="diff-lines" aria-label="Diff preview">
+            ${commits.diff.lines.map(([kind, number, text]) => `
+              <div class="diff-line"${kind ? ` data-kind="${escapeAttribute(kind)}"` : ""}>
+                <span class="line-no">${escapeHtml(number)}</span>
+                <span class="line-text">${escapeHtml(text)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      ` : `
+        <section class="empty-state">
+          <strong>Diff unavailable</strong>
+          <span>The task has commit metadata, but no line-by-line artifact was captured.</span>
+        </section>
+      `;
+
+      root.innerHTML = `${release}${files}${diff}`;
+    }
+
+    function updateLayout() {
+      document.querySelectorAll("[data-panel]").forEach((panel) => {
+        if (!panel.classList.contains("panel-toggle") && !panel.classList.contains("hide-panel")) {
+          const key = panel.dataset.panel;
+          panel.dataset.hidden = String(!visible[key]);
+        }
+      });
+
+      document.querySelectorAll(".panel-toggle").forEach((button) => {
+        button.setAttribute("aria-pressed", String(visible[button.dataset.panel]));
+      });
+
+      const columns = [];
+      if (visible.overview) columns.push("minmax(330px, 0.78fr)");
+      if (visible.protocol) columns.push("minmax(420px, 1.1fr)");
+      if (visible.commits) columns.push("minmax(360px, 0.9fr)");
+      layout.style.gridTemplateColumns = columns.length ? columns.join(" ") : "1fr";
+    }
+
+    function setPreset(name) {
+      if (name === "balanced") {
+        visible.overview = true;
+        visible.protocol = true;
+        visible.commits = true;
+      } else if (name === "review") {
+        visible.overview = true;
+        visible.protocol = true;
+        visible.commits = false;
+      } else if (name === "evidence") {
+        visible.overview = false;
+        visible.protocol = true;
+        visible.commits = true;
+      }
+      document.querySelectorAll(".preset").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.preset === name));
+      });
+      updateLayout();
+    }
+
+    function renderWorkbench() {
+      renderScenarioTabs();
+      renderScenarioMeta();
+      renderTopState();
+      renderTaskContext();
+      ensureDefaultCollapsedGroups();
+      renderPipelineRuns();
+      renderPipeline();
+      renderProtocol();
+      renderCommits();
+    }
+
+    document.querySelectorAll(".panel-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const key = button.dataset.panel;
+        visible[key] = !visible[key];
+        document.querySelectorAll(".preset").forEach((preset) => {
+          preset.setAttribute("aria-pressed", "false");
+        });
+        updateLayout();
+      });
+    });
+
+    document.querySelectorAll(".hide-panel").forEach((button) => {
+      button.addEventListener("click", () => {
+        visible[button.dataset.panel] = false;
+        document.querySelectorAll(".preset").forEach((preset) => {
+          preset.setAttribute("aria-pressed", "false");
+        });
+        updateLayout();
+      });
+    });
+
+    document.querySelectorAll(".preset").forEach((button) => {
+      button.addEventListener("click", () => setPreset(button.dataset.preset));
+    });
+
+    document.getElementById("closeStepModal").addEventListener("click", closeStepModal);
+
+    document.getElementById("stepModal").addEventListener("click", (event) => {
+      if (event.target.id === "stepModal") closeStepModal();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeStepModal();
+    });
+
+    document.querySelectorAll(".panel-mode-tabs, .task-subnav").forEach((tabGroup) => {
+      tabGroup.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        tabGroup.querySelectorAll("button").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+      });
+    });
+
+    renderWorkbench();
+    updateLayout();
+  </script>
+</body>
+</html>

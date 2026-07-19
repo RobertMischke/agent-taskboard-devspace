@@ -1,0 +1,327 @@
+<title>Agent-Chat Composer — Modell, Settings &amp; Kontext</title>
+<style>
+  :root {
+    --page-bg: #f3f2ef;
+    --page-fg: #2b2926;
+    --page-muted: #6f6a63;
+    --page-card: #ffffff;
+    --page-border: #dcd9d4;
+
+    --studio-bg-editor: #ffffff;
+    --studio-bg-elevated: #f6f5f3;
+    --studio-bg-hover: #edebe7;
+    --studio-border: #d8d4ce;
+    --studio-fg: #2b2926;
+    --studio-fg-dim: #57534c;
+    --studio-fg-muted: #8a857d;
+    --studio-accent: #d97757;
+    --studio-on-accent: #ffffff;
+    --studio-warn: #b97e2e;
+    --studio-warn-bg: #f7ecd9;
+
+    --font-ui: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page-bg: #161514;
+      --page-fg: #d6d3cf;
+      --page-muted: #8f8b85;
+      --page-card: #1e1d1b;
+      --page-border: #33312e;
+
+      --studio-bg-editor: #1e1d1b;
+      --studio-bg-elevated: #262523;
+      --studio-bg-hover: #2e2c29;
+      --studio-border: #3a3835;
+      --studio-fg: #d6d3cf;
+      --studio-fg-dim: #b0aca5;
+      --studio-fg-muted: #8f8b85;
+      --studio-accent: #d97757;
+      --studio-on-accent: #1a120e;
+      --studio-warn: #e0a458;
+      --studio-warn-bg: #3a2f1e;
+    }
+  }
+  :root[data-theme="light"] {
+    --page-bg: #f3f2ef; --page-fg: #2b2926; --page-muted: #6f6a63; --page-card: #ffffff; --page-border: #dcd9d4;
+    --studio-bg-editor: #ffffff; --studio-bg-elevated: #f6f5f3; --studio-bg-hover: #edebe7; --studio-border: #d8d4ce;
+    --studio-fg: #2b2926; --studio-fg-dim: #57534c; --studio-fg-muted: #8a857d;
+    --studio-accent: #d97757; --studio-on-accent: #ffffff; --studio-warn: #b97e2e; --studio-warn-bg: #f7ecd9;
+  }
+  :root[data-theme="dark"] {
+    --page-bg: #161514; --page-fg: #d6d3cf; --page-muted: #8f8b85; --page-card: #1e1d1b; --page-border: #33312e;
+    --studio-bg-editor: #1e1d1b; --studio-bg-elevated: #262523; --studio-bg-hover: #2e2c29; --studio-border: #3a3835;
+    --studio-fg: #d6d3cf; --studio-fg-dim: #b0aca5; --studio-fg-muted: #8f8b85;
+    --studio-accent: #d97757; --studio-on-accent: #1a120e; --studio-warn: #e0a458; --studio-warn-bg: #3a2f1e;
+  }
+
+  body { background: var(--page-bg); color: var(--page-fg); font-family: var(--font-ui); margin: 0; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 96px; display: flex; flex-direction: column; gap: 40px; }
+
+  header h1 { font-size: 26px; font-weight: 650; margin: 0 0 8px; text-wrap: balance; }
+  header p { margin: 0; color: var(--page-muted); max-width: 65ch; line-height: 1.55; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--studio-accent); font-weight: 600; margin-bottom: 10px; }
+
+  .screen { border: 1px solid var(--page-border); border-radius: 10px; background: var(--page-card); overflow: hidden; }
+  .screen__bar { display: flex; align-items: baseline; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--page-border); }
+  .screen__bar b { font-size: 13px; font-weight: 600; }
+  .screen__bar span { font-size: 12px; color: var(--page-muted); }
+  .screen__stage { padding: 28px 24px; background: var(--studio-bg-editor); }
+  .screen__note { padding: 12px 16px; border-top: 1px solid var(--page-border); font-size: 13px; color: var(--page-muted); line-height: 1.5; }
+  .screen__note b { color: var(--page-fg); font-weight: 600; }
+
+  /* ---------- Composer ---------- */
+  .composer { position: relative; border: 1px solid var(--studio-border); border-radius: 12px; background: var(--studio-bg-elevated); padding: 12px 14px 10px; max-width: 640px; margin: 0 auto; }
+  .composer__modes { display: flex; gap: 6px; margin-bottom: 10px; }
+  .mode-pill { font-size: 11px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--studio-border); color: var(--studio-fg-muted); background: transparent; }
+  .mode-pill--active { border-color: var(--studio-accent); color: var(--studio-accent); }
+  .composer__input { color: var(--studio-fg-muted); font-size: 14px; min-height: 44px; }
+  .composer__foot { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .composer__spacer { flex: 1; }
+
+  .icon-btn { width: 28px; height: 28px; border-radius: 8px; border: 1px solid transparent; display: inline-flex; align-items: center; justify-content: center; color: var(--studio-fg-muted); font-size: 16px; }
+  .icon-btn:hover { background: var(--studio-bg-hover); }
+
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--studio-border); color: var(--studio-fg-dim); background: transparent; cursor: default; }
+  .chip .caret { font-size: 9px; color: var(--studio-fg-muted); }
+  .chip--warn { color: var(--studio-warn); border-color: color-mix(in srgb, var(--studio-warn) 45%, transparent); background: var(--studio-warn-bg); }
+  .chip--model { color: var(--studio-fg); font-weight: 550; }
+  .chip--model .cli { color: var(--studio-fg-muted); font-weight: 400; }
+
+  .send-btn { width: 30px; height: 30px; border-radius: 999px; background: var(--studio-accent); color: var(--studio-on-accent); display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+
+  .ring { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--studio-fg-muted); font-family: var(--font-mono); }
+  .ring svg { display: block; }
+  .ring circle.track { stroke: var(--studio-border); }
+  .ring circle.fill { stroke: var(--studio-accent); stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; }
+
+  .callout { position: absolute; width: 18px; height: 18px; border-radius: 999px; background: var(--studio-accent); color: var(--studio-on-accent); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); }
+
+  /* ---------- Picker popover ---------- */
+  .popover { position: absolute; right: 8px; bottom: 52px; width: 320px; background: var(--studio-bg-elevated); border: 1px solid var(--studio-border); border-radius: 10px; box-shadow: 0 10px 32px rgba(0,0,0,0.35); padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+  .popover h4 { margin: 0; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--studio-fg-muted); font-weight: 600; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { font-size: 12px; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--studio-border); color: var(--studio-fg-dim); }
+  .pill--on { border-color: var(--studio-accent); color: var(--studio-accent); background: color-mix(in srgb, var(--studio-accent) 10%, transparent); font-weight: 550; }
+  .pill small { color: var(--studio-fg-muted); font-family: var(--font-mono); font-size: 10px; margin-left: 4px; }
+
+  /* ---------- Context popover ---------- */
+  .ctx { max-width: 360px; margin: 0 auto; background: var(--studio-bg-elevated); border: 1px solid var(--studio-border); border-radius: 10px; padding: 16px; }
+  .ctx__head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .ctx__head b { font-size: 14px; }
+  .ctx__head span { display: block; font-size: 11px; color: var(--studio-fg-muted); font-family: var(--font-mono); }
+  .ctx__row { display: grid; grid-template-columns: 110px 1fr 58px; align-items: center; gap: 10px; font-size: 12px; color: var(--studio-fg-dim); padding: 4px 0; }
+  .ctx__row em { font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--studio-fg-muted); text-align: right; font-variant-numeric: tabular-nums; }
+  .bar { height: 5px; border-radius: 3px; background: var(--studio-border); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--studio-accent); border-radius: 3px; }
+  .bar i.dim { opacity: 0.45; }
+  .ctx__foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 11px; color: var(--studio-fg-muted); }
+  .ctx__refresh { color: var(--studio-accent); font-weight: 550; }
+
+  /* ---------- Transcript notice ---------- */
+  .transcript { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: 78%; border-radius: 10px; padding: 9px 13px; font-size: 13px; line-height: 1.5; }
+  .msg--user { align-self: flex-end; background: color-mix(in srgb, var(--studio-accent) 14%, var(--studio-bg-elevated)); color: var(--studio-fg); }
+  .msg--agent { align-self: flex-start; background: var(--studio-bg-elevated); border: 1px solid var(--studio-border); color: var(--studio-fg-dim); }
+  .notice { display: flex; align-items: center; gap: 12px; color: var(--studio-fg-muted); font-size: 11.5px; font-family: var(--font-mono); }
+  .notice::before, .notice::after { content: ""; flex: 1; height: 1px; background: var(--studio-border); }
+  .notice b { color: var(--studio-fg-dim); font-weight: 600; }
+
+  /* ---------- Legend ---------- */
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th { text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--page-muted); font-weight: 600; padding: 8px 12px; border-bottom: 1px solid var(--page-border); }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--page-border); vertical-align: top; line-height: 1.45; }
+  td:first-child { font-family: var(--font-mono); color: var(--studio-accent); font-weight: 700; white-space: nowrap; }
+  .tag { display: inline-block; font-size: 10.5px; padding: 2px 8px; border-radius: 999px; font-weight: 600; white-space: nowrap; }
+  .tag--lib { background: color-mix(in srgb, var(--studio-accent) 15%, transparent); color: var(--studio-accent); }
+  .tag--app { background: var(--studio-bg-hover); color: var(--studio-fg-dim); border: 1px solid var(--studio-border); }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--page-border); border-radius: 10px; background: var(--page-card); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Mockup · @coding-agent/chat</div>
+    <h1>Agent-Chat Composer — Modell, Settings &amp; Kontext</h1>
+    <p>Die Modellauswahl wandert aus dem App-Frontend in die Chat-Library und sitzt — wie im Claude-Composer —
+    unten in der Eingabebox. Dazu kommen ein kompakter Kontext-Ring (gespeist aus der
+    CLI-<span style="font-family:var(--font-mono)">/context</span>-Abfrage) und eine Modellwechsel-Notiz im Verlauf.
+    Die bestehende Session-Telemetrie im Pane-Header bleibt unverändert.</p>
+  </header>
+
+  <!-- Screen A -->
+  <section class="screen">
+    <div class="screen__bar"><b>A — Composer, Ruhezustand</b><span>Modell, Kontext &amp; Settings kompakt in der Fußzeile</span></div>
+    <div class="screen__stage">
+      <div class="composer">
+        <div class="composer__modes">
+          <span class="mode-pill mode-pill--active">Continue</span>
+          <span class="mode-pill">Ask</span>
+        </div>
+        <div class="composer__input">Message the agent — Enter to send…</div>
+        <div class="composer__foot">
+          <span class="icon-btn">+</span>
+          <span class="chip chip--warn">⛨ Bypass permissions <span class="caret">▼</span></span>
+          <span class="composer__spacer"></span>
+          <span class="ring">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <circle class="track" cx="9" cy="9" r="7" fill="none" stroke-width="2.5"></circle>
+              <circle class="fill" cx="9" cy="9" r="7" fill="none" stroke-width="2.5" stroke-dasharray="16.7 44"></circle>
+            </svg>
+            38%
+          </span>
+          <span class="chip chip--model">✦ Opus 4.8 · Extra High <span class="cli">— Claude Code</span> <span class="caret">▼</span></span>
+          <span class="send-btn">↑</span>
+        </div>
+        <span class="callout" style="left:-9px; bottom:38px;">1</span>
+        <span class="callout" style="left:42px; bottom:-9px;">2</span>
+        <span class="callout" style="right:250px; bottom:-9px;">3</span>
+        <span class="callout" style="right:60px; bottom:-9px;">4</span>
+      </div>
+    </div>
+    <div class="screen__note"><b>Bleibt:</b> die Session-Telemetrie (Tokens/Turns/Modell) im Pane-Header bleibt unverändert —
+    die Fußzeile kommt additiv dazu. Auch die Mode-Pills oben im Composer bleiben wie bisher.</div>
+  </section>
+
+  <!-- Screen B -->
+  <section class="screen">
+    <div class="screen__bar"><b>B — Modell-Picker offen</b><span>gleiche drei Sektionen wie die heutige App-Komponente</span></div>
+    <div class="screen__stage" style="padding-top:180px;">
+      <div class="composer">
+        <div class="popover">
+          <div>
+            <h4>CLI</h4>
+            <div class="pill-row" style="margin-top:6px;">
+              <span class="pill pill--on">Claude Code</span>
+              <span class="pill">Codex</span>
+            </div>
+          </div>
+          <div>
+            <h4>Model</h4>
+            <div class="pill-row" style="margin-top:6px;">
+              <span class="pill">Fable 5</span>
+              <span class="pill pill--on">Opus 4.8</span>
+              <span class="pill">Sonnet 5</span>
+              <span class="pill">Haiku 4.5</span>
+            </div>
+          </div>
+          <div>
+            <h4>Level</h4>
+            <div class="pill-row" style="margin-top:6px;">
+              <span class="pill">Low</span>
+              <span class="pill">Medium</span>
+              <span class="pill">High</span>
+              <span class="pill pill--on">Extra High</span>
+            </div>
+          </div>
+        </div>
+        <div class="composer__input">Message the agent — Enter to send…</div>
+        <div class="composer__foot">
+          <span class="icon-btn">+</span>
+          <span class="chip chip--warn">⛨ Bypass permissions <span class="caret">▼</span></span>
+          <span class="composer__spacer"></span>
+          <span class="ring">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <circle class="track" cx="9" cy="9" r="7" fill="none" stroke-width="2.5"></circle>
+              <circle class="fill" cx="9" cy="9" r="7" fill="none" stroke-width="2.5" stroke-dasharray="16.7 44"></circle>
+            </svg>
+            38%
+          </span>
+          <span class="chip chip--model" style="border-color: var(--studio-accent);">✦ Opus 4.8 · Extra High <span class="caret">▲</span></span>
+          <span class="send-btn">↑</span>
+        </div>
+      </div>
+    </div>
+    <div class="screen__note"><b>Migration:</b> Sektionen und Verhalten 1:1 aus <span style="font-family:var(--font-mono)">app-cli-model-selector</span>
+    übernommen (CLI / Model / Level, ohne Kosten-Multiplikator). Die Library-Komponente bekommt den Katalog als Input — der Store bleibt in der App.
+    Der Katalog muss vorher vervollständigt werden, damit alle verfügbaren Modelle erscheinen (siehe Registry-Befund).</div>
+  </section>
+
+  <!-- Screen C -->
+  <section class="screen">
+    <div class="screen__bar"><b>C — Kontext-Popover</b><span>Klick auf den Ring; Daten aus der /context-Abfrage der CLI</span></div>
+    <div class="screen__stage">
+      <div class="ctx">
+        <div class="ctx__head">
+          <svg width="34" height="34" viewBox="0 0 18 18">
+            <circle cx="9" cy="9" r="7" fill="none" stroke="var(--studio-border)" stroke-width="2.5"></circle>
+            <circle cx="9" cy="9" r="7" fill="none" stroke="var(--studio-accent)" stroke-width="2.5" stroke-dasharray="16.7 44" stroke-linecap="round" transform="rotate(-90 9 9)"></circle>
+          </svg>
+          <div>
+            <b>Context — 38% used</b>
+            <span>76.400 / 200.000 tokens</span>
+          </div>
+        </div>
+        <div class="ctx__row">System prompt <span class="bar"><i style="width:12%"></i></span> <em>3.1k</em></div>
+        <div class="ctx__row">Tools &amp; MCP <span class="bar"><i style="width:24%"></i></span> <em>18.2k</em></div>
+        <div class="ctx__row">Messages <span class="bar"><i style="width:52%"></i></span> <em>55.1k</em></div>
+        <div class="ctx__row">Free <span class="bar"><i class="dim" style="width:62%"></i></span> <em>123.6k</em></div>
+        <div class="ctx__foot">
+          <span>via /context · refreshed 12 s ago</span>
+          <span class="ctx__refresh">⟳ Refresh</span>
+        </div>
+      </div>
+    </div>
+    <div class="screen__note"><b>Quelle:</b> der bestehende Endpoint <span style="font-family:var(--font-mono)">POST /api/tasks/{jobId}/context-usage/refresh</span>
+    liefert den Snapshot bereits — neu ist nur die kompakte Ring-Anzeige im Composer statt der Anzeige über dem Chat.</div>
+  </section>
+
+  <!-- Screen D -->
+  <section class="screen">
+    <div class="screen__bar"><b>D — Modellwechsel im Verlauf</b><span>zentrierte Notiz-Zeile, kein Bubble</span></div>
+    <div class="screen__stage">
+      <div class="transcript">
+        <div class="msg msg--user">Refactor the retry logic in the runner, keep the backoff curve.</div>
+        <div class="msg msg--agent">Done — extracted <span style="font-family:var(--font-mono)">RetryPolicy</span>, all 34 tests green.</div>
+        <div class="notice">Model changed: Sonnet 5 → <b>Opus 4.8 · Extra High</b></div>
+        <div class="msg msg--user">Now design the migration plan for the queue.</div>
+      </div>
+    </div>
+    <div class="screen__note"><b>Rendering:</b> neuer Notiz-Typ in der Library (zentrierte Divider-Zeile). Wird bei jedem Commit
+    des Pickers und bei serverseitigen Modellwechseln in den Verlauf geschrieben.</div>
+  </section>
+
+  <!-- Legend -->
+  <section>
+    <div class="eyebrow">Zuordnung</div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Nr</th><th>Control</th><th>Herkunft</th><th>Daten</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Attach-Button (bestehend)</td>
+            <td><span class="tag tag--lib">Library · vorhanden</span></td>
+            <td>unverändert</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Permission-Control („Bypass permissions“ / „Full access“)</td>
+            <td><span class="tag tag--lib">Library · neu</span></td>
+            <td>Modes als Input, Commit-Event an Host; Durchreichung an die CLI ggf. via cli-runner-Anpassung</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Kontext-Ring + Popover</td>
+            <td><span class="tag tag--lib">Library · neu</span></td>
+            <td><span style="font-family:var(--font-mono)">ContextUsageSnapshot</span> als Input, Refresh-Event an Host</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Modell-Picker (CLI / Model / Level)</td>
+            <td><span class="tag tag--lib">Library · migriert</span></td>
+            <td>Katalog als Input (<span style="font-family:var(--font-mono)">CliModelInfo[]</span>), Commit-Event an Host</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>Modellwechsel-Notiz im Verlauf</td>
+            <td><span class="tag tag--lib">Library · neu</span></td>
+            <td>Notiz-Message vom Host eingefügt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
