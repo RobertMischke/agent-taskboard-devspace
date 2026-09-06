@@ -1,0 +1,33 @@
+{
+  "name": "@voice/review",
+  "version": "0.1.0",
+  "description": "Framework-independent local text review overlays and feedback client for Voice Studio",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./standalone": "./dist/voice-review.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LIVE-BRIDGE.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node build.mjs",
+    "test": "npm run build && node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "jsdom": "^26.1.0",
+    "typescript": "~5.8.3"
+  },
+  "dependencies": {
+    "@voice/contracts": "0.1.0"
+  }
+}

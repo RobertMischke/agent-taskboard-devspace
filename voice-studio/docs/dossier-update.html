@@ -1,0 +1,120 @@
+<!-- voice-studio:current:start -->
+<section class="box accent" id="voice-studio-current">
+  <h4>2026-09-06: Voice Studio Preview 0.2 — live applications and source folders</h4>
+  <p>The operator's feedback changed the main workflow: stronger contrast and larger
+  controls, clearer reports, and browsing the real running website. Angular projects
+  now connect their original development server and associate routes with content
+  modules and component context. Markdown projects use folder navigation.</p>
+  <p>Open <a href="http://127.0.0.1:5188">Voice Studio</a>. The expanded
+  <a href="http://127.0.0.1:5189/index.html">Quality Studio example website</a>
+  runs on its own local origin with eleven HTML pages, original styles/scripts,
+  native navigation, FAQ, contact-form behaviour, a saved checklist and an imprint
+  for the local example. No fictional public business identity is claimed.</p>
+  <p>The real <a href="http://127.0.0.1:4184/?voice-studio=1">Agent Studio Angular
+  website</a> is also onboarded: 27 route mappings, original TypeScript content
+  modules and explicit shared-component context. Its copy is unchanged by onboarding.
+  Studio never treats a copied render as the editable Angular source.</p>
+</section>
+
+<h3>Two entry points and their sources</h3>
+<table><thead><tr><th>Project</th><th>What the user browses</th><th>What a fix changes</th></tr></thead><tbody>
+  <tr><td>Angular application</td><td>The original local development server, with routing, styles, scripts and normal interactions</td><td>The mapped TypeScript content literal or supported template source; component references stay attached to the review</td></tr>
+  <tr><td>Static website</td><td>The site's actual local HTTP responses and native links</td><td>The original HTML file, through a reviewed version-checked source diff</td></tr>
+  <tr><td>Markdown project</td><td>Folders, subfolders and the selected file's rendered content</td><td>The actual Markdown file; surrounding supported formatting and links are preserved</td></tr>
+</tbody></table>
+<p>The framework-independent <code>@voice/review</code> library is shared by these
+surfaces. Solid underlines show supplied findings; dotted underlines show human
+feedback. Selection works on unmarked, safely mapped text. The browser bridge uses
+an explicitly configured local project origin, exact sender-window checks and
+versioned page/review messages. Studio bearer credentials never cross into the site.</p>
+<p><code>voice.config.json</code> declares <code>liveUrl</code>, included
+<code>sourceFiles</code>, route-to-file mappings and <code>sourceContexts</code>.
+The Agent Studio pilot reads 30 TypeScript content files; a read-only adapter check
+found 1,770 prose units. Imports, code, technical strings and interpolated templates
+are excluded. Component context is explicit and bounded; this is not a complete
+automatically inferred Angular dependency graph.</p>
+
+<h3>Review, feedback and implementation</h3>
+<p>Browse → mark text → save feedback beside the source → inspect local or semantic
+findings → prepare a replacement → review the full source diff → explicitly apply
+→ verify the changed running app or file. File/project reports cover the supported
+source inventory and declare exclusions. Feedback, proposals and run history persist
+in project metadata; stale versions cannot silently overwrite newer source.</p>
+<p>The TypeScript adapter parses an AST without executing website code and preserves
+literal delimiters, escaping and Unicode. A source proposal remains one bounded
+file span. Syntax validation does not replace the website's Angular build/typecheck.
+Multi-file component changes remain a broader implementation task requiring their
+own affected-file plan and verification.</p>
+
+<h3>Semantic review uses the Coding-Agent-Runner</h3>
+<p><b>The tool boundary is implemented through <code>CodingAgentRunner</code> 0.7.0.</b>
+The explicit semantic-review action starts a configured local CLI route. The Runner
+receives a staged source snapshot, mapped units, feedback and bounded component
+context with read-only permission, clean context and delegation disabled. It returns
+structured findings with exact quote/span references and reasoning. It cannot apply
+source changes. Running, completed, failed, cancelled and stale results
+are stored and shown separately. Incomplete output fails validation and carries
+an explicit error instead of appearing as a complete review.</p>
+<p>There is no model call during page opening or ordinary lint. A configured route
+is visible before starting; semantic review can use the operator's existing CLI
+account. Execution is not an automatic claim of Voice qualification, cost approval
+by Token Economy or a proven best model. Integration tests use fake Runner streams;
+their success must not be presented as a real model benchmark.</p>
+
+<h3>Which models should Voice know?</h3>
+<p><b>Voice owns task-specific editorial qualification and preference.</b> Token
+Economy owns the existing catalogue, model identities, capacity/cost knowledge and
+routing policy. The host owns configuration, credentials, admission and execution.
+The Runner is the execution mechanism, not another model-quality catalogue.</p>
+<table><thead><tr><th>Role</th><th>Model requirement</th><th>Evidence</th></tr></thead><tbody>
+  <tr><td>Fixed rules, reports, feedback and manual proposals</td><td>No LLM</td><td>Concrete source spans and deterministic checks</td></tr>
+  <tr><td>Semantic review</td><td>Explicit provisional Runner route until qualified</td><td>Finding precision, useful reasoning, missed issues and factual preservation</td></tr>
+  <tr><td>Rewrite proposal</td><td>Qualify separately by language and voice profile</td><td>Blinded preference, preserved meaning and unsupported additions</td></tr>
+  <tr><td>Angular/source implementation</td><td>Existing host admission and correctness floors; may differ from the writing model</td><td>Affected source/components, diff and build/tests</td></tr>
+  <tr><td>Verification</td><td>Deterministic checks and human evidence; optional independent semantic review</td><td>A generator cannot certify its own output</td></tr>
+</tbody></table>
+<p>The existing host-policy baseline <code>gpt-5.6-sol / medium</code> is a starting
+comparison, not a Voice winner. Resolve exact candidate/model/effort routes through
+the catalogue; evaluate alternatives in held-out DE/EN comparisons. Prefer a cheaper
+qualified equivalent when evidence supports it. Measure cost and latency per accepted
+improvement, including retries. Qualification storage, benchmark execution and the
+tested Token Economy admission adapter remain planned.</p>
+<p>Token Economy's current benchmark-cohort selector does not universally certify
+every baseline or operator pin for Voice. A future Voice admission check must validate
+the selected route before launch. Pins remain explicit operator decisions; unqualified
+routes remain experiments. Voice does not silently override routing or fabricate
+complexity scores to force a preferred model.</p>
+
+<h3>The dossier's own introduction is a review case</h3>
+<p>The title “Voice Lint concept revision” and the paragraph beginning “Research and
+analysis behind a sober public voice…” produce <b>zero local-rule findings</b> in
+the current engine. That is not an editorial pass. The text foregrounds internal
+concepts, metrics and enforcement mechanisms before explaining what a reader can do.</p>
+<p>A user-facing alternative is <b>“Texte auf der Website prüfen und verbessern”</b>:
+“Voice Studio öffnet deine laufende Website. Du markierst Textstellen, speicherst
+Feedback und prüfst vorgeschlagene Änderungen, bevor sie in den Quelltext übernommen
+werden.” This is a proposed editorial rewrite, not a measured model result.</p>
+
+<h3>Verification and remaining boundaries</h3>
+<p id="voice-v02-verification">Verified on 2026-09-06: the Angular frontend and
+.NET backend build successfully; 22 library tests, 81 backend assertions,
+30 fake-Runner checks and 12 asynchronous UI-state checks pass. Integrated Chrome
+tests cover native website scripts/navigation/history, actual Angular SPA routing
+and source/component mapping, Markdown folders, durable feedback, reviewed source
+diffs, real-file application and reload. API checks cover authentication, origin
+rejection, Unicode, idempotency and stale-version rejection. Sixteen responsive
+screens at 1440, 736 and 360 pixels have no document overflow; measured normal
+Studio text meets 4.5:1 contrast. No real model was invoked. The real Angular
+project's 30 files load in about 3.3 seconds cold and 0.8 seconds warm on the local
+test machine; these are local observations, not a service guarantee.</p>
+<p>Live review is limited to configured local development servers. Sites that block
+iframe embedding need a development frame policy or ordinary browsing in their own
+tab. Ambiguous/dynamic text stays unassigned. Markdown remains a supported subset.
+Studio offsets are explicitly UTF-16; a future Voice Lint core adapter must convert
+the core's proposed code-point coordinates. Claims remain advisory and no numeric
+voice score is shown.</p>
+<p>Implementation and guides: <code>C:/Projects/agent-taskboard-devspace/voice-studio</code>,
+<code>docs/workflow.md</code>, <code>docs/runner-integration.md</code> and
+<code>docs/model-strategy.md</code>. Earlier dossier sections preserve historical
+research; this section is the current implementation record.</p>
+<!-- voice-studio:current:end -->

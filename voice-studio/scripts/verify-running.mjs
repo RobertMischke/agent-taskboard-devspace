@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
+import { readSession } from './session.mjs';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const before=await readSession(root);
+const duplicate=spawnSync('dotnet', [path.join(root,'backend/VoiceStudio.Api/bin/Debug/net10.0/VoiceStudio.Api.dll')], {cwd:root,encoding:'utf8',timeout:15000});
+assert.notEqual(duplicate.status,0,'Second instance must exit');
+assert.equal(duplicate.signal,null,'Second instance must not time out');
+assert(JSON.stringify(await readSession(root))===JSON.stringify(before),'Active credentials must be preserved');
+assert.equal((await fetch('http://127.0.0.1:5188/api/projects',{headers:{Authorization:`Bearer ${before.token}`}})).status,200);
+console.log('PASS concurrent launch preserves the active session; no credential values logged.');

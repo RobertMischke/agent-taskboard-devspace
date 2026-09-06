@@ -1,0 +1,1105 @@
+<header class="studio-header">
+  <a class="brand" href="/" aria-label="Voice Studio Startseite"
+    ><span class="brand-mark" aria-hidden="true"
+      ><i></i><i></i><i></i><i></i><i></i></span
+    ><span>voice<span class="brand-light"> studio</span></span></a
+  >
+  <div class="header-purpose">Lokale Textprüfung und Quelltextänderungen</div>
+  <div class="header-status">
+    <span class="status-dot" [class.connected]="connected()"></span
+    >{{ connected() ? "Lokale Sitzung" : "Lokal verbinden"
+    }}<span class="version">Preview 0.2</span>
+  </div>
+</header>
+
+@if (!connected()) {
+  <main class="welcome">
+    <section class="welcome-intro">
+      <div class="eyebrow">VOICE STUDIO</div>
+      <h1>Webseiten und Markdown prüfen</h1>
+      <p class="welcome-lead">
+        Webseiten und Markdown lesen, Textstellen markieren und Feedback direkt
+        im Projekt behalten. Mit einer Vorschau jeder Änderung am Quelltext.
+      </p>
+      <div class="specimen">
+        <span class="specimen-label">SO SIEHT REVIEW AUS</span>
+        <p>
+          Wir
+          <span class="sample-underline wording">revolutionieren</span> deinen
+          Workflow mit
+          <span class="sample-underline claims"
+            >garantiert besseren Ergebnissen</span
+          >.
+        </p>
+        <div class="specimen-note">
+          Unterstrichene Textstellen zeigen Befunde und Feedback.
+        </div>
+      </div>
+      <div class="welcome-features">
+        <span><b>01</b> Im Kontext lesen</span
+        ><span><b>02</b> Feedback speichern</span
+        ><span><b>03</b> Quelle verbessern</span>
+      </div>
+    </section>
+    <section class="pair-card">
+      <span class="local-badge">● NUR AUF DIESEM RECHNER</span>
+      <h2>Studio verbinden</h2>
+      <p>
+        Starte Voice Studio und gib den Verbindungscode aus dem Terminal ein.
+        Die Sitzung bleibt in diesem Browser-Tab.
+      </p>
+      <form (ngSubmit)="pair()">
+        <label for="pairing-code">Verbindungscode</label>
+        <input
+          id="pairing-code"
+          name="pairingCode"
+          [(ngModel)]="pairingCode"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Code aus dem Terminal"
+          [disabled]="busy()"
+          autofocus
+        />
+        <button
+          class="button primary wide"
+          type="submit"
+          [disabled]="busy() || !pairingCode.trim()"
+        >
+          {{ busy() ? "Verbinde …" : "Lokales Studio öffnen" }}
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
+      @if (error()) {
+        <p class="error-message" role="alert">{{ error() }}</p>
+      }
+      <p class="small-muted pair-note">
+        HTML und Markdown · Feedback als Metadatei · Ohne Cloud-Modell
+      </p>
+    </section>
+  </main>
+} @else {
+  <div class="studio-layout" [class.sidebar-collapsed]="sidebarCollapsed()">
+    @if (!sidebarCollapsed()) {
+      <aside class="project-sidebar" aria-label="Projekte und Dateien">
+        <div class="sidebar-heading">
+          <span class="eyebrow">ARBEITSRAUM</span
+          ><button
+            class="icon-button"
+            type="button"
+            title="Lokales Projekt öffnen"
+            aria-label="Lokales Projekt öffnen"
+            (click)="registrationOpen.set(!registrationOpen())"
+          >
+            +
+          </button>
+        </div>
+        @if (registrationOpen()) {
+          <form class="register-form" (ngSubmit)="registerProject()">
+            <label for="project-path">Lokaler Projektordner</label
+            ><input
+              id="project-path"
+              name="projectPath"
+              [(ngModel)]="projectPath"
+              placeholder="C:\Projekte\meine-webseite"
+              required
+            />
+            <label for="project-name"
+              >Name <span class="optional">optional</span></label
+            ><input
+              id="project-name"
+              name="projectName"
+              [(ngModel)]="projectName"
+              placeholder="Meine Webseite"
+            />
+            <button
+              class="button primary small wide"
+              [disabled]="busy() || !projectPath.trim()"
+            >
+              Projekt öffnen
+            </button>
+            <p class="small-muted">
+              Durchsucht HTML- und Markdown-Dateien. Dynamische Anwendungen
+              benötigen einen Quelltext-Adapter.
+            </p>
+          </form>
+        }
+        <div class="project-list">
+          @for (project of projects(); track project.id) {
+            <button
+              type="button"
+              class="project-button"
+              [class.active]="selectedProject()?.id === project.id"
+              [disabled]="busy()"
+              (click)="openProject(project)"
+            >
+              <span class="folder-icon" aria-hidden="true">◇</span
+              ><span
+                >{{ project.name
+                }}<small
+                  >{{ project.documentCount }}
+                  {{ project.documentCount === 1 ? "Datei" : "Dateien" }}</small
+                ></span
+              ><span class="chevron" aria-hidden="true">›</span>
+            </button>
+          }
+        </div>
+        @if (selectedProject(); as project) {
+          <div class="file-section-heading">
+            <span class="eyebrow">DATEIEN</span
+            ><span class="count">{{ documents().length }}</span>
+          </div>
+          <div class="folder-location">
+            <strong>/{{ folderPath() }}</strong>
+            @if (folderPath()) {
+              <button
+                type="button"
+                class="text-button"
+                (click)="parentFolder()"
+              >
+                ↑ Übergeordneter Ordner
+              </button>
+            }
+          </div>
+          <div class="file-list">
+            @for (folder of subfolders(); track folder.path) {
+              <button
+                type="button"
+                class="file-button folder-button"
+                (click)="folderPath.set(folder.path)"
+              >
+                <span aria-hidden="true">▸</span><span>{{ folder.name }}/</span>
+              </button>
+            }
+            @for (file of visibleFiles(); track file.id) {
+              <button
+                type="button"
+                class="file-button"
+                [class.active]="document()?.id === file.id"
+                [disabled]="busy()"
+                (click)="
+                  openDocument(file.id, tab() === 'project' ? 'preview' : tab())
+                "
+              >
+                <span class="file-type">{{
+                  file.format === "markdown" ? "M↓" : "〈〉"
+                }}</span
+                ><span class="file-name"
+                  >{{ file.path
+                  }}<small>{{ file.wordCount }} Wörter</small></span
+                >
+                @if (file.findingCount > 0) {
+                  <span class="file-count">{{ file.findingCount }}</span>
+                }
+              </button>
+            }
+          </div>
+          <div class="project-description">{{ project.description }}</div>
+        }
+        <div class="sidebar-footer">
+          <div>
+            <span class="status-dot connected"></span> Im lokalen Projekt
+            gespeichert
+          </div>
+          <p>Dein Feedback bleibt bei der Quelle.</p>
+        </div>
+      </aside>
+    }
+
+    <main class="workspace">
+      @if (error()) {
+        <div class="alert error" role="alert">
+          <span>{{ error() }}</span>
+          @if (stale() && document(); as current) {
+            <button
+              type="button"
+              (click)="openDocument(current.id)"
+              [disabled]="busy()"
+            >
+              Aktuellen Stand laden
+            </button>
+          }
+          <button
+            type="button"
+            class="dismiss"
+            aria-label="Fehler schließen"
+            (click)="error.set('')"
+          >
+            ×
+          </button>
+        </div>
+      }
+      @if (notice()) {
+        <div class="alert success" role="status">
+          <span>{{ notice() }}</span
+          ><button
+            type="button"
+            class="dismiss"
+            aria-label="Hinweis schließen"
+            (click)="notice.set('')"
+          >
+            ×
+          </button>
+        </div>
+      }
+      <div class="workspace-actions">
+        <button
+          class="button secondary"
+          type="button"
+          (click)="sidebarCollapsed.set(!sidebarCollapsed())"
+          [attr.aria-expanded]="!sidebarCollapsed()"
+        >
+          {{
+            sidebarCollapsed() ? "Projekte und Dateien" : "Dateien ausblenden"
+          }}
+        </button>
+        <span>{{ selectedProject()?.name }}</span>
+        <button
+          class="button secondary"
+          type="button"
+          (click)="reviewOpen.set(!reviewOpen())"
+          [attr.aria-expanded]="reviewOpen()"
+        >
+          {{ reviewOpen() ? "Review schließen" : "Review öffnen" }}
+        </button>
+      </div>
+      <div class="workspace-heading">
+        <div>
+          <div class="breadcrumb">
+            {{ selectedProject()?.name ?? "Arbeitsraum" }}<span>/</span
+            >{{
+              tab() === "project"
+                ? "Projektbericht"
+                : (document()?.path ?? "Dateien")
+            }}
+          </div>
+          <h1>
+            {{
+              tab() === "project"
+                ? "Projektbericht"
+                : (document()?.title ?? "Dein Projekt öffnen")
+            }}
+          </h1>
+        </div>
+        @if (document(); as current) {
+          <button
+            class="button secondary small refresh-button"
+            type="button"
+            [disabled]="busy() || loading()"
+            (click)="openDocument(current.id)"
+          >
+            <span aria-hidden="true">↻</span> Neu einlesen
+          </button>
+        }
+      </div>
+      <nav class="view-tabs" aria-label="Ansicht">
+        <button
+          type="button"
+          [class.active]="tab() === 'preview'"
+          (click)="changeTab('preview')"
+        >
+          {{ isLiveWebsite() ? "Website" : "Markdown" }}
+        </button>
+        <button
+          type="button"
+          [class.active]="tab() === 'source'"
+          (click)="changeTab('source')"
+        >
+          Quelltext
+        </button>
+        <button
+          type="button"
+          [class.active]="tab() === 'file'"
+          (click)="changeTab('file')"
+        >
+          Dateibericht
+          @if (document(); as current) {
+            <span>{{ current.findings.length }}</span>
+          }
+        </button>
+        <button
+          type="button"
+          [class.active]="tab() === 'project'"
+          (click)="changeTab('project')"
+        >
+          Projektbericht
+        </button>
+      </nav>
+
+      @if (loading()) {
+        <div class="loading-state" role="status">
+          <span class="loading-indicator"></span>Dateien werden eingelesen und
+          geprüft …
+        </div>
+      }
+
+      @if (!loading() && tab() === "project") {
+        @if (projectReport(); as report) {
+          <section class="report project-report">
+            <div class="report-intro">
+              <div class="eyebrow">PROJEKTBERICHT</div>
+              <h2>Dateien im Projekt</h2>
+              <p>
+                Befunde und menschliches Feedback über alle eingelesenen
+                Dateien. Die Zähler beschreiben Fundstellen, keine Bewertung
+                deiner Sprache.
+              </p>
+            </div>
+            <div class="metric-grid">
+              <div>
+                <strong>{{ report.documents.length }}</strong
+                ><span>Dateien</span>
+              </div>
+              <div>
+                <strong>{{ report.totalWords }}</strong
+                ><span>Wörter</span>
+              </div>
+              <div>
+                <strong>{{ report.findingCount }}</strong
+                ><span>Automatische Befunde</span>
+              </div>
+              <div>
+                <strong>{{ report.openFeedbackCount }}</strong
+                ><span>Offene Rückmeldungen</span>
+              </div>
+            </div>
+            <div class="report-card">
+              <h3>Dateien im Projekt</h3>
+              <div class="table-scroll">
+                <table class="file-table">
+                  <thead>
+                    <tr>
+                      <th>Datei</th>
+                      <th>Format</th>
+                      <th>Wörter</th>
+                      <th>Befunde</th>
+                      <th>Feedback</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (file of report.documents; track file.id) {
+                      <tr>
+                        <td>
+                          <strong>{{ file.path }}</strong
+                          ><small>{{ file.title }}</small>
+                        </td>
+                        <td>
+                          <span class="format-badge">{{
+                            file.format === "markdown"
+                              ? "MD"
+                              : file.format === "typescript"
+                                ? "TS"
+                                : "HTML"
+                          }}</span>
+                        </td>
+                        <td>{{ file.wordCount }}</td>
+                        <td>{{ file.findingCount }}</td>
+                        <td>{{ file.openFeedbackCount }}</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="text-button"
+                            (click)="openDocument(file.id, 'file')"
+                          >
+                            Prüfen ↗
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="report-two-columns">
+              <div class="report-card">
+                <h3>Nach Kategorie</h3>
+                @for (item of projectCategoryCounts(); track item.category) {
+                  <div class="report-count-row">
+                    <span
+                      ><i
+                        class="category-line"
+                        [attr.data-category]="item.category"
+                      ></i
+                      >{{ categoryLabel(item.category) }}</span
+                    ><strong>{{ item.count }}</strong>
+                  </div>
+                } @empty {
+                  <p class="small-muted">Keine automatischen Befunde.</p>
+                }
+              </div>
+              <div class="report-card">
+                <h3>Nach Regel</h3>
+                @for (item of projectRuleCounts(); track item.rule) {
+                  <div class="report-count-row">
+                    <code>{{ item.rule }}</code
+                    ><strong>{{ item.count }}</strong>
+                  </div>
+                } @empty {
+                  <p class="small-muted">Noch keine ausgelösten Regeln.</p>
+                }
+              </div>
+            </div>
+            <p class="coverage-note">
+              Aktuell prüft ein lokaler Regelkern ausgewählte sprachliche
+              Muster. Aussagen benötigen weiterhin fachliche Prüfung; eine
+              vollständige Faktenprüfung ist nicht angebunden.
+            </p>
+          </section>
+        }
+      } @else if (!loading() || (tab() === "preview" && isLiveWebsite())) {
+        @if (document(); as current) {
+          <div
+            class="document-workspace"
+            [class.review-collapsed]="!reviewOpen()"
+          >
+            <section class="document-pane" aria-label="Dokument">
+              @if (tab() === "preview" && isLiveWebsite()) {
+                @if (selectedProject(); as project) {
+                  <voice-live-browser
+                    [project]="project"
+                    [documents]="documents()"
+                    [detail]="reviewDocument()"
+                    [loading]="loading()"
+                    [activeFindingId]="activeFinding()?.id ?? null"
+                    (documentNavigate)="openDocument($event)"
+                    (selection)="selectText($event)"
+                    (finding)="liveFinding($event)"
+                    (feedback)="liveFeedback($event)"
+                    (saveUrl)="saveLiveUrl($event)"
+                    (sourceMatched)="setLiveMatch($event)"
+                  />
+                }
+              }
+              @if (tab() === "preview" && !isLiveWebsite()) {
+                <div class="preview-toolbar">
+                  <div class="browser-dots" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                  </div>
+                  <div class="preview-address">
+                    <span aria-hidden="true">⌑</span>{{ current.path }}
+                  </div>
+                  <span class="preview-format">{{
+                    current.format === "markdown"
+                      ? "Markdown"
+                      : current.format === "typescript"
+                        ? "TypeScript"
+                        : "HTML"
+                  }}</span>
+                </div>
+                <div class="preview-context">
+                  <span>{{
+                    current.format === "markdown"
+                      ? "Markdown aus der Quelldatei"
+                      : "Lokale Webseite · ohne Skripte"
+                  }}</span
+                  ><span
+                    >Text markieren, um Feedback zu geben
+                    <span aria-hidden="true">↗</span></span
+                  >
+                </div>
+                @if (previewMappingIssue()) {
+                  <div class="mapping-note" role="status">
+                    {{ previewMappingIssue() }}
+                  </div>
+                }
+                <iframe
+                  #previewFrame
+                  title="Dokumentvorschau mit Voice-Markierungen"
+                  sandbox="allow-same-origin"
+                  [srcdoc]="previewHtml()"
+                  (load)="previewLoaded()"
+                ></iframe>
+                <div class="preview-legend">
+                  @for (category of categories; track category.id) {
+                    <span
+                      ><i
+                        class="category-line"
+                        [attr.data-category]="category.id"
+                      ></i
+                      >{{ category.label }}</span
+                    >
+                  }
+                  <span
+                    ><i class="category-line feedback"></i>Dein Feedback</span
+                  >
+                </div>
+              }
+              @if (tab() === "source") {
+                <div class="source-toolbar">
+                  <span>{{ current.path }}</span
+                  ><span
+                    >{{
+                      current.format === "markdown"
+                        ? "Markdown"
+                        : current.format === "typescript"
+                          ? "TypeScript"
+                          : "HTML"
+                    }}
+                    · schreibgeschützte Ansicht</span
+                  >
+                </div>
+                <pre class="source-view"><code>{{ current.source }}</code></pre>
+                <div class="source-footer">
+                  Änderungen werden als Vorschlag vorbereitet und nach deiner
+                  Prüfung in diese Datei geschrieben.
+                </div>
+              }
+              @if (tab() === "file") {
+                <div class="report file-report">
+                  <div class="eyebrow">BERICHT ZUR GANZEN DATEI</div>
+                  <h2>Textstellen prüfen</h2>
+                  <p class="report-description">
+                    Alle erkannten Befunde dieser Datei, auch außerhalb des
+                    sichtbaren Ausschnitts.
+                  </p>
+                  <div class="metric-grid compact">
+                    <div>
+                      <strong>{{ current.wordCount }}</strong
+                      ><span>Wörter</span>
+                    </div>
+                    <div>
+                      <strong>{{ current.findings.length }}</strong
+                      ><span>Befunde</span>
+                    </div>
+                    <div>
+                      <strong>{{ feedbackTotal() }}</strong
+                      ><span>Offenes Feedback</span>
+                    </div>
+                  </div>
+                  <div class="coverage-card">
+                    <h3>Prüfabdeckung</h3>
+                    <p>
+                      <strong
+                        >{{ current.coverage.checkedUnits }} von
+                        {{ current.coverage.totalUnits }}</strong
+                      >
+                      Textabschnitten geprüft ·
+                      {{ current.coverage.excludedRegions }} Bereiche
+                      ausgeschlossen
+                    </p>
+                    @for (note of current.coverage.notes; track $index) {
+                      <p class="small-muted">{{ note }}</p>
+                    }
+                  </div>
+                  <div class="finding-list">
+                    @for (finding of current.findings; track finding.id) {
+                      <button
+                        class="finding-card"
+                        type="button"
+                        [class.selected]="activeFinding()?.id === finding.id"
+                        (click)="selectFinding(finding)"
+                      >
+                        <div class="finding-heading">
+                          <span
+                            ><i
+                              class="category-line"
+                              [attr.data-category]="finding.category"
+                            ></i
+                            >{{ categoryLabel(finding.category) }}</span
+                          >
+                        </div>
+                        <h3>{{ finding.message }}</h3>
+                        <blockquote>{{ finding.quote }}</blockquote>
+                        <p>{{ finding.explanation }}</p>
+                        <div class="finding-foot">
+                          <span
+                            >{{
+                              finding.severity === "error"
+                                ? "Prüfbedarf"
+                                : finding.severity === "warning"
+                                  ? "Hinweis"
+                                  : "Information"
+                            }} </span
+                          ><span>Textstelle öffnen →</span>
+                        </div>
+                      </button>
+                    } @empty {
+                      <div class="empty-card">
+                        <h3>Keine automatischen Befunde.</h3>
+                        <p>
+                          Du kannst in der Vorschau trotzdem jede Textstelle
+                          markieren und Feedback speichern.
+                        </p>
+                      </div>
+                    }
+                  </div>
+                  <div class="report-card">
+                    <h3>Alle Textabschnitte</h3>
+                    <p class="small-muted">
+                      Auch unauffällige Stellen lassen sich zur Überarbeitung
+                      auswählen.
+                    </p>
+                    @for (unit of current.units; track unit.id) {
+                      <button
+                        type="button"
+                        class="unit-row"
+                        (click)="
+                          selectText({
+                            unitId: unit.id,
+                            quote: unit.text,
+                            start: 0,
+                            end: unit.text.length,
+                          })
+                        "
+                      >
+                        <span
+                          >Zeile {{ sourceLine(unit.sourceSpan.start) }}</span
+                        >
+                        <p>{{ unit.text }}</p>
+                        <span aria-hidden="true">↗</span>
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+            </section>
+
+            @if (reviewOpen()) {
+              <aside class="review-panel" aria-label="Analyse und Feedback">
+                <div class="review-panel-heading">
+                  <div>
+                    <div class="eyebrow">DEVELOPER REVIEW</div>
+                    <h2>
+                      {{
+                        selected() ? "Diese Textstelle" : "Sprache im Detail"
+                      }}
+                    </h2>
+                  </div>
+                  <span class="count">{{ current.findings.length }}</span>
+                </div>
+                @if (componentContexts().length) {
+                  <details class="component-context">
+                    <summary>Komponenten und Textquelle</summary>
+                    <p>{{ current.path }}</p>
+                    @for (context of componentContexts(); track context) {
+                      <code>{{ context }}</code>
+                    }
+                  </details>
+                }
+                <div class="analysis-mode">
+                  <span class="status-dot connected"></span> Lokale Regeln ·
+                  kein LLM <span>Hinweise zur Prüfung</span>
+                </div>
+                @if (selected(); as selection) {
+                  <div class="selection-card">
+                    <div class="selection-heading">
+                      <span>{{
+                        activeFinding()
+                          ? "AUTOMATISCHER BEFUND"
+                          : activeFeedback()
+                            ? "DEIN FEEDBACK"
+                            : "DEINE AUSWAHL"
+                      }}</span
+                      ><button
+                        class="icon-button"
+                        type="button"
+                        aria-label="Auswahl schließen"
+                        (click)="clearSelection()"
+                      >
+                        ×
+                      </button>
+                    </div>
+                    <blockquote>{{ selection.quote }}</blockquote>
+                    <span class="small-muted"
+                      >{{ unitFor(selection.unitId)?.kind }} · Zeile
+                      {{
+                        sourceLine(
+                          unitFor(selection.unitId)?.sourceSpan?.start ?? 0
+                        )
+                      }}</span
+                    >
+                  </div>
+                  @if (activeFinding(); as finding) {
+                    <div class="finding-explanation">
+                      <span class="category-label"
+                        ><i
+                          class="category-line"
+                          [attr.data-category]="finding.category"
+                        ></i
+                        >{{ categoryLabel(finding.category) }}</span
+                      >
+                      <h3>{{ finding.message }}</h3>
+                      <p>{{ finding.explanation }}</p>
+                      <code>{{ finding.ruleId }}</code>
+                    </div>
+                  }
+                  @if (activeFeedback(); as feedback) {
+                    <div class="active-feedback">
+                      <span
+                        class="feedback-state"
+                        [attr.data-status]="feedback.status"
+                        >{{ statusLabel(feedback.status) }}</span
+                      >
+                      <p>{{ feedback.comment }}</p>
+                      @if (feedback.status === "needs_reattachment") {
+                        <p class="small-muted">
+                          Die Quelle hat sich verändert. Wähle die passende
+                          Textstelle in der Vorschau und speichere neues
+                          Feedback.
+                        </p>
+                      }
+                    </div>
+                  }
+                  <form class="panel-form" (ngSubmit)="saveFeedback()">
+                    <h3>Feedback festhalten</h3>
+                    <label for="feedback-category">Kategorie</label
+                    ><select
+                      id="feedback-category"
+                      name="feedbackCategory"
+                      [(ngModel)]="feedbackCategory"
+                    >
+                      @for (category of categories; track category.id) {
+                        <option [value]="category.id">
+                          {{ category.label }}
+                        </option>
+                      }</select
+                    ><label for="feedback-comment">Was soll sich ändern?</label
+                    ><textarea
+                      id="feedback-comment"
+                      name="feedbackComment"
+                      [(ngModel)]="feedbackComment"
+                      rows="3"
+                      placeholder="Was stört dich? Was soll der Text konkret sagen?"
+                    ></textarea
+                    ><button
+                      class="button primary wide"
+                      [disabled]="
+                        busy() || !feedbackComment.trim() || !canEditSelection()
+                      "
+                    >
+                      {{ busy() ? "Speichere …" : "Feedback speichern" }}
+                    </button>
+                    <p class="small-muted">
+                      Bleibt als Metadatei bei der Quelldatei.
+                    </p>
+                  </form>
+                  <form
+                    class="panel-form proposal-form"
+                    (ngSubmit)="createProposal()"
+                  >
+                    <div class="panel-section-heading">
+                      <h3>Änderung vorbereiten</h3>
+                      <span class="subtle-tag">Quelltext</span>
+                    </div>
+                    <label for="replacement">Vorgeschlagener Text</label
+                    ><textarea
+                      id="replacement"
+                      name="replacement"
+                      [(ngModel)]="replacement"
+                      (ngModelChange)="proposal.set(null)"
+                      rows="3"
+                      placeholder="Deine bessere Formulierung"
+                    ></textarea
+                    ><button
+                      class="button secondary wide"
+                      [disabled]="
+                        busy() ||
+                        replacement === selection.quote ||
+                        !canEditSelection()
+                      "
+                    >
+                      Quelltext-Diff erstellen <span aria-hidden="true">→</span>
+                    </button>
+                    <p class="small-muted">
+                      Regelbasierter Vorschlag oder eigene Formulierung. Es wird
+                      kein Modell aufgerufen.
+                    </p>
+                  </form>
+                } @else {
+                  <div class="selection-hint">
+                    <span class="selection-symbol" aria-hidden="true">I</span>
+                    <h3>Textstelle auswählen</h3>
+                    <p>
+                      Klicke auf eine Markierung oder wähle selbst Text aus.
+                      Auch ohne automatischen Befund.
+                    </p>
+                  </div>
+                  <div class="quick-findings">
+                    <div class="panel-section-heading">
+                      <h3>Automatische Befunde</h3>
+                      <button
+                        type="button"
+                        class="text-button"
+                        (click)="changeTab('file')"
+                      >
+                        Alle ansehen
+                      </button>
+                    </div>
+                    @for (
+                      finding of current.findings.slice(0, 6);
+                      track finding.id
+                    ) {
+                      <button
+                        class="quick-finding"
+                        type="button"
+                        (click)="selectFinding(finding)"
+                      >
+                        <i
+                          class="category-line"
+                          [attr.data-category]="finding.category"
+                        ></i
+                        ><span
+                          >{{ finding.message
+                          }}<small>„{{ finding.quote }}“</small></span
+                        ><span aria-hidden="true">↗</span>
+                      </button>
+                    } @empty {
+                      <p class="small-muted">
+                        Keine automatischen Befunde. Dein Urteil bleibt
+                        entscheidend.
+                      </p>
+                    }
+                  </div>
+                }
+                @if (proposal(); as diff) {
+                  <section class="proposal-diff">
+                    <div class="panel-section-heading">
+                      <h3>Änderung prüfen</h3>
+                      <span class="subtle-tag">{{ proposalStatus(diff) }}</span>
+                    </div>
+                    <div class="diff-block before">
+                      <span>− VORHER</span>
+                      <pre>{{ diff.sourceBefore }}</pre>
+                    </div>
+                    <div class="diff-block after">
+                      <span>+ NACHHER</span>
+                      <pre>{{ diff.sourceAfter }}</pre>
+                    </div>
+                    <p class="small-muted">{{ diff.reason }}</p>
+                    @if (diff.state === "applied") {
+                      <p class="proposal-history-note">
+                        Dieser Vorschlag wurde bereits in die Quelldatei
+                        übernommen.
+                      </p>
+                    } @else if (diff.expectedVersion !== current.version) {
+                      <p class="proposal-history-note">
+                        Die Quelle wurde seit diesem Vorschlag geändert.
+                        Erstelle einen neuen Vorschlag auf dem aktuellen Stand.
+                      </p>
+                    }
+                    <button
+                      type="button"
+                      class="button primary wide"
+                      [disabled]="busy() || !canApplyProposal()"
+                      (click)="applyProposal()"
+                    >
+                      In Quelldatei übernehmen
+                    </button>
+                    <p class="small-muted">
+                      Schreibt die Datei nur, wenn ihre Version unverändert ist.
+                      Feedback bleibt zur Nachprüfung erhalten.
+                    </p>
+                  </section>
+                }
+
+                <section class="saved-proposals">
+                  <div class="panel-section-heading">
+                    <h3>
+                      Gespeicherte Vorschläge
+                      <span class="count">{{ savedProposals().length }}</span>
+                    </h3>
+                  </div>
+                  @for (item of savedProposals(); track item.id) {
+                    <button
+                      type="button"
+                      class="history-proposal"
+                      [class.selected]="proposal()?.id === item.id"
+                      [disabled]="busy()"
+                      (click)="openSavedProposal(item)"
+                    >
+                      <span
+                        class="feedback-state"
+                        [attr.data-status]="
+                          item.state === 'applied'
+                            ? 'resolved'
+                            : item.expectedVersion !== current.version
+                              ? 'needs_recheck'
+                              : 'open'
+                        "
+                        >{{ proposalStatus(item) }}</span
+                      >
+                      <span class="history-quote">{{ item.before }}</span>
+                      <span class="history-replacement"
+                        >→ {{ item.replacement || "(Text entfernen)" }}</span
+                      >
+                      <span class="history-action"
+                        >Quelltext-Diff öffnen ↗</span
+                      >
+                    </button>
+                  } @empty {
+                    <p class="small-muted">
+                      Noch keine Vorschläge für diese Datei gespeichert.
+                    </p>
+                  }
+                </section>
+                <section class="saved-feedback">
+                  <div class="panel-section-heading">
+                    <h3>
+                      Gespeichertes Feedback
+                      <span class="count">{{ feedbackTotal() }}</span>
+                    </h3>
+                    <button
+                      class="text-button"
+                      type="button"
+                      (click)="showAllFeedback.set(!showAllFeedback())"
+                    >
+                      {{ showAllFeedback() ? "Nur offen" : "Alle" }}
+                    </button>
+                  </div>
+                  @for (feedback of feedbackList(); track feedback.id) {
+                    <article class="feedback-item">
+                      <button
+                        type="button"
+                        class="feedback-open"
+                        (click)="selectFeedback(feedback)"
+                      >
+                        <span
+                          class="feedback-state"
+                          [attr.data-status]="feedback.status"
+                          >{{ statusLabel(feedback.status) }}</span
+                        >
+                        <blockquote>{{ feedback.quote }}</blockquote>
+                        <p>{{ feedback.comment }}</p>
+                      </button>
+                      <div class="feedback-item-footer">
+                        <span>{{ categoryLabel(feedback.category) }}</span
+                        ><button
+                          class="text-button"
+                          type="button"
+                          [disabled]="busy()"
+                          (click)="
+                            setFeedbackStatus(
+                              feedback,
+                              feedback.status === 'resolved'
+                                ? 'open'
+                                : 'resolved'
+                            )
+                          "
+                        >
+                          {{
+                            feedback.status === "resolved"
+                              ? "Wieder öffnen"
+                              : "Erledigt markieren"
+                          }}
+                        </button>
+                      </div>
+                    </article>
+                  } @empty {
+                    <p class="small-muted">
+                      {{
+                        showAllFeedback()
+                          ? "Noch kein Feedback gespeichert."
+                          : "Kein offenes Feedback."
+                      }}
+                    </p>
+                  }
+                </section>
+                <form
+                  class="panel-form request-form"
+                  (ngSubmit)="saveRequest()"
+                >
+                  <div class="panel-section-heading">
+                    <h3>Verbesserungsauftrag</h3>
+                    <span class="subtle-tag">Lokal</span>
+                  </div>
+                  <p class="small-muted">
+                    {{
+                      activeFeedback()
+                        ? "Für die gewählte Rückmeldung."
+                        : "Für das offene Feedback dieser Datei."
+                    }}
+                    Der Auftrag wird für deinen weiteren Workflow gespeichert.
+                  </p>
+                  <label for="request-instruction">Arbeitsanweisung</label
+                  ><textarea
+                    id="request-instruction"
+                    name="requestInstruction"
+                    [(ngModel)]="requestInstruction"
+                    rows="2"
+                    placeholder="Zum Beispiel: Aussagen präzisieren und vorhandene Belege verwenden."
+                  ></textarea
+                  ><button
+                    class="button secondary wide"
+                    [disabled]="busy() || !requestInstruction.trim() || stale()"
+                  >
+                    Auftrag speichern
+                  </button>
+                  @if (lastRequest(); as request) {
+                    <p class="request-saved">
+                      ✓ Auftrag {{ request.id.slice(0, 8) }} gespeichert
+                    </p>
+                  }
+                  <p class="small-muted">
+                    Agent-Ausführung ist noch nicht angebunden.
+                  </p>
+                </form>
+
+                <section class="saved-requests">
+                  <div class="panel-section-heading">
+                    <h3>
+                      Gespeicherte Aufträge
+                      <span class="count">{{ savedRequests().length }}</span>
+                    </h3>
+                  </div>
+                  @for (request of savedRequests(); track request.id) {
+                    <article class="history-request">
+                      <div class="request-history-heading">
+                        <span class="feedback-state">{{
+                          requestStatus(request)
+                        }}</span
+                        ><time>{{
+                          request.createdAt | date: "dd.MM.yyyy, HH:mm"
+                        }}</time>
+                      </div>
+                      <p>{{ request.instruction }}</p>
+                      <div class="request-history-meta">
+                        <span
+                          >{{ request.feedbackIds.length }} Rückmeldungen</span
+                        ><code>{{ request.id.slice(0, 8) }}</code>
+                      </div>
+                      @if (request.expectedVersion !== current.version) {
+                        <p class="small-muted">
+                          Die Quelle wurde seit dem Auftrag geändert.
+                        </p>
+                      }
+                    </article>
+                  } @empty {
+                    <p class="small-muted">
+                      Noch keine Aufträge für diese Datei gespeichert.
+                    </p>
+                  }
+                </section>
+                <div class="review-footer">
+                  <span>Quelle {{ current.version.slice(0, 8) }}</span
+                  ><span>Review {{ current.reviewRevision }}</span>
+                </div>
+                <voice-semantic-review
+                  [projectId]="selectedProject()!.id"
+                  [document]="current"
+                  [api]="semanticApi"
+                  (chooseFinding)="selectFinding($event)"
+                  (findingsChange)="updateSemanticFindings($event)"
+                />
+              </aside>
+            }
+          </div>
+        } @else {
+          <section class="empty-workspace">
+            <h2>Projekt öffnen</h2>
+            <p>
+              Öffne links ein Beispiel oder einen lokalen Ordner mit HTML- und
+              Markdown-Dateien.
+            </p>
+            <button
+              type="button"
+              class="button primary"
+              (click)="registrationOpen.set(true)"
+            >
+              Projektordner öffnen
+            </button>
+          </section>
+        }
+      }
+    </main>
+  </div>
+}

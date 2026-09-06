@@ -1,0 +1,10 @@
+node_modules/
+**/dist/
+**/bin/
+**/obj/
+.voice-studio/
+test-results/
+examples/**/.voice-lint/
+.angular/
+frontend/.angular/
+*.log

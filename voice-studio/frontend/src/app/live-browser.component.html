@@ -1,0 +1,34 @@
+<form class="browser-toolbar" (ngSubmit)="openAddress()">
+  <div class="browser-navigation">
+    <button type="button" class="icon-button" aria-label="Website zurück" title="Zurück" (click)="history('back')" [disabled]="!bridgeReady()">←</button>
+    <button type="button" class="icon-button" aria-label="Website vor" title="Vor" (click)="history('forward')" [disabled]="!bridgeReady()">→</button>
+    <button type="button" class="icon-button" aria-label="Website neu laden" title="Neu laden" (click)="history('reload')" [disabled]="!currentUrl()">↻</button>
+  </div>
+  <label class="visually-hidden" for="website-address">Adresse der laufenden Website</label>
+  <input id="website-address" name="websiteAddress" [(ngModel)]="address" type="url" placeholder="http://127.0.0.1:4184/" autocomplete="off" spellcheck="false" required />
+  <button class="button primary" type="submit">Öffnen</button>
+  @if (currentUrl()) { <a class="button secondary" [href]="currentUrl()" target="_blank" rel="noopener noreferrer">Eigener Tab ↗</a> }
+  <button type="button" class="button secondary small" [attr.aria-pressed]="showMarks()" (click)="toggleMarks()">{{ showMarks() ? 'Markierungen an' : 'Markierungen aus' }}</button>
+</form>
+<div class="browser-status" role="status">
+  <span><i class="status-dot" [class.connected]="bridgeReady()"></i> {{ bridgeReady() ? "Live verbunden" : status() }}</span>
+  @if (matchedFile()) { <span class="browser-source">Quelle: <strong>{{ matchedFile() }}</strong></span> }
+</div>
+@if (frameUrl(); as url) {
+  <iframe #liveFrame class="live-frame" title="Laufende Website mit Voice Review" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" [src]="url" (load)="frameLoaded()"></iframe>
+} @else { <div class="browser-empty"><h2>Deine Website im Studio öffnen</h2><p>Starte den lokalen Entwicklungsserver deiner Website und trage oben seine Adresse ein. Die Website läuft mit ihrer Navigation, ihren Styles und Skripten.</p></div> }
+<details class="bridge-help">
+  <summary>{{ bridgeReady() ? 'Verbindung und Quellzuordnung' : 'Review-Library verbinden oder eine blockierte Einbettung öffnen' }}</summary>
+  @if (mappingNote()) { <div class="mapping-note">{{ mappingNote() }}</div> }
+  <p>Die Seite wird direkt von ihrem eigenen lokalen Server geladen. Wenn sie Einbettung blockiert, öffne sie über „Eigener Tab“. Für Feedback im Studio binde die Library im lokalen Entwicklermodus ein und erlaube dort den Studio-Origin als Frame-Elternseite.</p>
+  <pre><code>{{ integrationCode }}</code></pre>
+  <div class="source-mapping-form">
+    <label for="browser-source">Quelldatei für diese Route</label>
+    <select id="browser-source" name="sourceChoice" [(ngModel)]="sourceChoice" (ngModelChange)="chooseSource()">
+      <option value="">Automatisch über die Projekt-Routen</option>
+      @for (file of documents; track file.id) { <option [value]="file.id">{{ file.path }}</option> }
+    </select>
+    <button type="button" class="button secondary" (click)="useAsStart()" [disabled]="!address">Adresse als Projektstart speichern</button>
+  </div>
+  <p>Nur eindeutig passende Quelltextabschnitte erhalten Markierungen. Dynamische oder abweichende Texte bleiben ohne Quellzuordnung. Review-Daten werden ausschließlich an den eingetragenen lokalen Server übertragen.</p>
+</details>

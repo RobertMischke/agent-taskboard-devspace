@@ -1,0 +1,9 @@
+import { bootstrapApplication } from "@angular/platform-browser";
+import { provideZonelessChangeDetection } from "@angular/core";
+import { AppComponent } from "./app/app.component";
+
+bootstrapApplication(AppComponent, {
+  providers: [provideZonelessChangeDetection()],
+}).catch((error) =>
+  console.error("Voice Studio konnte nicht gestartet werden.", error),
+);

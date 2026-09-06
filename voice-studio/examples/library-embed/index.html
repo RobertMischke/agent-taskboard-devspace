@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@voice/review · standalone embed</title>
+  <style>
+    :root{color-scheme:light dark;--bg:light-dark(#fafaf8,#151a20);--ink:light-dark(#202935,#ebeff4);--line:light-dark(#d5dce2,#3b4653);--muted:light-dark(#566373,#b1bdc9)}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,sans-serif}header{padding:22px 28px;border-bottom:1px solid var(--line)}header p{margin:6px 0;color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;max-width:1150px;margin:auto}main{padding:40px}aside{padding:28px;border-left:1px solid var(--line)}h1{font-size:38px;line-height:1.18}button,textarea{font:inherit}button{padding:8px 14px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer}textarea{display:block;width:100%;min-height:100px;margin:12px 0;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:10px;border-radius:6px}blockquote{margin:16px 0;padding:12px;background:light-dark(#edf0f3,#242c35)}small{color:var(--muted)}@media(max-width:700px){.layout{grid-template-columns:1fr}aside{border-left:0;border-top:1px solid var(--line)}main{padding:24px}}
+  </style>
+</head>
+<body>
+  <header><b>@voice/review · standalone JavaScript embed</b><p>No Angular required. Select any text or a marked finding.</p><small>This integration example keeps comments in memory. Voice Studio connects these callbacks to durable .NET storage.</small></header>
+  <div class="layout">
+    <main id="article">
+      <h1 data-voice-unit="heading">A code browser, not a dashboard.</h1>
+      <p data-voice-unit="intro">Our powerful tools make every review effortless.</p>
+      <p data-voice-unit="body">You can annotate this unmarked sentence too. The source remains ordinary HTML, and a host application decides how feedback is stored.</p>
+      <p data-voice-unit="unicode">Unicode selections stay aligned: 🧪 Wörter und Überarbeitung.</p>
+    </main>
+    <aside>
+      <h2>Review</h2>
+      <p id="explanation">Select a phrase to create a note.</p>
+      <blockquote id="quote">No selection</blockquote>
+      <label for="comment">Your feedback</label>
+      <textarea id="comment" placeholder="What should change?"></textarea>
+      <button id="save" type="button" disabled>Add demo note</button>
+      <button id="toggle" type="button">Disable review</button>
+      <p id="state" role="status" aria-live="polite">Review enabled</p>
+      <div id="notes"></div>
+    </aside>
+  </div>
+  <script src="/library/voice-review.js"></script>
+  <script>
+    const article=document.getElementById('article');
+    const units=Array.from(article.querySelectorAll('[data-voice-unit]')).map(el=>({id:el.dataset.voiceUnit,text:el.textContent,sourceSpan:{start:0,end:el.textContent.length,encoding:'utf16'},kind:el.tagName==='H1'?'heading':'body',language:'en'}));
+    const findings=[{id:'heading-period',ruleId:'heading-period',category:'structure',severity:'warning',message:'Heading ends with a period',explanation:'Use a section label without terminal punctuation.',quote:units[0].text,unitId:'heading',start:0,end:units[0].text.length,suggestion:'A code browser',engine:'example-fixture'},{id:'word-powerful',ruleId:'evaluation-word',category:'wording',severity:'warning',message:'Explain the concrete capability',explanation:'The adjective does not identify what the reader can do.',quote:'powerful',unitId:'intro',start:4,end:12,suggestion:null,engine:'example-fixture'}];
+    let selection=null,notes=[],review;
+    const state=document.getElementById('state');
+    function select(value){selection=value;document.getElementById('quote').textContent=value.quote;document.getElementById('save').disabled=false;}
+    function mount(){review=VoiceReview.mountVoiceReview({root:article,units,findings,feedback:notes,onSelect:select,onFindingSelect:f=>{select(f);document.getElementById('explanation').textContent=f.explanation;}});}
+    document.getElementById('save').addEventListener('click',()=>{if(!selection)return;const comment=document.getElementById('comment').value.trim();if(!comment){state.textContent='Enter a comment first.';return;}const now=new Date().toISOString();notes.push({id:crypto.randomUUID(),...selection,prefix:'',suffix:'',comment,category:'wording',status:'open',sourceVersion:'demo',createdAt:now,updatedAt:now});review?.update({feedback:notes});const p=document.createElement('p');p.textContent=selection.quote+': '+comment;document.getElementById('notes').append(p);state.textContent='Demo note added in memory. Reload clears this standalone example.';});
+    document.getElementById('toggle').addEventListener('click',event=>{if(review){review.dispose();review=null;event.target.textContent='Enable review';state.textContent='Review disabled; source text unchanged.';}else{mount();event.target.textContent='Disable review';state.textContent='Review enabled';}});
+    if(globalThis.VoiceReview){mount();}else{state.textContent='Build @voice/review and open this example through the Voice Studio server.';}
+  </script>
+</body>
+</html>

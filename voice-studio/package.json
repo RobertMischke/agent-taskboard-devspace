@@ -1,0 +1,27 @@
+{
+  "name": "voice-studio-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/contracts",
+    "packages/review",
+    "frontend"
+  ],
+  "scripts": {
+    "build:library": "npm run build -w @voice/review",
+    "build:frontend": "npm run build -w @voice/studio",
+    "build:backend": "dotnet build backend/VoiceStudio.Api/VoiceStudio.Api.csproj",
+    "build": "npm run build:library && npm run build:frontend && npm run build:backend",
+    "start": "bash scripts/start.sh",
+    "test:library": "npm test -w @voice/review",
+    "test:e2e": "node scripts/verify-e2e.mjs",
+    "test:backend": "dotnet run --project backend/VoiceStudio.Tests",
+    "test:api": "node scripts/verify-api.mjs",
+    "test:runner": "dotnet run --project backend/VoiceStudio.RunnerTests",
+    "test:live": "node scripts/verify-live.mjs",
+    "test:ui-state": "node scripts/verify-ui-state.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}
