@@ -24,7 +24,7 @@ function loadComponent(file, name) {
   const module = { exports: {} };
   vm.runInNewContext(compiled.outputText, { exports: module.exports, require: id => id === '@angular/core' ? core : {},
     crypto: webcrypto, setTimeout: callback => { const id = ++nextTimer; timers.set(id, callback); return id; },
-    clearTimeout: id => timers.delete(id), console }, { filename: file });
+    clearTimeout: id => timers.delete(id), clearInterval: id => timers.delete(id), window: { location: { origin: 'http://127.0.0.1:5188' }, addEventListener() {}, removeEventListener() {} }, URLSearchParams, URL, location: { search: '', href: 'http://127.0.0.1:5188/' }, history: { state: null, replaceState() {} }, console }, { filename: file });
   return { Component: module.exports[name], timers, fire: () => { const entry = timers.entries().next().value; assert.ok(entry, 'poll timer exists'); timers.delete(entry[0]); entry[1](); } };
 }
 const document = (id = 'a') => ({ id, version: 'source-' + id, path: id + '.md', format: 'markdown', units: [], findings: [], feedback: [], reviewRevision: 0, renderedHtml: '', source: '' });
@@ -90,5 +90,30 @@ const setup = () => { const runtime = loadComponent('semantic-review.component.t
   app.semanticFindings.set([finding]); app.activeFinding.set(finding); app.proposal.set({ id: 'old-advice' });
   app.updateSemanticFindings([]);
   check(app.activeFinding() === null && app.proposal() === null, 'invalidated semantic finding clears selected advice and pending diff');
+}
+
+{
+  const { Component } = loadComponent('live-browser.component.ts', 'LiveBrowserComponent');
+  const live = new Component(), posts = [];
+  const frameWindow = { postMessage: (message, targetOrigin) => posts.push({ message, targetOrigin }) };
+  const original = { ...document(), path: 'src/app/content/home.ts', reviewRevision: 0, units: [{ id: 'ts-u-0', text: 'Review work', sourceSpan: { start: 10, end: 21, encoding: 'utf16' } }] };
+  live.project = { id: 'p', liveUrl: 'http://127.0.0.1:4184/', sourceRoutes: { '/': original.path } };
+  live.documents = [original]; live.detail = original;
+  live.expectedOrigin = 'http://127.0.0.1:4184'; live.currentUrl.set('http://127.0.0.1:4184/'); live.bridgeReady.set(true);
+  live.liveFrame = { nativeElement: { contentWindow: frameWindow } };
+  live.sendReview(); live.sendReview();
+  check(posts.length === 1, 'unchanged live snapshot does not send duplicate review payloads');
+  const firstReviewId = posts[0].message.reviewId;
+  const refreshed = { ...original, units: [{ ...original.units[0], id: 'ts-u-1' }] };
+  live.detail = refreshed;
+  live.ngOnChanges({ detail: { previousValue: original, currentValue: refreshed, firstChange: false } });
+  check(posts.length === 2 && posts[1].message.units[0].id === 'ts-u-1' && posts[1].message.reviewId !== firstReviewId, 'new adapter snapshot sends remapped units and a new review identity at the same source hash and review revision');
+  live.onMessage({ source: frameWindow, origin: live.expectedOrigin, data: { type: 'voice-studio:selection', sessionId: live.sessionId, reviewId: firstReviewId, selection: { unitId: 'ts-u-0', quote: 'Review', start: 0, end: 6 } } });
+  check(live.selection.values.length === 0, 'old live review selections cannot survive an adapter snapshot refresh');
+  live.detail = { ...refreshed }; live.sendReview();
+  check(posts.length === 3 && posts[2].message.units[0].id === 'ts-u-1', 'fresh same-content document snapshots are also delivered for renewed context');
+  live.currentUrl.set('http://127.0.0.1:4184/unmapped'); live.sendReview(); live.detail = { ...refreshed }; live.sendReview();
+  check(posts.length === 4 && posts[3].message.units.length === 0 && posts.every(item => item.targetOrigin === 'http://127.0.0.1:4184'), 'unmapped routes clear review data once and preserve the registered origin boundary');
+  live.ngOnDestroy();
 }
 console.log('UI state: ' + checks + ' checks passed; deferred fake HTTP only, no backend or model calls.');

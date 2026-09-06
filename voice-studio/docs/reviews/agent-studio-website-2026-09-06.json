@@ -1,0 +1,2133 @@
+{
+  "schemaVersion": 1,
+  "id": "agent-studio-website-2026-09-06",
+  "title": "Agent-Studio-Website: vollständige redaktionelle Prüfung",
+  "reviewedAt": "2026-09-06T20:24:08.613Z",
+  "reviewDate": "2026-09-06",
+  "timezone": "Europe/Berlin",
+  "websiteRoot": "C:\\Projects\\agent-taskboard-devspace\\agent-studio-for-software-website\\04-angular-static-final",
+  "reviewer": "Codex / human-reviewable editorial audit",
+  "method": "Alle 30 TypeScript-Inhaltsdateien vollständig gelesen; 27 lokale Routen erfasst; ausgewählte aktuelle Produktdokumente und Implementierungsquellen gegengeprüft; zwei einschlägige offizielle Webquellen gelesen. Befunde durch TypeScript-AST auf exakte decodierte Literaltexte geprüft. Kein zusätzlich gestarteter Coding-Agent-/LLM-Runner, keine Website-Quelltextänderung.",
+  "sourceSnapshotRule": "sourceVersion ist SHA-256 über UTF-8-Dateiinhalt. Vor Meta-Import oder Änderung gegen aktuelle Quelle prüfen. Die Literalposition ist ein Quellanker; decoded quote offsets dürfen bei Escape-Sequenzen nicht als direkte Quelloffsets verwendet werden.",
+  "evidenceScope": "Lokaler Website-Stand und aktueller Dev-Checkout; keine unabhängige Bestätigung eines veröffentlichten Produkt-Releases. Befunde mit needs-product-verification sind Abgleichaufträge. Kein umfassender Sicherheits-, Rechts-, Browser-, Accessibility- oder Laufzeittest.",
+  "definitions": {
+    "categories": {
+      "structure": "Orientierung, Reihenfolge, Voraussetzungen oder Linkziel",
+      "claims": "Geltungsbereich, Beleglage oder Stand einer Aussage",
+      "wording": "Verständlichkeit und präzise Formulierung",
+      "meta": "Autoren-/Designsprache oder fehlende Kennzeichnung des Darstellungsstatus"
+    },
+    "severities": {
+      "error": "Klar belegte sachliche Falschaussage mit unmittelbarer Auswirkung auf Verständnis/Entscheidung",
+      "warning": "Relevanter Widerspruch, fehlende Belegbasis oder notwendiger Release-Abgleich",
+      "info": "Begrenzte redaktionelle Verbesserung"
+    },
+    "dispositions": {
+      "verified-contradiction": "Mit benanntem Beleg widersprüchlich; bei Dev-Evidenz ist der beabsichtigte Release-Stand weiterhin zu prüfen",
+      "needs-product-verification": "Veröffentlichte Produktversion oder Betriebsmodus muss geklärt werden; nicht pauschal falsch",
+      "needs-evidence": "Beleg bzw. Stichtag fehlt; Aussage nicht als widerlegt markiert",
+      "editorial": "Begründeter redaktioneller Vorschlag, kein Nachweis einer falschen Produktfunktion"
+    }
+  },
+  "summary": {
+    "routeCount": 27,
+    "contentFileCount": 30,
+    "reviewedRouteCount": 27,
+    "reviewedContentFileCount": 30,
+    "findingCount": 36,
+    "categories": {
+      "structure": 4,
+      "claims": 17,
+      "wording": 6,
+      "meta": 9
+    },
+    "dispositions": {
+      "verified-contradiction": 6,
+      "needs-product-verification": 6,
+      "needs-evidence": 2,
+      "editorial": 22
+    }
+  },
+  "nextActions": [
+    "News zuerst mit dem aktuellen Hinweis der verlinkten Anbieterquelle korrigieren; Titel, Lead und Body zusammen prüfen.",
+    "Website-Zielrelease festlegen; Setup, Status und Host-Sicherheits-/Roadmap-Text daran gemeinsam abgleichen.",
+    "Angular-Plan und Pricing-Verantwortung anhand lokaler Implementierung aktualisieren.",
+    "Konkrete redaktionelle Vorschläge selektiv übernehmen; Research-Outlines und schematische Karten passend kennzeichnen.",
+    "Im Voice-Studio zunächst Feedback mit Belegen importieren. Ersatztexte bleiben Vorschläge; kein Auto-Apply. sourceVersion und exaktes Zitat vor Import/Fix erneut validieren."
+  ],
+  "coverage": [
+    {
+      "sourcePath": "src/app/content/about.ts",
+      "routes": [
+        "/about"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:207957d72f1499c58eda1814e6af5773ae8c9381a2afeb0ec069fb5edcc90754",
+      "lineCount": 52,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Biografischer und persönlicher Kontext; kein konkreter redaktioneller Änderungsbedarf. Private Tatsachen wurden nicht unabhängig nachrecherchiert."
+    },
+    {
+      "sourcePath": "src/app/content/agents.ts",
+      "routes": [],
+      "role": "shared-content",
+      "importedBy": [
+        "src/app/content/home.ts",
+        "src/app/content/product.ts"
+      ],
+      "consumerRoutes": [
+        "/",
+        "/product"
+      ],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:68cac05fcdc181e94bd42272520e03827b114d01a245fb4cd51c4e0bcc4c8b55",
+      "lineCount": 24,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Gemeinsame Agentenbeschreibungen gelesen. Kein pauschaler Befund gegen Wörter wie powerful/strong; heutige Eignung der Anbieter für alle Aufgaben nicht unabhängig qualifiziert."
+    },
+    {
+      "sourcePath": "src/app/content/article-specs-context-not-control.ts",
+      "routes": [
+        "/articles/specs-are-context-not-control"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:a437a36ebfa68bef1bec999d07cf8b1629bb037d5b024228a35a008b43d6716e",
+      "lineCount": 162,
+      "findingIds": [
+        "ASW-034"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamter Artikel gelesen. Grundstruktur von Kiro anhand offizieller Specs-Dokumentation geprüft; Positionierung und Meinungsargument bleiben als solche bestehen."
+    },
+    {
+      "sourcePath": "src/app/content/article-workforce-sensemaking-cli.ts",
+      "routes": [
+        "/articles/workforce-sensemaking-cli"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:f3f4367f0be82492be8908a4ed30ceb015129c5a6351287d1b56d1d733dc509f",
+      "lineCount": 129,
+      "findingIds": [
+        "ASW-035"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamtes Outline gelesen. Draft-Status ist erkennbar; fehlende Beobachtungsbelege werden nicht durch erfundene Beispiele ersetzt."
+    },
+    {
+      "sourcePath": "src/app/content/articles.ts",
+      "routes": [
+        "/articles"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:4de4442913671998b422e522925e63a3cf8226bc6f9574217b8602b39a340312",
+      "lineCount": 58,
+      "findingIds": [
+        "ASW-033"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Beide Einträge und ihre vorhandenen Routen geprüft. Outline-Label ist keine Täuschung über einen fertigen Erfahrungsbericht."
+    },
+    {
+      "sourcePath": "src/app/content/best-practice-angular-quality-rails.ts",
+      "routes": [
+        "/patterns/angular-quality-rails"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:d788ed727553a30a12ac069909e56556e529744a046e1fab2ed11978fe01d5b0",
+      "lineCount": 110,
+      "findingIds": [
+        "ASW-002",
+        "ASW-003"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Vollständig gelesen und mit package.json, getrenntem Template und Inhaltsinventar abgeglichen. Kein Lint-Lauf für diese redaktionelle Prüfung."
+    },
+    {
+      "sourcePath": "src/app/content/captures.ts",
+      "routes": [],
+      "role": "shared-content",
+      "importedBy": [
+        "src/app/content/about.ts",
+        "src/app/content/best-practice-angular-quality-rails.ts",
+        "src/app/content/comparison.ts",
+        "src/app/content/context-management.ts",
+        "src/app/content/documentation.ts",
+        "src/app/content/getting-started.ts",
+        "src/app/content/home.ts",
+        "src/app/content/open-source.ts",
+        "src/app/content/pattern-external-cli-on-the-side.ts",
+        "src/app/content/pattern-plus-one-developer.ts",
+        "src/app/content/pattern-workforce-sensemaking-cli.ts",
+        "src/app/content/product.ts",
+        "src/app/content/screenshots-tour.ts",
+        "src/app/content/security.ts",
+        "src/app/content/software-quality.ts",
+        "src/app/content/tokens.ts",
+        "src/app/content/work-model.ts"
+      ],
+      "consumerRoutes": [
+        "/about",
+        "/patterns/angular-quality-rails",
+        "/compared-to-other-products",
+        "/context-management",
+        "/documentation",
+        "/getting-started",
+        "/",
+        "/open-source",
+        "/patterns/external-cli-on-the-side",
+        "/patterns/plus-one-developer",
+        "/patterns/workforce-sensemaking-cli",
+        "/product",
+        "/screenshots",
+        "/security",
+        "/software-quality",
+        "/tokens",
+        "/how-work-happens"
+      ],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:a7575cf4179a02b1371daa0a9f8815d9ea0f324e999830802df8f7dc69f842ec",
+      "lineCount": 498,
+      "findingIds": [
+        "ASW-036"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Alle gemeinsamen Captions, Texte, Zahlen und Beispielzeilen gelesen; Renderer-Verzweigung geprüft. metrics/rows bei imageSrc sind nicht sichtbar und werden nicht als veröffentlichte Kennzahlen beanstandet. Kein Pixel-/Screenshot-Beweis für jede Caption."
+    },
+    {
+      "sourcePath": "src/app/content/comparison.ts",
+      "routes": [
+        "/compared-to-other-products"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:2246ff9d877e0772f3fbaacf9f04041b3f7ca1046aeb676aa1a33a79ab3c1aea",
+      "lineCount": 141,
+      "findingIds": [
+        "ASW-027",
+        "ASW-028"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Vergleichstext und Matrix gelesen, lokale Ziele geprüft. Aktuelle externe Feature-Matrix nicht vollständig unabhängig verifiziert; keine unbelegte Behauptung, Anbieterfunktionen seien falsch."
+    },
+    {
+      "sourcePath": "src/app/content/context-management.ts",
+      "routes": [
+        "/context-management"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:764c5d315b9f72b5eecfd5b18a907ecd5653b33f1fea17eb221da1fb5ba367fc",
+      "lineCount": 182,
+      "findingIds": [
+        "ASW-021"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamtes Projekt-/Task-Kontextmodell gelesen. Zukunftsformulierungen zu Query/History nicht automatisch als fertige Funktion bewertet."
+    },
+    {
+      "sourcePath": "src/app/content/documentation.ts",
+      "routes": [
+        "/documentation"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:807c582a872100317510b9b09985bf0533153fe8980ac97b424c2c8f204725c4",
+      "lineCount": 106,
+      "findingIds": [
+        "ASW-022",
+        "ASW-023"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Lesefolge und Begriffe gelesen. Keine Rechts-/Security-Garantie aus logischem Repository-Scope abgeleitet."
+    },
+    {
+      "sourcePath": "src/app/content/dossier-model.ts",
+      "routes": [
+        "/dossiers"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:9ab2dd19bb461007d111c652561f7c3d158f14d68b02eb34a932754110049916",
+      "lineCount": 91,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Alle Phasen, Dossier-/Epic-/Task-Abgrenzungen und Übergänge gelesen. Kein hinreichend konkreter Änderungsbedarf; abstrakte Modellbegriffe sind im erklärenden Kontext vertretbar."
+    },
+    {
+      "sourcePath": "src/app/content/getting-started.ts",
+      "routes": [
+        "/getting-started"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:41c210925fc4c5f56531280a82284d47c7afebf180dad5dfcf6db6e91dac764b",
+      "lineCount": 116,
+      "findingIds": [
+        "ASW-005",
+        "ASW-006",
+        "ASW-007"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Voraussetzungen, Architektur und Zeitfolge gelesen. Setup-Kohorte muss an veröffentlichten Stand gebunden werden; Zeitversprechen nicht gemessen."
+    },
+    {
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "lineCount": 198,
+      "findingIds": [
+        "ASW-015",
+        "ASW-016",
+        "ASW-017",
+        "ASW-018",
+        "ASW-019",
+        "ASW-020"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Homepage gelesen. Historische Commit-/Zeilen-Zahlen mit Zeitfenster und Zählmethode bleiben als Snapshot erhalten; sie wurden nicht als heutige Qualität bewiesen oder pauschal beanstandet."
+    },
+    {
+      "sourcePath": "src/app/content/imprint.ts",
+      "routes": [
+        "/imprint"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:eb17ab40f26a89a2518c2fc6cb0782c429ddec5f3a019add9978d058e01dc565",
+      "lineCount": 51,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Alle Anbieter-, Kontakt- und Datenschutztexte gelesen. Kein sprachlicher Änderungsbedarf festgestellt. Dies ist keine juristische Vollständigkeitsprüfung und keine Prüfung der realen Hosting-/E-Mail-Verarbeitung."
+    },
+    {
+      "sourcePath": "src/app/content/index.ts",
+      "routes": [],
+      "role": "loader-registry",
+      "importedBy": [],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:52034b79e5a89458141b084dcf687fc8584aafaf3aad88c37be7afde079fbe5e",
+      "lineCount": 63,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Gesamtes Registry-/Loader-Modul geprüft; technische Zuordnung, keine eigenständige öffentliche Seitenprosa."
+    },
+    {
+      "sourcePath": "src/app/content/manifesto.ts",
+      "routes": [
+        "/manifesto"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:9a22e77f5d5e0686ca9d0fa88fb12f39fa1589f1e2c7a5132a4a05f5f837fa3a",
+      "lineCount": 101,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Englische Argumentation und ausdrücklich wörtlicher deutscher Originaltext vollständig gelesen. Zuspitzungen sind als Manifest/These gerahmt. Keine stillschweigende Redaktion des als Original bezeichneten Textes; keine allgemeine Produktivitätsmessung behauptet."
+    },
+    {
+      "sourcePath": "src/app/content/news.ts",
+      "routes": [
+        "/news"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:1854a7d09bea1e315bd78fdad900950d537a91e5b757bb6e3255411e2c927552",
+      "lineCount": 66,
+      "findingIds": [
+        "ASW-001"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Meldung und ihre verlinkte aktuelle Primärquelle geprüft. Korrektur betrifft einen überprüften Widerspruch, nicht nur eine Stilpräferenz."
+    },
+    {
+      "sourcePath": "src/app/content/open-source.ts",
+      "routes": [
+        "/open-source"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:f803dba7ca4de3a5258af8cc31b28a403258da9a40e44e5082eba5a5f4843581",
+      "lineCount": 66,
+      "findingIds": [
+        "ASW-008"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Lizenz-/Beteiligungs-/Repository-Text gelesen; kanonischen Link abgeglichen. Keine Rechtsberatung zum Umfang der Lizenz."
+    },
+    {
+      "sourcePath": "src/app/content/pattern-external-cli-on-the-side.ts",
+      "routes": [
+        "/patterns/external-cli-on-the-side"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:ba14cc2cb6c78070b60a7a7155fd512c1ae732475a8ed3eaccc870e8d25b1e94",
+      "lineCount": 92,
+      "findingIds": [
+        "ASW-031"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamter Seitenworkflow und API-Voraussetzungen gelesen; keine zusätzlichen universellen CLI-Fähigkeiten behauptet."
+    },
+    {
+      "sourcePath": "src/app/content/pattern-plus-one-developer.ts",
+      "routes": [
+        "/patterns/plus-one-developer"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:37b1c7df50e3a6ba3c54252e5caded61ca53df55f9f0cd9a0e1607e9f9d14743",
+      "lineCount": 118,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Gesamtes Muster gelesen. Zusätzliche Kapazität ist durch Scope, getrennte Arbeitsbereiche und menschliche Aufmerksamkeit qualifiziert; kein erzwungener Befund gegen die +N-Metapher."
+    },
+    {
+      "sourcePath": "src/app/content/pattern-workforce-sensemaking-cli.ts",
+      "routes": [
+        "/patterns/workforce-sensemaking-cli"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:ce066c29b7dc35e71cb04dc573a74a2149c08514902a0c7f1b25b8c412c9f123",
+      "lineCount": 120,
+      "findingIds": [
+        "ASW-032"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamtes Muster samt Research-Abschnitt gelesen. Ausdrücklicher Outline-Status wird erhalten."
+    },
+    {
+      "sourcePath": "src/app/content/patterns.ts",
+      "routes": [
+        "/patterns"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:95c5abecfcee5257e7d54cb2387ed10750e8ab52da5ec996fc20b6b2e1411e78",
+      "lineCount": 181,
+      "findingIds": [
+        "ASW-029",
+        "ASW-030"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Alle Katalogeinträge und vorhandenen Detailrouten gelesen. Muster können Arbeitsweisen beschreiben und müssen nicht sämtlich automatische Produktfunktionen sein."
+    },
+    {
+      "sourcePath": "src/app/content/product.ts",
+      "routes": [
+        "/product"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:a96ac68fa0baa06db9ccc02e224867d5587aaf4507d953443868fff9631984c0",
+      "lineCount": 312,
+      "findingIds": [
+        "ASW-009",
+        "ASW-010",
+        "ASW-014"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Alle Produktbereiche einschließlich Remote-Hosts, Agenten, Modelle, Token, Review, Chat und Drift gelesen; aktuelle Setup-/Host-Dokumentation als qualifizierter Gegenbeleg genutzt."
+    },
+    {
+      "sourcePath": "src/app/content/relationship-model.ts",
+      "routes": [
+        "/relationship-model"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:967b6fd2eaf39c5c6af8448869c2f8b770525ee7a86f7903711eb46d0a8a1bab",
+      "lineCount": 110,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Gesamtes Modell zu Task, Job, Branch, Commit, Review und Release gelesen. Integration vor menschlicher Annahme ist ausdrücklich beschrieben und wird nicht in eine andere Sicherheitszusage umgedeutet. Keine vollständige Laufzeitprüfung jeder Relation."
+    },
+    {
+      "sourcePath": "src/app/content/screenshots-tour.ts",
+      "routes": [
+        "/screenshots"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:8299b9c51ffbca8d77467c44b671f46289f3141df9eca3279bc28b88ddde8e17",
+      "lineCount": 59,
+      "findingIds": [],
+      "conclusion": "no-actionable-finding-in-reviewed-scope",
+      "notes": "Alle vier Tourabschnitte gelesen. Reale Captures und gepinnte Demo-Zustände werden ausdrücklich erklärt. Kein neuer vollständiger Screenshot-/Video- oder Reproduzierbarkeitstest; kein unbelegter Mockup-Vorwurf."
+    },
+    {
+      "sourcePath": "src/app/content/security.ts",
+      "routes": [
+        "/security"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:23de3e3187eb698355a3375c3112cbe5494f560a58e50f30c881ddd3d2efc8c9",
+      "lineCount": 102,
+      "findingIds": [
+        "ASW-026"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Alle Grenzen, Konten, Credentials und Review-Hinweise gelesen. Qualifizierte Aussagen und Verantwortung des Betreibers bleiben erhalten; keine Sicherheitszertifizierung durchgeführt."
+    },
+    {
+      "sourcePath": "src/app/content/software-quality.ts",
+      "routes": [
+        "/software-quality"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:28a97163c464ffa940eb8be624298170572fefcdbec3eab81e6aa25c05fbf09f",
+      "lineCount": 145,
+      "findingIds": [
+        "ASW-025"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Qualitätsargumentation gelesen. Prüfungen, menschliche Entscheidung und risikobasierte Intensität bleiben erhalten; Screenshot-Geltungsbereich wird präzisiert."
+    },
+    {
+      "sourcePath": "src/app/content/status.ts",
+      "routes": [
+        "/status"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:fb6de89490dd9666c6804131bba0a1e2a7638a1c9f144e08210429e945bc9a03",
+      "lineCount": 74,
+      "findingIds": [
+        "ASW-004",
+        "ASW-011"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Vollständiger Alpha-/Beta-/Roadmap-Text gelesen. Unbekannte Veröffentlichung wird nicht als bestätigte Verfügbarkeit ausgegeben."
+    },
+    {
+      "sourcePath": "src/app/content/tokens.ts",
+      "routes": [
+        "/tokens"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:598ab7e7656ebd8e8d1a37425b45af46829c4b2cf4b1d87e8081d9e3a203b7fc",
+      "lineCount": 104,
+      "findingIds": [
+        "ASW-012",
+        "ASW-013"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamte Kosten-/Produktionsfaktor-Argumentation gelesen und Library-Zuordnung im aktuellen Quellcode geprüft. Historische Preise/unknown-Behandlung werden unterstützt, keine pauschale Aktualität aller Tarife behauptet."
+    },
+    {
+      "sourcePath": "src/app/content/work-model.ts",
+      "routes": [
+        "/how-work-happens"
+      ],
+      "role": "route-content",
+      "importedBy": [
+        "src/app/content/index.ts"
+      ],
+      "consumerRoutes": [],
+      "reviewStatus": "reviewed",
+      "sourceVersion": "sha256:b5290d24d1503b46fff39dd8bc5d2e57e5b031b05debfcd3f093c21fca1b734b",
+      "lineCount": 169,
+      "findingIds": [
+        "ASW-024"
+      ],
+      "conclusion": "targeted-findings",
+      "notes": "Gesamter Lebenszyklus gelesen, einschließlich Abbruch, Fortschrittsdimensionen, externer Erledigung und Integration vor Annahme. Konkrete Release-Semantik bleibt erhalten."
+    }
+  ],
+  "evidence": {
+    "website-package": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/package.json",
+      "locator": "scripts.lint, lint:ts, lint:templates, lint:scss",
+      "supports": "ESLint für TypeScript und Angular-Templates sowie Stylelint für SCSS sind als ausführbare Scripts eingerichtet; dies belegt die Existenz, nicht einen aktuellen erfolgreichen Lint-Lauf.",
+      "sha256": "27e0f10f073830c49b5f253c37cac4a3398ddecfbafaa00c4979cf189a34ad50"
+    },
+    "website-renderer": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/page.component.ts",
+      "locator": "templateUrl: './page.component.html'",
+      "supports": "Das Seiten-Template liegt in einer separaten HTML-Datei. Die Inhaltsmodule werden pro Route geladen.",
+      "sha256": "bd3ed915bfcdc9f9b2abc2215da737ea354ec6b35b56d81a4961fe9322a92015"
+    },
+    "website-routes": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/site-content.ts",
+      "locator": "productRepositoryUrl; sitePageMeta",
+      "supports": "Kanonischer Repository-Link agent-orc/agent-studio; 27 veröffentlichte Routen in der lokalen Seitenkonfiguration, nur ein Vergleichshub.",
+      "sha256": "ad2669ce659286a1e27277301c4eb424f00cb44ab11bcfee8247e1831aea54a5"
+    },
+    "website-config": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/voice.config.json",
+      "locator": "routes; sourceFiles; sourceContexts",
+      "supports": "Vollständige Zuordnung der 27 Routen zu 27 Seitenmodulen; drei weitere gemeinsame Inhaltsdateien.",
+      "sha256": "23e67e05a09fb25764bbd0609bd93b5c11ae61e7d55a24ae9774b385c88d701e"
+    },
+    "website-readme": {
+      "kind": "local-document",
+      "path": "agent-studio-for-software-website/04-angular-static-final/README.md",
+      "locator": "content structure; lint commands; product visual workflow",
+      "supports": "Lokale Website-Struktur und dokumentierter Workflow. Ältere Absätze zum Screenshot-Stand sind kein ausreichender Beleg gegen einzelne heutige Captures.",
+      "sha256": "f1da04c85df1d9a2a2ac6c35e0203dcc7285d741462709d39c014b0be27750a1"
+    },
+    "product-readme": {
+      "kind": "local-document",
+      "path": "agent-taskboard-dev/README.md",
+      "locator": "Getting started; Docker Compose; guided setup; Token Economy",
+      "supports": "Aktueller Dev-Checkout beschreibt Docker Compose als ersten Einstieg, einen Linux-x64-Setup-Weg sowie Token Economy als Pricing-/Accounting-Abhängigkeit. Kein unabhängiger Nachweis des öffentlich veröffentlichten Release-Stands.",
+      "sha256": "94d4c753e4c7b1362da867adbf854bcc0c608d1c93d3e9e41f8f0501f0c9fbb4"
+    },
+    "product-setup": {
+      "kind": "local-document",
+      "path": "agent-taskboard-dev/docs/operations/setup/getting-started.md",
+      "locator": "primary Docker setup; prerequisites; agent-orchestrator-setup; Agent Host onboarding",
+      "supports": "Dokumentierter Docker-Einstieg benötigt Git, Docker Compose v2 und freien Speicher; ein Coding-Agent-CLI wird erst mit einem ausführenden Host benötigt. Ein geführter Setup-Weg ist separat dokumentiert. Veröffentlichung muss abgeglichen werden.",
+      "sha256": "20b760857da57ee46e0218b35f67a10a4ad523eef74e1abb9621582141ef8676"
+    },
+    "product-hosts": {
+      "kind": "local-document",
+      "path": "agent-taskboard-dev/docs/operations/remote-hosts.md",
+      "locator": "Add execution host; per-host/per-repository deploy key; AGT-1922; AGT-2141",
+      "supports": "Aktuelle Produktdokumentation beschreibt Host-Verwaltung, Onboarding und Schreibidentitäten für Repository-Zugriff. Ein Host kann dafür Git-Hosting-Zugangsdaten benötigen; Release-Geltung gesondert prüfen.",
+      "sha256": "7c179bd186992d8f7626d2b1e4dcfe145d597ad90cc5114bdae44b3110c6edf4"
+    },
+    "product-pricing": {
+      "kind": "local-source",
+      "path": "agent-taskboard-dev/backend/Features/Runner/TokenPricing.cs",
+      "locator": "using EconomyPricing = TokenEconomy; TokenEconomyPriceProvider; ModelKnown; recordedAt",
+      "supports": "Der aktuelle Studio-Adapter bezieht Katalog und historische Preise aus Token Economy und führt unbekannte Preise mit ModelKnown=false. Das ist Quellcodebeleg, keine vollständige Laufzeitprüfung aller Berichte.",
+      "sha256": "2851efac4cab86093d27d07d530f8589249b9723c6a71e80244235a17423c447"
+    },
+    "product-claims": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/content/product.ts",
+      "locator": "remote-execution; Ubuntu 24.04 constraint; modelPool",
+      "supports": "Die Produktseite selbst begrenzt die nachgewiesene Remote-Ausführung auf Ubuntu 24.04 und beschreibt konkrete Task-/Runner-Funktionen.",
+      "sha256": "a96ac68fa0baa06db9ccc02e224867d5587aaf4507d953443868fff9631984c0"
+    },
+    "workflow-copy": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/content/work-model.ts",
+      "locator": "process progress; task progress; failed/stopped runs; release flow",
+      "supports": "Die Seite unterscheidet laufende Prozesse, Task-Fortschritt, unvollständige Ergebnisse und menschliche Annahme. Integration und Annahme sind ausdrücklich verschiedene Schritte.",
+      "sha256": "b5290d24d1503b46fff39dd8bc5d2e57e5b031b05debfcd3f093c21fca1b734b"
+    },
+    "quality-copy": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/content/software-quality.ts",
+      "locator": "automated checks; visual evidence; human review",
+      "supports": "Tests, visuelle Prüfung und menschliche Entscheidungen ergänzen sich; ein einzelner Screenshot deckt nicht alle Zustände oder Verhalten ab.",
+      "sha256": "28a97163c464ffa940eb8be624298170572fefcdbec3eab81e6aa25c05fbf09f"
+    },
+    "security-copy": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/content/security.ts",
+      "locator": "security investment; owned boundaries; credentials; partly",
+      "supports": "Der Fließtext qualifiziert den Beitrag von Review-Budget und nennt weitere Sicherheitsgrenzen. Die isolierte Formel sollte diesen Geltungsbereich behalten.",
+      "sha256": "23de3e3187eb698355a3375c3112cbe5494f560a58e50f30c881ddd3d2efc8c9"
+    },
+    "tokens-copy": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/content/tokens.ts",
+      "locator": "production factor; human time; rework; outcomes",
+      "supports": "Die eigene Kostenargumentation berücksichtigt Nacharbeit, Prüfung und menschliche Zeit; ein allgemeiner Kostenvorteil wird nicht mit einem Vergleich belegt.",
+      "sha256": "598ab7e7656ebd8e8d1a37425b45af46829c4b2cf4b1d87e8081d9e3a203b7fc"
+    },
+    "capture-renderer": {
+      "kind": "local-source",
+      "path": "agent-studio-for-software-website/04-angular-static-final/src/app/capture-card.component.html",
+      "locator": "screen-bar; @if imageSrc; @else metrics/rows",
+      "supports": "Echte Bilder und synthetische Zeilen teilen den Rahmen Agent Studio Stable. Bei Bildern werden die statischen metrics/rows nicht angezeigt; diese wurden daher nicht als veröffentlichte Zahlenbehauptungen gewertet.",
+      "sha256": "fb619c7e714482dfc2804e068038434fdbc1180baf34e828c627a925d598d4d2"
+    },
+    "anthropic-policy": {
+      "kind": "official-web",
+      "url": "https://support.claude.com/en/articles/15036540-use-the-claude-agent-sdk-with-your-claude-plan",
+      "title": "Use the Claude Agent SDK with your Claude plan",
+      "retrievedOn": "2026-09-06",
+      "locator": "Update June 15; article dated June 16, 2026; note before the superseded body",
+      "supports": "Der aktuelle Hinweis setzt die angekündigte Änderung aus. Der darunterstehende frühere Artikel bleibt ausdrücklich nur als Referenz erhalten."
+    },
+    "kiro-specs": {
+      "kind": "official-web",
+      "url": "https://kiro.dev/docs/specs/",
+      "title": "Kiro Specs documentation",
+      "retrievedOn": "2026-09-06",
+      "locator": "Core Structure; Three-Phase Workflow; page updated August 27, 2026",
+      "supports": "Die beschriebene Grundstruktur aus Anforderungen, Design und Aufgaben ist durch die offizielle Dokumentation gedeckt. Damit wird nicht jede weitergehende Wettbewerbsbewertung bestätigt."
+    }
+  },
+  "findings": [
+    {
+      "id": "ASW-001",
+      "title": "Ausgesetzte Anbieteränderung als geltende Änderung dargestellt",
+      "sourcePath": "src/app/content/news.ts",
+      "routes": [
+        "/news"
+      ],
+      "exactQuote": "On June 15, 2026, Claude Code Agent SDK and claude -p usage on Claude subscription plans move to a separate monthly Agent SDK credit.",
+      "category": "claims",
+      "severity": "error",
+      "disposition": "verified-contradiction",
+      "explanation": "Die verlinkte Primärquelle enthält inzwischen einen ausdrücklichen Aufschub. Der frühere Haupttext darunter gilt nur noch als historische Referenz. Die Website übernimmt dessen Aussage ohne den korrigierenden Hinweis. Titel und Abschnitt „What Changes“ müssen zusammen abgeglichen werden.",
+      "replacement": "Anthropic paused the announced Claude Agent SDK usage changes on June 15, 2026. Check the current policy when configuring a CLI workflow.",
+      "evidenceRefs": [
+        "anthropic-policy"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 1,
+      "group": "provider-policy",
+      "status": "open",
+      "sourceVersion": "sha256:1854a7d09bea1e315bd78fdad900950d537a91e5b757bb6e3255411e2c927552",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 10,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 310,
+          "end": 621
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 133
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-002",
+      "title": "Ist-Analyse beschreibt einen überholten Website-Stand",
+      "sourcePath": "src/app/content/best-practice-angular-quality-rails.ts",
+      "routes": [
+        "/patterns/angular-quality-rails"
+      ],
+      "exactQuote": "This plan is based on the current website app: Angular 21, Prettier installed, no ESLint or Stylelint scripts yet, one large `site-content.ts`, large `page.component.scss`, and mostly inline templates. The goal is better structure before the site becomes hard to maintain.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "verified-contradiction",
+      "explanation": "Im geprüften Repository existieren bereits Lint-Scripts für TypeScript, Templates und SCSS, 30 Inhaltsmodule und ein separates HTML-Template. Der als aktuell bezeichnete Ausgangspunkt ist damit überholt. Den Plan als datierten Rückblick kennzeichnen oder auf verbleibende Arbeit umstellen; die allgemeinen Qualitätsregeln bleiben sinnvoll.",
+      "replacement": "The website now has per-route content modules, separate HTML templates and lint commands for TypeScript, templates and SCSS. Keep these checks and component boundaries effective as the site grows.",
+      "evidenceRefs": [
+        "website-package",
+        "website-renderer",
+        "website-config"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "angular-plan-drift",
+      "status": "open",
+      "sourceVersion": "sha256:d788ed727553a30a12ac069909e56556e529744a046e1fab2ed11978fe01d5b0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 12,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 515,
+          "end": 787
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 272
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-003",
+      "title": "Nicht vorhandene Lint-Scripts werden behauptet",
+      "sourcePath": "src/app/content/best-practice-angular-quality-rails.ts",
+      "routes": [
+        "/patterns/angular-quality-rails"
+      ],
+      "exactQuote": "The package has Prettier but no ESLint, Angular template linting or Stylelint scripts yet.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "verified-contradiction",
+      "explanation": "package.json enthält bereits lint:ts, lint:templates und lint:scss. Dies ist ein konkreter Gegenbeleg zur Negativaussage; die Existenz der Scripts sagt allein noch nichts über den aktuellen Check-Erfolg aus.",
+      "replacement": "The package includes lint commands for TypeScript, Angular templates and SCSS.",
+      "evidenceRefs": [
+        "website-package"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "angular-plan-drift",
+      "status": "open",
+      "sourceVersion": "sha256:d788ed727553a30a12ac069909e56556e529744a046e1fab2ed11978fe01d5b0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 26,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 1764,
+          "end": 1854
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 90
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-004",
+      "title": "Installationsstatus mit aktueller Produktdokumentation abgleichen",
+      "sourcePath": "src/app/content/status.ts",
+      "routes": [
+        "/status"
+      ],
+      "exactQuote": "Build from source: there is no installer and no hosted account — you clone the repository and build the binaries.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Die aktuellen Dev-Dokumente beschreiben Docker Compose als Einstieg und einen geführten Linux-Setup-Weg. Das passt nicht zum uneingeschränkten „kein Installer“. Vor der Textfreigabe klären, auf welchen veröffentlichten Produktstand sich die Website bezieht; die Dev-Dokumentation allein beweist keine öffentliche Release-Verfügbarkeit. Das fehlende Hosted-Angebot wird hier nicht bestritten.",
+      "replacement": "Follow the repository’s current setup guide for the supported installation paths. Agent Studio does not provide a hosted account.",
+      "evidenceRefs": [
+        "product-readme",
+        "product-setup"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "setup-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:fb6de89490dd9666c6804131bba0a1e2a7638a1c9f144e08210429e945bc9a03",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 24,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 1394,
+          "end": 1507
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 113
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-005",
+      "title": "Einstiegsanleitung setzt einen alten Build-Pfad voraus",
+      "sourcePath": "src/app/content/getting-started.ts",
+      "routes": [
+        "/getting-started"
+      ],
+      "exactQuote": "This is the shortest useful path through an early-alpha tool. You build the three binaries from source, connect one repository and run a coding-agent CLI you already use — on your workstation or a remote host. There is no installer or hosted account yet.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Der Leser soll drei Binaries selbst bauen, während die aktuellen Produktdokumente einen Docker-Einstieg und getrenntes Host-Onboarding beschreiben. Den freigegebenen Einstieg festlegen und anschließend Zusammenfassung, Schritte, Voraussetzungen und Zeitangaben gemeinsam daran ausrichten. Die 30 Minuten sind ohne gemessenen Ablauf weder bestätigt noch als falsch eingestuft.",
+      "replacement": "Start with the repository’s current setup guide. Once Agent Studio is running, connect a repository and configure an Agent Host with the coding-agent CLI you intend to use.",
+      "evidenceRefs": [
+        "product-setup",
+        "product-readme"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "setup-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:41c210925fc4c5f56531280a82284d47c7afebf180dad5dfcf6db6e91dac764b",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 14,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 536,
+          "end": 790
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 254
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-006",
+      "title": "Voraussetzungen passen nicht zum dokumentierten Docker-Einstieg",
+      "sourcePath": "src/app/content/getting-started.ts",
+      "routes": [
+        "/getting-started"
+      ],
+      "exactQuote": "Install Git, Node.js and the coding-agent CLI you intend to run.",
+      "category": "structure",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Beim dokumentierten Docker-Weg benötigt der erste Start Git und Docker Compose; Node.js und eine angemeldete CLI sind dort keine Host-Voraussetzung. Die CLI kommt mit der Ausführungsumgebung hinzu. Nach Wahl des veröffentlichten Setup-Pfads die Schritte trennen, statt Nutzer unnötig lokale Entwicklungswerkzeuge installieren zu lassen.",
+      "replacement": null,
+      "evidenceRefs": [
+        "product-setup"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "setup-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:41c210925fc4c5f56531280a82284d47c7afebf180dad5dfcf6db6e91dac764b",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 25,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 1414,
+          "end": 1478
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 64
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-007",
+      "title": "Repository-Name weicht vom kanonischen Projektlink ab",
+      "sourcePath": "src/app/content/getting-started.ts",
+      "routes": [
+        "/getting-started"
+      ],
+      "exactQuote": "Clone github.com/RobertMischke/agent-studio and enter the checkout.",
+      "category": "structure",
+      "severity": "warning",
+      "disposition": "verified-contradiction",
+      "explanation": "Der gemeinsame Website-Link und das aktuelle Produkt-README nennen agent-orc/agent-studio. Prosa und benachbarten Clone-Befehl auf diesen kanonischen Link vereinheitlichen. Ob GitHub den alten Namen weiterleitet, wurde nicht geprüft; der Befund behauptet keinen kaputten Redirect.",
+      "replacement": "Clone github.com/agent-orc/agent-studio and enter the checkout.",
+      "evidenceRefs": [
+        "website-routes",
+        "product-readme"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "canonical-repository",
+      "status": "open",
+      "sourceVersion": "sha256:41c210925fc4c5f56531280a82284d47c7afebf180dad5dfcf6db6e91dac764b",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 42,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 2461,
+          "end": 2528
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 67
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-008",
+      "title": "Zweiter abweichender Repository-Name",
+      "sourcePath": "src/app/content/open-source.ts",
+      "routes": [
+        "/open-source"
+      ],
+      "exactQuote": "Repository: github.com/RobertMischke/agent-studio.",
+      "category": "structure",
+      "severity": "info",
+      "disposition": "verified-contradiction",
+      "explanation": "Auch die Open-Source-Seite verwendet den alten Owner-Namen, während der zentrale Link agent-orc nutzt. Gemeinsamen kanonischen Wert verwenden; daraus folgt keine Aussage über die Erreichbarkeit des alten Links.",
+      "replacement": "Repository: github.com/agent-orc/agent-studio.",
+      "evidenceRefs": [
+        "website-routes",
+        "product-readme"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "canonical-repository",
+      "status": "open",
+      "sourceVersion": "sha256:f803dba7ca4de3a5258af8cc31b28a403258da9a40e44e5082eba5a5f4843581",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 24,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 1159,
+          "end": 1209
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 50
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-009",
+      "title": "Remote-Host-Zugangsdaten zu absolut ausgeschlossen",
+      "sourcePath": "src/app/content/product.ts",
+      "routes": [
+        "/product"
+      ],
+      "exactQuote": "The security model is deliberate: the host holds no Git-hosting credentials, nothing listens publicly, and an SSH tunnel is the only door until you decide otherwise.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Der aktuelle Host-Runbook beschreibt Schreib-Deploy-Keys beziehungsweise Push-Identitäten pro Host und Repository. Das widerspricht einem generellen Verzicht auf Git-Hosting-Zugangsdaten auf dem Host. Netzwerkzugang und Zugangsdaten müssen für den tatsächlich veröffentlichten Betriebsmodus beschrieben werden; ein früheres Tunnel-Modell darf nicht als universeller heutiger Zustand erscheinen.",
+      "replacement": "Configure host credentials and network exposure explicitly. Follow the current host setup guide for repository access and the connection model.",
+      "evidenceRefs": [
+        "product-hosts"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "host-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:a96ac68fa0baa06db9ccc02e224867d5587aaf4507d953443868fff9631984c0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 185,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 13115,
+          "end": 13280
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 165
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-010",
+      "title": "Host-Verwaltung pauschal als Roadmap geführt",
+      "sourcePath": "src/app/content/product.ts",
+      "routes": [
+        "/product"
+      ],
+      "exactQuote": "Roadmap: remote hosts become first-class product objects — a host registry with per-CLI quota, per-project execution assignment and a guided onboarding wizard.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Aktuelle Produktdokumente beschreiben bereits die Verwaltung und das geführte Hinzufügen von Execution Hosts sowie projektbezogene Repository-Konfiguration. Pro Teilfunktion den veröffentlichten Stand prüfen und nur verbleibende Arbeit als Roadmap ausweisen; aus dem Runbook folgt nicht automatisch, dass jede genannte Quotenfunktion veröffentlicht ist.",
+      "replacement": null,
+      "evidenceRefs": [
+        "product-hosts"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "host-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:a96ac68fa0baa06db9ccc02e224867d5587aaf4507d953443868fff9631984c0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 187,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 13437,
+          "end": 13596
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 159
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-011",
+      "title": "Roadmap wiederholt möglicherweise bereits gelieferte Host-Funktionen",
+      "sourcePath": "src/app/content/status.ts",
+      "routes": [
+        "/status"
+      ],
+      "exactQuote": "Remote hosts as first-class objects: a host registry, per-CLI quota and per-project execution assignment.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-product-verification",
+      "explanation": "Diese Roadmap-Liste muss dieselbe Release-Entscheidung wie die Produktseite verwenden. Der aktuelle Host-Runbook belegt bereits Teile davon; noch offene Quoten-/Zuweisungsdetails getrennt benennen. Keine pauschale Ersetzung durch „alles fertig“.",
+      "replacement": null,
+      "evidenceRefs": [
+        "product-hosts"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "host-release-alignment",
+      "status": "open",
+      "sourceVersion": "sha256:fb6de89490dd9666c6804131bba0a1e2a7638a1c9f144e08210429e945bc9a03",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 44,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 3116,
+          "end": 3221
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 105
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-012",
+      "title": "Pricing-Verantwortung dem falschen Paket zugeordnet",
+      "sourcePath": "src/app/content/tokens.ts",
+      "routes": [
+        "/tokens"
+      ],
+      "exactQuote": "the coding-agent-runner pricing library",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "verified-contradiction",
+      "explanation": "Der aktuelle Studio-Adapter importiert Token Economy und verwendet TokenEconomyPriceProvider. Coding-Agent-Runner ist damit nicht die in diesem Quellstand verwendete Pricing-Quelle. Den gesamten Absatz einschließlich seiner Zielzustands-Klammer aktualisieren; vor Veröffentlichung den beabsichtigten Release-Stand bestätigen.",
+      "replacement": "the Token Economy pricing library",
+      "evidenceRefs": [
+        "product-pricing",
+        "product-readme"
+      ],
+      "confidence": 0.99,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "pricing-owner",
+      "status": "open",
+      "sourceVersion": "sha256:598ab7e7656ebd8e8d1a37425b45af46829c4b2cf4b1d87e8081d9e3a203b7fc",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 69,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 4420,
+          "end": 4864
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 70,
+          "end": 109
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-013",
+      "title": "Allgemeiner Kostenvorteil ohne Vergleichsgrundlage",
+      "sourcePath": "src/app/content/tokens.ts",
+      "routes": [
+        "/tokens"
+      ],
+      "exactQuote": "The cost is lower than classical software production, but it is still a strategic factor.",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-evidence",
+      "explanation": "Aus Tokenpreisen allein folgt kein allgemeiner Vorteil bei Gesamtkosten. Die Seite nennt selbst Nacharbeit, Prüfung und menschliche Zeit als Faktoren. Einen konkreten Vergleich mit Aufgabe, Zeitraum und Kostenumfang belegen oder die Aussage konditional formulieren. Der Befund behauptet nicht, agentische Entwicklung sei grundsätzlich teurer.",
+      "replacement": "Whether agent-assisted development costs less depends on the task, rework, verification and human time.",
+      "evidenceRefs": [
+        "tokens-copy"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "cost-claim",
+      "status": "open",
+      "sourceVersion": "sha256:598ab7e7656ebd8e8d1a37425b45af46829c4b2cf4b1d87e8081d9e3a203b7fc",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 25,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 1183,
+          "end": 1404
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 132,
+          "end": 221
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-014",
+      "title": "Dynamische Modellzahl ohne nachvollziehbaren Stichtag",
+      "sourcePath": "src/app/content/product.ts",
+      "routes": [
+        "/product"
+      ],
+      "exactQuote": "255 tool-capable models on OpenRouter",
+      "category": "claims",
+      "severity": "warning",
+      "disposition": "needs-evidence",
+      "explanation": "Die präzise Zahl benötigt einen Katalogstand und eine Definition des Filters „tool-capable“. Die Rubrik Open-Weight Models wirft zusätzlich die Frage auf, ob auch nach Gewichtsverfügbarkeit gefiltert wurde. Inventar und Zahl wurden hier nicht neu erhoben: als zu prüfen kennzeichnen, nicht als falsch. Verfügbarkeit ist außerdem kein Qualitätsnachweis für eine Aufgabe.",
+      "replacement": null,
+      "evidenceRefs": [
+        "product-claims"
+      ],
+      "confidence": 0.94,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "model-catalog-evidence",
+      "status": "open",
+      "sourceVersion": "sha256:a96ac68fa0baa06db9ccc02e224867d5587aaf4507d953443868fff9631984c0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 29,
+        "column": 16,
+        "literalSourceSpan": {
+          "start": 1878,
+          "end": 1915
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 37
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-015",
+      "title": "Startnutzen konkreter als garantierte Entlastung ausdrücken",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "Agent Studio turns Codex, Claude Code and Gemini into bounded, reviewable software work. Keep tasks, project context, agent runs, evidence and decisions in one place — so more agent output does not become more mental overhead.",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die Zusammenfassung verbindet konkrete Funktionen mit einem uneingeschränkten Entlastungsergebnis. Für den ersten Kontakt lässt sich genauer sagen, was der Leser zuweisen und gemeinsam prüfen kann. Die Positionierung rund um kognitive Last bleibt sinnvoll; sie muss nicht als garantiertes Ergebnis jedes Einsatzes erscheinen.",
+      "replacement": "Use Agent Studio to assign tasks to Codex, Claude Code and Gemini. Keep each task’s scope, project context, runs, evidence and review decisions together.",
+      "evidenceRefs": [
+        "product-claims",
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "homepage-clarity",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 30,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 1422,
+          "end": 1648
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 226
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-016",
+      "title": "Gewünschten Review-Ablauf nicht jedem Run zusichern",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "A successful agent run is not completed software. Every run starts with a bounded task, gathers evidence and ends with an explicit review decision.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„Every run … ends“ beschreibt den idealen Prozess wie einen unvermeidlichen Ausgang. Die Workflow-Seite berücksichtigt auch gestoppte und unvollständige Runs. Als Handlungsfolge formuliert bleibt der gewünschte Qualitätsanspruch erhalten, ohne diese Zustände auszublenden.",
+      "replacement": "Define the task’s scope before starting an agent. Review the resulting changes and evidence, then decide whether to accept the work or request a follow-up.",
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "homepage-clarity",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 92,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 4949,
+          "end": 5096
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 147
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-017",
+      "title": "UX-Fachbegriff verdeckt die konkrete Bedienfolge",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "Progressive disclosure starts with the current state and required decision, then shows the summarized result. Evidence is directly accessible; protocol, history and diffs remain available for deep inspection.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„Progressive disclosure“ erklärt die Designmethode. Ein neuer Nutzer braucht hier vor allem die Reihenfolge seiner Prüfung und die verfügbaren Ansichten. Der Vorschlag übersetzt dieselbe Funktion in eine Bedienhandlung.",
+      "replacement": "Check the task’s current status and result summary first. Open the run log, history or diff when you need to inspect how the result was produced.",
+      "evidenceRefs": [
+        "product-claims",
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "homepage-clarity",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 125,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 6334,
+          "end": 6542
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 208
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-018",
+      "title": "Ausführung überall ist weiter als der belegte Betriebsumfang",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "Central state. Execution anywhere.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die Kurzzeile löst die Aussage vom konfigurierten lokalen oder entfernten Host. Die Produktseite nennt ausdrücklich eine begrenzte OS-Validierung. „Local or remote“ vermittelt die Architektur, ohne Kompatibilität mit beliebigen Umgebungen anzudeuten.",
+      "replacement": "Shared task state. Local or remote execution.",
+      "evidenceRefs": [
+        "product-claims",
+        "product-hosts"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "host-scope-wording",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 133,
+        "column": 16,
+        "literalSourceSpan": {
+          "start": 6736,
+          "end": 6770
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 34
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-019",
+      "title": "Architekturbeschreibung auf konfigurierte Hosts begrenzen",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "One Task Server keeps every task, run and review decision coherent. Agent Runners execute coding-agent CLIs on any host you control. Agent Studio gives the work one browser surface.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„Any host“ überspringt Installation, unterstützte Laufzeit und Konfiguration. Der konkrete Zusammenhang zwischen gespeichertem Task-Zustand, CLI-Ausführung und Browser-Review reicht zur Erklärung aus. Keine unbelegte Liste zusätzlicher unterstützter Betriebssysteme ergänzen.",
+      "replacement": "The Task Server stores tasks, runs and review decisions. Agent Runners execute coding-agent CLIs on configured local or remote hosts. Use Agent Studio in the browser to review the work.",
+      "evidenceRefs": [
+        "product-claims",
+        "product-hosts"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "host-scope-wording",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 135,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 6798,
+          "end": 6979
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 181
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-020",
+      "title": "Ersten Schritt als überprüfbare Handlung formulieren",
+      "sourcePath": "src/app/content/home.ts",
+      "routes": [
+        "/"
+      ],
+      "exactQuote": "Clone Agent Studio, connect a safe repository and take one deliberately small change from bounded intent to an evidence-backed decision.",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„Safe repository“, „bounded intent“ und „evidence-backed decision“ komprimieren mehrere interne Begriffe. Den gewünschten Ablauf mit einem gefahrlos änderbaren Repository, kleiner Aufgabe und Prüfung vor Annahme ausdrücken. Der Setup-Link vermeidet einen erneuten Build-first-Claim, solange der Release-Abgleich offen ist.",
+      "replacement": "Follow the setup guide, connect a Git repository you can safely change, and start with one small task. Inspect the changes and recorded checks before accepting the result.",
+      "evidenceRefs": [
+        "product-setup",
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "homepage-clarity",
+      "status": "open",
+      "sourceVersion": "sha256:a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 187,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 10057,
+          "end": 10193
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 136
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-021",
+      "title": "Interne Umbenennung steht vor dem Lesernutzen",
+      "sourcePath": "src/app/content/context-management.ts",
+      "routes": [
+        "/context-management"
+      ],
+      "exactQuote": "Context Management replaces the old Docs framing: Agent Studio separates project-level context from task-level context and makes both useful for agent runs, review and drift control.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die alte Navigations-/Positionierungsentscheidung hilft neuen Lesern nicht. Der folgende Unterschied zwischen Projektregeln und aufgabenbezogenem Kontext ist hingegen nützlich und kann direkt den Einstieg bilden.",
+      "replacement": "Agent Studio keeps repository rules and architecture decisions separate from the context of each task. Both remain available during execution and review.",
+      "evidenceRefs": [
+        "website-renderer",
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:764c5d315b9f72b5eecfd5b18a907ecd5653b33f1fea17eb221da1fb5ba367fc",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 14,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 566,
+          "end": 748
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 182
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-022",
+      "title": "Interne Dokumentstruktur statt Lesehilfe beschrieben",
+      "sourcePath": "src/app/content/documentation.ts",
+      "routes": [
+        "/documentation"
+      ],
+      "exactQuote": "Read this in order once, then return by concept. It distills the product model instead of mirroring an internal concepts folder file by file.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Der Vergleich mit einem internen concepts-Ordner erklärt den redaktionellen Ursprung. Konkrete Themen als Orientierung sind für den Leser hilfreicher und erhalten die beabsichtigte Leserichtung.",
+      "replacement": "Read the task, execution, evidence and context sections in order, then return to the concept you need.",
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:807c582a872100317510b9b09985bf0533153fe8980ac97b424c2c8f204725c4",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 12,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 455,
+          "end": 596
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 141
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-023",
+      "title": "Acute Context ist im Englischen mehrdeutig",
+      "sourcePath": "src/app/content/documentation.ts",
+      "routes": [
+        "/documentation"
+      ],
+      "exactQuote": "Give the Run Acute Context; Keep the Rest as History",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„Acute“ wird im Englischen eher als scharf, schwerwiegend oder dringend verstanden. Der Abschnitt meint den für diesen Run relevanten Ausschnitt. Den Begriff direkt benennen, ohne ein zusätzliches Kontextmodell einzuführen.",
+      "replacement": "Give Each Run Relevant Context; Keep the Rest as History",
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "terminology",
+      "status": "open",
+      "sourceVersion": "sha256:807c582a872100317510b9b09985bf0533153fe8980ac97b424c2c8f204725c4",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 74,
+        "column": 16,
+        "literalSourceSpan": {
+          "start": 3678,
+          "end": 3730
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 52
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-024",
+      "title": "Interne Metapher erschwert die Release-Erklärung",
+      "sourcePath": "src/app/content/work-model.ts",
+      "routes": [
+        "/how-work-happens"
+      ],
+      "exactQuote": "the transparent watering-can model",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die Metapher erklärt neuen Lesern nicht, dass Integration vor der endgültigen Annahme stattfinden kann. Gerade diese Reihenfolge ist entscheidend und sollte direkt benannt werden. Der dokumentierte Workflow wird nicht in ein anderes Freigabemodell umgedeutet.",
+      "replacement": "a workflow that integrates task changes before final acceptance",
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "terminology",
+      "status": "open",
+      "sourceVersion": "sha256:b5290d24d1503b46fff39dd8bc5d2e57e5b031b05debfcd3f093c21fca1b734b",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 82,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 6592,
+          "end": 7019
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 18,
+          "end": 52
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-025",
+      "title": "Screenshot-Evidenz wird als vollständiger Beweis formuliert",
+      "sourcePath": "src/app/content/software-quality.ts",
+      "routes": [
+        "/software-quality"
+      ],
+      "exactQuote": "Visual evidence proves UI changes and catches layout regressions.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Visuelle Evidenz zeigt bestimmte Zustände und kann bei der Erkennung von Layoutfehlern helfen. Ein Screenshot beweist weder alle Interaktionen noch alle Viewports. Die präzisere Aussage stärkt die Rolle visueller Prüfung, ohne sie mit vollständiger Verifikation gleichzusetzen.",
+      "replacement": "Screenshots show captured UI states and help reviewers spot layout regressions.",
+      "evidenceRefs": [
+        "quality-copy",
+        "capture-renderer"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "evidence-scope",
+      "status": "open",
+      "sourceVersion": "sha256:28a97163c464ffa940eb8be624298170572fefcdbec3eab81e6aa25c05fbf09f",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 55,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 3705,
+          "end": 3770
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 65
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-026",
+      "title": "Isolierte Sicherheitsformel verliert die Einschränkung des Fließtexts",
+      "sourcePath": "src/app/content/security.ts",
+      "routes": [
+        "/security"
+      ],
+      "exactQuote": "Security is a function of token investment, workflow and model quality.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Der Fließtext nennt weitere Faktoren wie Berechtigungen, Zugangsdaten und Ausführungsgrenzen und formuliert den Budgetbeitrag vorsichtiger. Die isolierte Formel lässt Sicherheit insgesamt wie ein Ergebnis von LLM-Investition wirken. Auf den Aufwand für gezieltes Sicherheitsreview begrenzen; keine zusätzliche Sicherheitszusage ergänzen.",
+      "replacement": "Targeted security review requires budget, a defined workflow and suitable models.",
+      "evidenceRefs": [
+        "security-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "evidence-scope",
+      "status": "open",
+      "sourceVersion": "sha256:23de3e3187eb698355a3375c3112cbe5494f560a58e50f30c881ddd3d2efc8c9",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 52,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 3717,
+          "end": 3788
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 71
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-027",
+      "title": "Seitenplatzierung statt Vergleichsnutzen im Einstieg",
+      "sourcePath": "src/app/content/comparison.ts",
+      "routes": [
+        "/compared-to-other-products"
+      ],
+      "exactQuote": "Comparison content lives outside the main product path. It maps Agent Studio against terminal-only agents, hosted platforms, IDE agents and open-source orchestrators.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die Position in der Informationsarchitektur ist eine Autorenentscheidung. Der Leser kommt für den Vergleich der Arbeitsabläufe und Kategorien; damit kann der Einstieg direkt beginnen.",
+      "replacement": "Compare Agent Studio with terminal agents, hosted platforms, IDE agents and open-source orchestrators.",
+      "evidenceRefs": [
+        "website-routes"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:2246ff9d877e0772f3fbaacf9f04041b3f7ca1046aeb676aa1a33a79ab3c1aea",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 14,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 610,
+          "end": 776
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 166
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-028",
+      "title": "Weiterführende Vergleichsseiten werden ohne vorhandene Ziele angekündigt",
+      "sourcePath": "src/app/content/comparison.ts",
+      "routes": [
+        "/compared-to-other-products"
+      ],
+      "exactQuote": "This hub gives developers the quick answer first, then maps deeper comparison paths: Agent Studio alternatives, Agent Studio vs Codex, Agent Studio vs Claude Code, Agent Studio vs Cursor or Windsurf, and tools for managing coding agents in 2026.",
+      "category": "structure",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "In den 27 lokalen Routen existiert nur dieser Vergleichshub, keine separaten Seiten zu den genannten Gegenüberstellungen. Wenn „paths“ lediglich Themen meint, sollte das so heißen; andernfalls konkrete vorhandene Ziele verlinken. Die Aussage bewertet keine unüberprüften Wettbewerbsfunktionen.",
+      "replacement": "This page compares tool categories and the task, review and usage workflows of Agent Studio, Codex and Claude Code.",
+      "evidenceRefs": [
+        "website-routes",
+        "website-config"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "missing-reader-destination",
+      "status": "open",
+      "sourceVersion": "sha256:2246ff9d877e0772f3fbaacf9f04041b3f7ca1046aeb676aa1a33a79ab3c1aea",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 61,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 3694,
+          "end": 3939
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 245
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-029",
+      "title": "Autorenklassifikation vor den nutzbaren Workflows",
+      "sourcePath": "src/app/content/patterns.ts",
+      "routes": [
+        "/patterns"
+      ],
+      "exactQuote": "This is a product learning surface, not a general handbook for agentic software work. Patterns name the repeatable work shapes Agent Studio supports. Best practices are concrete operating rules for using Agent Studio well.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Der Text grenzt das redaktionelle Format ab, bevor Leser eine Aufgabe erkennen. Die angebotenen Workflows lassen sich konkret nennen; die Unterscheidung zwischen Mustern und Checklisten kann in der Listenstruktur verbleiben.",
+      "replacement": "Choose a workflow for using Agent Studio: start asynchronous tasks, connect an existing CLI, preserve evidence or set up project checks.",
+      "evidenceRefs": [
+        "website-config"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:95c5abecfcee5257e7d54cb2387ed10750e8ab52da5ec996fc20b6b2e1411e78",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 10,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 223,
+          "end": 445
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 222
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-030",
+      "title": "Katalogkarte führt bereits eingerichtete Prüfungen als künftigen Plan",
+      "sourcePath": "src/app/content/patterns.ts",
+      "routes": [
+        "/patterns"
+      ],
+      "exactQuote": "Plan ESLint, template linting, SCSS linting, component splitting and reusable Angular components before the website grows further.",
+      "category": "claims",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die verlinkte Best-Practice-Seite und ihre Katalogkarte sollten gemeinsam aktualisiert werden. Die Lint-Werkzeuge sind bereits eingerichtet; Komponentenarbeit kann weiterhin offen sein. Erledigte Checks und verbleibende Strukturarbeit getrennt beschreiben.",
+      "replacement": "Keep TypeScript, template and SCSS checks effective, and review component boundaries as the website grows.",
+      "evidenceRefs": [
+        "website-package",
+        "website-renderer"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "angular-plan-drift",
+      "status": "open",
+      "sourceVersion": "sha256:95c5abecfcee5257e7d54cb2387ed10750e8ab52da5ec996fc20b6b2e1411e78",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 157,
+        "column": 15,
+        "literalSourceSpan": {
+          "start": 7090,
+          "end": 7220
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 130
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-031",
+      "title": "Benötigten Kontext als Voraussetzung nennen",
+      "sourcePath": "src/app/content/pattern-external-cli-on-the-side.ts",
+      "routes": [
+        "/patterns/external-cli-on-the-side"
+      ],
+      "exactQuote": "The agent has enough project context to shape the task, call the API and put the work into the task board.",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Der Nutzungshinweis setzt ausreichenden Kontext einfach voraus. Für einen konkreten Workflow ist hilfreicher, welche Informationen und erlaubten API-Aktionen vor dem Erstellen einer Aufgabe feststehen müssen. Die Fähigkeit zur API-Nutzung selbst wird hier nicht bestritten.",
+      "replacement": "Provide the project identity, scope, acceptance criteria and permitted API actions before asking the CLI to create the task.",
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "workflow-prerequisite",
+      "status": "open",
+      "sourceVersion": "sha256:ba14cc2cb6c78070b60a7a7155fd512c1ae732475a8ed3eaccc870e8d25b1e94",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 51,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 3046,
+          "end": 3306
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 154,
+          "end": 260
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-032",
+      "title": "Öffentliche Pattern-Seite enthält einen Auftrag an künftige Autoren",
+      "sourcePath": "src/app/content/pattern-workforce-sensemaking-cli.ts",
+      "routes": [
+        "/patterns/workforce-sensemaking-cli"
+      ],
+      "exactQuote": "A researcher writing the full article should study the pattern as a real operating loop, not as a tooling preference. The central question is how a human keeps understanding while an agent workforce continues producing change.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Der Abschnitt ist ausdrücklich ein Research Outline und deshalb kein versteckter Fertigstellungsclaim. Er unterbricht trotzdem den Nutzungsablauf mit einer Arbeitsanweisung an Autoren. Als öffentliche Forschungsnotiz klar abtrennen oder durch beobachtete Anwendungsschritte ersetzen; keine Sitzung oder Evidenz erfinden.",
+      "replacement": null,
+      "evidenceRefs": [
+        "website-config"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:ce066c29b7dc35e71cb04dc573a74a2149c08514902a0c7f1b25b8c412c9f123",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 61,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 4499,
+          "end": 4725
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 226
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-033",
+      "title": "Artikelübersicht erklärt ihre Funktion für die Positionierung",
+      "sourcePath": "src/app/content/articles.ts",
+      "routes": [
+        "/articles"
+      ],
+      "exactQuote": "Articles give Agent Studio a place for durable positioning that is deeper than a feature page but still directly connected to the product. The first article draws the line between spec-driven coding tools such as Kiro and Agent Studio.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "„A place for durable positioning“ beschreibt, warum der Autor diese Rubrik gebaut hat. Der Leser sollte erfahren, welche Fragen die Beiträge beantworten. Die Kiro-Grundbeschreibung ist durch die offizielle Specs-Dokumentation gedeckt und wird nicht pauschal als Wettbewerbsabwertung markiert.",
+      "replacement": "Read how Agent Studio uses specifications as task context and how a separate CLI can help you review parallel agent work.",
+      "evidenceRefs": [
+        "kiro-specs",
+        "website-config"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:4de4442913671998b422e522925e63a3cf8226bc6f9574217b8602b39a340312",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 12,
+        "column": 7,
+        "literalSourceSpan": {
+          "start": 368,
+          "end": 603
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 235
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-034",
+      "title": "Internes Kürzel ohne Erklärung im Argument",
+      "sourcePath": "src/app/content/article-specs-context-not-control.ts",
+      "routes": [
+        "/articles/specs-are-context-not-control"
+      ],
+      "exactQuote": "APEGs, TASKs and explicit specs preserve intent for concrete agent work.",
+      "category": "wording",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "APEG wird für neue Leser nicht aufgelöst; zusammen mit TASKs wirkt die Aussage wie internes Prozessvokabular. Beim ersten Vorkommen den belegten Begriff erklären oder die tatsächlich gemeinten öffentlich dokumentierten Arbeitsobjekte benennen. Die Bedeutung von APEG wurde hier nicht geraten.",
+      "replacement": null,
+      "evidenceRefs": [
+        "workflow-copy"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "terminology",
+      "status": "open",
+      "sourceVersion": "sha256:a437a36ebfa68bef1bec999d07cf8b1629bb037d5b024228a35a008b43d6716e",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 33,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 2494,
+          "end": 2566
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 72
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-035",
+      "title": "Artikel bleibt bei einem Forschungsauftrag statt einem beobachteten Beispiel",
+      "sourcePath": "src/app/content/article-workforce-sensemaking-cli.ts",
+      "routes": [
+        "/articles/workforce-sensemaking-cli"
+      ],
+      "exactQuote": "The article should document how a human keeps orientation while parallel agent work is happening. The best evidence will come from watching a real session and asking which moments would have been harder without the second CLI.",
+      "category": "meta",
+      "severity": "info",
+      "disposition": "editorial",
+      "explanation": "Die Zusammenfassung nennt das Dokument ehrlich ein Outline. Für Leser, die einen nutzbaren Artikel erwarten, fehlt aber das angekündigte Beispiel. Entweder als Forschungsnotiz mit offenen Fragen publizieren oder eine tatsächliche Sitzung dokumentieren und die Autorenanweisungen ersetzen. Ein fertiger Erfahrungsbericht lässt sich nicht allein sprachlich herstellen.",
+      "replacement": null,
+      "evidenceRefs": [
+        "website-config"
+      ],
+      "confidence": 0.91,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 3,
+      "group": "public-author-notes",
+      "status": "open",
+      "sourceVersion": "sha256:f3f4367f0be82492be8908a4ed30ceb015129c5a6351287d1b56d1d733dc509f",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 44,
+        "column": 11,
+        "literalSourceSpan": {
+          "start": 2621,
+          "end": 2847
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 226
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    },
+    {
+      "id": "ASW-036",
+      "title": "Synthetischer Chat-Inhalt braucht eine sichtbare Beispielkennzeichnung",
+      "sourcePath": "src/app/content/captures.ts",
+      "routes": [
+        "/product",
+        "/how-work-happens"
+      ],
+      "exactQuote": "2 projects have high drift. Reissues concentrate token spend.",
+      "category": "meta",
+      "severity": "warning",
+      "disposition": "editorial",
+      "explanation": "Dieser feste Text wird als Zeile einer bildlosen Chat-Karte gerendert. Das Template verwendet dafür denselben Rahmen „Agent Studio Stable“ wie für echte Screenshots, ohne hier ein Beispiel-Label zu ergänzen. Die Darstellung kann deshalb wie beobachtete Produkt-Evidenz wirken. Den ganzen bildlosen Kartentyp sichtbar als schematisches Beispiel kennzeichnen; echte Bildcaptions und ausgeblendete Kennzahlen sind davon zu unterscheiden.",
+      "replacement": null,
+      "evidenceRefs": [
+        "capture-renderer",
+        "product-claims"
+      ],
+      "confidence": 0.96,
+      "confidenceMeaning": "Sicherheit, dass der beschriebene Review-Bedarf besteht; keine Wahrscheinlichkeit, dass ein ungeprüfter Produktclaim falsch ist.",
+      "priority": 2,
+      "group": "illustration-provenance",
+      "status": "open",
+      "sourceVersion": "sha256:a7575cf4179a02b1371daa0a9f8815d9ea0f324e999830802df8f7dc69f842ec",
+      "anchor": {
+        "offsetEncoding": "utf16",
+        "line": 329,
+        "column": 30,
+        "literalSourceSpan": {
+          "start": 15217,
+          "end": 15278
+        },
+        "quoteSpanInDecodedLiteral": {
+          "start": 0,
+          "end": 61
+        },
+        "exactQuoteIsDecodedLiteralSubstring": true
+      }
+    }
+  ]
+}

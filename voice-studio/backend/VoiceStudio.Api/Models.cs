@@ -12,7 +12,7 @@ public record ProjectReport(string ProjectId, DocumentSummary[] Documents, int T
 public record FeedbackInput(string UnitId, string Quote, int Start, int End, string Comment, string Category, string ExpectedVersion, int ExpectedReviewRevision, string RequestId);
 public record FeedbackStatusInput(string Status, int ExpectedReviewRevision);
 public record ProposalInput(string UnitId, int Start, int End, string Replacement, string ExpectedVersion, string? FeedbackId);
-public record Proposal(string Id, string DocumentId, string Before, string After, string Replacement, string SourceBefore, string SourceAfter, string ExpectedVersion, SourceSpan SourceSpan, string? FeedbackId, string Reason, string State);
+public record Proposal(string Id, string DocumentId, string Before, string After, string Replacement, string SourceBefore, string SourceAfter, string ExpectedVersion, SourceSpan SourceSpan, string? FeedbackId, string Reason, string State, string? TaskId = null, string? RunId = null, ProposalEdit[]? Edits = null);
 public record ApplyInput(string ExpectedVersion);
 public record ImprovementInput(string[] FeedbackIds, string Instruction, string ExpectedVersion, string RequestId);
 public record ImprovementRequest(string Id, string ProjectId, string DocumentId, string[] FeedbackIds, string Instruction, string ExpectedVersion, string Status, string CreatedAt);
@@ -27,6 +27,7 @@ public class ReviewFile
     public int Revision { get; set; }
     public string DocumentPath { get; set; } = "";
     public string SourceVersion { get; set; } = "";
+    public string? UnitsFingerprint { get; set; }
     public List<Feedback> Feedback { get; set; } = [];
     public Dictionary<string, string> RequestIds { get; set; } = [];
     public List<Proposal> Proposals { get; set; } = [];
@@ -37,5 +38,16 @@ public class ApiError(int status, string message) : Exception(message)
     public int Status { get; } = status;
 }
 
-public record ContextSource(string Path, string Source, bool Truncated);
+public record ContextSource(string Path, string Source, bool Truncated, string? Version = null);
 public record ReviewRunContext(string ProjectRoot, DocumentDetail Document, ContextSource[] ContextFiles);
+
+public record ProposalEdit(string UnitId, int Start, int End, string Quote, string Replacement, string Reason);
+public record ImprovementTaskInput(string Instruction, string[] FeedbackIds, string ExpectedVersion, int ExpectedReviewRevision, string RequestId);
+public record TaskStartInput(int ExpectedTaskRevision, string ExpectedVersion, int ExpectedReviewRevision, string RequestId);
+public record TaskRevisionInput(int ExpectedTaskRevision);
+public record TaskApplyInput(int ExpectedTaskRevision, string ExpectedVersion, int ExpectedReviewRevision);
+public record TaskPrompt(string Prompt, string SourceVersion, int ReviewRevision);
+public record TaskApplyResult(ImprovementTask Task, DocumentDetail Document);
+public record ImprovementTask(string Id, string ProjectId, string DocumentId, string Instruction, string[] FeedbackIds, string SourceVersion, int ReviewRevision, int Revision, string Status, string CreatedAt, string UpdatedAt, string? RunId = null, string? ProposalId = null, string? Error = null, Proposal? Proposal = null, string[]? Notes = null, string? Resolution = null);
+
+public record TaskResolveInput(int ExpectedTaskRevision, string ExpectedVersion, int ExpectedReviewRevision, string Note);

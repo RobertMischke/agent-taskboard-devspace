@@ -4,7 +4,7 @@ function extract(source) {
 if (typeof source !== 'string' || source.length > 2_100_000) throw new Error('Invalid TypeScript source size');
 const file = ts.createSourceFile('voice-content.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 if (file.parseDiagnostics.length) throw new Error('TypeScript syntax error: ' + ts.flattenDiagnosticMessageText(file.parseDiagnostics[0].messageText, ' '));
-const prose = new Set('title titles headline headlines headlineLines heroKicker kicker eyebrow heading headings subheading subtitle seoTitle metaDescription description descriptions lead summary heroOperational label labels navLabel body paragraphs paragraph quote quotes text texts caption captions alt annotations statusChips bullets bullet items intro introduction note notes detail details message helperText placeholder cta value benefit benefits question answer'.toLowerCase().split(' '));
+const prose = new Set('title titles headline headlines headlineLines heroKicker kicker eyebrow heading headings subheading subtitle seoTitle metaDescription description descriptions lead summary heroOperational label labels navLabel body paragraphs paragraph quote quotes text texts caption captions alt annotations statusChips bullets bullet items intro introduction note notes detail details message helperText placeholder cta value benefit benefits question answer count'.toLowerCase().split(' '));
 const units = [];
 let excluded = 0, visibleLength = 0;
 function decode(node) {
@@ -65,6 +65,9 @@ function visit(value, path) {
     if (!prose.has(key)) { excluded++; return; }
     const mapped = decode(node);
     if (!mapped || !mapped.text.isWellFormed() || !/\p{L}/u.test(mapped.text) || /^(?:https?:\/\/|\/|#[\w-]+$)/i.test(mapped.text) || /<\/?[a-z][^>]*>/i.test(mapped.text)) { excluded++; return; }
+    // A rendered count may contain a public claim, while numeric counters and
+    // single technical tokens remain outside prose analysis.
+    if (key === 'count' && !/\s/u.test(mapped.text.trim())) { excluded++; return; }
     visibleLength += mapped.text.length;
     if (units.length >= 5000 || visibleLength > 500000) throw new Error('Configured TypeScript content exceeds adapter limits');
     const kind = /^(title|headline|headlinelines|heading)$/.test(key) ? (path.filter(p => !p.startsWith('[')).length <= 2 ? 'h1' : 'h2') : 'p';

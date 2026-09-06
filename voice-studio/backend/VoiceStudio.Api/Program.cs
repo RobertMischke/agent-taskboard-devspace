@@ -53,7 +53,10 @@ var legacySession = Path.Combine(runtime, "session.json");
 if (File.Exists(legacySession)) File.Delete(legacySession);
 builder.Services.AddSingleton(new ProjectStore(home));
 builder.Services.AddSingleton(provider => new RunnerReviewService(provider.GetRequiredService<ProjectStore>(), RunnerReviewOptions.FromEnvironment(), Path.Combine(sessionRoot, "runner")));
+builder.Services.AddSingleton<ImprovementTaskService>();
+builder.Services.AddSingleton(provider => new ProjectCheckService(provider.GetRequiredService<ProjectStore>(), Path.Combine(sessionRoot, "checks.json")));
 var app = builder.Build();
+_ = app.Services.GetRequiredService<ProjectCheckService>(); // Freeze private check profiles at startup.
 var failedPairings = new Queue<DateTimeOffset>();
 var pairingGate = new object();
 var liveExample = new LiveExampleSite(home);
@@ -83,7 +86,10 @@ app.Use(async (context, next) =>
 });
 
 app.MapVoiceSemanticReview();
-app.MapGet("/api/health", () => new { status = "ok", service = "voice-studio", version = "0.2.0" });
+app.MapImprovementTasks();
+app.MapProjectChecks();
+app.MapFallback("/api/{**path}", () => Results.NotFound(new { error = "API-Route nicht gefunden.", message = "API-Route nicht gefunden." }));
+app.MapGet("/api/health", () => new { status = "ok", service = "voice-studio", version = "0.3.0" });
 app.MapGet("/api/session", (HttpContext context) => new { paired = FixedEquals(context.Request.Headers.Authorization.ToString(), "Bearer " + token), requiresPairing = true, pairingFile = ".voice-studio/session-location.json", mode = "local" });
 app.MapPost("/api/session/pair", (PairInput input) =>
 {

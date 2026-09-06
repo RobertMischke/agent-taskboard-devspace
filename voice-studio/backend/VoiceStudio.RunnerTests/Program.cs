@@ -106,6 +106,18 @@ try
     var history = service.ListRuns(project.Id, documentId);
     Check(history.Length == 6 && history[0].Id == result.Id && history.Zip(history.Skip(1)).All(pair => string.CompareOrdinal(pair.First.CreatedAt, pair.Second.CreatedAt) >= 0), "history retains every terminal run newest first");
     Check(history.Single(run => run.Id == replay.Id).Status == "stale", "old completed evidence is revalidated when history is loaded");
+    fake.Factory = (request, ct) => Success(request, ct);
+    var parserReplayInput = new SemanticReviewInput(document.Version, "parser-mapping-replay");
+    started = await service.StartAsync(project.Id, documentId, parserReplayInput);
+    result = await Finished(service, project.Id, documentId, started.Id);
+    var parserRunPath = Path.Combine(projectRoot, ".voice-lint", "semantic-runs", result.Id, "run.json");
+    var parserRun = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(parserRunPath))!;
+    parserRun["unitsFingerprint"] = "legacy-parser-mapping";
+    File.WriteAllText(parserRunPath, parserRun.ToJsonString());
+    var callsBeforeParserReplay = fake.Starts;
+    var parserReplay = await service.StartAsync(project.Id, documentId, parserReplayInput);
+    Check(parserReplay.Status == "stale" && parserReplay.Findings.Length == 0 && fake.Starts == callsBeforeParserReplay,
+        "idempotent semantic POST revalidates parser mapping without starting another model");
     Reject(() => service.GetRun(project.Id, documentId, "../outside"), "run paths reject traversal");
     Console.WriteLine($"Runner semantic review: {checks} checks passed; fake streams only, zero model calls.");
 }

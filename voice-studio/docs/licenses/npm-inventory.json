@@ -1,0 +1,5438 @@
+{
+  "checkedAt": "2026-09-06T20:44:53.139Z",
+  "scope": "npm dependency metadata; not a complete distribution license audit or SPDX conformance attestation",
+  "notes": [
+    "Declared metadata does not replace each package license text, notices, bundled data or file-level exceptions.",
+    "LanguageTool, Vale, CSpell, Hunspell and textlint are researched candidates and are not installed by this change.",
+    "First-party @voice workspace packages are excluded; this inventory does not assign them a license."
+  ],
+  "packages": [
+    {
+      "packageLocation": "node_modules/@algolia/abtesting",
+      "name": "@algolia/abtesting",
+      "version": "1.14.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-abtesting",
+      "name": "@algolia/client-abtesting",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-analytics",
+      "name": "@algolia/client-analytics",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-common",
+      "name": "@algolia/client-common",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-insights",
+      "name": "@algolia/client-insights",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-personalization",
+      "name": "@algolia/client-personalization",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-query-suggestions",
+      "name": "@algolia/client-query-suggestions",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/client-search",
+      "name": "@algolia/client-search",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/ingestion",
+      "name": "@algolia/ingestion",
+      "version": "1.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/monitoring",
+      "name": "@algolia/monitoring",
+      "version": "1.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/recommend",
+      "name": "@algolia/recommend",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/requester-browser-xhr",
+      "name": "@algolia/requester-browser-xhr",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/requester-fetch",
+      "name": "@algolia/requester-fetch",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@algolia/requester-node-http",
+      "name": "@algolia/requester-node-http",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@ampproject/remapping",
+      "name": "@ampproject/remapping",
+      "version": "2.3.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular-devkit/architect",
+      "name": "@angular-devkit/architect",
+      "version": "0.2102.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular-devkit/core",
+      "name": "@angular-devkit/core",
+      "version": "21.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular-devkit/schematics",
+      "name": "@angular-devkit/schematics",
+      "version": "21.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build",
+      "name": "@angular/build",
+      "version": "21.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/cli",
+      "name": "@angular/cli",
+      "version": "21.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/common",
+      "name": "@angular/common",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/compiler",
+      "name": "@angular/compiler",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/compiler-cli",
+      "name": "@angular/compiler-cli",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/core",
+      "name": "@angular/core",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/forms",
+      "name": "@angular/forms",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/platform-browser",
+      "name": "@angular/platform-browser",
+      "version": "21.2.22",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@asamuzakjp/css-color",
+      "name": "@asamuzakjp/css-color",
+      "version": "3.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/code-frame",
+      "name": "@babel/code-frame",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/compat-data",
+      "name": "@babel/compat-data",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/core",
+      "name": "@babel/core",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/generator",
+      "name": "@babel/generator",
+      "version": "7.29.8",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-annotate-as-pure",
+      "name": "@babel/helper-annotate-as-pure",
+      "version": "7.27.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-compilation-targets",
+      "name": "@babel/helper-compilation-targets",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-globals",
+      "name": "@babel/helper-globals",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-module-imports",
+      "name": "@babel/helper-module-imports",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-module-transforms",
+      "name": "@babel/helper-module-transforms",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-split-export-declaration",
+      "name": "@babel/helper-split-export-declaration",
+      "version": "7.24.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-string-parser",
+      "name": "@babel/helper-string-parser",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-validator-identifier",
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-validator-option",
+      "name": "@babel/helper-validator-option",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helpers",
+      "name": "@babel/helpers",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/parser",
+      "name": "@babel/parser",
+      "version": "7.29.8",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/template",
+      "name": "@babel/template",
+      "version": "7.29.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/traverse",
+      "name": "@babel/traverse",
+      "version": "7.29.8",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/types",
+      "name": "@babel/types",
+      "version": "7.29.8",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@csstools/color-helpers",
+      "name": "@csstools/color-helpers",
+      "version": "5.1.0",
+      "declaredLicense": "MIT-0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@csstools/css-calc",
+      "name": "@csstools/css-calc",
+      "version": "2.1.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@csstools/css-color-parser",
+      "name": "@csstools/css-color-parser",
+      "version": "3.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@csstools/css-parser-algorithms",
+      "name": "@csstools/css-parser-algorithms",
+      "version": "3.0.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@csstools/css-tokenizer",
+      "name": "@csstools/css-tokenizer",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@emnapi/core",
+      "name": "@emnapi/core",
+      "version": "1.11.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@emnapi/runtime",
+      "name": "@emnapi/runtime",
+      "version": "1.11.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@emnapi/wasi-threads",
+      "name": "@emnapi/wasi-threads",
+      "version": "1.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/aix-ppc64",
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/aix-ppc64",
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/aix-ppc64",
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/android-arm",
+      "name": "@esbuild/android-arm",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/android-arm",
+      "name": "@esbuild/android-arm",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/android-arm",
+      "name": "@esbuild/android-arm",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/android-arm64",
+      "name": "@esbuild/android-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/android-arm64",
+      "name": "@esbuild/android-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/android-arm64",
+      "name": "@esbuild/android-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/android-x64",
+      "name": "@esbuild/android-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/android-x64",
+      "name": "@esbuild/android-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/android-x64",
+      "name": "@esbuild/android-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/darwin-arm64",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/darwin-arm64",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/darwin-arm64",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/darwin-x64",
+      "name": "@esbuild/darwin-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/darwin-x64",
+      "name": "@esbuild/darwin-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/darwin-x64",
+      "name": "@esbuild/darwin-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/freebsd-arm64",
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/freebsd-arm64",
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/freebsd-arm64",
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/freebsd-x64",
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/freebsd-x64",
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/freebsd-x64",
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-arm",
+      "name": "@esbuild/linux-arm",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-arm",
+      "name": "@esbuild/linux-arm",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-arm",
+      "name": "@esbuild/linux-arm",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-arm64",
+      "name": "@esbuild/linux-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-arm64",
+      "name": "@esbuild/linux-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-arm64",
+      "name": "@esbuild/linux-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-ia32",
+      "name": "@esbuild/linux-ia32",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-ia32",
+      "name": "@esbuild/linux-ia32",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-ia32",
+      "name": "@esbuild/linux-ia32",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-loong64",
+      "name": "@esbuild/linux-loong64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-loong64",
+      "name": "@esbuild/linux-loong64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-loong64",
+      "name": "@esbuild/linux-loong64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-mips64el",
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-mips64el",
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-mips64el",
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-ppc64",
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-ppc64",
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-ppc64",
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-riscv64",
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-riscv64",
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-riscv64",
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-s390x",
+      "name": "@esbuild/linux-s390x",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-s390x",
+      "name": "@esbuild/linux-s390x",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-s390x",
+      "name": "@esbuild/linux-s390x",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/linux-x64",
+      "name": "@esbuild/linux-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/linux-x64",
+      "name": "@esbuild/linux-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/linux-x64",
+      "name": "@esbuild/linux-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/netbsd-arm64",
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/netbsd-arm64",
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/netbsd-arm64",
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/netbsd-x64",
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/netbsd-x64",
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/netbsd-x64",
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/openbsd-arm64",
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/openbsd-arm64",
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/openbsd-arm64",
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/openbsd-x64",
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/openbsd-x64",
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/openbsd-x64",
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/openharmony-arm64",
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/openharmony-arm64",
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/openharmony-arm64",
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/sunos-x64",
+      "name": "@esbuild/sunos-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/sunos-x64",
+      "name": "@esbuild/sunos-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/sunos-x64",
+      "name": "@esbuild/sunos-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/win32-arm64",
+      "name": "@esbuild/win32-arm64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/win32-arm64",
+      "name": "@esbuild/win32-arm64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/win32-arm64",
+      "name": "@esbuild/win32-arm64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/win32-ia32",
+      "name": "@esbuild/win32-ia32",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/win32-ia32",
+      "name": "@esbuild/win32-ia32",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/win32-ia32",
+      "name": "@esbuild/win32-ia32",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@esbuild/win32-x64",
+      "name": "@esbuild/win32-x64",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/@esbuild/win32-x64",
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/@esbuild/win32-x64",
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@gar/promise-retry",
+      "name": "@gar/promise-retry",
+      "version": "1.0.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@harperfast/extended-iterable",
+      "name": "@harperfast/extended-iterable",
+      "version": "1.0.3",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@hono/node-server",
+      "name": "@hono/node-server",
+      "version": "2.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/ansi",
+      "name": "@inquirer/ansi",
+      "version": "1.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/checkbox",
+      "name": "@inquirer/checkbox",
+      "version": "4.3.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/confirm",
+      "name": "@inquirer/confirm",
+      "version": "5.1.21",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/core",
+      "name": "@inquirer/core",
+      "version": "10.3.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/editor",
+      "name": "@inquirer/editor",
+      "version": "4.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/expand",
+      "name": "@inquirer/expand",
+      "version": "4.0.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/external-editor",
+      "name": "@inquirer/external-editor",
+      "version": "1.0.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/figures",
+      "name": "@inquirer/figures",
+      "version": "1.0.15",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/input",
+      "name": "@inquirer/input",
+      "version": "4.3.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/number",
+      "name": "@inquirer/number",
+      "version": "3.0.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/password",
+      "name": "@inquirer/password",
+      "version": "4.0.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/prompts",
+      "name": "@inquirer/prompts",
+      "version": "7.10.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/rawlist",
+      "name": "@inquirer/rawlist",
+      "version": "4.1.11",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/search",
+      "name": "@inquirer/search",
+      "version": "3.2.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/select",
+      "name": "@inquirer/select",
+      "version": "4.4.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@inquirer/type",
+      "name": "@inquirer/type",
+      "version": "3.0.10",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@isaacs/fs-minipass",
+      "name": "@isaacs/fs-minipass",
+      "version": "4.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@istanbuljs/schema",
+      "name": "@istanbuljs/schema",
+      "version": "0.1.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@jridgewell/gen-mapping",
+      "name": "@jridgewell/gen-mapping",
+      "version": "0.3.13",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@jridgewell/remapping",
+      "name": "@jridgewell/remapping",
+      "version": "2.3.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@jridgewell/resolve-uri",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@jridgewell/sourcemap-codec",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@jridgewell/trace-mapping",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@listr2/prompt-adapter-inquirer",
+      "name": "@listr2/prompt-adapter-inquirer",
+      "version": "3.0.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-darwin-arm64",
+      "name": "@lmdb/lmdb-darwin-arm64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-darwin-x64",
+      "name": "@lmdb/lmdb-darwin-x64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-linux-arm",
+      "name": "@lmdb/lmdb-linux-arm",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-linux-arm64",
+      "name": "@lmdb/lmdb-linux-arm64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-linux-x64",
+      "name": "@lmdb/lmdb-linux-x64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-win32-arm64",
+      "name": "@lmdb/lmdb-win32-arm64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@lmdb/lmdb-win32-x64",
+      "name": "@lmdb/lmdb-win32-x64",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@modelcontextprotocol/sdk",
+      "name": "@modelcontextprotocol/sdk",
+      "version": "1.30.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-darwin-arm64",
+      "name": "@msgpackr-extract/msgpackr-extract-darwin-arm64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-darwin-x64",
+      "name": "@msgpackr-extract/msgpackr-extract-darwin-x64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-linux-arm",
+      "name": "@msgpackr-extract/msgpackr-extract-linux-arm",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-linux-arm64",
+      "name": "@msgpackr-extract/msgpackr-extract-linux-arm64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-linux-x64",
+      "name": "@msgpackr-extract/msgpackr-extract-linux-x64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@msgpackr-extract/msgpackr-extract-win32-x64",
+      "name": "@msgpackr-extract/msgpackr-extract-win32-x64",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/lzma-linux-x64-gnu",
+      "name": "@napi-rs/lzma-linux-x64-gnu",
+      "version": "1.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice",
+      "name": "@napi-rs/nice",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-android-arm-eabi",
+      "name": "@napi-rs/nice-android-arm-eabi",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-android-arm64",
+      "name": "@napi-rs/nice-android-arm64",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-darwin-arm64",
+      "name": "@napi-rs/nice-darwin-arm64",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-darwin-x64",
+      "name": "@napi-rs/nice-darwin-x64",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-freebsd-x64",
+      "name": "@napi-rs/nice-freebsd-x64",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-arm-gnueabihf",
+      "name": "@napi-rs/nice-linux-arm-gnueabihf",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-arm64-gnu",
+      "name": "@napi-rs/nice-linux-arm64-gnu",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-arm64-musl",
+      "name": "@napi-rs/nice-linux-arm64-musl",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-ppc64-gnu",
+      "name": "@napi-rs/nice-linux-ppc64-gnu",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-riscv64-gnu",
+      "name": "@napi-rs/nice-linux-riscv64-gnu",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-s390x-gnu",
+      "name": "@napi-rs/nice-linux-s390x-gnu",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-x64-gnu",
+      "name": "@napi-rs/nice-linux-x64-gnu",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-linux-x64-musl",
+      "name": "@napi-rs/nice-linux-x64-musl",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-openharmony-arm64",
+      "name": "@napi-rs/nice-openharmony-arm64",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-win32-arm64-msvc",
+      "name": "@napi-rs/nice-win32-arm64-msvc",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-win32-ia32-msvc",
+      "name": "@napi-rs/nice-win32-ia32-msvc",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/nice-win32-x64-msvc",
+      "name": "@napi-rs/nice-win32-x64-msvc",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@napi-rs/wasm-runtime",
+      "name": "@napi-rs/wasm-runtime",
+      "version": "1.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/agent",
+      "name": "@npmcli/agent",
+      "version": "4.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/fs",
+      "name": "@npmcli/fs",
+      "version": "5.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/git",
+      "name": "@npmcli/git",
+      "version": "7.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/installed-package-contents",
+      "name": "@npmcli/installed-package-contents",
+      "version": "4.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/node-gyp",
+      "name": "@npmcli/node-gyp",
+      "version": "5.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/package-json",
+      "name": "@npmcli/package-json",
+      "version": "7.0.5",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/promise-spawn",
+      "name": "@npmcli/promise-spawn",
+      "version": "9.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/redact",
+      "name": "@npmcli/redact",
+      "version": "4.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/run-script",
+      "name": "@npmcli/run-script",
+      "version": "10.0.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@oxc-project/types",
+      "name": "@oxc-project/types",
+      "version": "0.113.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher",
+      "name": "@parcel/watcher",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-android-arm64",
+      "name": "@parcel/watcher-android-arm64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-darwin-arm64",
+      "name": "@parcel/watcher-darwin-arm64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-darwin-x64",
+      "name": "@parcel/watcher-darwin-x64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-freebsd-x64",
+      "name": "@parcel/watcher-freebsd-x64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-arm-glibc",
+      "name": "@parcel/watcher-linux-arm-glibc",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-arm-musl",
+      "name": "@parcel/watcher-linux-arm-musl",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-arm64-glibc",
+      "name": "@parcel/watcher-linux-arm64-glibc",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-arm64-musl",
+      "name": "@parcel/watcher-linux-arm64-musl",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-x64-glibc",
+      "name": "@parcel/watcher-linux-x64-glibc",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-linux-x64-musl",
+      "name": "@parcel/watcher-linux-x64-musl",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-win32-arm64",
+      "name": "@parcel/watcher-win32-arm64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher-win32-x64",
+      "name": "@parcel/watcher-win32-x64",
+      "version": "2.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@playwright/test",
+      "name": "@playwright/test",
+      "version": "1.63.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-android-arm64",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-darwin-arm64",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-darwin-x64",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-freebsd-x64",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-linux-arm-gnueabihf",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-linux-arm64-gnu",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-linux-arm64-musl",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-linux-x64-gnu",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-linux-x64-musl",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-openharmony-arm64",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-wasm32-wasi",
+      "name": "@rolldown/binding-wasm32-wasi",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-win32-arm64-msvc",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/binding-win32-x64-msvc",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@rolldown/pluginutils",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-android-arm-eabi",
+      "name": "@rollup/rollup-android-arm-eabi",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-android-arm64",
+      "name": "@rollup/rollup-android-arm64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-darwin-arm64",
+      "name": "@rollup/rollup-darwin-arm64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-darwin-x64",
+      "name": "@rollup/rollup-darwin-x64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-freebsd-arm64",
+      "name": "@rollup/rollup-freebsd-arm64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-freebsd-x64",
+      "name": "@rollup/rollup-freebsd-x64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-arm-gnueabihf",
+      "name": "@rollup/rollup-linux-arm-gnueabihf",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-arm-musleabihf",
+      "name": "@rollup/rollup-linux-arm-musleabihf",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-arm64-gnu",
+      "name": "@rollup/rollup-linux-arm64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-arm64-musl",
+      "name": "@rollup/rollup-linux-arm64-musl",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-loong64-gnu",
+      "name": "@rollup/rollup-linux-loong64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-loong64-musl",
+      "name": "@rollup/rollup-linux-loong64-musl",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-ppc64-gnu",
+      "name": "@rollup/rollup-linux-ppc64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-ppc64-musl",
+      "name": "@rollup/rollup-linux-ppc64-musl",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-riscv64-gnu",
+      "name": "@rollup/rollup-linux-riscv64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-riscv64-musl",
+      "name": "@rollup/rollup-linux-riscv64-musl",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-s390x-gnu",
+      "name": "@rollup/rollup-linux-s390x-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-x64-gnu",
+      "name": "@rollup/rollup-linux-x64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-linux-x64-musl",
+      "name": "@rollup/rollup-linux-x64-musl",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-openbsd-x64",
+      "name": "@rollup/rollup-openbsd-x64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-openharmony-arm64",
+      "name": "@rollup/rollup-openharmony-arm64",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-win32-arm64-msvc",
+      "name": "@rollup/rollup-win32-arm64-msvc",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-win32-ia32-msvc",
+      "name": "@rollup/rollup-win32-ia32-msvc",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-win32-x64-gnu",
+      "name": "@rollup/rollup-win32-x64-gnu",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@rollup/rollup-win32-x64-msvc",
+      "name": "@rollup/rollup-win32-x64-msvc",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@schematics/angular",
+      "name": "@schematics/angular",
+      "version": "21.2.23",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/bundle",
+      "name": "@sigstore/bundle",
+      "version": "4.0.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/core",
+      "name": "@sigstore/core",
+      "version": "3.2.1",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/protobuf-specs",
+      "name": "@sigstore/protobuf-specs",
+      "version": "0.5.2",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/sign",
+      "name": "@sigstore/sign",
+      "version": "4.1.1",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/tuf",
+      "name": "@sigstore/tuf",
+      "version": "4.0.2",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@sigstore/verify",
+      "name": "@sigstore/verify",
+      "version": "3.1.1",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@standard-schema/spec",
+      "name": "@standard-schema/spec",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@tufjs/canonical-json",
+      "name": "@tufjs/canonical-json",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@tufjs/models",
+      "name": "@tufjs/models",
+      "version": "4.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@tybys/wasm-util",
+      "name": "@tybys/wasm-util",
+      "version": "0.10.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/@types/estree",
+      "name": "@types/estree",
+      "version": "1.0.9",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@vitejs/plugin-basic-ssl",
+      "name": "@vitejs/plugin-basic-ssl",
+      "version": "2.1.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@yarnpkg/lockfile",
+      "name": "@yarnpkg/lockfile",
+      "version": "1.1.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/abbrev",
+      "name": "abbrev",
+      "version": "4.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/accepts",
+      "name": "accepts",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/agent-base",
+      "name": "agent-base",
+      "version": "7.1.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ajv",
+      "name": "ajv",
+      "version": "8.18.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ajv-formats",
+      "name": "ajv-formats",
+      "version": "3.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/algoliasearch",
+      "name": "algoliasearch",
+      "version": "5.48.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ansi-escapes",
+      "name": "ansi-escapes",
+      "version": "7.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/ansi-regex",
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ansi-regex",
+      "name": "ansi-regex",
+      "version": "6.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/ansi-styles",
+      "name": "ansi-styles",
+      "version": "4.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ansi-styles",
+      "name": "ansi-styles",
+      "version": "6.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/balanced-match",
+      "name": "balanced-match",
+      "version": "4.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/baseline-browser-mapping",
+      "name": "baseline-browser-mapping",
+      "version": "2.11.21",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/beasties",
+      "name": "beasties",
+      "version": "0.4.1",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/body-parser",
+      "name": "body-parser",
+      "version": "2.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/boolbase",
+      "name": "boolbase",
+      "version": "1.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/brace-expansion",
+      "name": "brace-expansion",
+      "version": "5.0.9",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/browserslist",
+      "name": "browserslist",
+      "version": "4.28.9",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/buffer-from",
+      "name": "buffer-from",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/bytes",
+      "name": "bytes",
+      "version": "3.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cacache",
+      "name": "cacache",
+      "version": "20.0.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/call-bind-apply-helpers",
+      "name": "call-bind-apply-helpers",
+      "version": "1.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/call-bound",
+      "name": "call-bound",
+      "version": "1.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/caniuse-lite",
+      "name": "caniuse-lite",
+      "version": "1.0.30001810",
+      "declaredLicense": "CC-BY-4.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/chalk",
+      "name": "chalk",
+      "version": "5.6.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/chardet",
+      "name": "chardet",
+      "version": "2.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/sass/node_modules/chokidar",
+      "name": "chokidar",
+      "version": "4.0.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/chokidar",
+      "name": "chokidar",
+      "version": "5.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/chownr",
+      "name": "chownr",
+      "version": "3.0.0",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cli-cursor",
+      "name": "cli-cursor",
+      "version": "5.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cli-spinners",
+      "name": "cli-spinners",
+      "version": "3.4.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cli-truncate",
+      "name": "cli-truncate",
+      "version": "5.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cli-width",
+      "name": "cli-width",
+      "version": "4.1.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cliui",
+      "name": "cliui",
+      "version": "9.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/color-convert",
+      "name": "color-convert",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/color-name",
+      "name": "color-name",
+      "version": "1.1.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/colorette",
+      "name": "colorette",
+      "version": "2.0.20",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/content-disposition",
+      "name": "content-disposition",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/content-type",
+      "name": "content-type",
+      "version": "1.0.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/body-parser/node_modules/content-type",
+      "name": "content-type",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/negotiator/node_modules/content-type",
+      "name": "content-type",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/type-is/node_modules/content-type",
+      "name": "content-type",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/convert-source-map",
+      "name": "convert-source-map",
+      "version": "1.9.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/core/node_modules/convert-source-map",
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cookie",
+      "name": "cookie",
+      "version": "0.7.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cookie-signature",
+      "name": "cookie-signature",
+      "version": "1.2.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cors",
+      "name": "cors",
+      "version": "2.8.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cross-spawn",
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/css-select",
+      "name": "css-select",
+      "version": "6.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/css-what",
+      "name": "css-what",
+      "version": "7.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cssstyle",
+      "name": "cssstyle",
+      "version": "4.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/data-urls",
+      "name": "data-urls",
+      "version": "5.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/debug",
+      "name": "debug",
+      "version": "4.4.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/decimal.js",
+      "name": "decimal.js",
+      "version": "10.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/depd",
+      "name": "depd",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/detect-libc",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/dom-serializer",
+      "name": "dom-serializer",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/domelementtype",
+      "name": "domelementtype",
+      "version": "2.3.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/domhandler",
+      "name": "domhandler",
+      "version": "5.0.3",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/domutils",
+      "name": "domutils",
+      "version": "3.2.2",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/dunder-proto",
+      "name": "dunder-proto",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ee-first",
+      "name": "ee-first",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/electron-to-chromium",
+      "name": "electron-to-chromium",
+      "version": "1.5.422",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/emoji-regex",
+      "name": "emoji-regex",
+      "version": "10.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/emoji-regex",
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/encodeurl",
+      "name": "encodeurl",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/entities",
+      "name": "entities",
+      "version": "4.5.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-html-rewriting-stream/node_modules/entities",
+      "name": "entities",
+      "version": "6.0.1",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5/node_modules/entities",
+      "name": "entities",
+      "version": "6.0.1",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/htmlparser2/node_modules/entities",
+      "name": "entities",
+      "version": "7.0.1",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-html-rewriting-stream/node_modules/parse5/node_modules/entities",
+      "name": "entities",
+      "version": "8.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-sax-parser/node_modules/entities",
+      "name": "entities",
+      "version": "8.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/env-paths",
+      "name": "env-paths",
+      "version": "2.2.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/environment",
+      "name": "environment",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/es-define-property",
+      "name": "es-define-property",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/es-errors",
+      "name": "es-errors",
+      "version": "1.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/es-object-atoms",
+      "name": "es-object-atoms",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/esbuild",
+      "name": "esbuild",
+      "version": "0.25.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@angular/build/node_modules/esbuild",
+      "name": "esbuild",
+      "version": "0.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/vite/node_modules/esbuild",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/escalade",
+      "name": "escalade",
+      "version": "3.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/escape-html",
+      "name": "escape-html",
+      "version": "1.0.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/etag",
+      "name": "etag",
+      "version": "1.8.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/eventemitter3",
+      "name": "eventemitter3",
+      "version": "5.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/eventsource",
+      "name": "eventsource",
+      "version": "3.0.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/eventsource-parser",
+      "name": "eventsource-parser",
+      "version": "3.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/exponential-backoff",
+      "name": "exponential-backoff",
+      "version": "3.1.3",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/express",
+      "name": "express",
+      "version": "5.2.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/express-rate-limit",
+      "name": "express-rate-limit",
+      "version": "8.7.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fast-deep-equal",
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fast-uri",
+      "name": "fast-uri",
+      "version": "3.1.7",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fdir",
+      "name": "fdir",
+      "version": "6.5.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/finalhandler",
+      "name": "finalhandler",
+      "version": "2.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/forwarded",
+      "name": "forwarded",
+      "version": "0.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fresh",
+      "name": "fresh",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fs-minipass",
+      "name": "fs-minipass",
+      "version": "3.0.3",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/fsevents",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": false,
+      "source": "package-lock.json"
+    },
+    {
+      "packageLocation": "node_modules/function-bind",
+      "name": "function-bind",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/gensync",
+      "name": "gensync",
+      "version": "1.0.0-beta.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/get-caller-file",
+      "name": "get-caller-file",
+      "version": "2.0.5",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/get-east-asian-width",
+      "name": "get-east-asian-width",
+      "version": "1.6.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/get-intrinsic",
+      "name": "get-intrinsic",
+      "version": "1.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/get-proto",
+      "name": "get-proto",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/glob",
+      "name": "glob",
+      "version": "13.0.6",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/glob-to-regexp",
+      "name": "glob-to-regexp",
+      "version": "0.4.1",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/gopd",
+      "name": "gopd",
+      "version": "1.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/graceful-fs",
+      "name": "graceful-fs",
+      "version": "4.2.11",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/has-symbols",
+      "name": "has-symbols",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/hasown",
+      "name": "hasown",
+      "version": "2.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/hono",
+      "name": "hono",
+      "version": "4.13.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/hosted-git-info",
+      "name": "hosted-git-info",
+      "version": "9.0.3",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/html-encoding-sniffer",
+      "name": "html-encoding-sniffer",
+      "version": "4.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/htmlparser2",
+      "name": "htmlparser2",
+      "version": "10.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/http-cache-semantics",
+      "name": "http-cache-semantics",
+      "version": "4.2.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/http-errors",
+      "name": "http-errors",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/http-proxy-agent",
+      "name": "http-proxy-agent",
+      "version": "7.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/https-proxy-agent",
+      "name": "https-proxy-agent",
+      "version": "7.0.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/whatwg-encoding/node_modules/iconv-lite",
+      "name": "iconv-lite",
+      "version": "0.6.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/iconv-lite",
+      "name": "iconv-lite",
+      "version": "0.7.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ignore-walk",
+      "name": "ignore-walk",
+      "version": "8.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/immutable",
+      "name": "immutable",
+      "version": "5.1.9",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/inherits",
+      "name": "inherits",
+      "version": "2.0.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ini",
+      "name": "ini",
+      "version": "6.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ip-address",
+      "name": "ip-address",
+      "version": "10.7.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ipaddr.js",
+      "name": "ipaddr.js",
+      "version": "1.9.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-extglob",
+      "name": "is-extglob",
+      "version": "2.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/is-fullwidth-code-point",
+      "name": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-fullwidth-code-point",
+      "name": "is-fullwidth-code-point",
+      "version": "5.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-glob",
+      "name": "is-glob",
+      "version": "4.0.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-interactive",
+      "name": "is-interactive",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-potential-custom-element-name",
+      "name": "is-potential-custom-element-name",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-promise",
+      "name": "is-promise",
+      "version": "4.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/is-unicode-supported",
+      "name": "is-unicode-supported",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/isexe",
+      "name": "isexe",
+      "version": "2.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/git/node_modules/isexe",
+      "name": "isexe",
+      "version": "4.0.0",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/promise-spawn/node_modules/isexe",
+      "name": "isexe",
+      "version": "4.0.0",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-gyp/node_modules/isexe",
+      "name": "isexe",
+      "version": "4.0.0",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/istanbul-lib-coverage",
+      "name": "istanbul-lib-coverage",
+      "version": "3.2.2",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/istanbul-lib-instrument",
+      "name": "istanbul-lib-instrument",
+      "version": "6.0.3",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/jose",
+      "name": "jose",
+      "version": "6.2.12",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/js-tokens",
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/jsdom",
+      "name": "jsdom",
+      "version": "26.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/jsesc",
+      "name": "jsesc",
+      "version": "3.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/json-parse-even-better-errors",
+      "name": "json-parse-even-better-errors",
+      "version": "5.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/json-schema-traverse",
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/json-schema-typed",
+      "name": "json-schema-typed",
+      "version": "8.0.2",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/json5",
+      "name": "json5",
+      "version": "2.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/jsonc-parser",
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/jsonparse",
+      "name": "jsonparse",
+      "version": "1.3.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/listr2",
+      "name": "listr2",
+      "version": "9.0.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/lmdb",
+      "name": "lmdb",
+      "version": "3.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/log-symbols",
+      "name": "log-symbols",
+      "version": "7.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/log-update",
+      "name": "log-update",
+      "version": "6.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@asamuzakjp/css-color/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "10.4.3",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/agent/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "11.5.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/git/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "11.5.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cacache/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "11.5.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/hosted-git-info/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "11.5.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/path-scurry/node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "11.5.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/lru-cache",
+      "name": "lru-cache",
+      "version": "5.1.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/magic-string",
+      "name": "magic-string",
+      "version": "0.30.21",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/make-fetch-happen",
+      "name": "make-fetch-happen",
+      "version": "15.0.6",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/math-intrinsics",
+      "name": "math-intrinsics",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/media-typer",
+      "name": "media-typer",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/merge-descriptors",
+      "name": "merge-descriptors",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/mime-db",
+      "name": "mime-db",
+      "version": "1.54.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/mime-types",
+      "name": "mime-types",
+      "version": "3.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/mimic-function",
+      "name": "mimic-function",
+      "version": "5.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minimatch",
+      "name": "minimatch",
+      "version": "10.2.6",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-flush/node_modules/minipass",
+      "name": "minipass",
+      "version": "3.3.6",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-pipeline/node_modules/minipass",
+      "name": "minipass",
+      "version": "3.3.6",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass",
+      "name": "minipass",
+      "version": "7.1.3",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-collect",
+      "name": "minipass-collect",
+      "version": "2.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-fetch",
+      "name": "minipass-fetch",
+      "version": "5.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-flush",
+      "name": "minipass-flush",
+      "version": "1.0.7",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-pipeline",
+      "name": "minipass-pipeline",
+      "version": "1.2.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-sized",
+      "name": "minipass-sized",
+      "version": "2.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minizlib",
+      "name": "minizlib",
+      "version": "3.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/mrmime",
+      "name": "mrmime",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ms",
+      "name": "ms",
+      "version": "2.1.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/msgpackr",
+      "name": "msgpackr",
+      "version": "1.12.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/msgpackr-extract",
+      "name": "msgpackr-extract",
+      "version": "3.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/mute-stream",
+      "name": "mute-stream",
+      "version": "2.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/nanoid",
+      "name": "nanoid",
+      "version": "3.3.18",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/negotiator",
+      "name": "negotiator",
+      "version": "1.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-addon-api",
+      "name": "node-addon-api",
+      "version": "6.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@parcel/watcher/node_modules/node-addon-api",
+      "name": "node-addon-api",
+      "version": "7.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-gyp",
+      "name": "node-gyp",
+      "version": "12.4.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-gyp-build-optional-packages",
+      "name": "node-gyp-build-optional-packages",
+      "version": "5.2.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-releases",
+      "name": "node-releases",
+      "version": "2.0.54",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/nopt",
+      "name": "nopt",
+      "version": "9.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-bundled",
+      "name": "npm-bundled",
+      "version": "5.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-install-checks",
+      "name": "npm-install-checks",
+      "version": "8.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-normalize-package-bin",
+      "name": "npm-normalize-package-bin",
+      "version": "5.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-package-arg",
+      "name": "npm-package-arg",
+      "version": "13.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-packlist",
+      "name": "npm-packlist",
+      "version": "10.0.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-pick-manifest",
+      "name": "npm-pick-manifest",
+      "version": "11.0.3",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/npm-registry-fetch",
+      "name": "npm-registry-fetch",
+      "version": "19.1.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/nth-check",
+      "name": "nth-check",
+      "version": "2.1.1",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/nwsapi",
+      "name": "nwsapi",
+      "version": "2.2.27",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/object-assign",
+      "name": "object-assign",
+      "version": "4.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/object-inspect",
+      "name": "object-inspect",
+      "version": "1.13.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/on-finished",
+      "name": "on-finished",
+      "version": "2.4.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/once",
+      "name": "once",
+      "version": "1.4.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/onetime",
+      "name": "onetime",
+      "version": "7.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ora",
+      "name": "ora",
+      "version": "9.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ordered-binary",
+      "name": "ordered-binary",
+      "version": "1.6.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/p-map",
+      "name": "p-map",
+      "version": "7.0.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/pacote",
+      "name": "pacote",
+      "version": "21.5.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5",
+      "name": "parse5",
+      "version": "7.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-html-rewriting-stream/node_modules/parse5",
+      "name": "parse5",
+      "version": "8.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-sax-parser/node_modules/parse5",
+      "name": "parse5",
+      "version": "8.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-html-rewriting-stream",
+      "name": "parse5-html-rewriting-stream",
+      "version": "8.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parse5-sax-parser",
+      "name": "parse5-sax-parser",
+      "version": "8.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/parseurl",
+      "name": "parseurl",
+      "version": "1.3.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/path-key",
+      "name": "path-key",
+      "version": "3.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/path-scurry",
+      "name": "path-scurry",
+      "version": "2.0.2",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/path-to-regexp",
+      "name": "path-to-regexp",
+      "version": "8.4.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/picocolors",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/picomatch",
+      "name": "picomatch",
+      "version": "4.0.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/piscina",
+      "name": "piscina",
+      "version": "5.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/pkce-challenge",
+      "name": "pkce-challenge",
+      "version": "5.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/playwright",
+      "name": "playwright",
+      "version": "1.63.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/playwright-core",
+      "name": "playwright-core",
+      "version": "1.63.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/postcss",
+      "name": "postcss",
+      "version": "8.5.28",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/postcss-media-query-parser",
+      "name": "postcss-media-query-parser",
+      "version": "0.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/postcss-safe-parser",
+      "name": "postcss-safe-parser",
+      "version": "7.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/proc-log",
+      "name": "proc-log",
+      "version": "6.1.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/proxy-addr",
+      "name": "proxy-addr",
+      "version": "2.0.7",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/punycode",
+      "name": "punycode",
+      "version": "2.3.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/qs",
+      "name": "qs",
+      "version": "6.16.0",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/range-parser",
+      "name": "range-parser",
+      "version": "1.3.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/raw-body",
+      "name": "raw-body",
+      "version": "3.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/sass/node_modules/readdirp",
+      "name": "readdirp",
+      "version": "4.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/readdirp",
+      "name": "readdirp",
+      "version": "5.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/reflect-metadata",
+      "name": "reflect-metadata",
+      "version": "0.2.2",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/require-from-string",
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/restore-cursor",
+      "name": "restore-cursor",
+      "version": "5.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/rfdc",
+      "name": "rfdc",
+      "version": "1.4.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/rolldown",
+      "name": "rolldown",
+      "version": "1.0.0-rc.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/rollup",
+      "name": "rollup",
+      "version": "4.63.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/router",
+      "name": "router",
+      "version": "2.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/rrweb-cssom",
+      "name": "rrweb-cssom",
+      "version": "0.8.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/rxjs",
+      "name": "rxjs",
+      "version": "7.8.2",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/safer-buffer",
+      "name": "safer-buffer",
+      "version": "2.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/sass",
+      "name": "sass",
+      "version": "1.97.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/saxes",
+      "name": "saxes",
+      "version": "6.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/core/node_modules/semver",
+      "name": "semver",
+      "version": "6.3.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@babel/helper-compilation-targets/node_modules/semver",
+      "name": "semver",
+      "version": "6.3.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/semver",
+      "name": "semver",
+      "version": "7.7.4",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/send",
+      "name": "send",
+      "version": "1.2.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/serve-static",
+      "name": "serve-static",
+      "version": "2.2.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/setprototypeof",
+      "name": "setprototypeof",
+      "version": "1.2.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/shebang-command",
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/shebang-regex",
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/side-channel",
+      "name": "side-channel",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/side-channel-list",
+      "name": "side-channel-list",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/side-channel-map",
+      "name": "side-channel-map",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/side-channel-weakmap",
+      "name": "side-channel-weakmap",
+      "version": "1.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/signal-exit",
+      "name": "signal-exit",
+      "version": "4.1.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/sigstore",
+      "name": "sigstore",
+      "version": "4.1.1",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/log-update/node_modules/slice-ansi",
+      "name": "slice-ansi",
+      "version": "7.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/slice-ansi",
+      "name": "slice-ansi",
+      "version": "8.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/smart-buffer",
+      "name": "smart-buffer",
+      "version": "4.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/socks",
+      "name": "socks",
+      "version": "2.8.10",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/socks-proxy-agent",
+      "name": "socks-proxy-agent",
+      "version": "8.0.5",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/source-map-support/node_modules/source-map",
+      "name": "source-map",
+      "version": "0.6.1",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/source-map",
+      "name": "source-map",
+      "version": "0.7.6",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/source-map-js",
+      "name": "source-map-js",
+      "version": "1.2.1",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/source-map-support",
+      "name": "source-map-support",
+      "version": "0.5.21",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/spdx-exceptions",
+      "name": "spdx-exceptions",
+      "version": "2.5.0",
+      "declaredLicense": "CC-BY-3.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/spdx-expression-parse",
+      "name": "spdx-expression-parse",
+      "version": "4.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/spdx-license-ids",
+      "name": "spdx-license-ids",
+      "version": "3.0.23",
+      "declaredLicense": "CC0-1.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ssri",
+      "name": "ssri",
+      "version": "13.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/statuses",
+      "name": "statuses",
+      "version": "2.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/stdin-discarder",
+      "name": "stdin-discarder",
+      "version": "0.3.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/string-width",
+      "name": "string-width",
+      "version": "4.2.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cliui/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/listr2/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/log-update/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yargs/node_modules/string-width",
+      "name": "string-width",
+      "version": "7.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/string-width",
+      "name": "string-width",
+      "version": "8.2.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi/node_modules/strip-ansi",
+      "name": "strip-ansi",
+      "version": "6.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/strip-ansi",
+      "name": "strip-ansi",
+      "version": "7.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/symbol-tree",
+      "name": "symbol-tree",
+      "version": "3.2.4",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tar",
+      "name": "tar",
+      "version": "7.5.22",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tinyglobby",
+      "name": "tinyglobby",
+      "version": "0.2.15",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tldts",
+      "name": "tldts",
+      "version": "6.1.86",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tldts-core",
+      "name": "tldts-core",
+      "version": "6.1.86",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/toidentifier",
+      "name": "toidentifier",
+      "version": "1.0.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tough-cookie",
+      "name": "tough-cookie",
+      "version": "5.1.2",
+      "declaredLicense": "BSD-3-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tr46",
+      "name": "tr46",
+      "version": "5.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tslib",
+      "name": "tslib",
+      "version": "2.8.1",
+      "declaredLicense": "0BSD",
+      "developmentOnly": false,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tuf-js",
+      "name": "tuf-js",
+      "version": "4.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/type-is",
+      "name": "type-is",
+      "version": "2.1.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "packages/review/node_modules/typescript",
+      "name": "typescript",
+      "version": "5.8.3",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/typescript",
+      "name": "typescript",
+      "version": "5.9.3",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-gyp/node_modules/undici",
+      "name": "undici",
+      "version": "6.28.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/undici",
+      "name": "undici",
+      "version": "7.29.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/unpipe",
+      "name": "unpipe",
+      "version": "1.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/update-browserslist-db",
+      "name": "update-browserslist-db",
+      "version": "1.3.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/validate-npm-package-name",
+      "name": "validate-npm-package-name",
+      "version": "7.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/vary",
+      "name": "vary",
+      "version": "1.1.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/vite",
+      "name": "vite",
+      "version": "7.3.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/w3c-xmlserializer",
+      "name": "w3c-xmlserializer",
+      "version": "5.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/watchpack",
+      "name": "watchpack",
+      "version": "2.5.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/weak-lru-cache",
+      "name": "weak-lru-cache",
+      "version": "1.2.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/webidl-conversions",
+      "name": "webidl-conversions",
+      "version": "7.0.0",
+      "declaredLicense": "BSD-2-Clause",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/whatwg-encoding",
+      "name": "whatwg-encoding",
+      "version": "3.1.1",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/whatwg-mimetype",
+      "name": "whatwg-mimetype",
+      "version": "4.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/whatwg-url",
+      "name": "whatwg-url",
+      "version": "14.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/which",
+      "name": "which",
+      "version": "2.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/git/node_modules/which",
+      "name": "which",
+      "version": "6.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/@npmcli/promise-spawn/node_modules/which",
+      "name": "which",
+      "version": "6.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/node-gyp/node_modules/which",
+      "name": "which",
+      "version": "6.0.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "6.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/cliui/node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/listr2/node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/log-update/node_modules/wrap-ansi",
+      "name": "wrap-ansi",
+      "version": "9.0.2",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/wrappy",
+      "name": "wrappy",
+      "version": "1.0.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/ws",
+      "name": "ws",
+      "version": "8.21.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/xml-name-validator",
+      "name": "xml-name-validator",
+      "version": "5.0.0",
+      "declaredLicense": "Apache-2.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/xmlchars",
+      "name": "xmlchars",
+      "version": "2.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/y18n",
+      "name": "y18n",
+      "version": "5.0.8",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yallist",
+      "name": "yallist",
+      "version": "3.1.1",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-flush/node_modules/yallist",
+      "name": "yallist",
+      "version": "4.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/minipass-pipeline/node_modules/yallist",
+      "name": "yallist",
+      "version": "4.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/tar/node_modules/yallist",
+      "name": "yallist",
+      "version": "5.0.0",
+      "declaredLicense": "BlueOak-1.0.0",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yargs",
+      "name": "yargs",
+      "version": "18.0.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yargs-parser",
+      "name": "yargs-parser",
+      "version": "22.0.0",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yoctocolors",
+      "name": "yoctocolors",
+      "version": "2.2.0",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/yoctocolors-cjs",
+      "name": "yoctocolors-cjs",
+      "version": "2.1.3",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/zod",
+      "name": "zod",
+      "version": "4.3.6",
+      "declaredLicense": "MIT",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    },
+    {
+      "packageLocation": "node_modules/zod-to-json-schema",
+      "name": "zod-to-json-schema",
+      "version": "3.25.2",
+      "declaredLicense": "ISC",
+      "developmentOnly": true,
+      "installedMetadataRead": true,
+      "source": "package-lock.json + installed package.json"
+    }
+  ]
+}

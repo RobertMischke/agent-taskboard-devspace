@@ -1,0 +1,120 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.project-checks {
+  padding: 24px 0;
+  border-top: 1px solid #b6c4ad;
+  color: #24311f;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.check-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+h3,
+h4,
+p {
+  margin: 0;
+}
+h3 {
+  font-size: 19px;
+}
+h4 {
+  font-size: 18px;
+}
+.check-intro,
+.check-command {
+  margin: 12px 0;
+}
+.check-meta {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #455b37;
+  overflow-wrap: anywhere;
+}
+.check-result {
+  border-top: 1px solid #b6c4ad;
+  margin-top: 18px;
+  padding-top: 18px;
+}
+.check-result > p {
+  margin: 10px 0;
+}
+.check-error,
+.check-stale {
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.check-error {
+  background: #f9e9e6;
+  color: #7d3029;
+}
+.check-stale {
+  background: #f8efd2;
+  color: #604616;
+}
+.check-result[data-status="completed"] h4 {
+  color: #245329;
+}
+.check-result[data-status="failed"] h4 {
+  color: #7d3029;
+}
+details {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #b6c4ad;
+  border-radius: 6px;
+  background: #fff;
+}
+summary {
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 28px;
+}
+pre {
+  max-height: 360px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 12px;
+  background: #f6f7f3;
+  border: 1px solid #c1cab9;
+  border-radius: 4px;
+  font:
+    13px/1.6 ui-monospace,
+    monospace;
+  color: #24311f;
+}
+.check-history button {
+  width: 100%;
+  padding: 12px;
+  display: grid;
+  gap: 5px;
+  text-align: left;
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid #b6c4ad;
+  border-radius: 6px;
+  color: #24311f;
+  font:
+    15px/1.5 system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+.check-history button.selected {
+  background: #e9efdf;
+  border-color: #60764d;
+}
+.check-history button span {
+  font-size: 14px;
+  color: #455b37;
+  overflow-wrap: anywhere;
+}

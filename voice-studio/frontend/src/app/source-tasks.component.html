@@ -1,0 +1,443 @@
+<section class="source-tasks" aria-label="Aufgaben für die Quelldatei">
+  <div class="task-section-heading">
+    <h3>
+      Aufgaben <span class="count">{{ tasks().length }}</span>
+    </h3>
+    <button
+      type="button"
+      class="text-button"
+      [disabled]="isBusy()"
+      (click)="newTask()"
+    >
+      Neue Aufgabe
+    </button>
+  </div>
+  <p class="task-source">
+    <strong>Quelle:</strong> <code>{{ document.path }}</code>
+  </p>
+  @if (loading()) {
+    <p class="small-muted" role="status">
+      Gespeicherte Aufgaben werden geladen …
+    </p>
+  }
+  @if (composeOpen()) {
+    <form class="task-compose" (ngSubmit)="create()">
+      <label for="source-task-instruction">Was soll sich ändern?</label>
+      <textarea
+        id="source-task-instruction"
+        name="sourceTaskInstruction"
+        [(ngModel)]="instruction"
+        rows="3"
+        [disabled]="isBusy()"
+        placeholder="Zum Beispiel: Den Einstieg konkretisieren. Vorhandene Funktionen und Belege beibehalten."
+      ></textarea>
+      <button
+        type="submit"
+        class="button primary wide"
+        [disabled]="isBusy() || conflict() || !instruction.trim()"
+      >
+        Aufgabe speichern
+      </button>
+      @if (selectableFeedback().length) {
+        <details class="task-feedback-picker">
+          <summary>
+            Feedback anhängen ({{ attachedFeedbackIds().length }})
+          </summary>
+          <div class="task-feedback-options">
+            @for (feedback of selectableFeedback(); track feedback.id) {
+              <div class="task-feedback-option">
+                <label>
+                  <input
+                    type="checkbox"
+                    [checked]="feedbackAttached(feedback.id)"
+                    [disabled]="isBusy()"
+                    (change)="toggleFeedback(feedback.id)"
+                  />
+                  <span
+                    ><strong>{{ feedbackHeading(feedback) }}</strong>
+                    <small>„{{ feedbackExcerpt(feedback.quote) }}“</small></span
+                  >
+                </label>
+                <details class="task-feedback-full">
+                  <summary>Rückmeldung lesen</summary>
+                  <blockquote>{{ feedback.quote }}</blockquote>
+                  <p>{{ feedback.comment }}</p>
+                </details>
+              </div>
+            }
+          </div>
+        </details>
+      }
+      <p class="small-muted">
+        Die Aufgabe bleibt mit Quelle und Feedback verknüpft. Speichern startet
+        noch keinen Agenten.
+      </p>
+    </form>
+  }
+  @if (error()) {
+    <p class="error-message" role="alert">{{ error() }}</p>
+  }
+  @if (conflict()) {
+    <p class="task-conflict">
+      Quelle, Feedback oder Aufgabe wurden inzwischen geändert. Lies den
+      aktuellen Stand ein und prüfe den Auftrag erneut.
+    </p>
+    <button
+      type="button"
+      class="button secondary wide"
+      [disabled]="loading() || mutating()"
+      (click)="refreshSource.emit()"
+    >
+      Quelle neu einlesen
+    </button>
+  }
+  @if (notice()) {
+    <p class="task-notice" role="status">{{ notice() }}</p>
+  }
+  @if (selectedTask(); as task) {
+    <article class="task-detail" [attr.data-status]="task.status">
+      <div class="task-section-heading">
+        <h4>{{ label(task) }}</h4>
+        <code class="task-id">{{ task.id.slice(0, 8) }}</code>
+      </div>
+      @if (task.status === "ready" || task.status === "applied") {
+        <details class="task-brief">
+          <summary>Auftrag ansehen</summary>
+          <p class="task-instruction">{{ task.instruction }}</p>
+        </details>
+      } @else {
+        <p class="task-instruction">{{ task.instruction }}</p>
+      }
+      @if (task.feedbackIds.length) {
+        <details class="task-attached-feedback">
+          <summary>
+            Angehängtes Feedback ({{ task.feedbackIds.length }})
+          </summary>
+          @for (id of task.feedbackIds; track id) {
+            @if (feedbackFor(id); as feedback) {
+              <blockquote>{{ feedback.quote }}</blockquote>
+              <p>{{ feedback.comment }}</p>
+            } @else {
+              <p class="small-muted">
+                Frühere Rückmeldung <code>{{ id.slice(0, 8) }}</code>
+              </p>
+            }
+          }
+        </details>
+      }
+      @if (
+        !isCurrent(task) &&
+        task.status !== "applied" &&
+        task.status !== "completed"
+      ) {
+        <p class="task-conflict">
+          Die Aufgabe gehört zu einem früheren Quell- oder Feedbackstand.
+          Übernehmen und Starten sind gesperrt.
+        </p>
+      }
+      @if (task.error) {
+        <p class="error-message">{{ task.error }}</p>
+      }
+      @if (task.status === "queued") {
+        @if (runner(); as route) {
+          @if (route.configured) {
+            <p class="task-runner-route">
+              <strong>{{ route.cli }} · {{ route.model }}</strong
+              ><span>{{ route.thinkingLevel }}</span>
+            </p>
+          }
+          @if (!route.available) {
+            <p class="small-muted">{{ route.message }}</p>
+            <button
+              type="button"
+              class="button secondary wide"
+              [disabled]="runnerLoading()"
+              (click)="refreshRunner()"
+            >
+              {{
+                runnerLoading()
+                  ? "Runner wird geprüft …"
+                  : "Runner erneut prüfen"
+              }}
+            </button>
+          }
+        }
+        <button
+          type="button"
+          class="button primary wide"
+          [disabled]="!canStart(task)"
+          (click)="start(task)"
+        >
+          An Agent-Runner übergeben
+        </button>
+        <p class="small-muted">
+          Startet den Coding-Agent über die angezeigte Route. Sein Ergebnis
+          kommt als Quelldiff zur Prüfung zurück.
+        </p>
+        @if (hasActiveTask()) {
+          <p class="small-muted">
+            Für diese Datei ist bereits eine Aufgabe in Bearbeitung.
+          </p>
+        }
+      }
+      @if (task.status === "running" || task.status === "cancelling") {
+        <p class="task-progress" role="status">
+          <span class="status-dot connected"></span
+          >{{
+            task.status === "running"
+              ? "Der Agent bearbeitet den Auftrag. Der Status wird automatisch aktualisiert."
+              : "Der Runner beendet den Auftrag. Der Status bleibt bis zum Abschluss sichtbar."
+          }}
+        </p>
+        @if (task.status === "running") {
+          <button
+            type="button"
+            class="button secondary wide"
+            [disabled]="isBusy()"
+            (click)="cancel(task)"
+          >
+            Bearbeitung abbrechen
+          </button>
+        }
+      }
+      @if (task.proposal; as proposal) {
+        <section
+          class="task-edits-review"
+          aria-label="Vorgeschlagene Textänderungen"
+        >
+          @if (proposal.edits?.length) {
+            <h5>{{ proposal.edits!.length }} Textänderungen</h5>
+            <ol class="task-edit-list">
+              @for (edit of proposal.edits ?? []; track $index) {
+                <li>
+                  <h6>Änderung {{ $index + 1 }}</h6>
+                  <div class="task-edit-before">
+                    <span>Ausgangstext</span>
+                    <p>{{ edit.quote }}</p>
+                  </div>
+                  <div class="task-edit-after">
+                    <span>{{
+                      task.status === "applied" ? "Übernommen" : "Vorgeschlagen"
+                    }}</span>
+                    <p>{{ edit.replacement || "Text entfernen" }}</p>
+                  </div>
+                  <p class="task-edit-reason">
+                    <strong>Grund:</strong> {{ edit.reason }}
+                  </p>
+                </li>
+              }
+            </ol>
+          } @else {
+            <h5>Textänderung</h5>
+            <div class="task-edit-before">
+              <span>Ausgangstext</span>
+              <p>{{ proposal.before }}</p>
+            </div>
+            <div class="task-edit-after">
+              <span>Vorgeschlagen</span>
+              <p>{{ proposal.after || "Text entfernen" }}</p>
+            </div>
+            <p class="task-edit-reason">{{ proposal.reason }}</p>
+          }
+        </section>
+        <details class="task-result-diff">
+          <summary>Vollständigen Quelldiff ansehen</summary>
+          <div class="task-diff before">
+            <h5>Vorher</h5>
+            <pre>{{ proposal.sourceBefore }}</pre>
+          </div>
+          <div class="task-diff after">
+            <h5>
+              {{ task.status === "applied" ? "Übernommen" : "Vorgeschlagen" }}
+            </h5>
+            <pre>{{ proposal.sourceAfter }}</pre>
+          </div>
+        </details>
+      }
+      @if (task.notes?.length) {
+        <section class="task-notes">
+          <h5>
+            {{
+              task.status === "completed"
+                ? "Entscheidung"
+                : "Hinweise und offene Fragen"
+            }}
+          </h5>
+          <ul>
+            @for (note of task.notes ?? []; track $index) {
+              <li>{{ note }}</li>
+            }
+          </ul>
+        </section>
+      }
+      @if (task.status === "ready") {
+        <button
+          type="button"
+          class="button primary wide"
+          [disabled]="!canApply(task)"
+          (click)="apply(task)"
+        >
+          Ergebnis in Quelldatei übernehmen
+        </button>
+        <p class="small-muted">
+          Schreibt den geprüften Diff in {{ document.path }}. Version und
+          Feedbackstand müssen unverändert sein; Feedback bleibt zur Nachprüfung
+          erhalten.
+        </p>
+      }
+      @if (task.status === "applied") {
+        <p class="task-notice">
+          Der Ergebnis-Diff wurde in die Quelldatei übernommen. Aufgabe und
+          Ergebnis bleiben gespeichert.
+        </p>
+      }
+      @if (
+        task.status === "needs_review" ||
+        task.status === "failed" ||
+        task.status === "cancelled" ||
+        task.status === "interrupted" ||
+        task.status === "stale" ||
+        (!isCurrent(task) &&
+          !isActive(task) &&
+          task.status !== "applied" &&
+          task.status !== "completed")
+      ) {
+        <button
+          type="button"
+          class="button secondary wide"
+          [disabled]="isBusy()"
+          (click)="prepareTask(task.instruction, task.feedbackIds)"
+        >
+          Als neue Aufgabe vorbereiten
+        </button>
+      }
+      @if (task.status === "needs_review") {
+        <p class="task-conflict">
+          Für diesen Auftrag ist noch Klärung nötig. Lies die offenen Fragen,
+          ergänze den Auftrag oder schließe ihn mit eigener Begründung ab.
+        </p>
+      }
+      @if (task.status === "completed") {
+        <p class="small-muted">
+          {{
+            task.resolution === "manual"
+              ? "Die Quelldatei bleibt unverändert."
+              : "Kein Änderungsvorschlag. Die Begründung steht unter Entscheidung."
+          }}
+        </p>
+      }
+      @if (
+        !isActive(task) &&
+        task.status !== "completed" &&
+        task.status !== "applied"
+      ) {
+        <details class="task-resolution">
+          <summary>Ohne Textänderung abschließen</summary>
+          <form (ngSubmit)="resolve(task)">
+            <label for="task-resolution-note">Begründung</label>
+            <textarea
+              id="task-resolution-note"
+              name="taskResolutionNote"
+              [(ngModel)]="resolutionNote"
+              rows="3"
+              maxlength="4000"
+              [disabled]="isBusy()"
+              placeholder="Zum Beispiel: Formulierung geprüft und bewusst beibehalten."
+            ></textarea>
+            <button
+              type="submit"
+              class="button secondary wide"
+              [disabled]="!canResolve(task)"
+            >
+              Als bearbeitet markieren
+            </button>
+          </form>
+        </details>
+      }
+      <details class="task-manual-fallback">
+        <summary>Fallback: manuell weitergeben</summary>
+        <p>
+          Wenn du den Auftrag außerhalb des angebundenen Runners bearbeiten
+          möchtest, kannst du den Prompt selbst weitergeben. Dieser Weg
+          aktualisiert den Aufgabenstatus nicht automatisch.
+        </p>
+        <button
+          type="button"
+          class="button secondary wide"
+          [disabled]="isBusy()"
+          (click)="showPrompt(task)"
+        >
+          Prompt anzeigen
+        </button>
+        @if (manualPrompt(); as prompt) {
+          <p class="small-muted">
+            Gebundene Quelle {{ prompt.sourceVersion.slice(0, 8) }} ·
+            Feedbackstand {{ prompt.reviewRevision }}
+          </p>
+          <pre class="task-prompt">{{ prompt.prompt }}</pre>
+          <button
+            type="button"
+            class="button secondary wide"
+            (click)="copyPrompt()"
+          >
+            Prompt kopieren
+          </button>
+        }
+      </details>
+    </article>
+  }
+  @if (tasks().length) {
+    <details class="task-history-group">
+      <summary>Gespeicherte Aufgaben ({{ tasks().length }})</summary>
+      <ul class="task-history" aria-label="Gespeicherte Aufgaben">
+        @for (task of tasks(); track task.id) {
+          <li>
+            <button
+              type="button"
+              [class.selected]="selectedTask()?.id === task.id"
+              [attr.aria-pressed]="selectedTask()?.id === task.id"
+              [disabled]="isBusy()"
+              (click)="openTask(task)"
+            >
+              <span class="task-status" [attr.data-status]="task.status">{{
+                label(task)
+              }}</span>
+              <span class="task-instruction-preview">{{
+                task.instruction
+              }}</span>
+              <time>{{ task.createdAt | date: "dd.MM.yyyy, HH:mm" }}</time>
+            </button>
+          </li>
+        }
+      </ul>
+    </details>
+  } @else if (!loading() && !composeOpen()) {
+    <p class="small-muted">
+      Für diese Quelldatei ist noch keine Aufgabe gespeichert.
+    </p>
+  }
+  @if (legacyRequests().length) {
+    <details class="task-legacy">
+      <summary>Frühere lokale Aufträge ({{ legacyRequests().length }})</summary>
+      <p>
+        Diese Aufträge wurden vor der Runner-Anbindung lokal vorgemerkt. Sie
+        wurden nicht ausgeführt und bleiben hier erhalten.
+      </p>
+      @for (request of legacyRequests(); track request.id) {
+        <article>
+          <strong>Lokal vorgemerkt</strong
+          ><time>{{ request.createdAt | date: "dd.MM.yyyy, HH:mm" }}</time>
+          <p>{{ request.instruction }}</p>
+          <button
+            type="button"
+            class="button secondary wide"
+            [disabled]="isBusy()"
+            (click)="prepareTask(request.instruction, request.feedbackIds)"
+          >
+            Als Aufgabe vorbereiten
+          </button>
+        </article>
+      }
+    </details>
+  }
+</section>

@@ -1,7 +1,8 @@
 # Voice Studio: two workspaces, one review workflow
 
-Preview 0.2 distinguishes a running application from a folder of documents.
-Both retain the original source, durable feedback and version-checked proposals.
+Preview 0.3 distinguishes a running application from a folder of documents.
+Both retain the original source, durable feedback, explicit source tasks and
+version-checked proposals. The rule wiki explains the shared local checks.
 
 ## Angular applications: browse the running app
 
@@ -72,16 +73,68 @@ rejected when the source adapter cannot preserve the structure safely.
 
 1. Browse the application or folder in its normal context.
 2. Open local findings or select an unmarked mapped passage.
-3. Save feedback with the source version in the project's metadata.
-4. Optionally start a semantic review through the Coding-Agent-Runner.
-5. Inspect its reasoning and bounded suggestion, or write your own replacement.
-6. Create and inspect the complete source diff.
-7. Explicitly apply it, then verify the changed file and rendered application.
+3. Read the rule’s explanation and save contextual feedback beside the source.
+4. Optionally start a semantic review of the whole selected file.
+5. Write a replacement, or save a task with an instruction and selected feedback.
+6. Start the saved task explicitly through the Coding-Agent-Runner.
+7. Read its outcome and inspect any complete source diff.
+8. Apply the proposal explicitly.
+9. Explicitly start the configured local project check, inspect its result, and verify the running application.
 
-Feedback, proposals and semantic run history remain associated with the project.
+Feedback, source tasks, proposals and semantic run history remain associated with the project.
 A stale source version cannot be overwritten. A source change can make an older
 note or semantic result stale; the UI labels that state instead of presenting it
 as a current finding. The original source backup/recovery journal remains in use.
+
+## Local project checks after apply
+
+The project-check panel offers a separate explicit start for the configured
+build/test command. The Angular pilot uses its existing `npm run check`.
+It shows running/cancelling status, bounded logs, exit code and the final
+completed, failed or cancelled result. Results persist with the configured
+source fingerprint; changed source or check configuration makes them `stale`,
+with the original outcome retained. Applying a proposal never starts a check
+automatically or marks an earlier result current.
+
+Only private host configuration outside the target repository chooses the fixed
+command and inputs; HTTP requests and `voice.config.json` cannot provide programs
+or arguments. Missing configured dependencies block start. This executes trusted
+project code with the host user's permissions, without a model or a sandbox
+guarantee. See [local project checks](../backend/CHECKS.md) for setup, source
+scope and process limits. A passing build still needs a review of the rendered
+page and its wording.
+
+## Saved tasks and decisions
+
+Saving a task records its instruction, selected feedback, source version, feedback
+revision and the configured component-context fingerprint. Saving does not call a
+model. The explicit start is idempotent; retries of the same request do not create
+a second Runner launch. A new attempt uses a new task after the source and
+feedback have been reviewed.
+
+| Outcome | What it means | Next step |
+| --- | --- | --- |
+| `queued` | Saved, with no model execution | Inspect the instruction/context and start explicitly |
+| `running` / `cancelling` | A Runner attempt is active or stopping | Observe or cancel; no source is written |
+| `ready` | A validated, combined source proposal is available | Inspect the complete diff and apply explicitly |
+| `completed`, `agent_no_changes` | The agent explicitly reported `already_satisfied`, with a reason and no open findings | Review the reason; no text was changed |
+| `needs_review` | Required facts or supported source operations are missing | Read the reason, provide evidence or prepare a broader task |
+| `failed` / `cancelled` / `interrupted` / `stale` | The attempt cannot provide a current successful proposal | Inspect the recorded outcome; no automatic restart |
+| `applied` | The separately approved proposal was written | Verify the real source and rendered result |
+
+A task proposal can combine 1–50 non-overlapping supported prose replacements in
+**one original file**. Every replacement refers to that original source version;
+the backend validates exact quotes, Unicode and source mapping, then applies the
+set to one source snapshot. It rejects overlap, unsafe markup boundaries and
+unsupported structural changes instead of applying a partial set. A related
+Angular component remains context, not an additional write target.
+
+Source, feedback revision and component-context hashes are rechecked around
+launch and before proposal creation/apply. A changed context requires renewed
+review. A separate manual resolution needs a written reason and current source
+and feedback state; it is visibly distinguished from an applied fix. Even a
+validated `already_satisfied` statement is the model’s judgment, not independent
+proof that the editorial task was solved.
 
 ## Semantic review is a Runner task
 
@@ -93,12 +146,29 @@ Findings need valid source-version, unit, quote and UTF-16 span references plus
 reasoning. Failed, cancelled, interrupted and stale runs are distinct from
 completed results. Malformed or incomplete model replies fail validation.
 
-Applying source changes remains an explicit backend proposal action. A semantic
-suggestion enters the same
-human-reviewed diff workflow as a manual suggestion. A syntactically valid JSON
+Applying source changes remains an explicit backend proposal action. Ordinary
+semantic-review findings are advisory; they do not create proposals automatically.
+An explicitly started improvement task may prepare a validated combined proposal,
+which enters the same human-reviewed diff workflow as a manual suggestion. A syntactically valid JSON
 reply is not a proof of truth or editorial quality. Qualification, comparative
 Voice benchmarks and Token Economy admission remain separate integration work.
 See [Runner integration](runner-integration.md) and [model strategy](model-strategy.md).
+
+## Explain the checks and preserve review evidence
+
+The local checker and wiki load one `knowledge/rules.json` catalogue with four
+advisory rules, their triggers, questions, examples and limitations. The wiki also
+explains source mapping, feedback, model choice and language-tool candidates.
+LanguageTool, Vale, CSpell, Hunspell and textlint are not integrated analyzers in
+this preview. See [language tooling](language-tooling.md) and
+[third-party notices](../THIRD_PARTY_NOTICES.md) for engine/data separation and the
+603-entry resolved npm metadata inventory.
+
+The [Agent Studio website review](reviews/agent-studio-website-2026-09-06.md) covers
+all 27 routes and 30 content files. Its 36 findings retain exact quotes, file
+hashes, evidence and dispositions in a companion JSON file. Import only after
+rechecking the current source; release-alignment questions are not automatically
+false claims, and replacement text is not automatically applied.
 
 The original dossier introduction is a retained counterexample: the local rule
 engine reports **zero findings** for “Voice Lint concept revision” and its

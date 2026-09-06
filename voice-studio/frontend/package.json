@@ -5,7 +5,9 @@
   "scripts": {
     "start": "ng serve --host 127.0.0.1 --port 4188 --proxy-config proxy.conf.json",
     "build": "ng build",
-    "typecheck": "tsc -p tsconfig.app.json --noEmit"
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "prebuild": "node scripts/copy-knowledge.mjs",
+    "prestart": "node scripts/copy-knowledge.mjs"
   },
   "dependencies": {
     "@angular/common": "^21.2.0",

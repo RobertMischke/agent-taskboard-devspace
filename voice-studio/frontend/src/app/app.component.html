@@ -5,12 +5,17 @@
     ><span>voice<span class="brand-light"> studio</span></span></a
   >
   <div class="header-purpose">Lokale Textprüfung und Quelltextänderungen</div>
+  <button class="button small header-wiki" type="button" (click)="openWiki()" aria-haspopup="dialog">Regel-Wiki</button>
   <div class="header-status">
     <span class="status-dot" [class.connected]="connected()"></span
     >{{ connected() ? "Lokale Sitzung" : "Lokal verbinden"
-    }}<span class="version">Preview 0.2</span>
+    }}<span class="version">Preview 0.3</span>
   </div>
 </header>
+
+@if (wikiArticle(); as article) {
+  <voice-knowledge-wiki [articleId]="article" (closed)="closeWiki()" (articleChanged)="openWiki($event)"></voice-knowledge-wiki>
+}
 
 @if (!connected()) {
   <main class="welcome">
@@ -73,7 +78,7 @@
         <p class="error-message" role="alert">{{ error() }}</p>
       }
       <p class="small-muted pair-note">
-        HTML und Markdown · Feedback als Metadatei · Ohne Cloud-Modell
+        Angular, HTML und Markdown · Feedback als Metadatei · Regeln ohne Modellaufruf
       </p>
     </section>
   </main>
@@ -258,7 +263,7 @@
           type="button"
           (click)="reviewOpen.set(!reviewOpen())"
           [attr.aria-expanded]="reviewOpen()"
-        >
+         [disabled]="loading() || busy()">
           {{ reviewOpen() ? "Review schließen" : "Review öffnen" }}
         </button>
       </div>
@@ -720,7 +725,11 @@
                       >
                       <h3>{{ finding.message }}</h3>
                       <p>{{ finding.explanation }}</p>
-                      <code>{{ finding.ruleId }}</code>
+                      @if (knowledge.entry(finding.ruleId); as rule) {
+                        <p class="finding-question"><strong>Prüffrage:</strong> {{ rule.question }}</p>
+                      }
+                      <details class="finding-context"><summary>Text im Kontext</summary><p>{{ unitFor(finding.unitId)?.text }}</p></details>
+                      <button class="button small" type="button" (click)="openWiki(finding.ruleId)">Regel, Beispiele und Grenzen ansehen →</button>
                     </div>
                   }
                   @if (activeFeedback(); as feedback) {
@@ -892,6 +901,22 @@
                   </section>
                 }
 
+                <voice-source-tasks
+                  [projectId]="selectedProject()!.id"
+                  [document]="current"
+                  [api]="semanticApi"
+                  [activeFeedbackId]="activeFeedback()?.id ?? null"
+                  [disabled]="busy() || stale()"
+                  (documentApplied)="sourceTaskApplied($event)"
+                  (refreshSource)="openDocument(current.id)"
+                ></voice-source-tasks>
+                <voice-project-checks
+                  [projectId]="selectedProject()!.id"
+                  [api]="semanticApi"
+                  [sourceSnapshot]="current"
+                  [disabled]="busy()">
+                </voice-project-checks>
+
                 <section class="saved-proposals">
                   <div class="panel-section-heading">
                     <h3>
@@ -991,81 +1016,6 @@
                           ? "Noch kein Feedback gespeichert."
                           : "Kein offenes Feedback."
                       }}
-                    </p>
-                  }
-                </section>
-                <form
-                  class="panel-form request-form"
-                  (ngSubmit)="saveRequest()"
-                >
-                  <div class="panel-section-heading">
-                    <h3>Verbesserungsauftrag</h3>
-                    <span class="subtle-tag">Lokal</span>
-                  </div>
-                  <p class="small-muted">
-                    {{
-                      activeFeedback()
-                        ? "Für die gewählte Rückmeldung."
-                        : "Für das offene Feedback dieser Datei."
-                    }}
-                    Der Auftrag wird für deinen weiteren Workflow gespeichert.
-                  </p>
-                  <label for="request-instruction">Arbeitsanweisung</label
-                  ><textarea
-                    id="request-instruction"
-                    name="requestInstruction"
-                    [(ngModel)]="requestInstruction"
-                    rows="2"
-                    placeholder="Zum Beispiel: Aussagen präzisieren und vorhandene Belege verwenden."
-                  ></textarea
-                  ><button
-                    class="button secondary wide"
-                    [disabled]="busy() || !requestInstruction.trim() || stale()"
-                  >
-                    Auftrag speichern
-                  </button>
-                  @if (lastRequest(); as request) {
-                    <p class="request-saved">
-                      ✓ Auftrag {{ request.id.slice(0, 8) }} gespeichert
-                    </p>
-                  }
-                  <p class="small-muted">
-                    Agent-Ausführung ist noch nicht angebunden.
-                  </p>
-                </form>
-
-                <section class="saved-requests">
-                  <div class="panel-section-heading">
-                    <h3>
-                      Gespeicherte Aufträge
-                      <span class="count">{{ savedRequests().length }}</span>
-                    </h3>
-                  </div>
-                  @for (request of savedRequests(); track request.id) {
-                    <article class="history-request">
-                      <div class="request-history-heading">
-                        <span class="feedback-state">{{
-                          requestStatus(request)
-                        }}</span
-                        ><time>{{
-                          request.createdAt | date: "dd.MM.yyyy, HH:mm"
-                        }}</time>
-                      </div>
-                      <p>{{ request.instruction }}</p>
-                      <div class="request-history-meta">
-                        <span
-                          >{{ request.feedbackIds.length }} Rückmeldungen</span
-                        ><code>{{ request.id.slice(0, 8) }}</code>
-                      </div>
-                      @if (request.expectedVersion !== current.version) {
-                        <p class="small-muted">
-                          Die Quelle wurde seit dem Auftrag geändert.
-                        </p>
-                      }
-                    </article>
-                  } @empty {
-                    <p class="small-muted">
-                      Noch keine Aufträge für diese Datei gespeichert.
                     </p>
                   }
                 </section>

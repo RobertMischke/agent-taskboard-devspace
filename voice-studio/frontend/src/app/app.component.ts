@@ -26,13 +26,17 @@ import type {
 
 import { SemanticReviewComponent, type StudioApi } from './semantic-review.component';
 import { LiveBrowserComponent } from './live-browser.component';
+import { KnowledgeService } from './knowledge.service';
+import { KnowledgeWikiComponent } from './knowledge-wiki.component';
+import { SourceTasksComponent, type SourceTaskDocumentApplied } from './source-tasks.component';
+import { ProjectChecksComponent } from './project-checks.component';
 
 type StudioTab = "preview" | "source" | "file" | "project";
 
 @Component({
   selector: "voice-studio",
   standalone: true,
-  imports: [CommonModule, FormsModule, LiveBrowserComponent, SemanticReviewComponent],
+  imports: [CommonModule, FormsModule, LiveBrowserComponent, SemanticReviewComponent, KnowledgeWikiComponent, SourceTasksComponent, ProjectChecksComponent],
   templateUrl: "./app.component.html",
 })
 export class AppComponent implements OnDestroy {
@@ -44,6 +48,8 @@ export class AppComponent implements OnDestroy {
   private loadSequence = 0;
   @ViewChild("previewFrame") previewFrame?: ElementRef<HTMLIFrameElement>;
 
+  readonly knowledge = inject(KnowledgeService);
+  readonly wikiArticle = signal<string | null>(new URLSearchParams(location.search).get('wiki'));
   readonly connected = signal(false);
   readonly sidebarCollapsed = signal(false);
   readonly reviewOpen = signal(false);
@@ -132,16 +138,35 @@ export class AppComponent implements OnDestroy {
       this.pairingCode = "";
       this.connected.set(true);
       this.projects.set(await this.api<ProjectSummary[]>("/api/projects"));
-      const first = this.projects()[0];
+      const requested = new URLSearchParams(location.search).get('project');
+      let remembered: string | null = null;
+      try { remembered = localStorage.getItem('voice-studio:last-project'); } catch { /* Storage is optional. */ }
+      const first = this.projects().find(project => project.id === (requested ?? remembered)) ?? this.projects()[0];
       if (first) await this.openProject(first);
       this.notice.set("");
     });
+  }
+
+  openWiki(articleId = 'review-basics'): void {
+    const id = this.knowledge.entry(articleId) ? articleId : (articleId === 'review-basics' ? articleId : 'semantic-review');
+    this.wikiArticle.set(id);
+    const url = new URL(location.href); url.searchParams.set('wiki', id);
+    history.replaceState(history.state, '', url);
+  }
+  closeWiki(): void {
+    this.wikiArticle.set(null);
+    const url = new URL(location.href); url.searchParams.delete('wiki');
+    history.replaceState(history.state, '', url);
   }
 
   async openProject(project: ProjectSummary): Promise<void> {
     this.disposeReview();
     ++this.loadSequence;
     this.selectedProject.set(project);
+    try { localStorage.setItem('voice-studio:last-project', project.id); } catch { /* Storage is optional. */ }
+    const projectUrl = new URL(location.href);
+    projectUrl.searchParams.set('project', project.id);
+    history.replaceState(history.state, '', projectUrl);
     this.sidebarCollapsed.set(!!project.liveUrl);
     this.reviewOpen.set(false);
     this.folderPath.set("");
@@ -204,7 +229,7 @@ export class AppComponent implements OnDestroy {
       this.semanticFindings.set([]);
       this.lastRequest.set(null);
       this.setDocument(detail, true);
-      this.savedProposals.set(proposals);
+      this.savedProposals.set(proposals.filter(item => !item.taskId));
       this.savedRequests.set(requests);
       this.stale.set(false);
       if (nextTab) this.tab.set(nextTab);
@@ -423,6 +448,17 @@ export class AppComponent implements OnDestroy {
     );
   }
 
+  async sourceTaskApplied(event: SourceTaskDocumentApplied): Promise<void> {
+    if (event.projectId !== this.selectedProject()?.id || event.document.id !== this.document()?.id) return;
+    this.setDocument(event.document, true);
+    this.clearSelection();
+    this.notice.set('Aufgaben-Diff in die Quelldatei übernommen. Prüfe die aktualisierte Seite und das zugehörige Feedback.');
+    try { await Promise.all([this.refreshReport(), this.refreshHistory()]); }
+    catch (error) {
+      if (event.projectId === this.selectedProject()?.id && event.document.id === this.document()?.id) this.handleError(error);
+    }
+  }
+
   async saveRequest(): Promise<void> {
     const detail = this.document();
     if (!detail || !this.requestInstruction.trim() || this.stale()) return;
@@ -450,6 +486,7 @@ export class AppComponent implements OnDestroy {
     const proposal = this.proposal();
     return (
       !!proposal &&
+      !proposal.taskId &&
       proposal.state === "pending" &&
       proposal.expectedVersion === this.document()?.version &&
       !this.stale()
@@ -476,7 +513,7 @@ export class AppComponent implements OnDestroy {
       this.api<ImprovementRequest[]>(`${url}/requests`),
     ]);
     if (!this.document() || url !== this.documentUrl()) return;
-    this.savedProposals.set(proposals);
+    this.savedProposals.set(proposals.filter(item => !item.taskId));
     this.savedRequests.set(requests);
   }
 

@@ -173,22 +173,6 @@ public static partial class DocumentParser
         return new(units.ToArray(), PreviewRenderer.Markdown(source, units, lang), excluded, lang);
     }
 
-    public static Finding[] Analyze(TextUnit[] units)
-    {
-        var findings = new List<Finding>();
-        void Add(TextUnit unit, string rule, string category, string message, string explanation, int start, int end, string? suggestion)
-            => findings.Add(new($"{unit.Id}-{rule}-{start}", rule, category, category == "claims" ? "info" : "warning", message, explanation, unit.Text[start..end], unit.Id, start, end, suggestion));
-        foreach (var unit in units)
-        {
-            if (unit.Kind.StartsWith('h') && unit.Kind.Length == 2 && unit.Text.EndsWith('.') && !unit.Text.EndsWith("..."))
-                Add(unit, "heading-period", "structure", "Punkt am Ende der Überschrift", "Eine Überschrift braucht hier in der Regel keinen Schlusspunkt. Abkürzungen bitte im Kontext prüfen.", unit.Text.Length - 1, unit.Text.Length, "");
-            foreach (Match match in Regex.Matches(unit.Text, @"\b(nahtlos(?:e[nmrs]?)?|revolutionär(?:e[nmrs]?)?|seamless(?:ly)?|game[- ]changer|leverage|ganzheitlich(?:e[nmrs]?)?|innovativ(?:e[nmrs]?)?|state[- ]of[- ]the[- ]art|powerful|effortless(?:ly)?|cutting[- ]edge|leistungsstark(?:e[nmrs]?)?|mühelos(?:e[nmrs]?)?)\b", RegexOptions.IgnoreCase))
-                Add(unit, "stock-wording", "wording", "Allgemeines Werbewort", "Beschreibe eine beobachtbare Funktion oder einen konkreten Nutzen. Das Signal ist ein Review-Hinweis, kein Wortverbot.", match.Index, match.Index + match.Length, null);
-            foreach (Match match in Regex.Matches(unit.Text, @"\b(wir (?:sind stolz|glauben|verstehen)|we (?:believe|are proud|understand)|es ist wichtig zu betonen|this page describes what exists|diese seite beschreibt)\b", RegexOptions.IgnoreCase))
-                Add(unit, "self-attestation", "meta", "Selbstaussage statt Beleg", "Prüfe, ob der Satz etwas über das Produkt erklärt oder lediglich die Haltung des Anbieters behauptet.", match.Index, match.Index + match.Length, null);
-            foreach (Match match in Regex.Matches(unit.Text, @"\b(garantiert|garantieren|guaranteed?|100\s*%|jede[nrms]?|alle[nrms]?|immer|never|always|\d+\s*%)(?!\w)", RegexOptions.IgnoreCase))
-                Add(unit, "claim-evidence", "claims", "Aussage braucht Prüfung", "Advisory: Diese Regel kann den Wahrheitsgehalt nicht prüfen. Verknüpfe die konkrete Aussage im Review mit einem nachvollziehbaren Beleg.", match.Index, match.Index + match.Length, null);
-        }
-        return findings.ToArray();
-    }
+    public static Finding[] Analyze(TextUnit[] units) => RuleCatalog.Analyze(units);
+
 }

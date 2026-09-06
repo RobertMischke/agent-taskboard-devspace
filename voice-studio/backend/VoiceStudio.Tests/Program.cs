@@ -205,6 +205,62 @@ throw new Error('This source must never execute');
     Check(TypeScriptContentAdapter.ProcessInvocationCount == parallelBefore + 1, "concurrent same-source requests share one parse");
     store.Unregister(project.Id);
     Check(store.ListProjects().Length == 0 && File.Exists(mdPath), "unregister preserves source");
+    var englishCount = TypeScriptContentAdapter.Parse("export const groups = [{ count: '255 tool-capable models on OpenRouter' }, { count: 255 }, { count: '255' }, { count: 'MODEL_COUNT' }, { count: '/api/models' }, { count: 'https://example.org/models' }, { id: 'technical model identifier' }];");
+    Check(englishCount.Units.Length == 1 && englishCount.Units[0].Text == "255 tool-capable models on OpenRouter", "rendered English count prose is extracted while numeric and technical values stay excluded");
+    var germanCount = TypeScriptContentAdapter.Parse("export const group = { count: '255 Modelle mit Werkzeugzugriff' };");
+    Check(germanCount.Units.Single().Text == "255 Modelle mit Werkzeugzugriff" && germanCount.Language == "de", "rendered German count prose is extracted");
+    var countSource = "export const group = { count: '255 tool-capable models on OpenRouter' };";
+    var countParsed = TypeScriptContentAdapter.Parse(countSource);
+    var countSpan = countParsed.MapSpan(countParsed.Units.Single().Id, 0, 3);
+    Check(countSource[countSpan.Start..countSpan.End] == "255", "count claim retains precise editable source span");
+    var germanWording = DocumentParser.Analyze(DocumentParser.Parse("Die leistungsstarke Suche erklärt ihre Filter.", "markdown").Units).Single(f => f.RuleId == "stock-wording");
+    var englishWording = DocumentParser.Analyze(DocumentParser.Parse("A powerful search.", "markdown").Units).Single(f => f.RuleId == "stock-wording");
+    Check(germanWording.Start == 4 && germanWording.End == 19 && germanWording.Quote == "leistungsstarke" &&
+        germanWording.Explanation.Contains("„leistungsstarke“") && germanWording.Explanation.Contains("Wortliste") &&
+        germanWording.Explanation.Contains("umgebende Text") && germanWording.Explanation.Contains("kann das Wort bleiben") &&
+        germanWording.RuleId == englishWording.RuleId, "shared DE/EN catalogue returns exact quote/span and explains context-based retention and word-list limits");
+    var shiftRoot = Path.Combine(root, "unit-shift"); Directory.CreateDirectory(shiftRoot);
+    File.WriteAllText(Path.Combine(shiftRoot, "voice.config.json"), "{\"version\":1,\"sourceFiles\":[\"content.ts\"]}");
+    File.WriteAllText(Path.Combine(shiftRoot, "content.ts"), "export const page = { title: 'Stable heading', count: '255 tool-capable models on OpenRouter', paragraphs: ['Repeated quote.', 'Repeated quote.'], body: 'Keep this paragraph clear.' };");
+    var shiftProject = store.Register(new(shiftRoot, "Unit shift")).Id;
+    var shiftDocId = store.ListDocuments(shiftProject).Single().Id;
+    var shiftDoc = store.GetDocument(shiftProject, shiftDocId);
+    var bodyUnit = shiftDoc.Units.Single(u => u.Text == "Keep this paragraph clear.");
+    shiftDoc = store.SaveFeedback(shiftProject, shiftDocId, new(bodyUnit.Id, "paragraph", 10, 19, "Keep concrete context", "wording", shiftDoc.Version, shiftDoc.ReviewRevision, "shift-unique"));
+    var duplicateUnit = shiftDoc.Units.First(u => u.Text == "Repeated quote.");
+    shiftDoc = store.SaveFeedback(shiftProject, shiftDocId, new(duplicateUnit.Id, "Repeated quote.", 0, 15, "Ambiguous duplicate", "wording", shiftDoc.Version, shiftDoc.ReviewRevision, "shift-duplicate"));
+    var shiftMetaPath = Path.Combine(shiftRoot, ".voice-lint", "reviews", shiftDocId + ".voice-meta.json");
+    var shiftMeta = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(shiftMetaPath))!;
+    shiftMeta["unitsFingerprint"] = null; // Legacy metadata from the parser before count prose was supported.
+    shiftMeta["feedback"]![0]!["unitId"] = "ts-u-3";
+    shiftMeta["feedback"]![1]!["unitId"] = "ts-u-1";
+    File.WriteAllText(shiftMetaPath, shiftMeta.ToJsonString());
+    var shifted = store.GetDocument(shiftProject, shiftDocId);
+    Check(shifted.Version == shiftDoc.Version && shifted.ReviewRevision == shiftDoc.ReviewRevision + 1, "unit-map migration is visible even with identical source hash");
+    Check(shifted.Feedback[0].UnitId == bodyUnit.Id && shifted.Feedback[0].Status == "needs_recheck", "shifted unit reattaches only to unique exact quote and context");
+    Check(shifted.Feedback[1].Status == "needs_reattachment", "ambiguous duplicate after unit shift requires reattachment");
+    Check(store.GetDocument(shiftProject, shiftDocId).ReviewRevision == shifted.ReviewRevision, "unit-map migration is persisted and idempotent");
+    shiftMeta = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(shiftMetaPath))!;
+    shiftMeta["unitsFingerprint"] = null;
+    shiftMeta["feedback"]![0]!["prefix"] = "Different original context";
+    File.WriteAllText(shiftMetaPath, shiftMeta.ToJsonString());
+    Check(store.GetDocument(shiftProject, shiftDocId).Feedback[0].Status == "needs_reattachment", "unique quote with mismatched context is not guessed");
+    var beforeRecovery = store.GetDocument(shiftProject, shiftDocId);
+    var recoveryProposal = store.CreateProposal(shiftProject, shiftDocId, new(beforeRecovery.Units[0].Id, 0, 6, "Clear", beforeRecovery.Version, null));
+    var afterRecoveryApply = store.ApplyProposal(shiftProject, shiftDocId, recoveryProposal.Id, new(beforeRecovery.Version));
+    shiftMeta = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(shiftMetaPath))!;
+    shiftMeta["unitsFingerprint"] = null;
+    shiftMeta["feedback"]![0]!["unitId"] = "ts-u-3";
+    shiftMeta["feedback"]![0]!["prefix"] = "Keep this ";
+    File.WriteAllText(shiftMetaPath, shiftMeta.ToJsonString());
+    var recoveryJournalPath = Path.Combine(shiftRoot, ".voice-lint", "transactions", shiftDocId + "-" + recoveryProposal.Id + ".json");
+    var recoveryJournal = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(recoveryJournalPath))!;
+    recoveryJournal["state"] = "pending";
+    File.WriteAllText(recoveryJournalPath, recoveryJournal.ToJsonString());
+    var recoveredMapping = store.GetDocument(shiftProject, shiftDocId);
+    Check(recoveredMapping.Version == afterRecoveryApply.Version && recoveredMapping.ReviewRevision == afterRecoveryApply.ReviewRevision + 1 &&
+        recoveredMapping.Feedback[0].UnitId == bodyUnit.Id && recoveredMapping.Feedback[0].Status == "needs_recheck",
+        "crash recovery cannot mask same-source unit-map migration by stamping a new fingerprint");
     Console.WriteLine($"PASS: {count} backend assertions.");
 }
 finally

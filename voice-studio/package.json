@@ -19,7 +19,13 @@
     "test:api": "node scripts/verify-api.mjs",
     "test:runner": "dotnet run --project backend/VoiceStudio.RunnerTests",
     "test:live": "node scripts/verify-live.mjs",
-    "test:ui-state": "node scripts/verify-ui-state.mjs"
+    "test:ui-state": "node scripts/verify-ui-state.mjs",
+    "test:tasks": "dotnet run --project backend/VoiceStudio.TaskTests",
+    "test:task-ui": "node scripts/verify-task-ui.mjs",
+    "test:wiki-tasks": "node scripts/verify-wiki-tasks.mjs",
+    "licenses:inventory": "node scripts/license-inventory.mjs",
+    "review:website": "node scripts/import-website-review.mjs",
+    "test:checks": "dotnet run --project backend/VoiceStudio.CheckTests/VoiceStudio.CheckTests.csproj"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1"

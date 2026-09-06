@@ -1,0 +1,538 @@
+{
+  "version": "voice-studio-rules/0.2",
+  "updatedAt": "2026-09-06",
+  "engine": "voice-studio/local-rules-v0",
+  "overview": "Regeln verstehen, Texte prüfen und Änderungen an der Quelle nachvollziehen.",
+  "rules": [
+    {
+      "id": "stock-wording",
+      "title": "Werbewörter konkret machen",
+      "category": "wording",
+      "message": "Konkrete Leistung fehlt möglicherweise",
+      "summary": "Ein wertendes Wort kann eine konkrete Beschreibung ersetzen. Der Treffer allein sagt noch nicht, dass die Formulierung falsch ist.",
+      "pattern": "\\b(nahtlos(?:e[nmrs]?)?|revolutionär(?:e[nmrs]?)?|seamless(?:ly)?|game[- ]changer|leverage|ganzheitlich(?:e[nmrs]?)?|innovativ(?:e[nmrs]?)?|state[- ]of[- ]the[- ]art|powerful|effortless(?:ly)?|cutting[- ]edge|leistungsstark(?:e[nmrs]?)?|mühelos(?:e[nmrs]?)?)\\b",
+      "explanation": "„{quote}“ bewertet eine Eigenschaft, ohne sie selbst zu erklären. Welche konkrete Aufgabe wird dadurch möglich oder einfacher? Wenn der umgebende Text das bereits nachvollziehbar beschreibt, kann das Wort bleiben. Dieser Treffer stammt aus einer Wortliste; die Regel prüft keine Belege im Kontext.",
+      "question": "Welche beobachtbare Fähigkeit oder Verbesserung meinst du an dieser Stelle?",
+      "nextStep": "Lies den ganzen Satz und die Nachbarsätze. Ergänze eine belegbare Fähigkeit oder eine konkrete Grenze; streiche das Wort nur, wenn dabei keine Bedeutung verloren geht.",
+      "acceptable": [
+        "Eine messbare Leistung wird direkt genannt und ihr Vergleich ist nachvollziehbar.",
+        "Das Wort gehört zu einem wörtlichen Zitat oder beschreibt eine ausdrücklich begründete Bewertung.",
+        "„Leverage“ wird als präziser Fachbegriff mit passender Zielgruppe verwendet."
+      ],
+      "limitations": [
+        "Die Wortliste versteht keine Ironie, Zitate, Fachsprache oder Nachbarsätze.",
+        "Es gibt keinen automatischen Ersatz: Ein anderes Werbewort würde das Problem nur verschieben.",
+        "Eine konkrete Funktion kann sinnvoller sein als eine Zahl. Zahlen dürfen nicht erfunden werden."
+      ],
+      "examples": [
+        {
+          "language": "DE",
+          "before": "Unser leistungsstarkes Wiki verbessert deine Texte.",
+          "after": "Im Wiki findest du zu jedem Hinweis die Regel, Beispiele und die Grenzen der Prüfung.",
+          "why": "Der Ersatz benennt konkrete Funktionen. Er passt nur, wenn diese Funktionen tatsächlich vorhanden sind."
+        },
+        {
+          "language": "EN",
+          "before": "Powerful tools for effortless reviews.",
+          "after": "Select a passage, save feedback beside its source, and inspect the proposed diff.",
+          "why": "Der Ablauf wird nachvollziehbar. Eine garantierte Zeitersparnis wird nicht hinzugefügt."
+        },
+        {
+          "language": "DE",
+          "before": "Die leistungsstarke Suche durchsucht Titel und Artikeltext; du kannst nach Regeltyp filtern.",
+          "after": "Die leistungsstarke Suche durchsucht Titel und Artikeltext; du kannst nach Regeltyp filtern.",
+          "why": "Ein Wortlistentreffer bleibt möglich. Die konkrete Beschreibung kann ausreichen, um den Hinweis begründet zu verwerfen."
+        }
+      ],
+      "related": [
+        "review-basics",
+        "claim-evidence",
+        "semantic-review"
+      ]
+    },
+    {
+      "id": "heading-period",
+      "title": "Schlusspunkt in Überschriften",
+      "category": "structure",
+      "message": "Schlusspunkt der Überschrift prüfen",
+      "summary": "Die Regel erkennt einen einzelnen Punkt am Ende einer Überschrift. Ob er ein Satzzeichen, eine Abkürzung oder Teil eines Namens ist, entscheidet der Kontext.",
+      "pattern": null,
+      "explanation": "Die erkannte Überschrift endet mit einem Punkt. Bei einer normalen Überschrift kann er entfallen. Gehört er aber zu einer Abkürzung, einem Namen oder einem Zitat, muss er bleiben. Der Vorschlag entfernt nur dieses Zeichen und braucht deine Prüfung.",
+      "question": "Ist der Punkt ein entbehrliches Satzzeichen oder Teil der eigentlichen Aussage?",
+      "nextStep": "Prüfe Abkürzungen und Eigennamen, bevor du den leeren Ersatztext übernimmst.",
+      "acceptable": [
+        "Die Überschrift endet mit einer Abkürzung wie „Dr.“.",
+        "Der Punkt ist Teil eines zitierten Texts oder eines festgelegten Namens.",
+        "Die redaktionelle Vorgabe verlangt vollständige Sätze mit Satzzeichen."
+      ],
+      "limitations": [
+        "Der Algorithmus kennt keine Abkürzungsliste.",
+        "Drei Punkte am Ende werden ausgenommen. Andere typografische Sonderfälle werden nicht verstanden.",
+        "Der Hinweis betrifft die erkannte Text-Unit; Markup kann eine Überschrift auf mehrere Units aufteilen."
+      ],
+      "examples": [
+        {
+          "language": "DE",
+          "before": "Feedback an der Quelle speichern.",
+          "after": "Feedback an der Quelle speichern",
+          "why": "Ein normaler Überschriftentext braucht hier keinen abschließenden Punkt."
+        },
+        {
+          "language": "EN",
+          "before": "Interview with Dr.",
+          "after": "Interview with Dr.",
+          "why": "Der Punkt gehört zur Abkürzung. Den automatischen Löschvorschlag nicht übernehmen."
+        }
+      ],
+      "related": [
+        "review-basics",
+        "source-mapping"
+      ]
+    },
+    {
+      "id": "self-attestation",
+      "title": "Selbstaussagen auf ihren Nutzen prüfen",
+      "category": "meta",
+      "message": "Haltung oder konkrete Information?",
+      "summary": "Eine Selbstaussage kann von der Information ablenken, die Leser gerade suchen. In einem Manifest oder einem persönlichen Text kann dieselbe Formulierung sinnvoll sein.",
+      "pattern": "\\b(wir (?:sind stolz|glauben|verstehen)|we (?:believe|are proud|understand)|es ist wichtig zu betonen|this page describes what exists|diese seite beschreibt)\\b",
+      "explanation": "„{quote}“ lenkt den Satz zunächst auf die Haltung des Autors oder auf den Text selbst. Prüfe, ob Leser hier eine Funktion, einen Beleg oder eine Handlungsanweisung brauchen. In einem Manifest oder einer persönlichen Stellungnahme kann die Haltung genau der Zweck des Texts sein.",
+      "question": "Braucht diese Seite die Haltung des Anbieters oder eine konkrete Information für den nächsten Schritt?",
+      "nextStep": "Benenne die relevante Information direkt. Erhalte persönliche Aussagen dort, wo sie der ausdrücklich gewählte Gegenstand sind.",
+      "acceptable": [
+        "Ein Manifest erklärt die Haltung des Autors und kennzeichnet sie als solche.",
+        "Ein persönlicher Bericht beschreibt eine Erfahrung, ohne sie als allgemeine Tatsache auszugeben.",
+        "Ein kurzer Orientierungssatz hilft nachweisbar, den Geltungsbereich einer langen Dokumentation zu verstehen."
+      ],
+      "limitations": [
+        "Die Regel erkennt die Textsorte und die Absicht der Seite nicht.",
+        "Nur die hinterlegten Phrasen werden gefunden; ähnliche Formulierungen können unbemerkt bleiben."
+      ],
+      "examples": [
+        {
+          "language": "DE",
+          "before": "Wir sind stolz auf unser Feedback-System.",
+          "after": "Feedback wird mit der markierten Textstelle und ihrer Quellversion gespeichert.",
+          "why": "Auf einer Funktionsseite hilft die konkrete Speicherweise eher als die Haltung des Anbieters."
+        },
+        {
+          "language": "EN",
+          "before": "We believe software work should remain reviewable.",
+          "after": "We believe software work should remain reviewable.",
+          "why": "In einem Manifest ist eine gekennzeichnete Überzeugung ein passender Inhalt; der Wortlistentreffer ist kein Fehlerbeweis."
+        }
+      ],
+      "related": [
+        "review-basics",
+        "semantic-review"
+      ]
+    },
+    {
+      "id": "claim-evidence",
+      "title": "Aussagen, Zahlen und Geltungsbereich prüfen",
+      "category": "claims",
+      "message": "Geltungsbereich und Beleg prüfen",
+      "summary": "Absolute Formulierungen und Prozentangaben verdienen eine genaue Prüfung. Die Regel erkennt nur die sprachlichen Auslöser, nicht ihren Wahrheitsgehalt.",
+      "pattern": "\\b(garantiert|garantieren|guaranteed?|100\\s*%|jede[nrms]?|alle[nrms]?|immer|never|always|\\d+\\s*%)(?!\\w)",
+      "explanation": "„{quote}“ kann eine vollständige Abdeckung, einen Vergleich oder eine Zusage ausdrücken. Auf welche Fälle und Bedingungen bezieht sich die Aussage, und welcher Beleg trägt sie? Die Regel hat nur dieses Sprachmuster erkannt; sie hat die Aussage nicht als falsch bewertet.",
+      "question": "Gilt die Aussage wirklich für den genannten Umfang, und ist dieser Umfang erkennbar?",
+      "nextStep": "Prüfe Quelle, Zeitpunkt, Vergleichsbasis und Ausnahmen. Belege die Aussage oder begrenze sie auf den tatsächlich nachgewiesenen Umfang.",
+      "acceptable": [
+        "Ein Wert ist als Messung mit Quelle, Datum und Bedingungen ausgewiesen.",
+        "„Alle“ bezieht sich auf eine klar begrenzte, tatsächlich vollständig geprüfte Menge.",
+        "Eine Anleitung verwendet „immer“ für eine beabsichtigte, nachvollziehbare Arbeitsregel."
+      ],
+      "limitations": [
+        "Es findet keine Faktenprüfung statt. Treffer sind deshalb Informationen, keine automatischen Veröffentlichungsblocker.",
+        "Nicht jede absolute Aussage wird erkannt: Die Wortliste enthält beispielsweise nicht jede englische Variante.",
+        "Kein Treffer bedeutet nicht, dass eine Aussage belegt oder richtig ist."
+      ],
+      "examples": [
+        {
+          "language": "DE",
+          "before": "Alle Webseiten funktionieren ohne Einrichtung.",
+          "after": "Die eingebundenen lokalen Beispielseiten funktionieren mit der mitgelieferten Review-Bridge.",
+          "why": "Der Ersatz begrenzt die Aussage auf einen überprüfbaren Umfang. Auch dieser Umfang muss tatsächlich getestet sein."
+        },
+        {
+          "language": "EN",
+          "before": "Reviews are guaranteed to improve your copy.",
+          "after": "Reviews identify passages to examine and explain the suggested changes.",
+          "why": "Die überprüfbare Tätigkeit ersetzt ein garantiertes Qualitätsversprechen."
+        }
+      ],
+      "related": [
+        "coverage",
+        "semantic-review",
+        "model-choice"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "review-basics",
+      "section": "Arbeitsweise",
+      "title": "Was ein Hinweis bedeutet",
+      "summary": "Ein Befund ist eine begründete Einladung zur Prüfung. Er ist weder ein Wortverbot noch ein automatisches Qualitätsurteil.",
+      "paragraphs": [
+        "Beginne mit dem vollständigen Satz, der Zielgruppe und dem Zweck der Seite. Eine Produktseite braucht andere Formulierungen als ein Manifest oder ein persönlicher Bericht.",
+        "Frage dann: Was genau wurde erkannt? Warum könnte es an dieser Stelle stören? Wann wäre dieselbe Formulierung angemessen? Welche Änderung bewahrt die Aussage?",
+        "Feste Regeln, semantische Reviews und menschliches Feedback haben unterschiedliche Grundlagen. Die Oberfläche soll den Ursprung und seine Grenzen erkennbar machen. Ein höherer Befundzähler ist kein Beweis für schlechtere Texte."
+      ],
+      "steps": [
+        "Textstelle im Kontext lesen.",
+        "Regelerklärung und Gegenbeispiele prüfen.",
+        "Begründetes Feedback speichern oder einen konkreten Ersatz vorbereiten.",
+        "Quelldiff prüfen und die Änderung ausdrücklich übernehmen."
+      ],
+      "related": [
+        "stock-wording",
+        "coverage",
+        "feedback",
+        "source-tasks",
+        "language-tools"
+      ]
+    },
+    {
+      "id": "coverage",
+      "section": "Prüfverfahren",
+      "title": "Abdeckung und Berichte richtig lesen",
+      "summary": "Ein Bericht zählt die unterstützten Texte und gefundenen Muster. Er misst keinen allgemeinen Voice-Score.",
+      "paragraphs": [
+        "Der Dateibericht zeigt analysierte Text-Units, ausgeschlossene Bereiche und die Hinweise der vier lokalen Regeln. Der Projektbericht zählt die unterstützten Quelldateien, Wörter, Befunde und offenen Rückmeldungen.",
+        "Wörter und Text-Units hängen vom jeweiligen Source-Adapter ab. Ein sichtbarer Angular-Absatz kann aus mehreren Feldern stammen. JavaScript-Code, dynamisch erzeugte Texte und ausgeschlossene Inhalte sind nicht automatisch mitgeprüft.",
+        "Null lokale Befunde bedeutet nur: Keines der implementierten Muster hat getroffen. Unklare Nutzenversprechen, widersprüchliche Aussagen oder ungeeignete Tonalität können trotzdem vorhanden sein.",
+        "Die ursprüngliche Dossier-Einleitung „Voice Lint concept revision“ und ihr abstrakter Absatz lieferten null lokale Befunde. Die Frage, was Leser damit tun können, musste redaktionell geprüft werden."
+      ],
+      "steps": [
+        "Dateiinventar und Adaptergrenzen prüfen.",
+        "Treffer nach Begründung lesen, nicht nach Anzahl sortieren.",
+        "Für Aussagen und Textzusammenhang ein zusätzliches semantisches oder menschliches Review verwenden."
+      ],
+      "related": [
+        "review-basics",
+        "source-mapping",
+        "semantic-review",
+        "language-tools"
+      ]
+    },
+    {
+      "id": "source-mapping",
+      "section": "Quellen und Dateien",
+      "title": "Vom sichtbaren Text zur Quelldatei",
+      "summary": "Ein Fix braucht eine eindeutige Quelle. Die Markierung im Browser allein reicht dafür nicht.",
+      "paragraphs": [
+        "Die Browser-Bridge erhält Text-Units und sucht eindeutig zuordenbare sichtbare Texte. Explizite data-voice-unit-Markierungen haben Vorrang; sonst wird konservativ nach genau passendem sichtbarem Text gesucht.",
+        "Doppelte, veränderte oder nicht zuordenbare Texte bleiben unverbunden. Dadurch kann eine Seite vollständig browsbar sein, obwohl nur ein Teil ihrer Texte direkt bearbeitbar ist.",
+        "Studio-Offsets zählen UTF-16-Codeeinheiten. Ein Emoji kann zwei solcher Einheiten belegen. Der Source-Adapter übersetzt die Auswahl auf den Originaltext und lehnt eine Auswahl ab, die ein Unicode-Zeichen oder eine nicht sicher übertragbare Markup-Grenze teilt.",
+        "Die SHA-256-Quellversion und die Feedback-Revision schützen gegen veraltete Änderungen. Nach einer Quelländerung müssen ältere Befunde erneut geprüft werden."
+      ],
+      "steps": [
+        "Die angezeigte Quelldatei und Zuordnungsdiagnose prüfen.",
+        "Nur eine sicher verbundene Textstelle als direkten Fix übernehmen.",
+        "Bei unklarer Zuordnung eine Aufgabe mit Kontext anlegen und die Quelle gezielt untersuchen."
+      ],
+      "related": [
+        "angular-sources",
+        "markdown-sources",
+        "source-tasks"
+      ]
+    },
+    {
+      "id": "angular-sources",
+      "section": "Quellen und Dateien",
+      "title": "Angular: Inhalte und Komponenten",
+      "summary": "Du browsst die echte Angular-App. Bearbeitet wird das zugeordnete Inhaltsmodul oder die unterstützte Template-Quelle.",
+      "paragraphs": [
+        "voice.config.json verbindet die lokale Browseradresse, Routen, freigegebene Quelldateien und zusätzliche Komponentenreferenzen. Bei Agent Studio zeigen 27 Routen auf ihre TypeScript-Inhaltsmodule.",
+        "Der TypeScript-Adapter liest einen AST, ohne Website-Code auszuführen. Er extrahiert unterstützte Textliterale aus ausdrücklich eingeschlossenen exportierten Objekt- und Arraywerten. Imports, ausführbarer Code und interpolierte Templates werden nicht als sichere Textquelle behandelt.",
+        "Komponentenreferenzen erklären, wie der Inhalt gerendert wird. Sie sind ausdrücklich konfigurierter Kontext; Studio berechnet daraus keinen vollständigen Angular-Abhängigkeitsgraphen.",
+        "Ein Textfix bewahrt Literal-Begrenzer und Escapes und wird syntaktisch geprüft. Die eigentliche Angular-Typprüfung und der Website-Build bleiben erforderlich."
+      ],
+      "steps": [
+        "Den eigenen Angular-Devserver starten und die lokale Bridge ausdrücklich einschalten.",
+        "Route und Quelle im Studio prüfen.",
+        "Fix als Quelldiff prüfen, übernehmen und die neu gerenderte App verifizieren."
+      ],
+      "related": [
+        "source-mapping",
+        "source-tasks",
+        "coverage"
+      ]
+    },
+    {
+      "id": "markdown-sources",
+      "section": "Quellen und Dateien",
+      "title": "Markdown: Ordner, Markup und Ausschlüsse",
+      "summary": "Bei Markdown ist die Dateistruktur der Arbeitsraum. Die gerenderte Ansicht behält den Bezug zum Originaltext.",
+      "paragraphs": [
+        "Du navigierst durch Ordner und Unterordner und öffnest eine Datei. Überschriften, normale Absätze, einfache Listen, Links und grundlegende Hervorhebungen werden unterstützt.",
+        "Codeblöcke, Inline-Code und weitere nicht als Prosa unterstützte Bereiche bleiben von der Analyse ausgeschlossen. Der Renderer ist eine begrenzte Markdown-Teilmenge und kein vollständiger CommonMark-Parser.",
+        "Die Dokumentvorschau führt keine Skripte aus. Ein Ersatz innerhalb sicher zugeordneter Linkbeschriftung kann den Link erhalten; eine Auswahl über uneindeutige Markup-Grenzen wird abgelehnt."
+      ],
+      "steps": [
+        "Dateibericht und ausgeschlossene Bereiche beachten.",
+        "Die Textauswahl so begrenzen, dass ihre Formatierung erhalten werden kann.",
+        "Den vollständigen Markdown-Quelldiff prüfen."
+      ],
+      "related": [
+        "source-mapping",
+        "feedback",
+        "coverage"
+      ]
+    },
+    {
+      "id": "semantic-review",
+      "section": "Prüfverfahren",
+      "title": "Semantisches Review und seine Grenzen",
+      "summary": "Ein semantisches Review untersucht Bedeutung und Zusammenhang über eine ausdrücklich gestartete Coding-Agent-Runner-Aufgabe.",
+      "paragraphs": [
+        "Der Runner erhält einen eingefrorenen Quellstand, Text-Units, Feedback und begrenzten Komponenten-Kontext in einer getrennten Arbeitsumgebung. Die Ausführung ist schreibgeschützt, beginnt mit sauberem Kontext und delegiert keine weiteren Aufgaben.",
+        "Das Modell muss strukturierte Befunde mit Quellversion, Textstellen, genauen Zitaten und Begründungen liefern. Studio validiert die Zuordnung. Unvollständige oder veraltete Ergebnisse erscheinen nicht als erfolgreicher vollständiger Review.",
+        "Formale Validierung beweist keine redaktionelle Richtigkeit. Ein plausibel formulierter Modellbefund kann falsch sein. Prüfe Belege, Zielgruppe, Auslassungen und ungewollt hinzugefügte Aussagen.",
+        "Beim Öffnen einer Seite und bei den festen Regeln wird kein Modell aufgerufen. Ein ausdrücklich gestarteter CLI-Run kann ausgewählten Text an den konfigurierten Anbieter senden."
+      ],
+      "steps": [
+        "Konfigurierte Route und übergebenen Kontext prüfen.",
+        "Review ausdrücklich starten; Fortschritt, Abbruch oder Fehler bleiben sichtbar.",
+        "Jeden Vorschlag anhand der echten Quelle und der belegbaren Produktfunktionen prüfen."
+      ],
+      "related": [
+        "claim-evidence",
+        "model-choice",
+        "source-tasks"
+      ]
+    },
+    {
+      "id": "feedback",
+      "section": "Arbeitsweise",
+      "title": "Feedback als Teil des Projekts",
+      "summary": "Rückmeldungen bleiben bei ihrer Quelle und lassen sich in konkrete Aufgaben überführen.",
+      "paragraphs": [
+        "Durchgezogene Unterstreichungen zeigen gelieferte Befunde; gepunktete Unterstreichungen zeigen gespeichertes Feedback. Du kannst auch einen sicher zugeordneten Text ohne bestehenden Befund auswählen.",
+        "Eine Rückmeldung speichert Zitat, Umgebung, Kategorie, Quellversion und Status in den .voice-lint-Metadaten des Projekts. Sie verändert den veröffentlichten Text noch nicht.",
+        "Schreibe möglichst Ursache und gewünschtes Ergebnis: „Der getestete Remote-Ablauf nennt Ubuntu 24.04. Bitte any host auf den belegten Umfang begrenzen“ ist ausführbarer als „zu viel Marketing“.",
+        "Wurde die Quelle geändert, kann Feedback eine erneute Prüfung oder Zuordnung benötigen. Erledigt ist ein redaktioneller Punkt erst nach überprüfter Änderung oder einer begründeten Entscheidung, den Text zu behalten."
+      ],
+      "steps": [
+        "Problem im konkreten Satz erklären.",
+        "Beleg oder gewünschte Grenze nennen.",
+        "Aufgabe anlegen oder einen eigenen Ersatztext vorbereiten."
+      ],
+      "related": [
+        "source-tasks",
+        "source-mapping",
+        "review-basics"
+      ]
+    },
+    {
+      "id": "source-tasks",
+      "section": "Arbeitsweise",
+      "title": "Von einem To-do zum übernommenen Fix",
+      "summary": "Eine Aufgabe verbindet Anweisung, Rückmeldungen, Quellversion, Agent-Lauf und überprüfbaren Quelldiff.",
+      "paragraphs": [
+        "Speichern und Ausführen sind getrennte Schritte. Eine gespeicherte Aufgabe löst keinen Modellaufruf aus. Erst der ausdrückliche Start verwendet den konfigurierten Coding-Agent-Runner.",
+        "Während der Bearbeitung zeigt die Aufgabe ihren Status. Abbruch, Fehler und ein fertiger Vorschlag bleiben in der Historie erkennbar. Eine geänderte Quelle oder neues Feedback kann einen erneuten Lauf erfordern.",
+        "Der Agent bereitet Änderungen an genau einer gebundenen Quelldatei vor. Studio prüft die Textstellen und erstellt einen vollständigen Diff. Erst die getrennte Übernahme schreibt in die echte Datei.",
+        "Für Änderungen über mehrere Komponenten und Dateien braucht es einen breiteren Implementierungsauftrag. Die Promptkopie bleibt eine Übergabehilfe, wenn die lokale Runner-Ausführung nicht eingerichtet ist.",
+        "Fehlen Belege oder ist eine Änderung in mehreren Dateien nötig, bleibt die Aufgabe als „Klärung nötig“ offen. Ein Agent-Lauf ohne Änderungen schließt nur einen ausdrücklich als bereits erfüllt belegten Auftrag ab. Du kannst eine Aufgabe auch selbst mit einer Begründung abschließen; das ändert ihren Status, nicht den Quelltext."
+      ],
+      "steps": [
+        "Gewünschtes Ergebnis und relevante Rückmeldungen in einer Aufgabe festhalten.",
+        "Bearbeitung starten und Status beobachten.",
+        "Quelldiff prüfen, ausdrücklich übernehmen und die echte Seite oder Datei kontrollieren.",
+        "Die konfigurierte Projektprüfung starten und ihren Quellstand mit dem übernommenen Fix vergleichen."
+      ],
+      "related": [
+        "feedback",
+        "source-mapping",
+        "semantic-review",
+        "project-checks"
+      ]
+    },
+    {
+      "id": "model-choice",
+      "section": "Prüfverfahren",
+      "title": "Modellwahl und Token Economy",
+      "summary": "Voice braucht redaktionelle Qualitätsbelege für eine Modellpräferenz. Eine konfigurierte Route allein ist keine solche Qualifizierung.",
+      "paragraphs": [
+        "Die vier festen Regeln und normale Rückmeldungen benötigen kein LLM. Semantische Reviews und Agent-Aufgaben verwenden eine ausdrücklich konfigurierte CLI-, Modell- und Denkaufwandskombination.",
+        "Voice bewertet die Eignung für Sprache, Voice-Profil und Aufgabe: hilfreiche Befunde, bewahrte Bedeutung, unbelegte Ergänzungen und angenommene Verbesserungen. Schreiben und Codeänderungen können unterschiedliche Modelle benötigen.",
+        "Token Economy bleibt für Modellidentitäten, Kosten-/Kapazitätswissen und Routing zuständig. Der Host verwaltet Konfiguration, Zugang und Ausführung; der Coding-Agent-Runner ist der Ausführungsweg.",
+        "Vergleichende Voice-Benchmarks, Qualifizierungsdaten und die Token-Economy-Zulassungsanbindung sind noch geplant. Die lokale CLI-Prüfung belegt weder den besten redaktionellen Kandidaten noch, dass ein Anbieter einen konkreten Modellaufruf akzeptiert."
+      ],
+      "related": [
+        "semantic-review",
+        "coverage"
+      ]
+    },
+    {
+      "id": "language-tools",
+      "section": "Sprachen und Werkzeuge",
+      "title": "Deutsch und Englisch ohne LLM prüfen",
+      "summary": "Rechtschreibung, Grammatik und redaktioneller Stil brauchen unterschiedliche Prüfverfahren. Dafür gibt es lokale Open-Source-Werkzeuge; ihre Einbindung in Voice ist noch geplant.",
+      "paragraphs": [
+        "Große Rechtschreibwörterbücher sind etwas anderes als unsere kleine Liste auffälliger Werbewörter. Eine Sprachprüfung berücksichtigt Wortformen und gegebenenfalls Zusammensetzungen; eine Stilregel prüft eine redaktionelle Entscheidung.",
+        "Für Voice ist LanguageTool als lokale Grammatik- und Rechtschreibprüfung für Deutsch und Englisch ein geeigneter erster Kandidat. Das dokumentierte lokale Basisangebot enthält keine cloudbasierten KI-Regeln. Optionale Sprachmodelldateien oder statistische Erweiterungen werden separat behandelt; eine explizit konfigurierte Sprache vermeidet unnötige automatische Erkennung.",
+        "Vale eignet sich für eine versionierte redaktionelle Vorgabe mit Terminologie, Mustern und an Markup gebundenen Regeln. CSpell passt als Rechtschreibprüfung in Node-/TypeScript-Workflows. textlint ist ein erweiterbares JavaScript-Gerüst für Textregeln und liefert selbst keine Regeln mit.",
+        "Keine dieser Einbindungen ist mit dem aktuellen vierteiligen lokalen Voice-Regelkatalog bereits ausgeliefert. Vor der Aktivierung braucht jeder Adapter Tests für Quellpositionen, Ausschlüsse, Sprachvarianten und Fehlalarme."
+      ],
+      "tools": [
+        {
+          "name": "LanguageTool (lokaler Kern)",
+          "purpose": "Grammatik und Rechtschreibung; Deutsch, Englisch und weitere Sprachen",
+          "license": "LGPL-2.1-or-later; Bibliotheken und Ressourcen separat",
+          "status": "Geprüfter Kandidat, noch nicht integriert"
+        },
+        {
+          "name": "Vale",
+          "purpose": "Terminologie und redaktionelle Regeln; sprachabhängige Regelpakete",
+          "license": "MIT für den Kern; Regelpakete separat",
+          "status": "Geprüfter Kandidat, noch nicht integriert"
+        },
+        {
+          "name": "CSpell / cspell-lib",
+          "purpose": "Rechtschreibung in Node-/TypeScript-Workflows; Sprache über Wörterbücher",
+          "license": "MIT für den Kern; Wörterbücher separat",
+          "status": "Geprüfter Kandidat, noch nicht integriert"
+        },
+        {
+          "name": "Hunspell",
+          "purpose": "Rechtschreibung und Wortformen; etwa für deutsche und englische Wörterbücher",
+          "license": "MPL 1.1 alternativ GPL 2 oder später bzw. LGPL 2.1 oder später laut license.hunspell; Fremdteile separat",
+          "status": "Geprüfter Kandidat, noch nicht integriert"
+        },
+        {
+          "name": "textlint",
+          "purpose": "Erweiterbare Textprüfung in JavaScript; Markdown und Klartext, weitere Formate per Plugin",
+          "license": "MIT für den Kern; Regeln und Plugins separat",
+          "status": "Optionaler Kandidat, keine mitgelieferten Regeln"
+        }
+      ],
+      "steps": [
+        "Sprachvariante am Projekt oder Text ausdrücklich festlegen, etwa de-DE oder en-US.",
+        "Rechtschreibung und Grammatik vor redaktionellem Stil getrennt ausweisen.",
+        "Jeden Treffer mit Werkzeug, Regel, Begründung und korrektem Source-Span verbinden.",
+        "Erst nach Sprach- und Lizenzprüfung ein festes Paket samt Datenversion freigeben."
+      ],
+      "sources": [
+        {
+          "title": "LanguageTool: Sprachen und Kernlizenz",
+          "url": "https://github.com/languagetool-org/languagetool/blob/master/README.md"
+        },
+        {
+          "title": "LanguageTool: lokaler Server ohne cloudbasierte KI-Regeln",
+          "url": "https://dev.languagetool.org/http-server"
+        },
+        {
+          "title": "Vale: Funktionsumfang",
+          "url": "https://github.com/vale-cli/vale"
+        },
+        {
+          "title": "Vale: MIT-Lizenz",
+          "url": "https://github.com/vale-cli/vale/blob/master/LICENSE"
+        },
+        {
+          "title": "CSpell: Library und CLI",
+          "url": "https://github.com/streetsidesoftware/cspell"
+        },
+        {
+          "title": "CSpell: MIT-Lizenz",
+          "url": "https://github.com/streetsidesoftware/cspell/blob/main/LICENSE"
+        },
+        {
+          "title": "Hunspell: Lizenzwahl",
+          "url": "https://github.com/hunspell/hunspell/blob/master/license.hunspell"
+        },
+        {
+          "title": "textlint: Lizenz und Regeln",
+          "url": "https://github.com/textlint/textlint"
+        }
+      ],
+      "related": [
+        "licenses",
+        "stock-wording",
+        "semantic-review",
+        "coverage"
+      ]
+    },
+    {
+      "id": "licenses",
+      "section": "Sprachen und Werkzeuge",
+      "title": "Lizenzen von Programm, Regeln und Wörterbuch",
+      "summary": "Open Source ist keine pauschale Erlaubnis ohne Bedingungen. Programmcode, Sprachdaten und Zusatzpakete werden einzeln erfasst.",
+      "paragraphs": [
+        "Die Lizenz einer Library gilt nicht automatisch für ein eingebundenes Wörterbuch. Für eine konkrete Distribution braucht Voice die genaue Version, Herkunft, Lizenzdatei, Copyright-Hinweise und gegebenenfalls Änderungsvermerke jedes Bestandteils.",
+        "Ein konkretes Beispiel: dictionary-de 3.0.0 verwendet igerman98-Daten. Die mitgelieferte Lizenz erlaubt GPL Version 2 oder 3. Das ist keine MIT-Lizenz und auch nicht pauschal eine Erlaubnis für beliebige spätere GPL-Versionen.",
+        "dictionary-en 4.0.0 deklariert im Paket „MIT AND BSD“. Seine Lizenzdatei enthält zusätzliche Quellen- und Copyright-Hinweise für die SCOWL-basierten Wortlisten und Affixdaten. Diese Angabe wird nicht ohne weitere Prüfung zu einer einzigen BSD-3-Clause-Zuweisung vereinfacht.",
+        "Auch LanguageTool weist ausdrücklich auf abweichend lizenzierte Bibliotheken und Ressourcen hin. Bei Vale und textlint werden installierte Regelpakete unabhängig vom MIT-lizenzierten Kern geprüft.",
+        "Die installierte CodingAgentRunner-Version 0.7.0 deklariert Apache-2.0 in ihren NuGet-Paketmetadaten. Lizenz und Anbieterbedingungen eines verwendeten Coding-Agent-CLI oder Cloud-Kontos bleiben davon getrennt.",
+        "Das npm-Inventar dieses Projekts erfasst deklarierte Paketlizenzen mit Versionen. Es ist kein vollständiger Audit aller enthaltenen Dateien und Daten. Fehlende oder unklare Angaben bleiben offen; diese Dokumentation weist dem eigenen Voice-Code keine neue Lizenz zu."
+      ],
+      "steps": [
+        "Exaktes Paket und Datenversion festhalten; keine beweglichen Downloads als freigegebenes Artefakt behandeln.",
+        "Kern, Sprachdaten, Modelle und Regelpakete getrennt prüfen.",
+        "Lizenztexte und erforderliche Hinweise bei einer Weitergabe mitliefern.",
+        "Offene Zuordnungen vor einer Paketveröffentlichung klären; nicht als „alles MIT“ zusammenfassen."
+      ],
+      "sources": [
+        {
+          "title": "dictionary-de 3.0.0: Paketmetadaten",
+          "url": "https://github.com/wooorm/dictionaries/blob/main/dictionaries/de/package.json"
+        },
+        {
+          "title": "dictionary-de: GPL Version 2 oder 3",
+          "url": "https://github.com/wooorm/dictionaries/blob/main/dictionaries/de/license"
+        },
+        {
+          "title": "dictionary-en 4.0.0: Paketmetadaten",
+          "url": "https://github.com/wooorm/dictionaries/blob/main/dictionaries/en/package.json"
+        },
+        {
+          "title": "dictionary-en: vollständige Hinweise",
+          "url": "https://github.com/wooorm/dictionaries/blob/main/dictionaries/en/license"
+        },
+        {
+          "title": "LanguageTool: Lizenz und Fremdressourcen",
+          "url": "https://github.com/languagetool-org/languagetool/blob/master/languagetool-standalone/COPYING.txt"
+        },
+        {
+          "title": "CodingAgentRunner 0.7.0: Paket",
+          "url": "https://www.nuget.org/packages/CodingAgentRunner/0.7.0"
+        },
+        {
+          "title": "Apache-2.0-Lizenz",
+          "url": "https://licenses.nuget.org/Apache-2.0"
+        }
+      ],
+      "related": [
+        "language-tools",
+        "model-choice"
+      ]
+    },
+    {
+      "id": "project-checks",
+      "section": "Arbeitsweise",
+      "title": "Geänderte Quellen mit dem Projekt prüfen",
+      "summary": "Starte die vorhandene Projektprüfung und lies Status, Ausgabe und Exitcode neben deinem Review.",
+      "paragraphs": [
+        "Eine Textänderung in einer Angular-Komponente kann Syntax, Links oder die Darstellung beeinflussen. Nach der Übernahme prüfst du deshalb die laufende Website und startest die für dieses Projekt eingerichtete Prüfung. Ein erfolgreicher Build bewertet weder den Schreibstil noch die sachliche Richtigkeit.",
+        "Für die Agent-Studio-Website führt „Projekt prüfen“ npm run check aus: TypeScript-, Template- und SCSS-Linting, Inhaltsprüfung und statischer Angular-Build mit Prüfung der erzeugten Seiten. Dieser Schritt benötigt kein LLM.",
+        "Die Prüfung startet erst durch deine Aktion. Während des Laufs kannst du die Ausgabe lesen oder abbrechen. Ergebnis, Exitcode und begrenztes Log bleiben im Projekt gespeichert. Ändern sich die erfassten Quellen oder die Prüfkonfiguration, gilt ein früherer Erfolg nicht mehr als Prüfung des aktuellen Standes.",
+        "Der Host legt das feste Kommando in seiner privaten Konfiguration fest. Die Website kann es nicht über ihre voice.config.json auswählen. Der gestartete Prozess führt den vertrauenswürdigen Projektcode mit den Rechten des Hosts aus; dieser Prüfschritt ist keine Prozess-Sandbox.",
+        "Ein Prüfergebnis bezieht sich auf die konfigurierten Eingabedateien. Der Dienst vergleicht deren Fingerprints vor und nach dem Lauf. Das ist kein unveränderlicher Snapshot; Änderungen außerhalb dieses Umfangs und sachliche Textfehler brauchen eine eigene Prüfung."
+      ],
+      "steps": [
+        "Quelldiff prüfen und übernehmen.",
+        "Website oder Markdown-Datei im tatsächlichen Kontext lesen.",
+        "Projektprüfung ausdrücklich starten und die erste konkrete Fehlermeldung lesen.",
+        "Fehler korrigieren und den neuen Stand erneut prüfen; einen alten Erfolg nicht als aktuellen Nachweis verwenden."
+      ],
+      "related": [
+        "source-tasks",
+        "source-mapping",
+        "review-basics"
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="TypeScriptExtractor.mjs" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../knowledge/rules.json" Link="rules.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CodingAgentRunner" Version="0.7.0" />

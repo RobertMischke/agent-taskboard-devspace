@@ -8,3 +8,4 @@ examples/**/.voice-lint/
 .angular/
 frontend/.angular/
 *.log
+.voice-runtime/

@@ -1,8 +1,10 @@
 # Voice Studio
 
-Preview 0.2: browse a **real local website** or a **Markdown folder**, mark text,
-save feedback, run a semantic review through the Coding-Agent-Runner, and inspect
-a source diff before changing the original file. Angular frontend, .NET 10 backend
+Preview 0.3: browse a **real local website** or a **Markdown folder**, mark text,
+save feedback, and turn it into a durable source task. Run a semantic review or
+explicitly start the task through the Coding-Agent-Runner, then inspect the full
+source diff before changing the original file. An explanatory rule wiki shares
+the local checker’s catalogue. Angular frontend, .NET 10 backend
 and the separately reusable JavaScript library `@voice/review`.
 
 ## Start
@@ -65,23 +67,75 @@ code; this is a limited subset rather than full CommonMark.
 
 1. Browse the page or file, then select a mapped passage. The review panel opens.
 2. Save feedback. Dotted underlines distinguish human notes from supplied findings.
-3. Write a replacement, use a rule suggestion, or start a semantic Runner review.
-4. Inspect the complete source diff and explicitly apply it.
-5. Verify the actual changed file and rendered page. Older source versions are rejected.
+3. Inspect a local rule or explicitly start a semantic review for the whole file.
+4. Write a replacement, or save a source task with its instruction and selected feedback.
+5. Explicitly start the saved task. Its status and Runner history remain available.
+6. Inspect the complete source diff and explicitly apply it.
+7. Explicitly start the configured local project check and inspect its status, logs and exit code.
+8. Verify the actual changed file and rendered page. Older source versions are rejected.
 
 File reports cover all supported units in the file and list parser exclusions;
-project reports aggregate the source inventory and deterministic findings. Proposals, feedback and semantic run history
-persist in project `.voice-lint` metadata. Reopening a run checks source and component
+project reports aggregate the source inventory and deterministic findings. Tasks,
+proposals, feedback and semantic run history persist in project `.voice-lint` metadata. Reopening a run checks source and component
 context again. Cancelled, failed, interrupted and stale runs are distinct from success.
 Malformed or incomplete model replies fail validation.
+
+A task can prepare **1–50 non-overlapping supported text edits in one file** as
+one reviewable proposal. The backend validates each original quote and preserves
+the source format before showing the combined diff. Source version, feedback
+revision and configured component-context hashes must still match at start,
+proposal creation and apply. Multi-file or structural work needs a broader task.
+
+A proposal becomes `ready`; it does not write source until you apply it. A
+validated `already_satisfied` outcome without changes or open findings can close
+the task with a reason. Missing facts or unsupported changes become `needs_review`,
+with the unresolved reason retained. You can also make a separate, explained
+manual decision to retain the source. A successful process alone is not a fix.
+
+The project-check panel runs the host-configured command only on explicit start;
+for the Angular pilot this is the existing `npm run check`. Results and bounded
+logs persist with the checked source fingerprint; a later source change marks
+the result `stale` while retaining its original outcome and exit code. Commands
+come only from private host configuration outside the target repository. They
+execute trusted project code with the host user's permissions, independently of
+model runs. See [local project checks](backend/CHECKS.md) for setup and limits.
+
+## Rule wiki and language tooling
+
+The four local advisory rules and their explanatory wiki use the shared
+[`knowledge/rules.json`](knowledge/rules.json) catalogue. Each rule has its trigger,
+context questions, counterexamples, next steps and limitations. A wordlist match
+is not proof that a claim is false or a word should be deleted. Zero matches are
+not an editorial pass.
+
+LanguageTool, Vale, CSpell, Hunspell and textlint are **evaluated candidates**, not
+installed Voice analyzers. Engine, dictionary, model and rule-package licenses
+remain separate. See [language tooling](docs/language-tooling.md),
+[third-party notices](THIRD_PARTY_NOTICES.md) and the
+[603-entry resolved npm metadata inventory](docs/licenses/npm-inventory.json).
+This inventory includes optional packages and is not a browser-shipping count or
+a complete file-level license audit.
+
+The real Agent Studio website has also received a complete editorial source
+review: **27 routes, 30 content files, 36 exact-quote findings**. The
+[report](docs/reviews/agent-studio-website-2026-09-06.md) and
+[JSON findings](docs/reviews/agent-studio-website-2026-09-06.json) separate verified
+contradictions, release-alignment questions, missing evidence and editorial
+suggestions. Source hashes and literal anchors make them reviewable; the audit
+itself did not change the website or start a model run.
+
+## Verified real-website pilot
+
+The [7 September pilot](docs/reviews/agent-studio-pilot-2026-09-07.md) records the actual six-edit homepage task, reviewed UI apply and live reload, the broader source revision, desktop/mobile browsing and the visible project check. The original audit above is retained as the pre-revision evidence. Screenshots and machine-readable results accompany the report; open release questions remain explicit follow-up tasks.
 
 ## Semantic review through the Coding-Agent-Runner
 
 The implemented adapter uses the pinned `CodingAgentRunner` 0.7.0 NuGet package and
 the operator's local CLI account. It stages the current file, mapped units,
 feedback and bounded component context with **read-only permission and clean
-context**. The model returns advisory structured findings; applying a fix remains
-an explicit action through the backend proposal workflow.
+context**. The model returns advisory structured findings. An explicitly started source
+task can turn validated replacement suggestions into one combined proposal;
+applying it remains a separate action through the backend proposal workflow.
 
 No model is called when opening a page or saving ordinary feedback. The operator
 starts a review explicitly in the review panel. Configure a compatible server
@@ -135,6 +189,8 @@ form. It contains no invented business identity or public service guarantee.
 npm run test:library
 npm run test:backend
 npm run test:runner
+dotnet run --project backend/VoiceStudio.TaskTests
+npm run test:checks
 npm run test:ui-state
 # Start Studio and the onboarded Agent Studio dev server, then:
 npm run test:api
@@ -142,7 +198,9 @@ npm run test:e2e
 node scripts/verify-running.mjs
 ```
 
-Runner tests use fake streams and make no model calls. Browser tests use installed
+Runner tests use fake streams and make no model calls. Project-check tests use
+fake processes and tiny isolated process fixtures; they do not build the target
+website or invoke a model. Browser tests use installed
 Chrome. The source-edit test creates its own local website/server and unregisters
 it afterward; it does not alter the Agent Studio website's copy. Screenshots and
 test runtime data are ignored. `node scripts/cleanup-verification.mjs` unregisters
@@ -158,3 +216,5 @@ Current verification evidence is recorded in the [Voice Lint dossier](http://loc
 | `packages/review/` | Framework-independent annotations, selection and local-site bridge |
 | `packages/contracts/` | Shared transport contracts; explicitly UTF-16 source coordinates |
 | `examples/` | Website, Markdown and standalone library projects |
+| `knowledge/` | Shared local-rule definitions and explanatory wiki articles |
+| `docs/reviews/` | Reviewable website findings, evidence and source coverage |

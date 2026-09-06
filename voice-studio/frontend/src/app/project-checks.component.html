@@ -1,0 +1,144 @@
+<section class="project-checks" aria-label="Lokale Projektprüfung">
+  <div class="check-heading">
+    <h3>Projekt prüfen</h3>
+    <button
+      type="button"
+      class="text-button"
+      [disabled]="loading() || mutating()"
+      (click)="reload()"
+    >
+      Stand aktualisieren
+    </button>
+  </div>
+  <p class="check-intro">
+    Führt den eingerichteten Build oder Test für das Projekt aus. Startet nur
+    auf deinen Klick.
+  </p>
+  @if (loading()) {
+    <p class="check-meta" role="status">Prüfstand wird geladen …</p>
+  }
+  @if (configuration(); as config) {
+    @if (config.label) {
+      <p class="check-command">
+        <strong>{{ config.label }}</strong>
+      </p>
+    }
+    @if (config.message) {
+      <p class="check-meta">{{ config.message }}</p>
+    }
+    @if (config.configured) {
+      <button
+        type="button"
+        class="button primary wide"
+        [disabled]="!canStart()"
+        (click)="start()"
+      >
+        Lokale Prüfung starten
+      </button>
+      <p class="check-meta">
+        Prüft den aktuellen Projektstand; ein früheres Ergebnis gilt nach
+        Änderungen als veraltet.
+      </p>
+    }
+  }
+  @if (error()) {
+    <p class="check-error" role="alert">{{ error() }}</p>
+  }
+  @if (activeRun(); as active) {
+    @if (selectedRun()?.id !== active.id) {
+      <button
+        type="button"
+        class="button secondary wide"
+        (click)="selectRun(active)"
+      >
+        Laufende Prüfung anzeigen
+      </button>
+    }
+  }
+  @if (selectedRun(); as run) {
+    <article class="check-result" [attr.data-status]="resultStatus(run)">
+      <h4 aria-live="polite">{{ label(run) }}</h4>
+      <p class="check-meta">
+        {{ run.label }} · {{ run.startedAt | date: "dd.MM.yyyy, HH:mm" }}
+      </p>
+      @if (!isActive(run) && !currentStandKnown()) {
+        <p class="check-stale">
+          Der aktuelle Projektstand konnte noch nicht bestätigt werden. Das
+          frühere Ergebnis gilt bis zur Aktualisierung nicht als aktuelle
+          Prüfung.
+        </p>
+      }
+      @if (isStale(run)) {
+        <p class="check-stale">
+          Quelle oder Prüfkonfiguration haben sich geändert. Dieses Ergebnis
+          bestätigt den aktuellen Stand nicht.
+        </p>
+        @if (run.outcome) {
+          <p>Früheres Ergebnis: {{ outcome(run) }}.</p>
+        }
+      }
+      @if (run.status === "running") {
+        <p>Die Prüfung läuft. Ausgabe und Status werden aktualisiert.</p>
+      }
+      @if (run.status === "cancelling") {
+        <p>
+          Die Prüfung wird beendet. Der endgültige Status folgt nach
+          Prozessende.
+        </p>
+      }
+      @if (run.exitCode !== undefined && run.exitCode !== null) {
+        <p class="check-exit">
+          Exitcode <strong>{{ run.exitCode }}</strong>
+        </p>
+      }
+      @if (run.error) {
+        <p class="check-error">{{ run.error }}</p>
+      }
+      @if (run.status === "running") {
+        <button
+          type="button"
+          class="button secondary wide"
+          [disabled]="isBusy()"
+          (click)="cancel(run)"
+        >
+          Prüfung abbrechen
+        </button>
+      }
+      <details class="check-logs" [open]="run.status === 'failed'">
+        <summary>Prüfausgabe ansehen</summary>
+        <pre>{{ run.log || "Noch keine Ausgabe." }}</pre>
+        @if (run.logTruncated) {
+          <p class="check-meta">
+            Die gespeicherte Ausgabe wurde auf
+            {{ configuration()?.logLimitChars ?? 65536 }} Zeichen begrenzt.
+          </p>
+        }
+      </details>
+      <p class="check-meta">
+        {{ run.inputFileCount }} Dateien im geprüften Projektstand.
+      </p>
+    </article>
+  } @else if (!loading() && configuration()?.configured) {
+    <p class="check-meta">Noch keine Prüfung gespeichert.</p>
+  }
+  @if (runs().length > 1) {
+    <details class="check-history">
+      <summary>Frühere Prüfungen ({{ runs().length }})</summary>
+      @for (run of runs(); track run.id) {
+        <button
+          type="button"
+          [class.selected]="selectedRun()?.id === run.id"
+          [attr.aria-pressed]="selectedRun()?.id === run.id"
+          [disabled]="mutating()"
+          (click)="selectRun(run)"
+        >
+          <strong>{{ label(run) }}</strong
+          ><span
+            >{{ run.startedAt | date: "dd.MM.yyyy, HH:mm" }} ·
+            {{ run.label }}</span
+          >
+        </button>
+      }
+    </details>
+  }
+</section>

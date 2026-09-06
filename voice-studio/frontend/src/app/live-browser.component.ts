@@ -25,6 +25,7 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
   private expectedOrigin = '';
   private handshakeTimer?: ReturnType<typeof setInterval>;
   private reviewSentFor = '';
+  private reviewSentDetail: DocumentDetail | null = null;
   private pendingDocument = '';
   private manualDocument = '';
   private navigationSequence = 0;
@@ -79,7 +80,7 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     setTimeout(() => { if (sequence === this.navigationSequence) this.frameUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(url.href)); });
   }
   frameLoaded(): void {
-    this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.sourceMatched.emit(false);
+    this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.reviewSentDetail = null; this.sourceMatched.emit(false);
     this.status.set('Website geöffnet · Verbindung zur Review-Library wird hergestellt …');
     clearInterval(this.handshakeTimer); let attempts = 0;
     const connect = () => {
@@ -92,17 +93,17 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     if (this.bridgeReady()) this.post({ type: 'voice-studio:navigate', action });
     else if (action === 'reload') this.navigate(this.currentUrl());
   }
-  toggleMarks(): void { this.showMarks.update(value => !value); this.reviewSentFor = ''; this.sendReview(); }
+  toggleMarks(): void { this.showMarks.update(value => !value); this.reviewSentFor = ''; this.reviewSentDetail = null; this.sendReview(); }
   chooseSource(): void {
     if (!this.sourceChoice) {
-      this.manualDocument = ''; this.pendingDocument = ''; this.reviewSentFor = '';
+      this.manualDocument = ''; this.pendingDocument = ''; this.reviewSentFor = ''; this.reviewSentDetail = null;
       const automatic = this.resolveDocument(this.currentUrl());
       if (automatic && automatic.id !== this.detail?.id) { this.pendingDocument = automatic.id; this.documentNavigate.emit(automatic.id); }
       else this.sendReview();
       return;
     }
     const file = this.documents.find(item => item.id === this.sourceChoice); if (!file) return;
-    this.manualDocument = file.id; this.pendingDocument = file.id; this.reviewSentFor = '';
+    this.manualDocument = file.id; this.pendingDocument = file.id; this.reviewSentFor = ''; this.reviewSentDetail = null;
     if (this.detail?.id !== file.id) this.documentNavigate.emit(file.id); else this.sendReview();
   }
   private validateUrl(value: string): URL {
@@ -123,7 +124,7 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
       if (this.currentUrl() !== url.href) this.manualDocument = '';
       this.bridgeReady.set(true); this.currentUrl.set(url.href); this.address = url.href;
       this.pageTitle.set(typeof message.title === 'string' ? message.title : 'Website');
-      this.reviewSentFor = ''; this.reviewId = ''; this.status.set('Live verbunden · Originalseite mit ihren Styles und Skripten');
+      this.reviewSentFor = ''; this.reviewSentDetail = null; this.reviewId = ''; this.status.set('Live verbunden · Originalseite mit ihren Styles und Skripten');
       const file = this.resolveDocument(url.href); this.matchedFile.set(file?.path ?? ''); this.sourceChoice = file?.id ?? ''; this.sourceMatched.emit(false);
       if (file && this.detail?.id !== file.id) { this.pendingDocument = file.id; this.documentNavigate.emit(file.id); } else this.sendReview();
       return;
@@ -169,8 +170,10 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     this.matchedFile.set(matched ? file.path : ''); this.sourceMatched.emit(matched && this.showMarks());
     if (!matched) this.mappingNote.set('Für diese Route ist noch keine Quelle zugeordnet. Wähle eine Datei, um passende Textstellen im Original zu prüfen.');
     const key = `${this.currentUrl()}:${matched ? detail.version + ':' + detail.reviewRevision + ':' + detail.findings.map(finding => finding.id).join(',') : 'unmapped'}:${this.showMarks()}`;
-    if (this.reviewSentFor === key) return;
-    this.reviewSentFor = key; this.reviewId = crypto.randomUUID();
+    // A fresh adapter snapshot may remap units without changing source or feedback hashes.
+    const mappedDetail = matched ? detail : null;
+    if (this.reviewSentFor === key && this.reviewSentDetail === mappedDetail) return;
+    this.reviewSentFor = key; this.reviewSentDetail = mappedDetail; this.reviewId = crypto.randomUUID();
     this.post({ type: 'voice-studio:review', reviewId: this.reviewId, pageUrl: this.currentUrl(), units: matched && this.showMarks() ? detail.units : [], findings: matched && this.showMarks() ? detail.findings : [], feedback: matched && this.showMarks() ? detail.feedback : [] });
   }
   private isValidSelection(value: unknown): value is SelectionTarget {
@@ -179,6 +182,6 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     return !!unit && Number.isInteger(target.start) && Number.isInteger(target.end) && target.start >= 0 && target.end > target.start && target.end <= unit.text.length && unit.text.slice(target.start, target.end) === target.quote;
   }
   private post(message: Record<string, unknown>): void { if (this.expectedOrigin) this.liveFrame?.nativeElement.contentWindow?.postMessage({ ...message, sessionId: this.sessionId }, this.expectedOrigin); }
-  private disconnect(): void { this.post({ type: 'voice-studio:disconnect' }); clearInterval(this.handshakeTimer); this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.mappingNote.set(''); this.matchedFile.set(''); this.sourceMatched.emit(false); }
+  private disconnect(): void { this.post({ type: 'voice-studio:disconnect' }); clearInterval(this.handshakeTimer); this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.reviewSentDetail = null; this.mappingNote.set(''); this.matchedFile.set(''); this.sourceMatched.emit(false); }
   ngOnDestroy(): void { ++this.navigationSequence; this.disconnect(); window.removeEventListener('message', this.receive); }
 }

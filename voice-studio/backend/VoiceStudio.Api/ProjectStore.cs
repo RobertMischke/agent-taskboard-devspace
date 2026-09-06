@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace VoiceStudio;
 
-public sealed class ProjectStore
+public sealed partial class ProjectStore
 {
     public static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web) { WriteIndented = true };
     private readonly string runtime;
@@ -153,8 +153,14 @@ public sealed class ProjectStore
         var path = MetadataPath(project, document);
         return File.Exists(path) ? ReadJson<ReviewFile>(path) : new() { DocumentPath = document.RelativePath };
     }
+    public static string UnitsFingerprint(TextUnit[] units) => Hash(JsonSerializer.Serialize(units, Json));
     private void SaveReview(RegisteredProject project, SourceDocument document, ReviewFile review)
-        => AtomicWrite(MetadataPath(project, document), JsonSerializer.Serialize(review, Json));
+    {
+        var source = ReadSource(document.FullPath).Source;
+        var format = Path.GetExtension(document.FullPath).ToLowerInvariant() switch { ".ts" => "typescript", ".html" or ".htm" => "html", _ => "markdown" };
+        review.UnitsFingerprint = UnitsFingerprint(DocumentParser.Parse(source, format).Units);
+        AtomicWrite(MetadataPath(project, document), JsonSerializer.Serialize(review, Json));
+    }
 
     public ReviewRunContext GetReviewRunContext(string projectId, string documentId, string expectedVersion)
     {
@@ -172,7 +178,7 @@ public sealed class ProjectStore
                 {
                     var (source, _) = ReadSource(Contained(project.Root, path));
                     var take = Math.Min(source.Length, Math.Min(32000, remaining));
-                    context.Add(new(path, source[..take], take < source.Length));
+                    context.Add(new(path, source[..take], take < source.Length, Hash(source)));
                     remaining -= take;
                 }
             }
@@ -219,8 +225,11 @@ public sealed class ProjectStore
         var format = Path.GetExtension(doc.FullPath).Equals(".ts", StringComparison.OrdinalIgnoreCase) ? "typescript" : Path.GetExtension(doc.FullPath).StartsWith(".ht", StringComparison.OrdinalIgnoreCase) ? "html" : "markdown";
         var parsed = DocumentParser.Parse(source, format);
         var review = Review(project, doc);
+        // Recovery may persist proposal state; retain the pre-recovery mapping
+        // comparison so that persistence cannot conceal an adapter migration.
+        var needsReanchor = review.SourceVersion != "" && (review.SourceVersion != version || review.UnitsFingerprint != UnitsFingerprint(parsed.Units));
         RecoverTransactions(project, doc, review, version);
-        if (review.SourceVersion != "" && review.SourceVersion != version)
+        if (needsReanchor)
         {
             Reanchor(review, parsed, version);
             SaveReview(project, doc, review);
@@ -249,7 +258,11 @@ public sealed class ProjectStore
                 var start = 0;
                 while (start < unit.Text.Length && (start = unit.Text.IndexOf(feedback.Quote, start, StringComparison.Ordinal)) >= 0)
                 {
-                    matches.Add((unit, start)); start += Math.Max(1, feedback.Quote.Length);
+                    var before = unit.Text[..start];
+                    var after = unit.Text[(start + feedback.Quote.Length)..];
+                    if (before.EndsWith(feedback.Prefix ?? "", StringComparison.Ordinal) && after.StartsWith(feedback.Suffix ?? "", StringComparison.Ordinal))
+                        matches.Add((unit, start));
+                    start += Math.Max(1, feedback.Quote.Length);
                 }
             }
             if (matches.Count == 1)
@@ -330,12 +343,8 @@ public sealed class ProjectStore
             CheckVersion(detail.Version, input.ExpectedVersion);
             if (input.Replacement is null || input.Replacement.Length > 50000) throw new ApiError(400, "Ersatztext ist ungültig oder zu lang.");
             var parsed = DocumentParser.Parse(detail.Source, detail.Format);
-            var span = parsed.MapSpan(input.UnitId, input.Start, input.End);
+            var (span, replacement) = MapReplacement(detail, parsed, input.UnitId, input.Start, input.End, input.Replacement);
             var unit = detail.Units.First(u => u.Id == input.UnitId);
-            if (detail.Format == "html" && (unit.Text.Contains("{{") || unit.Text.Contains("}}") || HasDynamicBinding(detail.Source, span))) throw new ApiError(422, "Diese Textstelle ist dynamisch gebunden (data-i18n/Template). Dafür wird ein Quelladapter benötigt; statische Fallback-Texte dürfen nicht als Fix angewendet werden.");
-            var replacement = detail.Format == "html" ? System.Net.WebUtility.HtmlEncode(input.Replacement)
-                : detail.Format == "typescript" ? TypeScriptContentAdapter.EscapeReplacement(input.Replacement, detail.Source[unit.SourceSpan.Start - 1])
-                : EscapeMarkdown(input.Replacement);
             var after = detail.Source[..span.Start] + replacement + detail.Source[span.End..];
             if (detail.Format == "typescript") TypeScriptContentAdapter.Parse(after);
             var doc = Document(project, documentId); var review = Review(project, doc);
@@ -347,7 +356,7 @@ public sealed class ProjectStore
         }
     }
 
-    public DocumentDetail ApplyProposal(string projectId, string documentId, string proposalId, ApplyInput input)
+    public DocumentDetail ApplyProposal(string projectId, string documentId, string proposalId, ApplyInput input, string? taskId = null)
     {
         lock (gate)
         {
@@ -357,6 +366,7 @@ public sealed class ProjectStore
             if (index < 0) throw new ApiError(404, "Vorschlag nicht gefunden.");
             var proposal = review.Proposals[index];
             if (!Regex.IsMatch(proposal.Id, @"^[a-f0-9]{32}$")) throw new ApiError(409, "Ungültige Vorschlags-ID in gespeicherten Metadaten.");
+            if (proposal.TaskId is not null && proposal.TaskId != taskId) throw new ApiError(409, "Task-Vorschläge werden über den zugehörigen Task und dessen aktuelle Revision übernommen.");
             if (proposal.State == "applied" && detail.Version == Hash(proposal.SourceAfter)) return detail;
             CheckVersion(detail.Version, input.ExpectedVersion); CheckVersion(detail.Version, proposal.ExpectedVersion);
             if (proposal.State != "pending") throw new ApiError(409, "Vorschlag kann nicht erneut angewendet werden.");

@@ -2399,3 +2399,12 @@ body:has(voice-live-browser) .brand {
     padding: 8px 14px;
   }
 }
+
+.finding-question{padding:12px 14px;border-left:3px solid #496c34;background:#eef4e7;color:#263c2b}.finding-context{margin:14px 0}.finding-context summary{cursor:pointer;min-height:32px;font-weight:650}.finding-context p{font-size:15px;line-height:1.65}.header-wiki{white-space:nowrap}
+
+/* On narrow phones, pairing or the live connection row already gives session status. */
+@media (max-width: 480px) {
+  .studio-header { gap: 12px; }
+  .studio-header .header-status { display: none; }
+  .studio-header .header-wiki { margin-left: auto; }
+}

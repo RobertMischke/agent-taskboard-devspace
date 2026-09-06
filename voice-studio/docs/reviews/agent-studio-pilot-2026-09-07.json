@@ -1,0 +1,258 @@
+{
+  "recordedAt": "2026-09-06T22:38:56.505Z",
+  "sourceRevision": {
+    "contentModules": 26,
+    "sharedFiles": 10,
+    "socialImages": 12
+  },
+  "homepagePilot": {
+    "recordedAt": "2026-09-06T21:54:10.044Z",
+    "taskId": "722dca548617b11cdf750d34af31d1d8",
+    "status": "applied",
+    "reviewedEdits": 6,
+    "sourceBefore": "a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+    "sourceAfter": "19f20503c5462eb37c30143dbb0cf0ec0479cf985253db336ba0f29ffaf5d37e",
+    "liveWebsiteReloadVerified": true,
+    "browserErrors": []
+  },
+  "websiteCheck": {
+    "id": "493caeb049394ba4bfb751d98b2789d2",
+    "status": "completed",
+    "exitCode": 0,
+    "sourceVersion": "145ecb531f5f0c3fca534854292c5dd07ea218e20851cea56665f9eb6d2f8852",
+    "configurationVersion": "f5ce60e75aa77b9de1a9bf6d0eb6c16a975bd8d8e48f1d6c61e7025be0dc0c0f",
+    "inputFileCount": 172,
+    "startedAt": "2026-09-06T22:31:44.7715618+00:00",
+    "completedAt": "2026-09-06T22:34:41.8837555+00:00"
+  },
+  "browser": {
+    "completedAt": "2026-09-06T22:20:18.885Z",
+    "passed": true,
+    "fullRouteReport": "test-results/website-revision-2026-09-06T22-10-45-501Z/report.json",
+    "targetedRegressionReport": "test-results/website-revision-2026-09-06T22-17-52-713Z/report.json",
+    "routeViewportChecks": 54,
+    "desktopJourney": "passed",
+    "mobileJourney": "passed after isolated gallery control fix",
+    "embedded1200pxIn1600px": "passed",
+    "internalRoutesAndFragments": "passed",
+    "browserErrors": 0,
+    "missingImages": 0,
+    "documentOverflow": 0,
+    "heroOverlaps": 0,
+    "sourceChangesBetweenRuns": [
+      "src/app/product-visual-gallery.component.scss"
+    ],
+    "sourceUnchangedDuringEachRun": true,
+    "currentSourceMatchesFinalRegression": false,
+    "method": "Full 27-route desktop/mobile sweep passed before the isolated mobile-gallery stylesheet fix. The affected real mobile Home/Setup/Tasktour/Imprint journey was rerun after that fix. Both reports retain exact source inventories; the earlier failed mobile result is preserved rather than overwritten. After browser QA, only scripts/validate-prerender.mjs changed. The complete source fingerprint consequently differs; src/** and public/** and every other inventoried input still match the final browser regression. Validator expectations are verified separately.",
+    "screenshots": [
+      "test-results/website-revision-2026-09-06T22-10-45-501Z/desktop-home.jpg",
+      "test-results/website-revision-2026-09-06T22-10-45-501Z/mobile-home.jpg",
+      "test-results/website-revision-2026-09-06T22-10-45-501Z/embedded-1200-home.jpg"
+    ],
+    "socialCardsVisual": "og-home.png and og-getting-started.png inspected directly: readable and no text/image overlap",
+    "modelCalls": 0,
+    "sourceEditsByVerifier": 0,
+    "updatedAt": "2026-09-06T22:25:55.277Z",
+    "currentAppAndAssetsMatchFinalRegression": true,
+    "allOtherFingerprintedInputsUnchanged": true,
+    "postBrowserQaChanges": [
+      {
+        "path": "scripts/validate-prerender.mjs",
+        "beforeSha256": "f241be94e67a2004f2b8ee6e21fd69275630eb2d55dce6db7a1567a63bc5aa68",
+        "afterSha256": "7b7ac86b4ae5447324fbc8942b7bfe987a1270df1125a7bbd464c20806e70910",
+        "classification": "validator-only",
+        "explanation": "Updated static prerender acceptance expectations for the new homepage title, section order, workflow and CTAs; bounded section extraction prevents a footer match."
+      }
+    ],
+    "validatorReview": {
+      "materialFindings": 0,
+      "sectionBoundaryFixtures": 4,
+      "result": "passed",
+      "applicationBuildValidation": "Root runs the complete project check separately; no browser rerun needed for this validator-only change."
+    }
+  },
+  "taskReconciliation": {
+    "recordedAt": "2026-09-06T22:37:36.136Z",
+    "planDigest": "fd7cde7f29fd518a1c4b93d30b6e6a3355ce8a374490c67e6559360dcd69d43a",
+    "checkId": "493caeb049394ba4bfb751d98b2789d2",
+    "results": [
+      {
+        "kind": "followup",
+        "id": "e0f01726c9d80a8450a1f2af234ae5f6",
+        "status": "queued"
+      },
+      {
+        "kind": "followup",
+        "id": "c11ffd593518d56aa46e8ab954e40730",
+        "status": "queued"
+      },
+      {
+        "kind": "followup",
+        "id": "251c55c54da98ad8e9b9f06176ba95aa",
+        "status": "queued"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "76d243d2fd9edd6ac073a9ab76c4ed25",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "0360a70f1510d26c23d1bdb54ae296d6",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "f6c5a9fc10ccd61be18f5c9af5f06d43",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "43803aaa39eca71314abd8b2b61b7add",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "90347b3cb320dcc53a596397f7689784",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "f8bf493fc78001ca0b12ab303949c08d",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "4e5f63a31af0636f35f2615b27edf0cb",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "acc9f44b0bf850e9b8beb9b311a4b989",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "ba5fb354ea5fa022a778291f3ae101af",
+        "status": "completed"
+      },
+      {
+        "kind": "preserved",
+        "id": "722dca548617b11cdf750d34af31d1d8",
+        "status": "applied"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "b61f7c3ce38c6af98369e3524614d754",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "fce1584abf579af0e3fe213f61c7a9aa",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "3aa3c7799f3cdb51da9bc20b68ec09e7",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "8d2679b22a484368fddd3d476b53bda9",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "8070fe802fdb4259c200033a41141cf1",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "923445bfd4b5ec1ed521522045265877",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "66d311cb0e06d41a966fcd76b8a4bf01",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "5fd8b60d9c41c55224018f0a0bd242b4",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "ef8ae87aa73a4618976672c142544678",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "8184fd02b5549f9bc8cd805ae77b1591",
+        "status": "completed"
+      },
+      {
+        "kind": "resolved-manual",
+        "id": "ebf3624a2e468c5bef4f3197fb35e479",
+        "status": "completed"
+      }
+    ]
+  },
+  "regressions": {
+    "library": 22,
+    "backend": 91,
+    "sourceTasks": 40,
+    "fakeRunner": 31,
+    "projectChecks": 44,
+    "uiState": 17,
+    "taskUi": 32,
+    "checkUi": 23
+  },
+  "limitations": [
+    "One real model pilot, not editorial model qualification.",
+    "The broader website revision was implemented in the repository; the six-edit homepage pilot used the actual Studio proposal/apply UI.",
+    "Three explicit release/setup/host/pricing follow-ups remain queued; original feedback is preserved.",
+    "External language-check engines remain candidates; core and dictionary/rule licenses are recorded separately."
+  ],
+  "projectCheckUi": {
+    "scope": "Actual local UI and Node process; isolated fixture; no models",
+    "unknownApiStatus": 404,
+    "projectId": "project-f9f922d0cb2e",
+    "successRunId": "aa5beeef08e04197b79ec938c539ed3a",
+    "starts": 3,
+    "modelStarts": [],
+    "errors": [],
+    "sourceUnchanged": true,
+    "screens": [
+      {
+        "name": "checks-success-1440",
+        "width": 1440,
+        "pageOverflow": false,
+        "panelOverflow": false,
+        "minimumFontSize": 13
+      },
+      {
+        "name": "checks-stale-360",
+        "width": 360,
+        "pageOverflow": false,
+        "panelOverflow": false,
+        "minimumFontSize": 13
+      },
+      {
+        "name": "checks-failed-398",
+        "width": 398,
+        "pageOverflow": false,
+        "panelOverflow": false,
+        "minimumFontSize": 13
+      },
+      {
+        "name": "checks-cancelled-360",
+        "width": 360,
+        "pageOverflow": false,
+        "panelOverflow": false,
+        "minimumFontSize": 13
+      }
+    ]
+  }
+}

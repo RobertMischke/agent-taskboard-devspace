@@ -46,6 +46,10 @@ public sealed record SemanticReviewRun
     public string ProjectId { get; init; } = "";
     public string DocumentId { get; init; } = "";
     public string SourceVersion { get; init; } = "";
+    public string? TaskId { get; init; }
+    public string? TaskDisposition { get; init; }
+    public string? TaskExplanation { get; init; }
+    public string UnitsFingerprint { get; init; } = "";
     public string RequestFingerprint { get; init; } = "";
     public string Status { get; init; } = "running";
     public string Cli { get; init; } = "";
@@ -185,37 +189,46 @@ public sealed class RunnerReviewService : IDisposable
                 "read-only", "clean", "provisional", "explicit-server-configuration", probe.Message, options.TimeoutSeconds);
         }
     }
-    public async Task<SemanticReviewRun> StartAsync(string projectId, string documentId, SemanticReviewInput input, CancellationToken ct = default)
+    public Task<SemanticReviewRun> StartAsync(string projectId, string documentId, SemanticReviewInput input, CancellationToken ct = default)
+        => StartCoreAsync(projectId, documentId, input, null, null, null, null, ct);
+
+    internal Task<SemanticReviewRun> StartTaskAsync(string projectId, string documentId, SemanticReviewInput input, string taskId, string[] feedbackIds, int reviewRevision, string contextFingerprint, CancellationToken ct = default)
+        => StartCoreAsync(projectId, documentId, input, taskId, feedbackIds, reviewRevision, contextFingerprint, ct);
+
+    private async Task<SemanticReviewRun> StartCoreAsync(string projectId, string documentId, SemanticReviewInput input, string? taskId, string[]? feedbackIds, int? reviewRevision, string? contextFingerprint, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(input.RequestId) || !Regex.IsMatch(input.RequestId, @"^[a-zA-Z0-9_-]{1,160}$")) throw new ApiError(400, "Eine eindeutige Review-Request-ID ist erforderlich.");
         if ((input.Instruction?.Length ?? 0) > 12000) throw new ApiError(400, "Die Review-Anweisung ist zu lang.");
         await startGate.WaitAsync(ct);
         try
         {
-            var context = store.GetReviewRunContext(projectId, documentId, input.ExpectedVersion);
+            var context = reviewRevision is null
+                ? store.GetReviewRunContext(projectId, documentId, input.ExpectedVersion)
+                : store.GetTaskContext(projectId, documentId, input.ExpectedVersion, reviewRevision.Value);
+            if (contextFingerprint is not null && ProjectStore.TaskContextFingerprint(context) != contextFingerprint) throw new ApiError(409, "Task-Kontext wurde vor dem Runner-Start geändert.");
             var id = ProjectStore.Hash(projectId + "\n" + documentId + "\n" + input.RequestId)[..32];
             var folder = ProjectStore.Contained(context.ProjectRoot, ".voice-lint/semantic-runs/" + id);
             var runFile = ProjectStore.Contained(context.ProjectRoot, ".voice-lint/semantic-runs/" + id + "/run.json");
-            var fingerprint = ProjectStore.Hash(JsonSerializer.Serialize(input, ProjectStore.Json));
+            var fingerprint = ProjectStore.Hash(taskId is null ? JsonSerializer.Serialize(input, ProjectStore.Json) : JsonSerializer.Serialize(new { input, taskId, feedbackIds, reviewRevision, contextFingerprint }, ProjectStore.Json));
             if (File.Exists(runFile))
             {
                 var existing = ReadRun(runFile);
                 if (existing.RequestFingerprint != fingerprint) throw new ApiError(409, "Review-Request-ID wurde bereits für andere Eingaben verwendet.");
-                return RecoverOrRead(existing, runFile);
+                return GetRun(projectId, documentId, id);
             }
             if (active.Count > 0) throw new ApiError(409, "Ein semantisches Review läuft bereits. Bitte abschließen oder abbrechen.");
             var status = await GetStatusAsync(ct);
             if (!status.Configured || !status.Available) throw new ApiError(503, status.Message);
+            // The availability probe may take seconds. Recheck before any durable
+            // claim or paid runner launch, not only when accepting its result.
+            context = reviewRevision is null
+                ? store.GetReviewRunContext(projectId, documentId, input.ExpectedVersion)
+                : store.GetTaskContext(projectId, documentId, input.ExpectedVersion, reviewRevision.Value);
+            if (contextFingerprint is not null && ProjectStore.TaskContextFingerprint(context) != contextFingerprint) throw new ApiError(409, "Task-Kontext wurde während der Runner-Statusprüfung geändert; kein Modelllauf gestartet.");
             var document = context.Document;
             if (document.Units.Length == 0) throw new ApiError(422, "Diese Datei enthält keine unterstützten Textabschnitte für ein semantisches Review.");
-            var contextJson = JsonSerializer.Serialize(new
-            {
-                documentId, path = document.Path, documentVersion = document.Version, document.Language,
-                source = document.Source, units = document.Units, feedback = document.Feedback,
-                relatedFiles = context.ContextFiles.Select(file => new { file.Path, file.Source, file.Truncated }),
-                exclusions = document.Coverage
-            }, ProjectStore.Json);
-            if (contextJson.Length > options.MaximumContextCharacters) throw new ApiError(422, "Der vollständige Datei- und Komponentenkontext überschreitet die konfigurierte Review-Grenze. Datei oder expliziten Kontext verkleinern; es wurde nichts an ein Modell gesendet.");
+            var contextJson = BuildContextJson(context, feedbackIds);
+            CheckContextSize(contextJson);
             Directory.CreateDirectory(folder); ProjectStore.EnsureNoLinks(folder);
             // A durable claim prevents simultaneous hosts/retries from launching twice.
             try { using var claim = new FileStream(Path.Combine(folder, "request.claim"), FileMode.CreateNew, FileAccess.Write, FileShare.None); }
@@ -223,9 +236,9 @@ public sealed class RunnerReviewService : IDisposable
             var run = new SemanticReviewRun
             {
                 Id = id, ProjectId = projectId, DocumentId = documentId, SourceVersion = document.Version,
-                RequestFingerprint = fingerprint, Cli = options.Cli!, Model = options.Model!, ThinkingLevel = options.ThinkingLevel!,
-                SuppliedUnits = document.Units.Length,
-                ContextFiles = context.ContextFiles.Select(file => new SemanticContextFile(file.Path, ProjectStore.Hash(file.Source), file.Source.Length, file.Truncated)).ToArray(),
+                RequestFingerprint = fingerprint, TaskId = taskId, Cli = options.Cli!, Model = options.Model!, ThinkingLevel = options.ThinkingLevel!,
+                SuppliedUnits = document.Units.Length, UnitsFingerprint = ProjectStore.UnitsFingerprint(document.Units),
+                ContextFiles = context.ContextFiles.Select(file => new SemanticContextFile(file.Path, (file.Version ?? ProjectStore.Hash(file.Source)), file.Source.Length, file.Truncated)).ToArray(),
                 Notes = ["Provisorisches semantisches Review über CodingAgentRunner; keine Voice-Modellqualifikation und keine automatische Quellenänderung.", "Zeit- und Ausgabegrenzen sind aktiv. Ein harter Token- oder Kostenhöchstbetrag wird vom CLI-Runner nicht garantiert."]
             };
             ProjectStore.AtomicWrite(Path.Combine(folder, "input.json"), contextJson);
@@ -249,7 +262,7 @@ public sealed class RunnerReviewService : IDisposable
         if (run.ProjectId != projectId || run.DocumentId != documentId) throw new ApiError(404, "Review gehört zu einer anderen Datei.");
         if (run.Status == "completed" && !ContextUnchanged(run))
         {
-            run = run with { Status = "stale", Findings = [], Error = "Quelle oder Komponentenkontext wurde geändert. Ergebnisse werden nicht auf den neuen Text angewendet." };
+            run = run with { Status = "stale", Findings = [], Error = "Quelle oder Textzuordnung oder Komponentenkontext wurde geändert. Ergebnisse werden nicht auf den neuen Text angewendet." };
             SaveRun(path, run);
         }
         return run;
@@ -277,7 +290,7 @@ public sealed class RunnerReviewService : IDisposable
             var current = RecoverOrRead(run, path);
             if (current.Status == "completed" && !ContextMatches(current, context))
             {
-                current = current with { Status = "stale", Findings = [], Error = "Quelle oder Komponentenkontext wurde geaendert. Erneutes Review erforderlich." };
+                current = current with { Status = "stale", Findings = [], Error = "Quelle, Textzuordnung oder Komponentenkontext wurde geaendert. Erneutes Review erforderlich." };
                 SaveRun(path, current);
             }
             return current;
@@ -307,7 +320,7 @@ public sealed class RunnerReviewService : IDisposable
             {
                 RunId = run.Id, WorkingDirectory = workspace, Model = run.Model, ThinkingLevel = run.ThinkingLevel,
                 PermissionMode = CliPermissionModes.ReadOnly, ContextMode = CliContextModes.Clean,
-                Prompt = BuildPrompt(contextJson, instruction)
+                Prompt = run.TaskId is null ? BuildPrompt(contextJson, instruction) : BuildTaskPrompt(contextJson, instruction)
             };
             await foreach (var item in runner.StreamAsync(request, cancellation.Token))
             {
@@ -327,9 +340,9 @@ public sealed class RunnerReviewService : IDisposable
             cancellation.Token.ThrowIfCancellationRequested();
             if (ended is null || ended.Outcome != RunOutcome.Completed || ended.ExitCode != 0)
                 throw new ApiError(422, "Runner hat das Review nicht erfolgreich abgeschlossen: " + (ended?.Reason ?? "kein erfolgreicher Abschluss"));
-            var result = ValidateOutput(output.ToString(), document, run.Id, run.Cli, actualModel ?? run.Model);
-            if (!ContextUnchanged(run)) run = run with { Status = "stale", Error = "Quelle oder Komponentenkontext hat sich während des Reviews geändert. Erneut prüfen; keine aktuellen Befunde übernommen." };
-            else run = run with { Status = "completed", Findings = result.Findings, ReviewedUnitIds = result.ReviewedUnitIds, Notes = [.. run.Notes, .. result.Notes] };
+            var result = ValidateOutput(output.ToString(), document, run.Id, run.Cli, actualModel ?? run.Model, run.TaskId is not null);
+            if (!ContextUnchanged(run)) run = run with { Status = "stale", Error = "Quelle, Textzuordnung oder Komponentenkontext hat sich während des Reviews geändert. Erneut prüfen; keine aktuellen Befunde übernommen." };
+            else run = run with { Status = "completed", Findings = result.Findings, ReviewedUnitIds = result.ReviewedUnitIds, Notes = [.. run.Notes, .. result.Notes], TaskDisposition = result.TaskDisposition, TaskExplanation = result.TaskExplanation };
         }
         catch (OperationCanceledException) { runner.Stop(run.Id); run = run with { Status = "cancelled", Findings = [], Error = "Review wurde abgebrochen oder hat die konfigurierte Laufzeit überschritten." }; }
         catch (Exception error) { runner.Stop(run.Id); run = run with { Status = "failed", Findings = [], Error = error.Message }; }
@@ -368,8 +381,8 @@ public sealed class RunnerReviewService : IDisposable
         catch (ApiError) { return false; }
     }
     private static bool ContextMatches(SemanticReviewRun run, ReviewRunContext current)
-        => current.Document.Version == run.SourceVersion && current.ContextFiles
-            .Select(file => new SemanticContextFile(file.Path, ProjectStore.Hash(file.Source), file.Source.Length, file.Truncated))
+        => current.Document.Version == run.SourceVersion && run.UnitsFingerprint == ProjectStore.UnitsFingerprint(current.Document.Units) && current.ContextFiles
+            .Select(file => new SemanticContextFile(file.Path, (file.Version ?? ProjectStore.Hash(file.Source)), file.Source.Length, file.Truncated))
             .SequenceEqual(run.ContextFiles);
     private string RunPath(string projectId, string documentId, string runId)
     {
@@ -414,6 +427,43 @@ public sealed class RunnerReviewService : IDisposable
     {
         lock (recordGate) ProjectStore.AtomicWrite(path, JsonSerializer.Serialize(run, ProjectStore.Json));
     }
+    public static string BuildContextJson(ReviewRunContext context, string[]? feedbackIds = null)
+        => JsonSerializer.Serialize(new
+        {
+            documentId = context.Document.Id, path = context.Document.Path, documentVersion = context.Document.Version, context.Document.Language,
+            source = context.Document.Source, units = context.Document.Units,
+            feedback = feedbackIds is null ? context.Document.Feedback : context.Document.Feedback.Where(f => feedbackIds.Contains(f.Id)).ToArray(),
+            relatedFiles = context.ContextFiles.Select(file => new { file.Path, file.Source, file.Truncated }),
+            exclusions = context.Document.Coverage
+        }, ProjectStore.Json);
+    private void CheckContextSize(string contextJson)
+    {
+        if (contextJson.Length > options.MaximumContextCharacters) throw new ApiError(422, "Der vollständige Datei- und Komponentenkontext überschreitet die konfigurierte Grenze. Es wurde nichts an ein Modell gesendet.");
+    }
+    public string PrepareTaskPrompt(ReviewRunContext context, string instruction, string[] feedbackIds)
+    {
+        var contextJson = BuildContextJson(context, feedbackIds); CheckContextSize(contextJson);
+        return BuildTaskPrompt(contextJson, instruction);
+    }
+    public static string BuildTaskPrompt(string contextJson, string? instruction)
+        => BuildPrompt(contextJson, instruction) + """
+
+        TASK MODE: Carry out the operator's requested prose improvements by returning precise replacement suggestions.
+        The operator instruction is the task. Only the selected feedback supplied in the data is relevant to this task.
+        Add these REQUIRED task fields to the review JSON schema:
+        "taskDisposition": "changes|already_satisfied|needs_information|unsupported",
+        "taskExplanation": "a concrete explanation grounded in the task and supplied context".
+        Use changes only when returning replacement suggestions. Use already_satisfied only when the task is already met, with no changes and no open findings.
+        Use needs_information for missing facts, or unsupported for structural/multi-file/source-adapter work; return no changes for those dispositions.
+        Each actionable change must be one finding with an exact quote and non-null suggestion.
+        Preserve all facts, links, source syntax, technical identifiers and unrelated text. Never propose edits to related files.
+        Return at most 50 non-overlapping changes within supported primary-document units. Offsets refer to the original text.
+        A suggestion contains only replacement prose, not source code, HTML, Markdown syntax, a diff, commands or explanations.
+        If the task is already satisfied, return no changes and give a concrete reason in notes. A successful review may deliberately retain the current wording.
+        If a requested fix needs unavailable facts, a structural source change or multiple files, explain that in notes and do not invent a replacement.
+        The host will validate every change and show a complete source diff. Only a later explicit user action may apply it.
+        """;
+
     public static string BuildPrompt(string contextJson, string? instruction) => """
         You are performing a semantic Voice review of one complete source file and its explicitly supplied component context.
         Review the prose for structure, unsupported claims, imprecise wording and self-referential/meta language.
@@ -429,8 +479,8 @@ public sealed class RunnerReviewService : IDisposable
         Write messages, explanations and suggestions in the primary document's language.
         """ + "\nOperator review focus (not permission to change source):\n" + (instruction ?? "Review all supplied text units.") + "\nBEGIN_REVIEW_DATA\n" + contextJson + "\nEND_REVIEW_DATA\n";
 
-    public record ValidatedSemanticOutput(SemanticReviewFinding[] Findings, string[] ReviewedUnitIds, string[] Notes);
-    public static ValidatedSemanticOutput ValidateOutput(string output, DocumentDetail document, string runId, string cli, string model)
+    public record ValidatedSemanticOutput(SemanticReviewFinding[] Findings, string[] ReviewedUnitIds, string[] Notes, string? TaskDisposition = null, string? TaskExplanation = null);
+    public static ValidatedSemanticOutput ValidateOutput(string output, DocumentDetail document, string runId, string cli, string model, bool taskMode = false)
     {
         var text = output.Trim();
         var fence = Regex.Match(text, @"^```(?:json)?\s*([\s\S]*?)\s*```$", RegexOptions.IgnoreCase);
@@ -466,7 +516,17 @@ public sealed class RunnerReviewService : IDisposable
                 "coding-agent-runner/" + cli + "/" + model, RequiredString(item, "evidence")));
         }
         var notes = RequiredArray(root, "notes").EnumerateArray().Select(item => item.ValueKind == JsonValueKind.String && item.GetString()!.Length <= 12000 ? item.GetString()! : throw new ApiError(422, "Ungültige Review-Notiz.")).ToArray();
-        return new(findings.ToArray(), reviewed, notes);
+        string? disposition = null, taskExplanation = null;
+        if (taskMode)
+        {
+            disposition = RequiredString(root, "taskDisposition"); taskExplanation = RequiredString(root, "taskExplanation");
+            var changes = findings.Count(f => f.Suggestion is not null && f.Suggestion != f.Quote);
+            if (disposition is not ("changes" or "already_satisfied" or "needs_information" or "unsupported") ||
+                disposition == "changes" && changes == 0 || disposition != "changes" && changes != 0 ||
+                disposition == "already_satisfied" && findings.Count != 0)
+                throw new ApiError(422, "Task-Ergebnis und begründeter Abschlussstatus widersprechen sich.");
+        }
+        return new(findings.ToArray(), reviewed, notes, disposition, taskExplanation);
     }
     private static JsonDocument ParseFinalObject(string text)
     {

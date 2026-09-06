@@ -1,6 +1,7 @@
-# Semantic review through CodingAgentRunner
+# Semantic review and source tasks through CodingAgentRunner
 
-The backend contains a semantic-review adapter for the existing
+Preview 0.3 uses one backend Runner adapter for full-file semantic reviews and
+explicitly started, durable improvement tasks. The backend contains a semantic-review adapter for the existing
 `CodingAgentRunner` .NET library. It launches the operator's configured coding
 agent CLI; it does not call a provider SDK or require another API-key workflow.
 The adapter is disabled until a server-side route is explicitly configured.
@@ -64,6 +65,19 @@ The start input contains `expectedVersion`, an idempotent `requestId` and an
 optional `instruction`. The host exposes authenticated endpoints and the explicit
 Studio button; automatic document loading never starts a model call.
 
+`ImprovementTaskService` exposes a separate durable workflow below
+`/api/projects/{projectId}/documents/{documentId}/tasks`: list/create, get,
+`/{id}/prompt`, and explicit `/{id}/start`, `/{id}/cancel`, `/{id}/apply` and `/{id}/resolve`
+actions. A task stores the instruction, selected feedback IDs, source version,
+feedback revision, component-context fingerprint and revision. Creation and start
+each require an idempotent request ID. Changed input under the same ID is rejected.
+
+Saving or copying the prepared prompt does not start inference. Starting calls
+the same Runner adapter in task mode. Capability checks are followed by another
+source/feedback/context check before the durable launch claim, so a slow probe
+cannot silently launch an already stale task. Requests cannot choose an arbitrary
+model, executable or write permission.
+
 A run retains configured CLI/model/effort, the actual model reported by the
 CLI when available, source version, context manifest, timestamps, status,
 advisory findings with evidence, notes, usage summaries and errors. The actual
@@ -115,7 +129,9 @@ An exit failure, cancellation, absent terminal event, malformed output or stale
 source/context cannot become a completed accepted review. The source and each
 supplied component-context snapshot are checked again before findings are
 accepted. Findings are advisory and returned separately from deterministic
-rules. Suggestions do not create or apply a source proposal automatically.
+rules. Suggestions from an ordinary semantic review do not create or apply a source
+proposal automatically. An explicitly started improvement task may prepare one
+validated combined proposal; no Runner path applies it.
 
 Each request has a durable claim and run record under
 `.voice-lint/semantic-runs/<runId>/`, with `input.json`, `run.json` and
@@ -124,6 +140,63 @@ same request ID is rejected. A leftover running record after restart becomes
 interrupted and is not automatically relaunched. Runner's raw logs and staged
 workspace remain under the host's configured runtime directory. These artifacts
 contain reviewed content; use the project's existing local retention policy.
+
+## Task outcomes and combined proposals
+
+Task mode adds two required output fields: `taskDisposition` and
+`taskExplanation`. The explanation must state a concrete reason grounded in the
+request and supplied context. The disposition is one of:
+
+- `changes`: at least one supported replacement suggestion is present.
+- `already_satisfied`: no replacement and no open finding remain; the task may
+  close as `completed` with resolution `agent_no_changes`.
+- `needs_information`: necessary facts are missing; the task becomes `needs_review`.
+- `unsupported`: the request needs structural, multi-file or unsupported source
+  operations; the task becomes `needs_review`.
+
+A successful CLI exit with no replacements is not enough to close a task. Missing
+or contradictory disposition fields fail validation. A model’s reason remains
+reviewable and is not independently certified by the JSON validator. The
+`needs_review` state retains the unresolved explanation without inventing a fix.
+
+A `changes` task may prepare 1–50 non-overlapping edits across supported text units
+**within the selected file**. `ProjectStore.CreateTaskProposal` rechecks source
+version, feedback revision and configured component-context fingerprint; validates
+quotes and safe mappings; preserves HTML/Markdown/TypeScript syntax through the
+source adapter; and constructs one complete before/after proposal. Overlap, unsafe
+source boundaries and invalid TypeScript are rejected as a set, not partially
+applied. Related context files are never source targets.
+
+The proposal makes the task `ready`. Only the separate task apply endpoint, with
+current task revision, source version and feedback revision, can write it. It
+rechecks component context and uses the existing backup and transaction journal.
+The ordinary proposal endpoint cannot bypass the owning task’s checks. A crash
+after the source transaction is recovered from the applied proposal instead of
+repeating the write. Applied tasks remain historical outcomes.
+
+Task records persist under `.voice-lint/tasks/<documentId>/<taskId>.json` and link
+the Runner run and proposal. Repeated starts do not launch again, failed or
+interrupted records do not restart on page load, and cancellation leaves source
+unchanged. A manual resolution is a distinct explicit action with a required
+reason and current source/feedback state.
+
+## Local build/test verification
+
+After applying a proposal, the user can explicitly start the project's configured
+local check in Studio. The Angular pilot runs its existing `npm run check`.
+`ProjectCheckService` is a separate bounded local process, with no model call or
+Coding-Agent-Runner launch. The panel exposes running/cancelling and final
+completed/failed/cancelled states, bounded logs and exit code. Persisted results
+are tied to the configured source fingerprint and become `stale` after source
+or profile changes, while retaining the original outcome.
+
+Executable, arguments, working directory and input scope come solely from private
+host configuration outside the target repository. Neither HTTP nor
+`voice.config.json` chooses a command. The process executes trusted repository
+code with the host user's permissions; it is not covered by the semantic Runner's
+read-only mode. Missing dependency prerequisites block start, and applying source
+never starts the command automatically. See [local project checks](../backend/CHECKS.md)
+for the configuration and API.
 
 ## Token Economy boundary
 
@@ -138,10 +211,25 @@ general model router or automatic fallback is introduced.
 
 ```sh
 dotnet run --project backend/VoiceStudio.RunnerTests/VoiceStudio.RunnerTests.csproj
+dotnet run --project backend/VoiceStudio.TaskTests/VoiceStudio.TaskTests.csproj
+npm run test:checks
 ```
 
 The tests inject `IVoiceReviewRunner`: they verify exact output validation,
 read-only/clean requests, staged context, persistence, idempotency, failed/missing
 terminal events, stale-source rejection and cancellation without starting a
-coding-agent model run. Live CLI authentication and actual model quality remain
-separate operator acceptance work.
+coding-agent model run. The task suite additionally checks saved-task lifecycle,
+context drift, dispositions, combined proposals and the explicit apply boundary.
+The separate project-check suite uses fake processes and tiny executable fixtures
+to test status, persistence, source drift, logs and process-tree cancellation
+without running a model or building the target website.
+Updated result counts belong in the current dossier after that verification run;
+the previously recorded baseline was 81 backend assertions and 30 fake-Runner
+checks. Live CLI authentication and actual model quality remain separate
+operator acceptance work.
+
+The four non-LLM local rules and their wiki use `knowledge/rules.json`. Evaluated
+LanguageTool/Vale/CSpell/Hunspell/textlint adapters are not part of Runner and are
+not installed analyzers. See [language tooling](language-tooling.md),
+[third-party notices](../THIRD_PARTY_NOTICES.md) and the resolved npm inventory for
+the distinction between actual packages and candidate engines/data.

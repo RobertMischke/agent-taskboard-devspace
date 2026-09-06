@@ -1,18 +1,19 @@
 <!-- voice-studio:current:start -->
 <section class="box accent" id="voice-studio-current">
-  <h4>2026-09-06: Voice Studio Preview 0.2 — live applications and source folders</h4>
-  <p>The operator's feedback changed the main workflow: stronger contrast and larger
-  controls, clearer reports, and browsing the real running website. Angular projects
-  now connect their original development server and associate routes with content
-  modules and component context. Markdown projects use folder navigation.</p>
-  <p>Open <a href="http://127.0.0.1:5188">Voice Studio</a>. The expanded
+  <h4>2026-09-07: Voice Studio Preview 0.3 — source fixes, rule wiki and project checks</h4>
+  <p>Voice Studio connects the real running website or a Markdown folder to its
+  original source. Feedback can now become a saved task with an explicit Runner
+  start, a durable outcome and a combined source proposal. The explanatory wiki
+  and four local rules share one catalogue. This section records implemented
+  behaviour separately from candidate language tooling and model research.</p>
+  <p>Open <a href="http://127.0.0.1:5188/?project=project-f80c52d87170">Voice Studio on the real Agent Studio project</a>. The expanded
   <a href="http://127.0.0.1:5189/index.html">Quality Studio example website</a>
   runs on its own local origin with eleven HTML pages, original styles/scripts,
   native navigation, FAQ, contact-form behaviour, a saved checklist and an imprint
   for the local example. No fictional public business identity is claimed.</p>
   <p>The real <a href="http://127.0.0.1:4184/?voice-studio=1">Agent Studio Angular
   website</a> is also onboarded: 27 route mappings, original TypeScript content
-  modules and explicit shared-component context. Its copy is unchanged by onboarding.
+  modules and explicit shared-component context. Onboarding originally preserved its copy. A subsequent reviewed revision changes 26 content modules and the shared interface, as recorded below.
   Studio never treats a copied render as the editable Angular source.</p>
 </section>
 
@@ -29,8 +30,8 @@ an explicitly configured local project origin, exact sender-window checks and
 versioned page/review messages. Studio bearer credentials never cross into the site.</p>
 <p><code>voice.config.json</code> declares <code>liveUrl</code>, included
 <code>sourceFiles</code>, route-to-file mappings and <code>sourceContexts</code>.
-The Agent Studio pilot reads 30 TypeScript content files; a read-only adapter check
-found 1,770 prose units. Imports, code, technical strings and interpolated templates
+The Agent Studio pilot reads 30 TypeScript content files. A Preview 0.2 read-only
+adapter check found 1,770 prose units; that is retained baseline evidence. Imports, code, technical strings and interpolated templates
 are excluded. Component context is explicit and bounded; this is not a complete
 automatically inferred Angular dependency graph.</p>
 
@@ -41,10 +42,89 @@ findings → prepare a replacement → review the full source diff → explicitl
 source inventory and declare exclusions. Feedback, proposals and run history persist
 in project metadata; stale versions cannot silently overwrite newer source.</p>
 <p>The TypeScript adapter parses an AST without executing website code and preserves
-literal delimiters, escaping and Unicode. A source proposal remains one bounded
-file span. Syntax validation does not replace the website's Angular build/typecheck.
+literal delimiters, escaping and Unicode. A task proposal can combine 1–50
+non-overlapping supported text edits in one original file. Each quote and source
+mapping is validated; unsafe or overlapping edits reject the set. Syntax validation
+does not replace the website's Angular build/typecheck.
 Multi-file component changes remain a broader implementation task requiring their
 own affected-file plan and verification.</p>
+
+<h3>Saved tasks have explicit starts and outcomes</h3>
+<p>A task stores its instruction, selected feedback, source version, feedback
+revision and configured component-context fingerprint. Saving it does not start
+a model. An explicit, idempotent start uses the Coding-Agent-Runner. Source and
+context are checked again after the availability probe and before proposal
+creation or apply. The durable run claim prevents a retry from launching twice.</p>
+<p>A validated combined proposal makes the task <code>ready</code>; a separate
+action applies the full reviewed diff. Task output declares
+<code>changes</code>, <code>already_satisfied</code>,
+<code>needs_information</code> or <code>unsupported</code>, with a concrete reason.
+Only <code>already_satisfied</code> without changes or open findings closes a task
+as retained text. Missing facts or an unsupported fix remain
+<code>needs_review</code>. A separate manual resolution needs a reason. Successful
+CLI exit alone is not evidence that the requested improvement was completed.</p>
+<p>Task metadata under <code>.voice-lint/tasks</code> links the instruction, run
+and proposal. Failed, cancelled, interrupted and stale tasks remain visible and
+do not restart automatically. Applying uses the existing source backup and
+transaction recovery; source tasks cannot bypass their owning revision checks.</p>
+
+<h3>Explainable rules and local language-tool candidates</h3>
+<p><code>knowledge/rules.json</code> supplies the four local rules and the wiki.
+Each rule explains its trigger, context questions, acceptable counterexamples,
+next step and limitations. A wordlist hit such as “powerful” or “leistungsstark”
+is a review prompt, not proof of a bad sentence. Qualified claims, personal
+positioning and dated evidence remain meaningful in their context.</p>
+<p>LanguageTool, Vale, CSpell, Hunspell and textlint are evaluated integration
+candidates, <b>not installed Voice analyzers</b>. Grammar, spelling and editorial
+style need different mechanisms. Engine licenses are separated from dictionaries,
+models and rule packages. <code>docs/language-tooling.md</code> records the
+primary-source research; <code>THIRD_PARTY_NOTICES.md</code> and
+<code>docs/licenses/npm-inventory.json</code> record actual dependency metadata.
+The inventory has 603 resolved npm entries, including optional/platform packages;
+it is neither a browser-module count nor a complete file-level license audit.
+This research assigns no new license to first-party Voice code.</p>
+
+<p>Read the <a href="http://127.0.0.1:5188/?wiki=language-tools">language-tools wiki</a>
+and <a href="http://127.0.0.1:5188/?wiki=licenses">license wiki</a> in Voice Studio
+for the planned adapters, source-mapping requirements and separate artifact records.</p>
+<table id="voice-language-tool-licenses">
+  <caption>Evaluated candidates &mdash; none of these engines is integrated into Voice yet</caption>
+  <thead><tr><th>Engine</th><th>Purpose</th><th>Declared core license</th><th>Official sources</th></tr></thead>
+  <tbody>
+    <tr><td>LanguageTool, local core</td><td>Grammar and spelling, including German and English. The documented local basic server excludes cloud AI rules.</td><td>LGPL-2.1-or-later; dependencies and resources can have different licenses.</td><td><a href="https://github.com/languagetool-org/languagetool/blob/master/README.md">Project and core license</a>; <a href="https://dev.languagetool.org/http-server">local server</a>; <a href="https://github.com/languagetool-org/languagetool/blob/master/languagetool-standalone/COPYING.txt">license and resource warning</a></td></tr>
+    <tr><td>Vale</td><td>Editorial style and terminology with markup-aware, language-specific rules.</td><td>MIT for the core; styles and rule packages require separate checks.</td><td><a href="https://github.com/vale-cli/vale">Project</a>; <a href="https://github.com/vale-cli/vale/blob/master/LICENSE">MIT license</a></td></tr>
+    <tr><td>CSpell / cspell-lib</td><td>Spelling in Node.js/TypeScript workflows; language support depends on the selected dictionaries.</td><td>MIT for the core; dictionary licenses are separate.</td><td><a href="https://github.com/streetsidesoftware/cspell">Project and JavaScript library</a>; <a href="https://github.com/streetsidesoftware/cspell/blob/main/LICENSE">MIT license</a></td></tr>
+    <tr><td>textlint</td><td>Pluggable JavaScript text checks. Markdown and plain text are built in; no rules are included by default.</td><td>MIT for the core; rules and plugins require separate checks.</td><td><a href="https://github.com/textlint/textlint">Project, defaults and license</a></td></tr>
+    <tr><td>Hunspell</td><td>Spelling and word forms using language-specific dictionary and affix data.</td><td>license.hunspell offers MPL 1.1, alternatively GPL 2 or later, or LGPL 2.1 or later. Other included components are separate.</td><td><a href="https://github.com/hunspell/hunspell">Project</a>; <a href="https://github.com/hunspell/hunspell/blob/master/license.hunspell">exact license choices</a></td></tr>
+  </tbody>
+</table>
+<p><b>Dictionary data is a separate license decision.</b>
+<a href="https://github.com/wooorm/dictionaries/blob/main/dictionaries/de/package.json">dictionary-de 3.0.0</a>
+declares <code>(GPL-2.0 OR GPL-3.0)</code>; its
+<a href="https://github.com/wooorm/dictionaries/blob/main/dictionaries/de/license">igerman98 license text</a>
+permits GPL version 2 or 3, not an unrestricted later-version choice.
+<a href="https://github.com/wooorm/dictionaries/blob/main/dictionaries/en/package.json">dictionary-en 4.0.0</a>
+declares <code>(MIT AND BSD)</code>. Its
+<a href="https://github.com/wooorm/dictionaries/blob/main/dictionaries/en/license">original license and copyright notices</a>
+cover the underlying wordlists and affix resources and must be retained; the abbreviated
+BSD label is not silently converted to one particular SPDX variant. Neither dictionary
+has been installed by this work. These examples do not license every DE/EN dictionary
+or a CSpell dictionary package.</p>
+
+
+<h3>Whole-site editorial review</h3>
+<p>The real Agent Studio website has been read across <b>27 of 27 routes and
+30 of 30 content files</b>. The review records <b>36 exact-quote findings</b>:
+6 documented contradictions, 6 product-release alignment questions, 2 requests
+for evidence and 22 editorial suggestions. The highest-priority correction is a
+provider-policy news item whose linked primary source now suspends the announced
+change. The Angular quality plan also describes completed local work as future
+work. Setup and host claims need the intended published release as their basis.</p>
+<p><code>docs/reviews/agent-studio-website-2026-09-06.md</code> and its JSON companion
+retain all route/file coverage, evidence, bounded suggestions, file hashes and
+TypeScript literal anchors. The editorial audit did not change the website; no
+Voice Studio Runner call was started for it. Import/fix requires current-source validation; the local
+Dev checkout does not independently establish public release availability.</p>
 
 <h3>Semantic review uses the Coding-Agent-Runner</h3>
 <p><b>The tool boundary is implemented through <code>CodingAgentRunner</code> 0.7.0.</b>
@@ -88,16 +168,25 @@ complexity scores to force a preferred model.</p>
 <h3>The dossier's own introduction is a review case</h3>
 <p>The title “Voice Lint concept revision” and the paragraph beginning “Research and
 analysis behind a sober public voice…” produce <b>zero local-rule findings</b> in
-the current engine. That is not an editorial pass. The text foregrounds internal
+the fixed-rule engine. That is not an editorial pass. The text foregrounds internal
 concepts, metrics and enforcement mechanisms before explaining what a reader can do.</p>
 <p>A user-facing alternative is <b>“Texte auf der Website prüfen und verbessern”</b>:
 “Voice Studio öffnet deine laufende Website. Du markierst Textstellen, speicherst
 Feedback und prüfst vorgeschlagene Änderungen, bevor sie in den Quelltext übernommen
 werden.” This is a proposed editorial rewrite, not a measured model result.</p>
 
+<h3>Current Preview 0.3 verification</h3>
+<p id="voice-v03-current-verification">Angular and .NET builds pass. Current regressions: 22 library tests, 91 backend assertions, 40 source-task checks, 31 fake-Runner checks, 44 project-check assertions, 17 asynchronous UI-state checks, 32 task-UI checks and 23 check-UI checks. Nine task/wiki views at 360, 398 and 1440 pixels had no overflow; measured normal text is at least 13px, with task contrast at least 5.86:1 and wiki contrast at least 6.04:1.</p>
+<p>The 36 findings were imported as durable feedback and 21 source tasks, with an idempotent repeat. One real homepage task used the explicit Codex route (gpt-5.6-sol, medium), returned six validated edits in about 67 seconds, and left the source unchanged until the separate reviewed UI apply. The six edits were then applied and confirmed on the actual live Angular page. This is one workflow pilot, not a model benchmark.</p>
+<p>The broader source revision changes 26 content modules, shared navigation/rendering, hero/footer responsiveness, mobile gallery controls and six social-card pairs. All 27 routes passed desktop/mobile inspection (54 route/viewport checks), with internal links/fragments, native navigation and a 1200px iframe. A targeted mobile journey verified the gallery fix. App sources and assets match the browser evidence; a later prerender-validator change is covered by the project check.</p>
+<h3>Project checks close the source-edit loop</h3>
+<p>The visible “Projekt prüfen” action runs the private host-configured <code>npm run check</code>. The real website completed linting, content validation, static Angular build, prerender checks and sitemap generation with exit 0. Run <code>493caeb049394ba4bfb751d98b2789d2</code> binds 172 configured inputs and the host configuration. Logs, exit status and history persist; cancellation is explicit. A result becomes stale after relevant source/configuration changes, and an unavailable current fingerprint is never displayed as a confirmed pass.</p>
+<p>A separate UI/Node fixture verified success, intentional failure, active cancellation, logs, persistence and a stale result after a source change. It had no browser errors and made no model calls.</p>
+<p>This process executes trusted project code with host permissions. The before/after fingerprints are optimistic guards, not an immutable snapshot or a sandbox. No LLM is needed for project checks. Read the <a href="http://127.0.0.1:5188/?wiki=project-checks">project-checks wiki</a>.</p>
+<p>The homepage task remains applied. Twenty other original tasks are manually completed with recorded editorial reasons; three queued follow-ups retain public release/setup, host capability and pricing-adapter questions. Their models were not started. Original feedback is preserved; removing an unsupported claim is not evidence that it was true. The detailed pilot and images are in <code>docs/reviews/agent-studio-pilot-2026-09-07.md</code>.</p>
 <h3>Verification and remaining boundaries</h3>
-<p id="voice-v02-verification">Verified on 2026-09-06: the Angular frontend and
-.NET backend build successfully; 22 library tests, 81 backend assertions,
+<p id="voice-v03-verification"><b>Previously recorded Preview 0.2 verification
+baseline, 2026-09-06:</b> the Angular frontend and .NET backend built successfully; 22 library tests, 81 backend assertions,
 30 fake-Runner checks and 12 asynchronous UI-state checks pass. Integrated Chrome
 tests cover native website scripts/navigation/history, actual Angular SPA routing
 and source/component mapping, Markdown folders, durable feedback, reviewed source
@@ -106,7 +195,10 @@ rejection, Unicode, idempotency and stale-version rejection. Sixteen responsive
 screens at 1440, 736 and 360 pixels have no document overflow; measured normal
 Studio text meets 4.5:1 contrast. No real model was invoked. The real Angular
 project's 30 files load in about 3.3 seconds cold and 0.8 seconds warm on the local
-test machine; these are local observations, not a service guarantee.</p>
+test machine; these are local observations, not a service guarantee. These
+figures are retained baseline evidence, not a claimed run of the new Preview 0.3
+task and wiki checks. Record the final task/UI verification separately after the
+current implementation is built and exercised.</p>
 <p>Live review is limited to configured local development servers. Sites that block
 iframe embedding need a development frame policy or ordinary browsing in their own
 tab. Ambiguous/dynamic text stays unassigned. Markdown remains a supported subset.
@@ -115,6 +207,7 @@ the core's proposed code-point coordinates. Claims remain advisory and no numeri
 voice score is shown.</p>
 <p>Implementation and guides: <code>C:/Projects/agent-taskboard-devspace/voice-studio</code>,
 <code>docs/workflow.md</code>, <code>docs/runner-integration.md</code> and
-<code>docs/model-strategy.md</code>. Earlier dossier sections preserve historical
+<code>docs/model-strategy.md</code>, <code>docs/language-tooling.md</code> and
+<code>docs/reviews/agent-studio-website-2026-09-06.md</code>. Earlier dossier sections preserve historical
 research; this section is the current implementation record.</p>
 <!-- voice-studio:current:end -->
