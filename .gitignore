@@ -21,3 +21,13 @@ _*
 # personal Claude Code settings & runtime state
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
+
+# one-off recovery/operator scripts dropped at the repo root by agent sessions
+/.agent-studio-*
+
+# test/verification residue (trx, logs, checkout zips) from operator gates
+/agent-studio-verification/
+
+# handoffs that carry incident details or secret fingerprints - never in a public repo
+/artifacts/*secret*
+/artifacts/*incident*
