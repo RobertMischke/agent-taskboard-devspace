@@ -1,0 +1,20 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": null,
+  "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+  "liveDossier": true,
+  "key": "VL-W1",
+  "lifecycleState": "review-requested",
+  "status": "decision-pending",
+  "studio": {
+    "status": "ok",
+    "service": "voice-studio",
+    "version": "0.3.0"
+  },
+  "published": false,
+  "dossierWidths": [
+    1440,
+    390
+  ],
+  "scope": "Historical local dossier handoff and preview state. published=false was the recorded state; this report is not a current service or publication check."
+}

@@ -5,13 +5,21 @@ export const CATEGORY_COLORS: Readonly<Record<string, string>> = Object.freeze({
   structure: '#285eb6', claims: '#bd6216', wording: '#8553a6', meta: '#a18720'
 });
 
+/** Supplied review data and callbacks. The host owns analysis, persistence and source edits. */
 export interface VoiceReviewOptions {
+  /** Existing DOM root containing data-voice-unit elements; mount after its document has loaded. */
   root: HTMLElement;
+  /** Source-adapter units whose text exactly matches eligible rendered DOM text. */
   units: readonly TextUnit[];
+  /** Existing local-rule, AI or human findings. Mounting never starts an analyzer or model. */
   findings: readonly Finding[];
+  /** Existing feedback. Persist new feedback through the host/backend, not this overlay. */
   feedback: readonly Feedback[];
+  /** Native selection callback. start/end are half-open UTF-16 offsets within one unit. */
   onSelect?: (selection: SelectionTarget) => void;
+  /** A supplied finding was selected; the host provides its accessible review panel. */
   onFindingSelect?: (finding: Finding) => void;
+  /** A supplied feedback mark was selected. */
   onFeedbackSelect?: (feedback: Feedback) => void;
 }
 export type VoiceReviewUpdate = Partial<Omit<VoiceReviewOptions, 'root'>>;
@@ -22,10 +30,15 @@ export interface VoiceReviewDiagnostics {
   unmappedFindingIds: string[];
   unmappedFeedbackIds: string[];
 }
+/** Owns one visual overlay and its DOM listeners. Keep it for the lifetime of the rendered view. */
 export interface VoiceReviewController {
+  /** Replace supplied data or callbacks and redraw; changing the root requires a new mount. */
   update(options: VoiceReviewUpdate): void;
+  /** Highlight/scroll to an existing finding, or clear the selection with null. */
   selectFinding(id: string | null): void;
+  /** Current anchor mapping coverage; this is not a content quality score. */
   getDiagnostics(): VoiceReviewDiagnostics;
+  /** Remove overlays, observers and listeners. Safe to call again during host teardown. */
   dispose(): void;
 }
 type Box = { left: number; top: number; right: number; bottom: number; width: number; height: number };

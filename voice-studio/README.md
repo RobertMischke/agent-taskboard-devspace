@@ -1,11 +1,15 @@
 # Voice Studio
 
-Preview 0.3: browse a **real local website** or a **Markdown folder**, mark text,
-save feedback, and turn it into a durable source task. Run a semantic review or
-explicitly start the task through the Coding-Agent-Runner, then inspect the full
-source diff before changing the original file. An explanatory rule wiki shares
-the local checker’s catalogue. Angular frontend, .NET 10 backend
-and the separately reusable JavaScript library `@voice/review`.
+Voice Studio is the local review UI; `@voice/review` is its separately reusable,
+framework-independent typed Library. Preview 0.3 opens a real local website or
+supported source folder, preserves review decisions and prepares guarded source
+changes. Register a Git checkout or an ordinary folder: basic file review does
+not require Git.
+
+The Library supplies annotations, native selection and an explicit live-page
+bridge. It renders host-supplied findings; it does not run an analyzer or call a
+model. The broader Voice Lint analyzer/CLI/CI layer remains planned. Studio uses
+Angular, a .NET 10 backend and shared UTF-16 transport contracts.
 
 ## Start
 
@@ -22,18 +26,64 @@ The launcher installs missing dependencies, builds the three parts and starts:
 - **Studio:** http://127.0.0.1:5188 — enter the terminal's pairing code.
 - **Real example website:** http://127.0.0.1:5189/index.html — also browsable independently.
 
+If the startup code has scrolled out of the console, run `npm run pairing-code`
+in another terminal in this workspace. It prints the current local pairing code,
+never the bearer token.
+
 Stop with Ctrl+C. If an older background instance remains, stop the exact PID
 printed by that instance before restarting. A second instance cannot rotate the
 active session's credentials. Credentials live in the current user's local
 application-data directory; `.voice-studio/session-location.json` contains only
-their path. The browser keeps its token in memory and requires pairing after reload.
+their path. The browser keeps its API token in memory. Pairing defaults to **Remember this browser for 7 days**: a private HttpOnly cookie resumes access after reload, reopening the browser or restarting the backend, on the same local origin. **Log out** revokes that browser’s access. See [browser sessions](docs/browser-session.md).
 
 For frontend development, start the backend and use `npm start -w @voice/studio`
 on port 4188. `npm run build` builds everything explicitly.
 
+## Review choices and language
+
+English is the default, with a saved German language option. Full, Compact and
+Website focus navigation adapt the workspace to the available screen. Select a
+passage to **Keep as written**, inspect an existing suggestion, or explicitly
+generate one to three alternatives through a configured model route. Own feedback
+and replacement text are optional. Choosing a suggestion prepares a source diff;
+applying it remains separate. The source context shows file/version and optional
+Git branch/commit; historical task edits are labeled as saved task evidence.
+
+See [the control and provenance guide](docs/usability.md) for decisions, retries,
+source changes and the embedded-browser diagnosis.
+
+## Public website and technical documentation
+
+Run `npm run website:preview` and open
+[the local Voice website](http://127.0.0.1:5187/voice/).
+The homepage gives Studio and the typed Library equal entry points, with an
+actual local Studio screenshot and a complete typed mount/dispose example.
+It explains both Git repositories and ordinary source folders.
+
+Five product pages support English and German. Sixteen technical guides are
+rendered as HTML from an explicit source catalogue, with code examples,
+navigation, section links and optional source downloads. Guide bodies remain
+English; the surrounding controls support EN/DE. Start with:
+
+- [Technical docs](http://127.0.0.1:5187/voice/docs/)
+- [Library types and IntelliSense](http://127.0.0.1:5187/voice/guides/library-types/)
+- [Seven-day browser sessions](http://127.0.0.1:5187/voice/guides/session/)
+- [Supported commands](http://127.0.0.1:5187/voice/guides/commands/)
+- [AI integration and the AGT plan](http://127.0.0.1:5187/voice/guides/agent-integration/)
+
+The [website and deployment guide](website/README.md) describes the allowlisted
+static output for the ecosystem's `/voice/` path. It has not been published.
+The local Studio application starts independently on port 5188.
+
+The [holistic review design](docs/holistic-review.md) describes goal-based page
+review and project-wide SEO, consistency and visual tasks with Git-pinned
+context, results and decisions. [Agent integration](docs/agent-integration.md)
+separates today's host-driven use from the proposed AGT pipeline step. The
+broader evaluator and AGT adapter are documented plans, not implemented features.
+
 ## Browse an Angular application
 
-Use **Projekte und Dateien** to register the actual source folder. Enter the
+Use **Projects and files** to register the actual source folder. Enter the
 application's existing local development URL in the Studio browser. It loads
 the site's own styles, scripts and routes. The example site includes the review
 bridge already; other applications enable it in developer mode.
@@ -66,9 +116,9 @@ code; this is a limited subset rather than full CommonMark.
 ## Review and fix
 
 1. Browse the page or file, then select a mapped passage. The review panel opens.
-2. Save feedback. Dotted underlines distinguish human notes from supplied findings.
+2. Keep the passage as written or inspect an existing suggestion. Own feedback is optional.
 3. Inspect a local rule or explicitly start a semantic review for the whole file.
-4. Write a replacement, or save a source task with its instruction and selected feedback.
+4. Explicitly generate alternatives, write an optional replacement, or save a source task with its instruction and selected feedback.
 5. Explicitly start the saved task. Its status and Runner history remain available.
 6. Inspect the complete source diff and explicitly apply it.
 7. Explicitly start the configured local project check and inspect its status, logs and exit code.
@@ -112,7 +162,7 @@ LanguageTool, Vale, CSpell, Hunspell and textlint are **evaluated candidates**, 
 installed Voice analyzers. Engine, dictionary, model and rule-package licenses
 remain separate. See [language tooling](docs/language-tooling.md),
 [third-party notices](THIRD_PARTY_NOTICES.md) and the
-[603-entry resolved npm metadata inventory](docs/licenses/npm-inventory.json).
+[604-entry resolved npm metadata inventory](docs/licenses/npm-inventory.json).
 This inventory includes optional packages and is not a browser-shipping count or
 a complete file-level license audit.
 
@@ -173,6 +223,20 @@ persistence callbacks. See [the full library guide](packages/review/README.md),
 [the bridge protocol](packages/review/LIVE-BRIDGE.md) and
 [the plain HTML example](http://127.0.0.1:5188/examples/library-embed/index.html).
 
+The package exports public types including `SourceSpan`, `TextUnit`,
+`Finding` and `VoiceReviewController`, with JSDoc for editor help.
+TypeScript and JavaScript with `// @ts-check` infer callback arguments and
+controller methods. A type-only reference also describes the classic browser
+global. See [typed integration](docs/library-types.md) and the shipped
+[TS](packages/review/examples/typescript.ts),
+[JS](packages/review/examples/javascript.js) and
+[standalone](packages/review/examples/standalone.js) examples.
+
+`npm run test:library-types` verifies isolated consumers using only
+distributable files. NodeNext and Bundler compile positive and expected-error
+fixtures; the actual TypeScript language service supplies checked completions,
+signatures and JSDoc hover text. This does not automate the VS Code interface.
+
 Live review is restricted to the explicitly configured loopback development
 origin. Studio tokens never cross into the page. Browser frame restrictions still
 apply: configure the local app to allow its development Studio parent, or browse
@@ -187,6 +251,9 @@ form. It contains no invented business identity or public service guarantee.
 
 ```sh
 npm run test:library
+npm run test:library-types
+npm run test:session
+npm run test:session-ui
 npm run test:backend
 npm run test:runner
 dotnet run --project backend/VoiceStudio.TaskTests
@@ -194,6 +261,7 @@ npm run test:checks
 npm run test:ui-state
 # Start Studio and the onboarded Agent Studio dev server, then:
 npm run test:api
+npm run test:browser-session
 npm run test:e2e
 node scripts/verify-running.mjs
 ```
@@ -207,7 +275,15 @@ test runtime data are ignored. `node scripts/cleanup-verification.mjs` unregiste
 the separate API fixture while retaining its evidence.
 
 Current verification evidence is recorded in the [Voice Lint dossier](http://localhost:4011/#/projects/voice-lint/workbenches/voice-concept-revision).
-`scripts/update-dossier.mjs` maintains its current section in `C:/Projects/voice-lint`.
+The [dossier integration](docs/integrations/voice-lint/README.md) maintains its marked section through explicit, configurable synchronization commands.
+
+## Maintained files and reusable tools
+
+See [file ownership and evidence retention](docs/maintaining.md), the
+[command catalogue](scripts/README.md), and the curated
+[12 September verification record](docs/verification/2026-09-12/README.md).
+Reusable code belongs to the product or supported scripts; dated reports are
+evidence, and one-off maintenance patches remain in an ignored local archive.
 
 | Folder | Role |
 |---|---|

@@ -1,0 +1,11 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": null,
+  "captureTimeBasis": "PNG has no embedded capture timestamp used here; source file modification time is recorded separately in the manifest.",
+  "evidenceKind": "screenshot-only",
+  "screenshot": "../screenshots/selection-keep-persisted.png",
+  "observation": "English selection-review UI shows Saved: keep as written for the powerful fixture passage, a saved reason, optional feedback and wording inputs, and generation unavailable without a configured model route.",
+  "producingScript": "scripts/verify-selection-workflow.mjs",
+  "stage": "persisted decision after reload",
+  "scope": "The producing script takes this screenshot after persistence assertions. No independent full-run JSON or console log is retained here, so this record does not assert completion of its later stale-decision or source-apply stages. No new model call or workflow run was made during curation."
+}

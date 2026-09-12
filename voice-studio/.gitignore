@@ -9,3 +9,5 @@ examples/**/.voice-lint/
 frontend/.angular/
 *.log
 .voice-runtime/
+# Local maintenance history and private investigation residue.
+.local/

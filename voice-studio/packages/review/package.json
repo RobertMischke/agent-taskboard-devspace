@@ -11,16 +11,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./standalone": "./dist/voice-review.js"
+    "./standalone": {
+      "types": "./dist/standalone.d.ts",
+      "default": "./dist/voice-review.js"
+    }
   },
   "files": [
     "dist",
     "README.md",
-    "LIVE-BRIDGE.md"
+    "LIVE-BRIDGE.md",
+    "examples"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && node build.mjs",
-    "test": "npm run build && node --test test/*.test.mjs"
+    "test": "npm run build && node --test test/*.test.mjs",
+    "test:types": "npm run build && node --test test/types.test.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",

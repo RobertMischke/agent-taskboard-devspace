@@ -1,8 +1,10 @@
 # Third-party dependencies and license records
 
-Checked 2026-09-06. This record distinguishes actual dependencies from proposed
-language tooling. It does not assign a license to first-party Voice Studio or
-the @voice workspace packages.
+npm metadata refreshed 2026-09-12T10:45:12.969Z. This record distinguishes actual
+dependencies from proposed language tooling. The NuGet metadata and repository
+references below retain their original check date of 2026-09-06; this npm refresh
+does not revalidate them. This record does not assign a license to first-party
+Voice Studio or the @voice workspace packages.
 
 ## Actual dependency metadata
 
@@ -17,6 +19,9 @@ the @voice workspace packages.
 | esbuild | 0.25.12, 0.28.1, 0.28.2 | MIT | Resolved/installed manifests; build dependency |
 | jsdom | 26.1.0 | MIT | Installed manifest; library tests |
 | Playwright test | 1.63.0 | Apache-2.0 | Installed manifest; development browser tests |
+| Marked | 18.0.12 | MIT | Website build-time Markdown parser; installed marked/package.json and package-lock.json |
+| Ajv | 8.18.0 | MIT | Development schema/example validation; installed ajv/package.json and package-lock.json |
+| Ajv-formats | 3.0.1 | MIT | Development schema format validation; installed ajv-formats/package.json and package-lock.json |
 | CodingAgentRunner | 0.7.0 | Apache-2.0 | Installed NuGet .nuspec license expression; [license](https://licenses.nuget.org/Apache-2.0), [package](https://www.nuget.org/packages/CodingAgentRunner/0.7.0) |
 | Microsoft.Extensions.Logging.Abstractions | 9.0.0 | MIT | Installed NuGet metadata; [license](https://licenses.nuget.org/MIT) |
 | Microsoft.Extensions.DependencyInjection.Abstractions | 9.0.0 | MIT | Installed NuGet metadata; transitive dependency of Logging.Abstractions |
@@ -31,7 +36,7 @@ The CLI programs invoked through Runner are installed separately and are not
 redistributed by Voice Studio. Their licenses, account terms and service terms
 must be considered independently.
 
-[npm-inventory.json](docs/licenses/npm-inventory.json) records all 603 resolved
+[npm-inventory.json](docs/licenses/npm-inventory.json) records all 604 resolved
 npm dependency entries with version, declared license and whether installed
 metadata was read. The count includes optional/platform packages and is not a
 count of shipped browser modules. Package metadata alone is not a full review of

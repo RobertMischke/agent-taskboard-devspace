@@ -7,7 +7,7 @@ public record Finding(string Id, string RuleId, string Category, string Severity
 public record Feedback(string Id, string UnitId, string Quote, string Prefix, string Suffix, int Start, int End, string Comment, string Category, string Status, string SourceVersion, string CreatedAt, string UpdatedAt);
 public record DocumentSummary(string Id, string Path, string Title, string Format, string Language, string Version, int WordCount, int FindingCount, int OpenFeedbackCount);
 public record Coverage(int CheckedUnits, int TotalUnits, int ExcludedRegions, string[] Notes);
-public record DocumentDetail(string Id, string Path, string Title, string Format, string Language, string Version, int WordCount, int FindingCount, int OpenFeedbackCount, string Source, string RenderedHtml, TextUnit[] Units, Finding[] Findings, Feedback[] Feedback, int ReviewRevision, Coverage Coverage);
+public record DocumentDetail(string Id, string Path, string Title, string Format, string Language, string Version, int WordCount, int FindingCount, int OpenFeedbackCount, string Source, string RenderedHtml, TextUnit[] Units, Finding[] Findings, Feedback[] Feedback, int ReviewRevision, Coverage Coverage, SelectionDecision[]? Decisions = null);
 public record ProjectReport(string ProjectId, DocumentSummary[] Documents, int TotalWords, int FindingCount, int OpenFeedbackCount, Dictionary<string, int> Categories, Dictionary<string, int> Rules);
 public record FeedbackInput(string UnitId, string Quote, int Start, int End, string Comment, string Category, string ExpectedVersion, int ExpectedReviewRevision, string RequestId);
 public record FeedbackStatusInput(string Status, int ExpectedReviewRevision);
@@ -17,7 +17,7 @@ public record ApplyInput(string ExpectedVersion);
 public record ImprovementInput(string[] FeedbackIds, string Instruction, string ExpectedVersion, string RequestId);
 public record ImprovementRequest(string Id, string ProjectId, string DocumentId, string[] FeedbackIds, string Instruction, string ExpectedVersion, string Status, string CreatedAt);
 public record RegisterInput(string Path, string? Name);
-public record PairInput(string Code);
+public record PairInput(string Code, bool Remember = false);
 public record BrowserInput(string Url);
 public record RegisteredProject(string Id, string Name, string Root, string? LiveUrl = null);
 public record SourceDocument(string Id, string RelativePath, string FullPath);
@@ -29,6 +29,7 @@ public class ReviewFile
     public string SourceVersion { get; set; } = "";
     public string? UnitsFingerprint { get; set; }
     public List<Feedback> Feedback { get; set; } = [];
+    public List<SelectionDecision> Decisions { get; set; } = [];
     public Dictionary<string, string> RequestIds { get; set; } = [];
     public List<Proposal> Proposals { get; set; } = [];
     public List<ImprovementRequest> ImprovementRequests { get; set; } = [];

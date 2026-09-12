@@ -1,7 +1,7 @@
-<section class="source-tasks" aria-label="Aufgaben für die Quelldatei">
+<section class="source-tasks" [attr.aria-label]="'Aufgaben für die Quelldatei' | t">
   <div class="task-section-heading">
     <h3>
-      Aufgaben <span class="count">{{ tasks().length }}</span>
+      {{ 'Aufgaben' | t }} <span class="count">{{ tasks().length }}</span>
     </h3>
     <button
       type="button"
@@ -9,39 +9,39 @@
       [disabled]="isBusy()"
       (click)="newTask()"
     >
-      Neue Aufgabe
+      {{ 'Neue Aufgabe' | t }}
     </button>
   </div>
   <p class="task-source">
-    <strong>Quelle:</strong> <code>{{ document.path }}</code>
+    <strong>{{ 'Quelle:' | t }}</strong> <code>{{ document.path }}</code>
   </p>
   @if (loading()) {
     <p class="small-muted" role="status">
-      Gespeicherte Aufgaben werden geladen …
+      {{ 'Gespeicherte Aufgaben werden geladen …' | t }}
     </p>
   }
   @if (composeOpen()) {
     <form class="task-compose" (ngSubmit)="create()">
-      <label for="source-task-instruction">Was soll sich ändern?</label>
+      <label for="source-task-instruction">{{ 'Was soll sich ändern?' | t }}</label>
       <textarea
         id="source-task-instruction"
         name="sourceTaskInstruction"
         [(ngModel)]="instruction"
         rows="3"
         [disabled]="isBusy()"
-        placeholder="Zum Beispiel: Den Einstieg konkretisieren. Vorhandene Funktionen und Belege beibehalten."
+        [placeholder]="'Zum Beispiel: Den Einstieg konkretisieren. Vorhandene Funktionen und Belege beibehalten.' | t"
       ></textarea>
       <button
         type="submit"
         class="button primary wide"
         [disabled]="isBusy() || conflict() || !instruction.trim()"
       >
-        Aufgabe speichern
+        {{ 'Aufgabe speichern' | t }}
       </button>
       @if (selectableFeedback().length) {
         <details class="task-feedback-picker">
           <summary>
-            Feedback anhängen ({{ attachedFeedbackIds().length }})
+            {{ 'Feedback anhängen ({count})' | t: { count: attachedFeedbackIds().length } }}
           </summary>
           <div class="task-feedback-options">
             @for (feedback of selectableFeedback(); track feedback.id) {
@@ -59,7 +59,7 @@
                   >
                 </label>
                 <details class="task-feedback-full">
-                  <summary>Rückmeldung lesen</summary>
+                  <summary>{{ 'Rückmeldung lesen' | t }}</summary>
                   <blockquote>{{ feedback.quote }}</blockquote>
                   <p>{{ feedback.comment }}</p>
                 </details>
@@ -69,18 +69,16 @@
         </details>
       }
       <p class="small-muted">
-        Die Aufgabe bleibt mit Quelle und Feedback verknüpft. Speichern startet
-        noch keinen Agenten.
+        {{ 'Die Aufgabe bleibt mit Quelle und Feedback verknüpft. Speichern startet noch keinen Agenten.' | t }}
       </p>
     </form>
   }
   @if (error()) {
-    <p class="error-message" role="alert">{{ error() }}</p>
+    <p class="error-message" role="alert">{{ error() | t }}</p>
   }
   @if (conflict()) {
     <p class="task-conflict">
-      Quelle, Feedback oder Aufgabe wurden inzwischen geändert. Lies den
-      aktuellen Stand ein und prüfe den Auftrag erneut.
+      {{ 'Quelle, Feedback oder Aufgabe wurden inzwischen geändert. Lies den aktuellen Stand ein und prüfe den Auftrag erneut.' | t }}
     </p>
     <button
       type="button"
@@ -88,21 +86,21 @@
       [disabled]="loading() || mutating()"
       (click)="refreshSource.emit()"
     >
-      Quelle neu einlesen
+      {{ 'Quelle neu einlesen' | t }}
     </button>
   }
   @if (notice()) {
-    <p class="task-notice" role="status">{{ notice() }}</p>
+    <p class="task-notice" role="status">{{ notice() | t }}</p>
   }
   @if (selectedTask(); as task) {
     <article class="task-detail" [attr.data-status]="task.status">
       <div class="task-section-heading">
-        <h4>{{ label(task) }}</h4>
+        <h4>{{ label(task) | t }}</h4>
         <code class="task-id">{{ task.id.slice(0, 8) }}</code>
       </div>
       @if (task.status === "ready" || task.status === "applied") {
         <details class="task-brief">
-          <summary>Auftrag ansehen</summary>
+          <summary>{{ 'Auftrag ansehen' | t }}</summary>
           <p class="task-instruction">{{ task.instruction }}</p>
         </details>
       } @else {
@@ -111,7 +109,7 @@
       @if (task.feedbackIds.length) {
         <details class="task-attached-feedback">
           <summary>
-            Angehängtes Feedback ({{ task.feedbackIds.length }})
+            {{ 'Angehängtes Feedback ({count})' | t: { count: task.feedbackIds.length } }}
           </summary>
           @for (id of task.feedbackIds; track id) {
             @if (feedbackFor(id); as feedback) {
@@ -119,7 +117,7 @@
               <p>{{ feedback.comment }}</p>
             } @else {
               <p class="small-muted">
-                Frühere Rückmeldung <code>{{ id.slice(0, 8) }}</code>
+                {{ 'Frühere Rückmeldung' | t }} <code>{{ id.slice(0, 8) }}</code>
               </p>
             }
           }
@@ -131,12 +129,11 @@
         task.status !== "completed"
       ) {
         <p class="task-conflict">
-          Die Aufgabe gehört zu einem früheren Quell- oder Feedbackstand.
-          Übernehmen und Starten sind gesperrt.
+          {{ 'Die Aufgabe gehört zu einem früheren Quell- oder Feedbackstand. Übernehmen und Starten sind gesperrt.' | t }}
         </p>
       }
       @if (task.error) {
-        <p class="error-message">{{ task.error }}</p>
+        <p class="error-message">{{ task.error | t }}</p>
       }
       @if (task.status === "queued") {
         @if (runner(); as route) {
@@ -147,18 +144,14 @@
             </p>
           }
           @if (!route.available) {
-            <p class="small-muted">{{ route.message }}</p>
+            <p class="small-muted">{{ route.message | t }}</p>
             <button
               type="button"
               class="button secondary wide"
               [disabled]="runnerLoading()"
               (click)="refreshRunner()"
             >
-              {{
-                runnerLoading()
-                  ? "Runner wird geprüft …"
-                  : "Runner erneut prüfen"
-              }}
+              {{ (runnerLoading() ? "Runner wird geprüft …" : "Runner erneut prüfen") | t }}
             </button>
           }
         }
@@ -168,26 +161,21 @@
           [disabled]="!canStart(task)"
           (click)="start(task)"
         >
-          An Agent-Runner übergeben
+          {{ 'An Agent-Runner übergeben' | t }}
         </button>
         <p class="small-muted">
-          Startet den Coding-Agent über die angezeigte Route. Sein Ergebnis
-          kommt als Quelldiff zur Prüfung zurück.
+          {{ 'Startet den Coding-Agent über die angezeigte Route. Sein Ergebnis kommt als Quelldiff zur Prüfung zurück.' | t }}
         </p>
         @if (hasActiveTask()) {
           <p class="small-muted">
-            Für diese Datei ist bereits eine Aufgabe in Bearbeitung.
+            {{ 'Für diese Datei ist bereits eine Aufgabe in Bearbeitung.' | t }}
           </p>
         }
       }
       @if (task.status === "running" || task.status === "cancelling") {
         <p class="task-progress" role="status">
           <span class="status-dot connected"></span
-          >{{
-            task.status === "running"
-              ? "Der Agent bearbeitet den Auftrag. Der Status wird automatisch aktualisiert."
-              : "Der Runner beendet den Auftrag. Der Status bleibt bis zum Abschluss sichtbar."
-          }}
+          >{{ (task.status === "running" ? "Der Agent bearbeitet den Auftrag. Der Status wird automatisch aktualisiert." : "Der Runner beendet den Auftrag. Der Status bleibt bis zum Abschluss sichtbar.") | t }}
         </p>
         @if (task.status === "running") {
           <button
@@ -196,59 +184,82 @@
             [disabled]="isBusy()"
             (click)="cancel(task)"
           >
-            Bearbeitung abbrechen
+            {{ 'Bearbeitung abbrechen' | t }}
           </button>
         }
       }
       @if (task.proposal; as proposal) {
+        <section class="task-result-provenance" data-testid="task-result-provenance" [attr.aria-label]="'Herkunft des Aufgabenergebnisses' | t">
+          <h5>{{ 'Gespeichertes Aufgabenergebnis' | t }}</h5>
+          <p class="task-source"><strong>{{ 'Datei:' | t }}</strong> <code>{{ document.path }}</code></p>
+          <p class="small-muted">{{ 'Aufgabe erstellt:' | t }} <time [attr.datetime]="task.createdAt">{{ formatDate(task.createdAt) }}</time></p>
+          @if (task.status === 'applied' || proposal.state === 'applied') {
+            <p class="small-muted">{{ 'Diese Änderungen wurden bereits übernommen. Die folgenden Vorher-/Nachher-Texte zeigen das gespeicherte Aufgabenergebnis.' | t }}</p>
+          } @else if (task.sourceVersion !== document.version || proposal.expectedVersion !== document.version) {
+            <p class="task-conflict">{{ 'Dieses Ergebnis bezieht sich auf eine frühere Quellfassung. Die aktuell geöffnete Datei hat eine andere Version.' | t }}</p>
+          } @else {
+            <p class="small-muted">{{ 'Die Ausgangsversion dieses Ergebnisses entspricht der aktuell geöffneten Quelldatei.' | t }}</p>
+          }
+          <p class="small-muted">{{ 'Dies ist der gespeicherte Diff dieser Aufgabe. Er zeigt nicht den aktuellen Git-Diff.' | t }}</p>
+          <details class="task-brief" data-testid="task-result-source-details">
+            <summary>{{ 'Quelle und Versionsdetails' | t }}</summary>
+            <p><strong>{{ 'Aufgabe:' | t }}</strong> <code>{{ task.id }}</code></p>
+            @if (task.runId || proposal.runId) {
+              <p><strong>{{ 'Agent-Lauf:' | t }}</strong> <code>{{ task.runId || proposal.runId }}</code></p>
+            }
+            <p><strong>{{ 'Aufgaben-Quellversion:' | t }}</strong> <code>{{ task.sourceVersion }}</code></p>
+            <p><strong>{{ 'Diff-Ausgangsversion:' | t }}</strong> <code>{{ proposal.expectedVersion }}</code></p>
+            <p><strong>{{ 'Geöffnete Quellversion:' | t }}</strong> <code>{{ document.version }}</code></p>
+            <p><strong>{{ 'Gespeicherter Auftrag:' | t }}</strong></p>
+            <p class="task-instruction">{{ task.instruction }}</p>
+          </details>
+        </section>
         <section
           class="task-edits-review"
-          aria-label="Vorgeschlagene Textänderungen"
+          [attr.aria-label]="'Vorgeschlagene Textänderungen' | t"
         >
           @if (proposal.edits?.length) {
-            <h5>{{ proposal.edits!.length }} Textänderungen</h5>
+            <h5>{{ '{count} Textänderungen' | t: { count: proposal.edits!.length } }}</h5>
             <ol class="task-edit-list">
               @for (edit of proposal.edits ?? []; track $index) {
                 <li>
-                  <h6>Änderung {{ $index + 1 }}</h6>
+                  <h6>{{ 'Änderung {count}' | t: { count: $index + 1 } }}</h6>
                   <div class="task-edit-before">
-                    <span>Ausgangstext</span>
+                    <span>{{ 'Ausgangstext' | t }}</span>
                     <p>{{ edit.quote }}</p>
                   </div>
                   <div class="task-edit-after">
-                    <span>{{
-                      task.status === "applied" ? "Übernommen" : "Vorgeschlagen"
-                    }}</span>
-                    <p>{{ edit.replacement || "Text entfernen" }}</p>
+                    <span>{{ (task.status === "applied" ? "Übernommen" : "Vorgeschlagen") | t }}</span>
+                    <p>{{ edit.replacement || ('Text entfernen' | t) }}</p>
                   </div>
                   <p class="task-edit-reason">
-                    <strong>Grund:</strong> {{ edit.reason }}
+                    <strong>{{ 'Grund:' | t }}</strong> {{ edit.reason }}
                   </p>
                 </li>
               }
             </ol>
           } @else {
-            <h5>Textänderung</h5>
+            <h5>{{ 'Textänderung' | t }}</h5>
             <div class="task-edit-before">
-              <span>Ausgangstext</span>
+              <span>{{ 'Ausgangstext' | t }}</span>
               <p>{{ proposal.before }}</p>
             </div>
             <div class="task-edit-after">
-              <span>Vorgeschlagen</span>
-              <p>{{ proposal.after || "Text entfernen" }}</p>
+              <span>{{ 'Vorgeschlagen' | t }}</span>
+              <p>{{ proposal.after || ('Text entfernen' | t) }}</p>
             </div>
             <p class="task-edit-reason">{{ proposal.reason }}</p>
           }
         </section>
         <details class="task-result-diff">
-          <summary>Vollständigen Quelldiff ansehen</summary>
+          <summary>{{ 'Vollständigen Quelldiff ansehen' | t }}</summary>
           <div class="task-diff before">
-            <h5>Vorher</h5>
+            <h5>{{ 'Vorher' | t }}</h5>
             <pre>{{ proposal.sourceBefore }}</pre>
           </div>
           <div class="task-diff after">
             <h5>
-              {{ task.status === "applied" ? "Übernommen" : "Vorgeschlagen" }}
+              {{ (task.status === "applied" ? "Übernommen" : "Vorgeschlagen") | t }}
             </h5>
             <pre>{{ proposal.sourceAfter }}</pre>
           </div>
@@ -257,11 +268,7 @@
       @if (task.notes?.length) {
         <section class="task-notes">
           <h5>
-            {{
-              task.status === "completed"
-                ? "Entscheidung"
-                : "Hinweise und offene Fragen"
-            }}
+            {{ (task.status === "completed" ? "Entscheidung" : "Hinweise und offene Fragen") | t }}
           </h5>
           <ul>
             @for (note of task.notes ?? []; track $index) {
@@ -277,18 +284,15 @@
           [disabled]="!canApply(task)"
           (click)="apply(task)"
         >
-          Ergebnis in Quelldatei übernehmen
+          {{ 'Ergebnis in Quelldatei übernehmen' | t }}
         </button>
         <p class="small-muted">
-          Schreibt den geprüften Diff in {{ document.path }}. Version und
-          Feedbackstand müssen unverändert sein; Feedback bleibt zur Nachprüfung
-          erhalten.
+          {{ 'Schreibt den geprüften Diff in {path}. Version und Feedbackstand müssen unverändert sein; Feedback bleibt zur Nachprüfung erhalten.' | t: { path: document.path } }}
         </p>
       }
       @if (task.status === "applied") {
         <p class="task-notice">
-          Der Ergebnis-Diff wurde in die Quelldatei übernommen. Aufgabe und
-          Ergebnis bleiben gespeichert.
+          {{ 'Der Ergebnis-Diff wurde in die Quelldatei übernommen. Aufgabe und Ergebnis bleiben gespeichert.' | t }}
         </p>
       }
       @if (
@@ -308,22 +312,17 @@
           [disabled]="isBusy()"
           (click)="prepareTask(task.instruction, task.feedbackIds)"
         >
-          Als neue Aufgabe vorbereiten
+          {{ 'Als neue Aufgabe vorbereiten' | t }}
         </button>
       }
       @if (task.status === "needs_review") {
         <p class="task-conflict">
-          Für diesen Auftrag ist noch Klärung nötig. Lies die offenen Fragen,
-          ergänze den Auftrag oder schließe ihn mit eigener Begründung ab.
+          {{ 'Für diesen Auftrag ist noch Klärung nötig. Lies die offenen Fragen, ergänze den Auftrag oder schließe ihn mit eigener Begründung ab.' | t }}
         </p>
       }
       @if (task.status === "completed") {
         <p class="small-muted">
-          {{
-            task.resolution === "manual"
-              ? "Die Quelldatei bleibt unverändert."
-              : "Kein Änderungsvorschlag. Die Begründung steht unter Entscheidung."
-          }}
+          {{ (task.resolution === "manual" ? "Die Quelldatei bleibt unverändert." : "Kein Änderungsvorschlag. Die Begründung steht unter Entscheidung.") | t }}
         </p>
       }
       @if (
@@ -332,9 +331,9 @@
         task.status !== "applied"
       ) {
         <details class="task-resolution">
-          <summary>Ohne Textänderung abschließen</summary>
+          <summary>{{ 'Ohne Textänderung abschließen' | t }}</summary>
           <form (ngSubmit)="resolve(task)">
-            <label for="task-resolution-note">Begründung</label>
+            <label for="task-resolution-note">{{ 'Begründung' | t }}</label>
             <textarea
               id="task-resolution-note"
               name="taskResolutionNote"
@@ -342,24 +341,22 @@
               rows="3"
               maxlength="4000"
               [disabled]="isBusy()"
-              placeholder="Zum Beispiel: Formulierung geprüft und bewusst beibehalten."
+              [placeholder]="'Zum Beispiel: Formulierung geprüft und bewusst beibehalten.' | t"
             ></textarea>
             <button
               type="submit"
               class="button secondary wide"
               [disabled]="!canResolve(task)"
             >
-              Als bearbeitet markieren
+              {{ 'Als bearbeitet markieren' | t }}
             </button>
           </form>
         </details>
       }
       <details class="task-manual-fallback">
-        <summary>Fallback: manuell weitergeben</summary>
+        <summary>{{ 'Fallback: manuell weitergeben' | t }}</summary>
         <p>
-          Wenn du den Auftrag außerhalb des angebundenen Runners bearbeiten
-          möchtest, kannst du den Prompt selbst weitergeben. Dieser Weg
-          aktualisiert den Aufgabenstatus nicht automatisch.
+          {{ 'Wenn du den Auftrag außerhalb des angebundenen Runners bearbeiten möchtest, kannst du den Prompt selbst weitergeben. Dieser Weg aktualisiert den Aufgabenstatus nicht automatisch.' | t }}
         </p>
         <button
           type="button"
@@ -367,12 +364,11 @@
           [disabled]="isBusy()"
           (click)="showPrompt(task)"
         >
-          Prompt anzeigen
+          {{ 'Prompt anzeigen' | t }}
         </button>
         @if (manualPrompt(); as prompt) {
           <p class="small-muted">
-            Gebundene Quelle {{ prompt.sourceVersion.slice(0, 8) }} ·
-            Feedbackstand {{ prompt.reviewRevision }}
+            {{ 'Gebundene Quelle {version} · Feedbackstand {revision}' | t: { version: prompt.sourceVersion.slice(0, 8), revision: prompt.reviewRevision } }}
           </p>
           <pre class="task-prompt">{{ prompt.prompt }}</pre>
           <button
@@ -380,7 +376,7 @@
             class="button secondary wide"
             (click)="copyPrompt()"
           >
-            Prompt kopieren
+            {{ 'Prompt kopieren' | t }}
           </button>
         }
       </details>
@@ -388,8 +384,8 @@
   }
   @if (tasks().length) {
     <details class="task-history-group">
-      <summary>Gespeicherte Aufgaben ({{ tasks().length }})</summary>
-      <ul class="task-history" aria-label="Gespeicherte Aufgaben">
+      <summary>{{ 'Gespeicherte Aufgaben ({count})' | t: { count: tasks().length } }}</summary>
+      <ul class="task-history" [attr.aria-label]="'Gespeicherte Aufgaben' | t">
         @for (task of tasks(); track task.id) {
           <li>
             <button
@@ -399,13 +395,11 @@
               [disabled]="isBusy()"
               (click)="openTask(task)"
             >
-              <span class="task-status" [attr.data-status]="task.status">{{
-                label(task)
-              }}</span>
+              <span class="task-status" [attr.data-status]="task.status">{{ label(task) | t }}</span>
               <span class="task-instruction-preview">{{
                 task.instruction
               }}</span>
-              <time>{{ task.createdAt | date: "dd.MM.yyyy, HH:mm" }}</time>
+              <time>{{ formatDate(task.createdAt) }}</time>
             </button>
           </li>
         }
@@ -413,20 +407,19 @@
     </details>
   } @else if (!loading() && !composeOpen()) {
     <p class="small-muted">
-      Für diese Quelldatei ist noch keine Aufgabe gespeichert.
+      {{ 'Für diese Quelldatei ist noch keine Aufgabe gespeichert.' | t }}
     </p>
   }
   @if (legacyRequests().length) {
     <details class="task-legacy">
-      <summary>Frühere lokale Aufträge ({{ legacyRequests().length }})</summary>
+      <summary>{{ 'Frühere lokale Aufträge ({count})' | t: { count: legacyRequests().length } }}</summary>
       <p>
-        Diese Aufträge wurden vor der Runner-Anbindung lokal vorgemerkt. Sie
-        wurden nicht ausgeführt und bleiben hier erhalten.
+        {{ 'Diese Aufträge wurden vor der Runner-Anbindung lokal vorgemerkt. Sie wurden nicht ausgeführt und bleiben hier erhalten.' | t }}
       </p>
       @for (request of legacyRequests(); track request.id) {
         <article>
-          <strong>Lokal vorgemerkt</strong
-          ><time>{{ request.createdAt | date: "dd.MM.yyyy, HH:mm" }}</time>
+          <strong>{{ 'Lokal vorgemerkt' | t }}</strong
+          ><time>{{ formatDate(request.createdAt) }}</time>
           <p>{{ request.instruction }}</p>
           <button
             type="button"
@@ -434,7 +427,7 @@
             [disabled]="isBusy()"
             (click)="prepareTask(request.instruction, request.feedbackIds)"
           >
-            Als Aufgabe vorbereiten
+            {{ 'Als Aufgabe vorbereiten' | t }}
           </button>
         </article>
       }

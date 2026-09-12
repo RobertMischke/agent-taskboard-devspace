@@ -1,17 +1,26 @@
 <header class="studio-header">
-  <a class="brand" href="/" aria-label="Voice Studio Startseite"
+  <a class="brand" href="/" [attr.aria-label]="'Voice Studio Startseite' | t"
     ><span class="brand-mark" aria-hidden="true"
       ><i></i><i></i><i></i><i></i><i></i></span
-    ><span>voice<span class="brand-light"> studio</span></span></a
+    ><span>voice<span class="brand-light">  studio</span></span></a
   >
-  <div class="header-purpose">Lokale Textprüfung und Quelltextänderungen</div>
-  <button class="button small header-wiki" type="button" (click)="openWiki()" aria-haspopup="dialog">Regel-Wiki</button>
+  <div class="header-purpose">{{ 'Lokale Textprüfung und Quelltextänderungen' | t }}</div>
+  <button class="button small header-wiki" type="button" (click)="openWiki()" aria-haspopup="dialog">{{ 'Regel-Wiki' | t }}</button>
+<div class="studio-preferences">
+    <label class="language-control"><span>{{ 'Sprache' | t }}</span><select aria-label="Language / Sprache" [ngModel]="i18n.locale()" (ngModelChange)="i18n.setLocale($event)"><option value="en">English</option><option value="de">Deutsch</option></select></label>
+    @if (connected()) { <label class="navigation-control"><span>{{ 'Anzeige' | t }}</span><select [attr.aria-label]="'Navigation' | t" [ngModel]="navigationMode()" (ngModelChange)="setNavigationMode($event)"><option value="full">{{ 'Normal' | t }}</option><option value="compact">{{ 'Kompakt' | t }}</option><option value="focus">{{ 'Website-Fokus' | t }}</option></select></label> }
+    @if (connected()) { <button type="button" class="button small session-logout" (click)="logout()" [disabled]="busy()" [attr.title]="rememberedUntil() ? ('Angemeldet bis {date}' | t:{date:rememberedDate()}) : ('Nur dieser Tab' | t)">{{ 'Abmelden' | t }}</button> }
+  </div>
   <div class="header-status">
     <span class="status-dot" [class.connected]="connected()"></span
-    >{{ connected() ? "Lokale Sitzung" : "Lokal verbinden"
-    }}<span class="version">Preview 0.3</span>
+    >{{ connected() ? ('Lokale Sitzung' | t) : ('Lokal verbinden' | t) }}<span class="version">Preview 0.3</span>
   </div>
 </header>
+@if (focusNavigation()) {
+  <div class="focus-tools"><button type="button" class="button secondary" (click)="toggleNavigation()" [attr.aria-expanded]="navigationOpen()" aria-controls="workspace-navigation">☰ {{ 'Navigation' | t }}</button><button type="button" class="button secondary" (click)="reviewOpen.set(!reviewOpen()); navigationOpen.set(false)" [attr.aria-expanded]="reviewOpen()">{{ (reviewOpen() ? 'Review schließen' : 'Review öffnen') | t }}</button></div>
+  @if (navigationOpen()) { <div class="navigation-backdrop" (click)="closeNavigation()" aria-hidden="true"></div> }
+}
+
 
 @if (wikiArticle(); as article) {
   <voice-knowledge-wiki [articleId]="article" (closed)="closeWiki()" (articleChanged)="openWiki($event)"></voice-knowledge-wiki>
@@ -21,78 +30,84 @@
   <main class="welcome">
     <section class="welcome-intro">
       <div class="eyebrow">VOICE STUDIO</div>
-      <h1>Webseiten und Markdown prüfen</h1>
+      <h1>{{ 'Webseiten und Markdown prüfen' | t }}</h1>
       <p class="welcome-lead">
-        Webseiten und Markdown lesen, Textstellen markieren und Feedback direkt
-        im Projekt behalten. Mit einer Vorschau jeder Änderung am Quelltext.
+
+        {{ 'Webseiten und Markdown lesen, Textstellen markieren und Feedback direkt im Projekt behalten. Mit einer Vorschau jeder Änderung am Quelltext.' | t }}
       </p>
       <div class="specimen">
-        <span class="specimen-label">SO SIEHT REVIEW AUS</span>
+        <span class="specimen-label">{{ 'SO SIEHT REVIEW AUS' | t }}</span>
         <p>
-          Wir
-          <span class="sample-underline wording">revolutionieren</span> deinen
-          Workflow mit
+
+          {{ 'Wir' | t }}
+          <span class="sample-underline wording">{{ 'revolutionieren' | t }}</span>  {{ 'deinen Workflow mit' | t }}
           <span class="sample-underline claims"
-            >garantiert besseren Ergebnissen</span
+            >{{ 'garantiert besseren Ergebnissen' | t }}</span
           >.
         </p>
         <div class="specimen-note">
-          Unterstrichene Textstellen zeigen Befunde und Feedback.
+
+          {{ 'Unterstrichene Textstellen zeigen Befunde und Feedback.' | t }}
         </div>
       </div>
       <div class="welcome-features">
-        <span><b>01</b> Im Kontext lesen</span
-        ><span><b>02</b> Feedback speichern</span
-        ><span><b>03</b> Quelle verbessern</span>
+        <span><b>01</b>  {{ 'Im Kontext lesen' | t }}</span
+        ><span><b>02</b>  {{ 'Feedback speichern' | t }}</span
+        ><span><b>03</b>  {{ 'Quelle verbessern' | t }}</span>
       </div>
     </section>
     <section class="pair-card">
-      <span class="local-badge">● NUR AUF DIESEM RECHNER</span>
-      <h2>Studio verbinden</h2>
+      <span class="local-badge">{{ '● NUR AUF DIESEM RECHNER' | t }}</span>
+      <h2>{{ 'Studio verbinden' | t }}</h2>
       <p>
-        Starte Voice Studio und gib den Verbindungscode aus dem Terminal ein.
-        Die Sitzung bleibt in diesem Browser-Tab.
+
+        {{ 'Gib den Verbindungscode einmal ein. Du kannst diesen Browser auf diesem Gerät sieben Tage lang angemeldet lassen.' | t }}
       </p>
+      @if (resumingSession()) { <p role="status">{{ 'Gespeicherte Anmeldung wird geprüft …' | t }}</p> }
       <form (ngSubmit)="pair()">
-        <label for="pairing-code">Verbindungscode</label>
+        <label for="pairing-code">{{ 'Verbindungscode' | t }}</label>
         <input
           id="pairing-code"
           name="pairingCode"
           [(ngModel)]="pairingCode"
           autocomplete="off"
           spellcheck="false"
-          placeholder="Code aus dem Terminal"
-          [disabled]="busy()"
+          [placeholder]="'Code aus dem Terminal' | t"
+          [disabled]="busy() || resumingSession()"
           autofocus
         />
+        <label class="remember-browser" for="remember-browser"><input id="remember-browser" name="rememberBrowser" type="checkbox" [(ngModel)]="rememberBrowser" [disabled]="busy() || resumingSession()" /> <span>{{ 'Diesen Browser 7 Tage merken' | t }}</span></label>
+        <p class="small-muted">{{ 'Nur auf einem eigenen Gerät aktivieren. Abmelden entfernt den gespeicherten Zugang dieses Browsers.' | t }}</p>
         <button
           class="button primary wide"
           type="submit"
-          [disabled]="busy() || !pairingCode.trim()"
+          [disabled]="busy() || resumingSession() || !pairingCode.trim()"
         >
-          {{ busy() ? "Verbinde …" : "Lokales Studio öffnen" }}
+
+          {{ busy() ? ('Verbinde …' | t) : ('Lokales Studio öffnen' | t) }}
           <span aria-hidden="true">→</span>
         </button>
       </form>
       @if (error()) {
-        <p class="error-message" role="alert">{{ error() }}</p>
+        <p class="error-message" role="alert">{{ (error()) | t }}</p>
       }
       <p class="small-muted pair-note">
-        Angular, HTML und Markdown · Feedback als Metadatei · Regeln ohne Modellaufruf
+
+        {{ 'Angular, HTML und Markdown · Feedback als Metadatei · Regeln ohne Modellaufruf' | t }}
       </p>
     </section>
   </main>
 } @else {
   <div class="studio-layout" [class.sidebar-collapsed]="sidebarCollapsed()">
     @if (!sidebarCollapsed()) {
-      <aside class="project-sidebar" aria-label="Projekte und Dateien">
+      <aside class="project-sidebar" [attr.aria-label]="'Projekte und Dateien' | t">
         <div class="sidebar-heading">
-          <span class="eyebrow">ARBEITSRAUM</span
+          <span class="eyebrow">{{ 'ARBEITSRAUM' | t }}</span
           ><button
             class="icon-button"
             type="button"
-            title="Lokales Projekt öffnen"
-            aria-label="Lokales Projekt öffnen"
+            [attr.title]="'Lokales Projekt öffnen' | t"
+            [attr.aria-label]="'Lokales Projekt öffnen' | t"
             (click)="registrationOpen.set(!registrationOpen())"
           >
             +
@@ -100,12 +115,12 @@
         </div>
         @if (registrationOpen()) {
           <form class="register-form" (ngSubmit)="registerProject()">
-            <label for="project-path">Lokaler Projektordner</label
+            <label for="project-path">{{ 'Lokaler Projektordner' | t }}</label
             ><input
               id="project-path"
               name="projectPath"
               [(ngModel)]="projectPath"
-              placeholder="C:\Projekte\meine-webseite"
+              [placeholder]="'C:\\Projekte\\meine-webseite' | t"
               required
             />
             <label for="project-name"
@@ -114,17 +129,18 @@
               id="project-name"
               name="projectName"
               [(ngModel)]="projectName"
-              placeholder="Meine Webseite"
+              [placeholder]="'Meine Webseite' | t"
             />
             <button
               class="button primary small wide"
               [disabled]="busy() || !projectPath.trim()"
             >
-              Projekt öffnen
+
+              {{ 'Projekt öffnen' | t }}
             </button>
             <p class="small-muted">
-              Durchsucht HTML- und Markdown-Dateien. Dynamische Anwendungen
-              benötigen einen Quelltext-Adapter.
+
+              {{ 'Durchsucht HTML- und Markdown-Dateien. Dynamische Anwendungen benötigen einen Quelltext-Adapter.' | t }}
             </p>
           </form>
         }
@@ -139,10 +155,9 @@
             >
               <span class="folder-icon" aria-hidden="true">◇</span
               ><span
-                >{{ project.name
-                }}<small
+                >{{ project.name }}<small
                   >{{ project.documentCount }}
-                  {{ project.documentCount === 1 ? "Datei" : "Dateien" }}</small
+                  {{ project.documentCount === 1 ? ('Datei' | t) : ('Dateien' | t) }}</small
                 ></span
               ><span class="chevron" aria-hidden="true">›</span>
             </button>
@@ -150,7 +165,7 @@
         </div>
         @if (selectedProject(); as project) {
           <div class="file-section-heading">
-            <span class="eyebrow">DATEIEN</span
+            <span class="eyebrow">{{ 'DATEIEN' | t }}</span
             ><span class="count">{{ documents().length }}</span>
           </div>
           <div class="folder-location">
@@ -161,7 +176,8 @@
                 class="text-button"
                 (click)="parentFolder()"
               >
-                ↑ Übergeordneter Ordner
+
+                {{ '↑ Übergeordneter Ordner' | t }}
               </button>
             }
           </div>
@@ -185,12 +201,9 @@
                   openDocument(file.id, tab() === 'project' ? 'preview' : tab())
                 "
               >
-                <span class="file-type">{{
-                  file.format === "markdown" ? "M↓" : "〈〉"
-                }}</span
+                <span class="file-type">{{ file.format === "markdown" ? "M↓" : "〈〉" }}</span
                 ><span class="file-name"
-                  >{{ file.path
-                  }}<small>{{ file.wordCount }} Wörter</small></span
+                  >{{ file.path }}<small>{{ file.wordCount }} {{ 'Wörter' | t }}</small></span
                 >
                 @if (file.findingCount > 0) {
                   <span class="file-count">{{ file.findingCount }}</span>
@@ -202,10 +215,9 @@
         }
         <div class="sidebar-footer">
           <div>
-            <span class="status-dot connected"></span> Im lokalen Projekt
-            gespeichert
+            <span class="status-dot connected"></span>  {{ 'Im lokalen Projekt gespeichert' | t }}
           </div>
-          <p>Dein Feedback bleibt bei der Quelle.</p>
+          <p>{{ 'Dein Feedback bleibt bei der Quelle.' | t }}</p>
         </div>
       </aside>
     }
@@ -213,20 +225,21 @@
     <main class="workspace">
       @if (error()) {
         <div class="alert error" role="alert">
-          <span>{{ error() }}</span>
+          <span>{{ (error()) | t }}</span>
           @if (stale() && document(); as current) {
             <button
               type="button"
               (click)="openDocument(current.id)"
               [disabled]="busy()"
             >
-              Aktuellen Stand laden
+
+              {{ 'Aktuellen Stand laden' | t }}
             </button>
           }
           <button
             type="button"
             class="dismiss"
-            aria-label="Fehler schließen"
+            [attr.aria-label]="'Fehler schließen' | t"
             (click)="error.set('')"
           >
             ×
@@ -235,27 +248,32 @@
       }
       @if (notice()) {
         <div class="alert success" role="status">
-          <span>{{ notice() }}</span
+          <span>{{ (notice()) | t }}</span
           ><button
             type="button"
             class="dismiss"
-            aria-label="Hinweis schließen"
+            [attr.aria-label]="'Hinweis schließen' | t"
             (click)="notice.set('')"
           >
             ×
           </button>
         </div>
       }
+      <div id="workspace-navigation" class="navigation-controls" [attr.role]="focusNavigation() ? 'dialog' : null" [attr.aria-label]="'Navigation' | t" [attr.aria-modal]="focusNavigation() && navigationOpen() ? 'true' : null" (keydown)="navigationKeydown($event)">
+        @if (focusNavigation()) { <div class="focus-navigation-heading"><strong>{{ 'Navigation' | t }}</strong><button type="button" class="button small" (click)="closeNavigation()" [attr.aria-label]="'Navigation schließen' | t">×</button></div>
+          <button type="button" class="button small focus-session-logout" (click)="logout()" [disabled]="busy()">{{ 'Abmelden und Browser vergessen' | t }}</button><div class="studio-preferences">
+    <label class="language-control"><span>{{ 'Sprache' | t }}</span><select aria-label="Language / Sprache" [ngModel]="i18n.locale()" (ngModelChange)="i18n.setLocale($event)"><option value="en">English</option><option value="de">Deutsch</option></select></label>
+    @if (connected()) { <label class="navigation-control"><span>{{ 'Anzeige' | t }}</span><select [attr.aria-label]="'Navigation' | t" [ngModel]="navigationMode()" (ngModelChange)="setNavigationMode($event)"><option value="full">{{ 'Normal' | t }}</option><option value="compact">{{ 'Kompakt' | t }}</option><option value="focus">{{ 'Website-Fokus' | t }}</option></select></label> }
+  </div> }
       <div class="workspace-actions">
         <button
           class="button secondary"
           type="button"
-          (click)="sidebarCollapsed.set(!sidebarCollapsed())"
+          (click)="toggleProjects()"
           [attr.aria-expanded]="!sidebarCollapsed()"
         >
-          {{
-            sidebarCollapsed() ? "Projekte und Dateien" : "Dateien ausblenden"
-          }}
+
+          {{ sidebarCollapsed() ? ('Projekte und Dateien' | t) : ('Dateien ausblenden' | t) }}
         </button>
         <span>{{ selectedProject()?.name }}</span>
         <button
@@ -264,25 +282,24 @@
           (click)="reviewOpen.set(!reviewOpen())"
           [attr.aria-expanded]="reviewOpen()"
          [disabled]="loading() || busy()">
-          {{ reviewOpen() ? "Review schließen" : "Review öffnen" }}
+
+          {{ reviewOpen() ? ('Review schließen' | t) : ('Review öffnen' | t) }}
         </button>
       </div>
       <div class="workspace-heading">
         <div>
           <div class="breadcrumb">
-            {{ selectedProject()?.name ?? "Arbeitsraum" }}<span>/</span
-            >{{
-              tab() === "project"
-                ? "Projektbericht"
-                : (document()?.path ?? "Dateien")
-            }}
+
+            {{ selectedProject()?.name ?? ('Arbeitsraum' | t) }}<span>/</span
+            >{{ tab() === "project"
+                ? ('Projektbericht' | t)
+                : (document()?.path ?? ('Dateien' | t)) }}
           </div>
           <h1>
-            {{
-              tab() === "project"
-                ? "Projektbericht"
-                : (document()?.title ?? "Dein Projekt öffnen")
-            }}
+
+            {{ tab() === "project"
+                ? ('Projektbericht' | t)
+                : (document()?.title ?? ('Dein Projekt öffnen' | t)) }}
           </h1>
         </div>
         @if (document(); as current) {
@@ -292,16 +309,17 @@
             [disabled]="busy() || loading()"
             (click)="openDocument(current.id)"
           >
-            <span aria-hidden="true">↻</span> Neu einlesen
+            <span aria-hidden="true">↻</span>  {{ 'Neu einlesen' | t }}
           </button>
         }
       </div>
-      <nav class="view-tabs" aria-label="Ansicht">
+      <nav class="view-tabs" [attr.aria-label]="'Ansicht' | t">
         <button
           type="button"
           [class.active]="tab() === 'preview'"
           (click)="changeTab('preview')"
         >
+
           {{ isLiveWebsite() ? "Website" : "Markdown" }}
         </button>
         <button
@@ -309,14 +327,16 @@
           [class.active]="tab() === 'source'"
           (click)="changeTab('source')"
         >
-          Quelltext
+
+          {{ 'Quelltext' | t }}
         </button>
         <button
           type="button"
           [class.active]="tab() === 'file'"
           (click)="changeTab('file')"
         >
-          Dateibericht
+
+          {{ 'Dateibericht' | t }}
           @if (document(); as current) {
             <span>{{ current.findings.length }}</span>
           }
@@ -326,14 +346,17 @@
           [class.active]="tab() === 'project'"
           (click)="changeTab('project')"
         >
-          Projektbericht
+
+          {{ 'Projektbericht' | t }}
         </button>
       </nav>
+        @if (document(); as sourceDocument) { <voice-source-context [projectId]="selectedProject()!.id" [document]="sourceDocument" [api]="semanticApi" /> }
+        @if (focusNavigation() && liveBrowser) { <form class="focus-address" (submit)="openFocusAddress(focusAddress.value); $event.preventDefault()"><label for="focus-website-address">{{ 'Website' | t }}</label><input #focusAddress id="focus-website-address" type="url" [value]="liveBrowser.address" required /><button type="submit" class="button primary">{{ 'Öffnen' | t }}</button><p class="small-muted">{{ liveBrowser.matchedFile() }}</p></form> }
+      </div>
 
       @if (loading()) {
         <div class="loading-state" role="status">
-          <span class="loading-indicator"></span>Dateien werden eingelesen und
-          geprüft …
+          <span class="loading-indicator"></span>{{ 'Dateien werden eingelesen und geprüft …' | t }}
         </div>
       }
 
@@ -341,42 +364,41 @@
         @if (projectReport(); as report) {
           <section class="report project-report">
             <div class="report-intro">
-              <div class="eyebrow">PROJEKTBERICHT</div>
-              <h2>Dateien im Projekt</h2>
+              <div class="eyebrow">{{ 'PROJEKTBERICHT' | t }}</div>
+              <h2>{{ 'Dateien im Projekt' | t }}</h2>
               <p>
-                Befunde und menschliches Feedback über alle eingelesenen
-                Dateien. Die Zähler beschreiben Fundstellen, keine Bewertung
-                deiner Sprache.
+
+                {{ 'Befunde und menschliches Feedback über alle eingelesenen Dateien. Die Zähler beschreiben Fundstellen, keine Bewertung deiner Sprache.' | t }}
               </p>
             </div>
             <div class="metric-grid">
               <div>
                 <strong>{{ report.documents.length }}</strong
-                ><span>Dateien</span>
+                ><span>{{ 'Dateien' | t }}</span>
               </div>
               <div>
                 <strong>{{ report.totalWords }}</strong
-                ><span>Wörter</span>
+                ><span>{{ 'Wörter' | t }}</span>
               </div>
               <div>
                 <strong>{{ report.findingCount }}</strong
-                ><span>Automatische Befunde</span>
+                ><span>{{ 'Automatische Befunde' | t }}</span>
               </div>
               <div>
                 <strong>{{ report.openFeedbackCount }}</strong
-                ><span>Offene Rückmeldungen</span>
+                ><span>{{ 'Offene Rückmeldungen' | t }}</span>
               </div>
             </div>
             <div class="report-card">
-              <h3>Dateien im Projekt</h3>
+              <h3>{{ 'Dateien im Projekt' | t }}</h3>
               <div class="table-scroll">
                 <table class="file-table">
                   <thead>
                     <tr>
-                      <th>Datei</th>
+                      <th>{{ 'Datei' | t }}</th>
                       <th>Format</th>
-                      <th>Wörter</th>
-                      <th>Befunde</th>
+                      <th>{{ 'Wörter' | t }}</th>
+                      <th>{{ 'Befunde' | t }}</th>
                       <th>Feedback</th>
                       <th></th>
                     </tr>
@@ -389,13 +411,11 @@
                           ><small>{{ file.title }}</small>
                         </td>
                         <td>
-                          <span class="format-badge">{{
-                            file.format === "markdown"
+                          <span class="format-badge">{{ file.format === "markdown"
                               ? "MD"
                               : file.format === "typescript"
                                 ? "TS"
-                                : "HTML"
-                          }}</span>
+                                : "HTML" }}</span>
                         </td>
                         <td>{{ file.wordCount }}</td>
                         <td>{{ file.findingCount }}</td>
@@ -406,7 +426,8 @@
                             class="text-button"
                             (click)="openDocument(file.id, 'file')"
                           >
-                            Prüfen ↗
+
+                            {{ 'Prüfen ↗' | t }}
                           </button>
                         </td>
                       </tr>
@@ -417,7 +438,7 @@
             </div>
             <div class="report-two-columns">
               <div class="report-card">
-                <h3>Nach Kategorie</h3>
+                <h3>{{ 'Nach Kategorie' | t }}</h3>
                 @for (item of projectCategoryCounts(); track item.category) {
                   <div class="report-count-row">
                     <span
@@ -425,29 +446,28 @@
                         class="category-line"
                         [attr.data-category]="item.category"
                       ></i
-                      >{{ categoryLabel(item.category) }}</span
+                      >{{ (categoryLabel(item.category)) | t }}</span
                     ><strong>{{ item.count }}</strong>
                   </div>
                 } @empty {
-                  <p class="small-muted">Keine automatischen Befunde.</p>
+                  <p class="small-muted">{{ 'Keine automatischen Befunde.' | t }}</p>
                 }
               </div>
               <div class="report-card">
-                <h3>Nach Regel</h3>
+                <h3>{{ 'Nach Regel' | t }}</h3>
                 @for (item of projectRuleCounts(); track item.rule) {
                   <div class="report-count-row">
                     <code>{{ item.rule }}</code
                     ><strong>{{ item.count }}</strong>
                   </div>
                 } @empty {
-                  <p class="small-muted">Noch keine ausgelösten Regeln.</p>
+                  <p class="small-muted">{{ 'Noch keine ausgelösten Regeln.' | t }}</p>
                 }
               </div>
             </div>
             <p class="coverage-note">
-              Aktuell prüft ein lokaler Regelkern ausgewählte sprachliche
-              Muster. Aussagen benötigen weiterhin fachliche Prüfung; eine
-              vollständige Faktenprüfung ist nicht angebunden.
+
+              {{ 'Aktuell prüft ein lokaler Regelkern ausgewählte sprachliche Muster. Aussagen benötigen weiterhin fachliche Prüfung; eine vollständige Faktenprüfung ist nicht angebunden.' | t }}
             </p>
           </section>
         }
@@ -457,7 +477,7 @@
             class="document-workspace"
             [class.review-collapsed]="!reviewOpen()"
           >
-            <section class="document-pane" aria-label="Dokument">
+            <section class="document-pane" [attr.aria-label]="'Dokument' | t">
               @if (tab() === "preview" && isLiveWebsite()) {
                 @if (selectedProject(); as project) {
                   <voice-live-browser
@@ -483,33 +503,30 @@
                   <div class="preview-address">
                     <span aria-hidden="true">⌑</span>{{ current.path }}
                   </div>
-                  <span class="preview-format">{{
-                    current.format === "markdown"
+                  <span class="preview-format">{{ current.format === "markdown"
                       ? "Markdown"
                       : current.format === "typescript"
                         ? "TypeScript"
-                        : "HTML"
-                  }}</span>
+                        : "HTML" }}</span>
                 </div>
                 <div class="preview-context">
-                  <span>{{
-                    current.format === "markdown"
-                      ? "Markdown aus der Quelldatei"
-                      : "Lokale Webseite · ohne Skripte"
-                  }}</span
+                  <span>{{ current.format === "markdown"
+                      ? ('Markdown aus der Quelldatei' | t)
+                      : ('Lokale Webseite · ohne Skripte' | t) }}</span
                   ><span
-                    >Text markieren, um Feedback zu geben
+                    >{{ 'Text markieren, um Feedback zu geben' | t }}
                     <span aria-hidden="true">↗</span></span
                   >
                 </div>
                 @if (previewMappingIssue()) {
                   <div class="mapping-note" role="status">
-                    {{ previewMappingIssue() }}
+
+                    {{ (previewMappingIssue()) | t }}
                   </div>
                 }
                 <iframe
                   #previewFrame
-                  title="Dokumentvorschau mit Voice-Markierungen"
+                  [attr.title]="'Dokumentvorschau mit Voice-Markierungen' | t"
                   sandbox="allow-same-origin"
                   [srcdoc]="previewHtml()"
                   (load)="previewLoaded()"
@@ -521,11 +538,11 @@
                         class="category-line"
                         [attr.data-category]="category.id"
                       ></i
-                      >{{ category.label }}</span
+                      >{{ (category.label) | t }}</span
                     >
                   }
                   <span
-                    ><i class="category-line feedback"></i>Dein Feedback</span
+                    ><i class="category-line feedback"></i>{{ 'Dein Feedback' | t }}</span
                   >
                 </div>
               }
@@ -533,57 +550,55 @@
                 <div class="source-toolbar">
                   <span>{{ current.path }}</span
                   ><span
-                    >{{
-                      current.format === "markdown"
+                    >{{ current.format === "markdown"
                         ? "Markdown"
                         : current.format === "typescript"
                           ? "TypeScript"
-                          : "HTML"
-                    }}
-                    · schreibgeschützte Ansicht</span
+                          : "HTML" }}
+                    {{ '· schreibgeschützte Ansicht' | t }}</span
                   >
                 </div>
                 <pre class="source-view"><code>{{ current.source }}</code></pre>
                 <div class="source-footer">
-                  Änderungen werden als Vorschlag vorbereitet und nach deiner
-                  Prüfung in diese Datei geschrieben.
+
+                  {{ 'Änderungen werden als Vorschlag vorbereitet und nach deiner Prüfung in diese Datei geschrieben.' | t }}
                 </div>
               }
               @if (tab() === "file") {
                 <div class="report file-report">
-                  <div class="eyebrow">BERICHT ZUR GANZEN DATEI</div>
-                  <h2>Textstellen prüfen</h2>
+                  <div class="eyebrow">{{ 'BERICHT ZUR GANZEN DATEI' | t }}</div>
+                  <h2>{{ 'Textstellen prüfen' | t }}</h2>
                   <p class="report-description">
-                    Alle erkannten Befunde dieser Datei, auch außerhalb des
-                    sichtbaren Ausschnitts.
+
+                    {{ 'Alle erkannten Befunde dieser Datei, auch außerhalb des sichtbaren Ausschnitts.' | t }}
                   </p>
                   <div class="metric-grid compact">
                     <div>
                       <strong>{{ current.wordCount }}</strong
-                      ><span>Wörter</span>
+                      ><span>{{ 'Wörter' | t }}</span>
                     </div>
                     <div>
                       <strong>{{ current.findings.length }}</strong
-                      ><span>Befunde</span>
+                      ><span>{{ 'Befunde' | t }}</span>
                     </div>
                     <div>
                       <strong>{{ feedbackTotal() }}</strong
-                      ><span>Offenes Feedback</span>
+                      ><span>{{ 'Offenes Feedback' | t }}</span>
                     </div>
                   </div>
                   <div class="coverage-card">
-                    <h3>Prüfabdeckung</h3>
+                    <h3>{{ 'Prüfabdeckung' | t }}</h3>
                     <p>
                       <strong
-                        >{{ current.coverage.checkedUnits }} von
+                        >{{ current.coverage.checkedUnits }} {{ 'von' | t }}
                         {{ current.coverage.totalUnits }}</strong
                       >
-                      Textabschnitten geprüft ·
-                      {{ current.coverage.excludedRegions }} Bereiche
-                      ausgeschlossen
+
+                      {{ 'Textabschnitten geprüft ·' | t }}
+                      {{ current.coverage.excludedRegions }} {{ 'Bereiche ausgeschlossen' | t }}
                     </p>
                     @for (note of current.coverage.notes; track $index) {
-                      <p class="small-muted">{{ note }}</p>
+                      <p class="small-muted">{{ (note) | t }}</p>
                     }
                   </div>
                   <div class="finding-list">
@@ -600,39 +615,37 @@
                               class="category-line"
                               [attr.data-category]="finding.category"
                             ></i
-                            >{{ categoryLabel(finding.category) }}</span
+                            >{{ (categoryLabel(finding.category)) | t }}</span
                           >
                         </div>
-                        <h3>{{ finding.message }}</h3>
+                        <h3>{{ (finding.message) | t }}</h3>
                         <blockquote>{{ finding.quote }}</blockquote>
-                        <p>{{ finding.explanation }}</p>
+                        <p>{{ findingExplanation(finding) }}</p>
                         <div class="finding-foot">
                           <span
-                            >{{
-                              finding.severity === "error"
-                                ? "Prüfbedarf"
+                            >{{ finding.severity === "error"
+                                ? ('Prüfbedarf' | t)
                                 : finding.severity === "warning"
-                                  ? "Hinweis"
-                                  : "Information"
-                            }} </span
-                          ><span>Textstelle öffnen →</span>
+                                  ? ('Hinweis' | t)
+                                  : ('Information' | t) }} </span
+                          ><span>{{ 'Textstelle öffnen →' | t }}</span>
                         </div>
                       </button>
                     } @empty {
                       <div class="empty-card">
-                        <h3>Keine automatischen Befunde.</h3>
+                        <h3>{{ 'Keine automatischen Befunde.' | t }}</h3>
                         <p>
-                          Du kannst in der Vorschau trotzdem jede Textstelle
-                          markieren und Feedback speichern.
+
+                          {{ 'Du kannst in der Vorschau trotzdem jede Textstelle markieren und Feedback speichern.' | t }}
                         </p>
                       </div>
                     }
                   </div>
                   <div class="report-card">
-                    <h3>Alle Textabschnitte</h3>
+                    <h3>{{ 'Alle Textabschnitte' | t }}</h3>
                     <p class="small-muted">
-                      Auch unauffällige Stellen lassen sich zur Überarbeitung
-                      auswählen.
+
+                      {{ 'Auch unauffällige Stellen lassen sich zur Überarbeitung auswählen.' | t }}
                     </p>
                     @for (unit of current.units; track unit.id) {
                       <button
@@ -648,7 +661,7 @@
                         "
                       >
                         <span
-                          >Zeile {{ sourceLine(unit.sourceSpan.start) }}</span
+                          >{{ 'Zeile' | t }} {{ sourceLine(unit.sourceSpan.start) }}</span
                         >
                         <p>{{ unit.text }}</p>
                         <span aria-hidden="true">↗</span>
@@ -660,21 +673,20 @@
             </section>
 
             @if (reviewOpen()) {
-              <aside class="review-panel" aria-label="Analyse und Feedback">
+              <aside class="review-panel" [attr.aria-label]="'Analyse und Feedback' | t">
                 <div class="review-panel-heading">
                   <div>
-                    <div class="eyebrow">DEVELOPER REVIEW</div>
+                    <div class="eyebrow">{{ 'DEVELOPER REVIEW' | t }}</div>
                     <h2>
-                      {{
-                        selected() ? "Diese Textstelle" : "Sprache im Detail"
-                      }}
+
+                      {{ selected() ? ('Diese Textstelle' | t) : ('Sprache im Detail' | t) }}
                     </h2>
                   </div>
                   <span class="count">{{ current.findings.length }}</span>
                 </div>
                 @if (componentContexts().length) {
                   <details class="component-context">
-                    <summary>Komponenten und Textquelle</summary>
+                    <summary>{{ 'Komponenten und Textquelle' | t }}</summary>
                     <p>{{ current.path }}</p>
                     @for (context of componentContexts(); track context) {
                       <code>{{ context }}</code>
@@ -682,23 +694,20 @@
                   </details>
                 }
                 <div class="analysis-mode">
-                  <span class="status-dot connected"></span> Lokale Regeln ·
-                  kein LLM <span>Hinweise zur Prüfung</span>
+                  <span class="status-dot connected"></span>  {{ 'Lokale Regeln · kein LLM' | t }} <span>{{ 'Hinweise zur Prüfung' | t }}</span>
                 </div>
                 @if (selected(); as selection) {
                   <div class="selection-card">
                     <div class="selection-heading">
-                      <span>{{
-                        activeFinding()
-                          ? "AUTOMATISCHER BEFUND"
+                      <span>{{ activeFinding()
+                          ? ('AUTOMATISCHER BEFUND' | t)
                           : activeFeedback()
-                            ? "DEIN FEEDBACK"
-                            : "DEINE AUSWAHL"
-                      }}</span
+                            ? ('DEIN FEEDBACK' | t)
+                            : ('DEINE AUSWAHL' | t) }}</span
                       ><button
                         class="icon-button"
                         type="button"
-                        aria-label="Auswahl schließen"
+                        [attr.aria-label]="'Auswahl schließen' | t"
                         (click)="clearSelection()"
                       >
                         ×
@@ -706,12 +715,10 @@
                     </div>
                     <blockquote>{{ selection.quote }}</blockquote>
                     <span class="small-muted"
-                      >{{ unitFor(selection.unitId)?.kind }} · Zeile
-                      {{
-                        sourceLine(
+                      >{{ unitFor(selection.unitId)?.kind }} {{ '· Zeile' | t }}
+                      {{ sourceLine(
                           unitFor(selection.unitId)?.sourceSpan?.start ?? 0
-                        )
-                      }}</span
+                        ) }}</span
                     >
                   </div>
                   @if (activeFinding(); as finding) {
@@ -721,15 +728,15 @@
                           class="category-line"
                           [attr.data-category]="finding.category"
                         ></i
-                        >{{ categoryLabel(finding.category) }}</span
+                        >{{ (categoryLabel(finding.category)) | t }}</span
                       >
-                      <h3>{{ finding.message }}</h3>
-                      <p>{{ finding.explanation }}</p>
+                      <h3>{{ (finding.message) | t }}</h3>
+                      <p>{{ findingExplanation(finding) }}</p>
                       @if (knowledge.entry(finding.ruleId); as rule) {
-                        <p class="finding-question"><strong>Prüffrage:</strong> {{ rule.question }}</p>
+                        <p class="finding-question"><strong>{{ 'Prüffrage:' | t }}</strong>  {{ rule.question }}</p>
                       }
-                      <details class="finding-context"><summary>Text im Kontext</summary><p>{{ unitFor(finding.unitId)?.text }}</p></details>
-                      <button class="button small" type="button" (click)="openWiki(finding.ruleId)">Regel, Beispiele und Grenzen ansehen →</button>
+                      <details class="finding-context"><summary>{{ 'Text im Kontext' | t }}</summary><p>{{ unitFor(finding.unitId)?.text }}</p></details>
+                      <button class="button small" type="button" (click)="openWiki(finding.ruleId)">{{ 'Regel, Beispiele und Grenzen ansehen →' | t }}</button>
                     </div>
                   }
                   @if (activeFeedback(); as feedback) {
@@ -737,21 +744,21 @@
                       <span
                         class="feedback-state"
                         [attr.data-status]="feedback.status"
-                        >{{ statusLabel(feedback.status) }}</span
+                        >{{ (statusLabel(feedback.status)) | t }}</span
                       >
                       <p>{{ feedback.comment }}</p>
                       @if (feedback.status === "needs_reattachment") {
                         <p class="small-muted">
-                          Die Quelle hat sich verändert. Wähle die passende
-                          Textstelle in der Vorschau und speichere neues
-                          Feedback.
+
+                          {{ 'Die Quelle hat sich verändert. Wähle die passende Textstelle in der Vorschau und speichere neues Feedback.' | t }}
                         </p>
                       }
                     </div>
                   }
-                  <form class="panel-form" (ngSubmit)="saveFeedback()">
-                    <h3>Feedback festhalten</h3>
-                    <label for="feedback-category">Kategorie</label
+                  <voice-selection-review [projectId]="selectedProject()!.id" [document]="current" [selection]="selection" [finding]="activeFinding()" [api]="semanticApi" [disabled]="busy() || loading() || stale() || !canEditSelection()" (proposalCreated)="selectionProposalCreated($event)" (decisionSaved)="selectionDecisionSaved($event)" />
+                  <details class="optional-review-input"><summary>{{ 'Eigenes Feedback (optional)' | t }}</summary><form class="panel-form" (ngSubmit)="saveFeedback()">
+                    <h3>{{ 'Feedback festhalten' | t }}</h3>
+                    <label for="feedback-category">{{ 'Kategorie' | t }}</label
                     ><select
                       id="feedback-category"
                       name="feedbackCategory"
@@ -759,16 +766,17 @@
                     >
                       @for (category of categories; track category.id) {
                         <option [value]="category.id">
-                          {{ category.label }}
+
+                          {{ (category.label) | t }}
                         </option>
                       }</select
-                    ><label for="feedback-comment">Was soll sich ändern?</label
+                    ><label for="feedback-comment">{{ 'Was soll sich ändern?' | t }}</label
                     ><textarea
                       id="feedback-comment"
                       name="feedbackComment"
                       [(ngModel)]="feedbackComment"
                       rows="3"
-                      placeholder="Was stört dich? Was soll der Text konkret sagen?"
+                      [placeholder]="'Was stört dich? Was soll der Text konkret sagen?' | t"
                     ></textarea
                     ><button
                       class="button primary wide"
@@ -776,28 +784,30 @@
                         busy() || !feedbackComment.trim() || !canEditSelection()
                       "
                     >
-                      {{ busy() ? "Speichere …" : "Feedback speichern" }}
+
+                      {{ busy() ? ('Speichere …' | t) : ('Feedback speichern' | t) }}
                     </button>
                     <p class="small-muted">
-                      Bleibt als Metadatei bei der Quelldatei.
+
+                      {{ 'Bleibt als Metadatei bei der Quelldatei.' | t }}
                     </p>
-                  </form>
-                  <form
+                  </form></details>
+                  <details class="optional-review-input"><summary>{{ 'Eigene Formulierung (optional)' | t }}</summary><form
                     class="panel-form proposal-form"
                     (ngSubmit)="createProposal()"
                   >
                     <div class="panel-section-heading">
-                      <h3>Änderung vorbereiten</h3>
-                      <span class="subtle-tag">Quelltext</span>
+                      <h3>{{ 'Änderung vorbereiten' | t }}</h3>
+                      <span class="subtle-tag">{{ 'Quelltext' | t }}</span>
                     </div>
-                    <label for="replacement">Vorgeschlagener Text</label
+                    <label for="replacement">{{ 'Vorgeschlagener Text' | t }}</label
                     ><textarea
                       id="replacement"
                       name="replacement"
                       [(ngModel)]="replacement"
                       (ngModelChange)="proposal.set(null)"
                       rows="3"
-                      placeholder="Deine bessere Formulierung"
+                      [placeholder]="'Deine bessere Formulierung' | t"
                     ></textarea
                     ><button
                       class="button secondary wide"
@@ -807,31 +817,33 @@
                         !canEditSelection()
                       "
                     >
-                      Quelltext-Diff erstellen <span aria-hidden="true">→</span>
+
+                      {{ 'Quelltext-Diff erstellen' | t }} <span aria-hidden="true">→</span>
                     </button>
                     <p class="small-muted">
-                      Regelbasierter Vorschlag oder eigene Formulierung. Es wird
-                      kein Modell aufgerufen.
+
+                      {{ 'Regelbasierter Vorschlag oder eigene Formulierung. Es wird kein Modell aufgerufen.' | t }}
                     </p>
-                  </form>
+                  </form></details>
                 } @else {
                   <div class="selection-hint">
                     <span class="selection-symbol" aria-hidden="true">I</span>
-                    <h3>Textstelle auswählen</h3>
+                    <h3>{{ 'Textstelle auswählen' | t }}</h3>
                     <p>
-                      Klicke auf eine Markierung oder wähle selbst Text aus.
-                      Auch ohne automatischen Befund.
+
+                      {{ 'Klicke auf eine Markierung oder wähle selbst Text aus. Auch ohne automatischen Befund.' | t }}
                     </p>
                   </div>
                   <div class="quick-findings">
                     <div class="panel-section-heading">
-                      <h3>Automatische Befunde</h3>
+                      <h3>{{ 'Automatische Befunde' | t }}</h3>
                       <button
                         type="button"
                         class="text-button"
                         (click)="changeTab('file')"
                       >
-                        Alle ansehen
+
+                        {{ 'Alle ansehen' | t }}
                       </button>
                     </div>
                     @for (
@@ -848,14 +860,13 @@
                           [attr.data-category]="finding.category"
                         ></i
                         ><span
-                          >{{ finding.message
-                          }}<small>„{{ finding.quote }}“</small></span
+                          >{{ (finding.message) | t }}<small>„{{ finding.quote }}“</small></span
                         ><span aria-hidden="true">↗</span>
                       </button>
                     } @empty {
                       <p class="small-muted">
-                        Keine automatischen Befunde. Dein Urteil bleibt
-                        entscheidend.
+
+                        {{ 'Keine automatischen Befunde. Dein Urteil bleibt entscheidend.' | t }}
                       </p>
                     }
                   </div>
@@ -863,27 +874,27 @@
                 @if (proposal(); as diff) {
                   <section class="proposal-diff">
                     <div class="panel-section-heading">
-                      <h3>Änderung prüfen</h3>
-                      <span class="subtle-tag">{{ proposalStatus(diff) }}</span>
+                      <h3>{{ 'Änderung prüfen' | t }}</h3>
+                      <span class="subtle-tag">{{ (proposalStatus(diff)) | t }}</span>
                     </div>
                     <div class="diff-block before">
-                      <span>− VORHER</span>
+                      <span>{{ '− VORHER' | t }}</span>
                       <pre>{{ diff.sourceBefore }}</pre>
                     </div>
                     <div class="diff-block after">
-                      <span>+ NACHHER</span>
+                      <span>{{ '+ NACHHER' | t }}</span>
                       <pre>{{ diff.sourceAfter }}</pre>
                     </div>
-                    <p class="small-muted">{{ diff.reason }}</p>
+                    <p class="small-muted">{{ (diff.reason) | t }}</p>
                     @if (diff.state === "applied") {
                       <p class="proposal-history-note">
-                        Dieser Vorschlag wurde bereits in die Quelldatei
-                        übernommen.
+
+                        {{ 'Dieser Vorschlag wurde bereits in die Quelldatei übernommen.' | t }}
                       </p>
                     } @else if (diff.expectedVersion !== current.version) {
                       <p class="proposal-history-note">
-                        Die Quelle wurde seit diesem Vorschlag geändert.
-                        Erstelle einen neuen Vorschlag auf dem aktuellen Stand.
+
+                        {{ 'Die Quelle wurde seit diesem Vorschlag geändert. Erstelle einen neuen Vorschlag auf dem aktuellen Stand.' | t }}
                       </p>
                     }
                     <button
@@ -892,11 +903,12 @@
                       [disabled]="busy() || !canApplyProposal()"
                       (click)="applyProposal()"
                     >
-                      In Quelldatei übernehmen
+
+                      {{ 'In Quelldatei übernehmen' | t }}
                     </button>
                     <p class="small-muted">
-                      Schreibt die Datei nur, wenn ihre Version unverändert ist.
-                      Feedback bleibt zur Nachprüfung erhalten.
+
+                      {{ 'Schreibt die Datei nur, wenn ihre Version unverändert ist. Feedback bleibt zur Nachprüfung erhalten.' | t }}
                     </p>
                   </section>
                 }
@@ -920,7 +932,8 @@
                 <section class="saved-proposals">
                   <div class="panel-section-heading">
                     <h3>
-                      Gespeicherte Vorschläge
+
+                      {{ 'Gespeicherte Vorschläge' | t }}
                       <span class="count">{{ savedProposals().length }}</span>
                     </h3>
                   </div>
@@ -941,26 +954,28 @@
                               ? 'needs_recheck'
                               : 'open'
                         "
-                        >{{ proposalStatus(item) }}</span
+                        >{{ (proposalStatus(item)) | t }}</span
                       >
                       <span class="history-quote">{{ item.before }}</span>
                       <span class="history-replacement"
-                        >→ {{ item.replacement || "(Text entfernen)" }}</span
+                        >→ {{ item.replacement || ('(Text entfernen)' | t) }}</span
                       >
                       <span class="history-action"
-                        >Quelltext-Diff öffnen ↗</span
+                        >{{ 'Quelltext-Diff öffnen ↗' | t }}</span
                       >
                     </button>
                   } @empty {
                     <p class="small-muted">
-                      Noch keine Vorschläge für diese Datei gespeichert.
+
+                      {{ 'Noch keine Vorschläge für diese Datei gespeichert.' | t }}
                     </p>
                   }
                 </section>
                 <section class="saved-feedback">
                   <div class="panel-section-heading">
                     <h3>
-                      Gespeichertes Feedback
+
+                      {{ 'Gespeichertes Feedback' | t }}
                       <span class="count">{{ feedbackTotal() }}</span>
                     </h3>
                     <button
@@ -968,7 +983,8 @@
                       type="button"
                       (click)="showAllFeedback.set(!showAllFeedback())"
                     >
-                      {{ showAllFeedback() ? "Nur offen" : "Alle" }}
+
+                      {{ showAllFeedback() ? ('Nur offen' | t) : ('Alle' | t) }}
                     </button>
                   </div>
                   @for (feedback of feedbackList(); track feedback.id) {
@@ -981,13 +997,13 @@
                         <span
                           class="feedback-state"
                           [attr.data-status]="feedback.status"
-                          >{{ statusLabel(feedback.status) }}</span
+                          >{{ (statusLabel(feedback.status)) | t }}</span
                         >
                         <blockquote>{{ feedback.quote }}</blockquote>
                         <p>{{ feedback.comment }}</p>
                       </button>
                       <div class="feedback-item-footer">
-                        <span>{{ categoryLabel(feedback.category) }}</span
+                        <span>{{ (categoryLabel(feedback.category)) | t }}</span
                         ><button
                           class="text-button"
                           type="button"
@@ -1001,26 +1017,24 @@
                             )
                           "
                         >
-                          {{
-                            feedback.status === "resolved"
-                              ? "Wieder öffnen"
-                              : "Erledigt markieren"
-                          }}
+
+                          {{ feedback.status === "resolved"
+                              ? ('Wieder öffnen' | t)
+                              : ('Erledigt markieren' | t) }}
                         </button>
                       </div>
                     </article>
                   } @empty {
                     <p class="small-muted">
-                      {{
-                        showAllFeedback()
-                          ? "Noch kein Feedback gespeichert."
-                          : "Kein offenes Feedback."
-                      }}
+
+                      {{ showAllFeedback()
+                          ? ('Noch kein Feedback gespeichert.' | t)
+                          : ('Kein offenes Feedback.' | t) }}
                     </p>
                   }
                 </section>
                 <div class="review-footer">
-                  <span>Quelle {{ current.version.slice(0, 8) }}</span
+                  <span>{{ 'Quelle' | t }} {{ current.version.slice(0, 8) }}</span
                   ><span>Review {{ current.reviewRevision }}</span>
                 </div>
                 <voice-semantic-review
@@ -1035,17 +1049,18 @@
           </div>
         } @else {
           <section class="empty-workspace">
-            <h2>Projekt öffnen</h2>
+            <h2>{{ 'Projekt öffnen' | t }}</h2>
             <p>
-              Öffne links ein Beispiel oder einen lokalen Ordner mit HTML- und
-              Markdown-Dateien.
+
+              {{ 'Öffne links ein Beispiel oder einen lokalen Ordner mit HTML- und Markdown-Dateien.' | t }}
             </p>
             <button
               type="button"
               class="button primary"
               (click)="registrationOpen.set(true)"
             >
-              Projektordner öffnen
+
+              {{ 'Projektordner öffnen' | t }}
             </button>
           </section>
         }

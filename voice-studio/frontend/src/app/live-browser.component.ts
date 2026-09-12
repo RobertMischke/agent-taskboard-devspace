@@ -1,10 +1,11 @@
-import { Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild, inject, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { I18nService, TranslatePipe, type TranslationParams } from './i18n.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import type { DocumentDetail, DocumentSummary, ProjectSummary, SelectionTarget } from '@voice/contracts';
 
 /** Review transport is restricted to the project's local development server. */
-@Component({ selector: 'voice-live-browser', standalone: true, imports: [FormsModule], templateUrl: './live-browser.component.html' })
+@Component({ selector: 'voice-live-browser', standalone: true, imports: [FormsModule, TranslatePipe], templateUrl: './live-browser.component.html' })
 export class LiveBrowserComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) project!: ProjectSummary;
   @Input() documents: DocumentSummary[] = [];
@@ -18,6 +19,7 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
   @Output() saveUrl = new EventEmitter<string>();
   @Output() sourceMatched = new EventEmitter<boolean>();
   @ViewChild('liveFrame') liveFrame?: ElementRef<HTMLIFrameElement>;
+  readonly i18n = inject(I18nService);
   private readonly sanitizer = inject(DomSanitizer);
   private readonly zone = inject(NgZone);
   private sessionId = crypto.randomUUID();
@@ -34,7 +36,10 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
   readonly pageTitle = signal('Website');
   readonly bridgeReady = signal(false);
   readonly status = signal('Lokale Website öffnen');
-  readonly mappingNote = signal('');
+  private readonly mappingMessage = signal('');
+  private readonly mappingParams = signal<TranslationParams>({});
+  readonly mappingNote = computed(() => this.mappingMessage().split('\n').map(message => this.i18n.t(message, this.mappingParams())).join(' '));
+  readonly markerNote = computed(() => !this.showMarks() ? this.i18n.t('Markierungen sind ausgeblendet. Schalte sie oben ein, um Befunde und offene Rückmeldungen zu sehen.') : this.mappingNote());
   readonly matchedFile = signal('');
   readonly showMarks = signal(true);
   address = '';
@@ -135,12 +140,27 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     if (message.type === 'voice-studio:feedback' && this.detail?.feedback.some(item => item.id === message.feedbackId)) this.feedback.emit(message.feedbackId);
     if (message.type === 'voice-studio:mapping') {
       const diagnostics = message.diagnostics;
-      const missing = new Set<string>([...(Array.isArray(diagnostics?.missingUnitIds) ? diagnostics.missingUnitIds : []), ...(Array.isArray(diagnostics?.mismatchedUnitIds) ? diagnostics.mismatchedUnitIds : []), ...(Array.isArray(diagnostics?.ambiguousUnitIds) ? diagnostics.ambiguousUnitIds : [])]);
       const count = this.detail?.units.length ?? 0;
-      this.mappingNote.set(missing.size ? `${typeof diagnostics?.mappedUnits === 'number' ? diagnostics.mappedUnits : Math.max(0, count - missing.size)} von ${count} Quelltextabschnitten auf dieser Seite zugeordnet. Weitere Befunde stehen im Dateibericht.` : '');
-      this.sourceMatched.emit(!!this.detail && this.resolveDocument(this.currentUrl())?.id === this.detail.id && this.showMarks());
+      const mapped = typeof diagnostics?.mappedUnits === 'number' && Number.isFinite(diagnostics.mappedUnits)
+        ? Math.max(0, Math.min(count, diagnostics.mappedUnits)) : 0;
+      const unmappedFindings = new Set(Array.isArray(diagnostics?.unmappedFindingIds) ? diagnostics.unmappedFindingIds : []);
+      const unmappedFeedback = new Set(Array.isArray(diagnostics?.unmappedFeedbackIds) ? diagnostics.unmappedFeedbackIds : []);
+      const findings = this.detail?.findings ?? [];
+      const feedback = this.detail?.feedback.filter(item => item.status === 'open' || item.status === 'needs_recheck') ?? [];
+      const anchoredFindings = findings.filter(item => !unmappedFindings.has(item.id)).length;
+      const anchoredFeedback = feedback.filter(item => !unmappedFeedback.has(item.id)).length;
+      const matched = !!this.detail && this.resolveDocument(this.currentUrl())?.id === this.detail.id;
+      if (matched && this.showMarks()) {
+        const hint = !mapped ? 'Kein Quelltext passt eindeutig zum sichtbaren Seitentext. Prüfe die Quelldatei und die Sprache der Website.'
+          : !findings.length && !feedback.length ? 'Für diese Quelle liegen keine Befunde oder offenen Rückmeldungen vor. Zugeordnete Texte lassen sich für Feedback auswählen.'
+          : !anchoredFindings && !anchoredFeedback ? 'Die Befunde liegen außerhalb der zugeordneten Textstellen. Details stehen im Dateibericht.'
+          : 'Unterstrichen werden nur betroffene Textstellen; sie können weiter unten auf der Seite liegen.';
+        this.mappingParams.set({ mapped, total: count, findings: anchoredFindings, totalFindings: findings.length, feedback: anchoredFeedback });
+        this.mappingMessage.set('{mapped} von {total} Quelltextabschnitten auf dieser Seite zugeordnet.\n{findings} von {totalFindings} Befunden und {feedback} offenen Rückmeldungen auf dieser Seite verankert.\n' + hint);
+      }
+      this.sourceMatched.emit(matched && mapped > 0 && this.showMarks());
     }
-    if (message.type === 'voice-studio:error' && typeof message.message === 'string') this.mappingNote.set(message.message);
+    if (message.type === 'voice-studio:error' && typeof message.message === 'string') this.mappingMessage.set(message.message);
   }
   private resolveDocument(raw: string): DocumentSummary | undefined {
     if (this.manualDocument) return this.documents.find(file => file.id === this.manualDocument);
@@ -167,8 +187,8 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     if (!this.project.liveUrl || this.validateUrl(this.project.liveUrl).origin !== this.expectedOrigin) return;
     const file = this.resolveDocument(this.currentUrl()); const detail = this.detail;
     const matched = !!file && !!detail && file.id === detail.id;
-    this.matchedFile.set(matched ? file.path : ''); this.sourceMatched.emit(matched && this.showMarks());
-    if (!matched) this.mappingNote.set('Für diese Route ist noch keine Quelle zugeordnet. Wähle eine Datei, um passende Textstellen im Original zu prüfen.');
+    this.matchedFile.set(matched ? file.path : ''); if (!matched || !this.showMarks()) this.sourceMatched.emit(false);
+    if (!matched) this.mappingMessage.set('Für diese Route ist noch keine Quelle zugeordnet. Wähle eine Datei, um passende Textstellen im Original zu prüfen.');
     const key = `${this.currentUrl()}:${matched ? detail.version + ':' + detail.reviewRevision + ':' + detail.findings.map(finding => finding.id).join(',') : 'unmapped'}:${this.showMarks()}`;
     // A fresh adapter snapshot may remap units without changing source or feedback hashes.
     const mappedDetail = matched ? detail : null;
@@ -182,6 +202,6 @@ export class LiveBrowserComponent implements OnChanges, OnDestroy {
     return !!unit && Number.isInteger(target.start) && Number.isInteger(target.end) && target.start >= 0 && target.end > target.start && target.end <= unit.text.length && unit.text.slice(target.start, target.end) === target.quote;
   }
   private post(message: Record<string, unknown>): void { if (this.expectedOrigin) this.liveFrame?.nativeElement.contentWindow?.postMessage({ ...message, sessionId: this.sessionId }, this.expectedOrigin); }
-  private disconnect(): void { this.post({ type: 'voice-studio:disconnect' }); clearInterval(this.handshakeTimer); this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.reviewSentDetail = null; this.mappingNote.set(''); this.matchedFile.set(''); this.sourceMatched.emit(false); }
+  private disconnect(): void { this.post({ type: 'voice-studio:disconnect' }); clearInterval(this.handshakeTimer); this.bridgeReady.set(false); this.reviewId = ''; this.reviewSentFor = ''; this.reviewSentDetail = null; this.mappingMessage.set(''); this.matchedFile.set(''); this.sourceMatched.emit(false); }
   ngOnDestroy(): void { ++this.navigationSequence; this.disconnect(); window.removeEventListener('message', this.receive); }
 }

@@ -21,6 +21,26 @@ it includes no Angular dependency or runtime package dependency. A host can copy
 that file into its local development assets. The Studio serves it at
 `/library/voice-review.js`; see `examples/library-embed/index.html` in the repo.
 
+## TypeScript and JavaScript IntelliSense
+
+The public ESM API carries declaration files and JSDoc for completion, callback
+inference and hover help. Import types such as `TextUnit`, `Finding`,
+`SourceSpan` and `VoiceReviewController` directly from `@voice/review`.
+Plain JavaScript can use `// @ts-check` and JSDoc `import('@voice/review')`
+types. Checked examples ship in [examples/](./examples/):
+[TypeScript](./examples/typescript.ts), [JavaScript](./examples/javascript.js),
+and [classic-script global](./examples/standalone.js).
+
+For a normal browser script, use
+`/// <reference types="@voice/review/standalone" />` to add editor types;
+load `voice-review.js` separately with a classic `<script>` tag. The reference
+does not load runtime code. Use the main entry for ESM imports.
+
+`npm run test:types -w @voice/review` verifies isolated consumers with NodeNext
+and Bundler resolution, intentional type errors, and actual TypeScript language
+service completion/hover results. It does not drive the VS Code user interface.
+The full workspace guide is [Typed Library integration](../../docs/library-types.md).
+
 ## Mount on existing HTML
 
 Assign explicit text-unit identifiers in development markup. Units should be

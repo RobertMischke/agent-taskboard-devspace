@@ -1,0 +1,75 @@
+{
+  "documentKind": "agt-voice-review-integration-planning-example",
+  "documentVersion": 1,
+  "status": "synthetic-example",
+  "implemented": false,
+  "conformsToExistingHolisticSchema": false,
+  "description": "Proposed field groups and lifecycle only. No actual run, commit, finding, artifact or configured pipeline is represented.",
+  "proposedStep": {
+    "id": "post-voice-review",
+    "kind": "Analysis",
+    "runMode": "Sequential",
+    "defaultEnabled": false,
+    "policy": {
+      "mode": "advisory",
+      "owner": "project-owner",
+      "sourceWrites": false,
+      "automaticFollowUpTasks": false,
+      "automaticModelReruns": false
+    }
+  },
+  "proposedEnvelope": {
+    "schemaVersion": 1,
+    "identity": {
+      "reviewId": "synthetic-review-001",
+      "taskId": "synthetic-task-001",
+      "runId": "synthetic-run-001",
+      "attemptId": "synthetic-attempt-001",
+      "stepId": "post-voice-review",
+      "requestHash": null,
+      "producer": "not-implemented",
+      "producerVersion": null
+    },
+    "subject": {
+      "repositoryId": "synthetic-website",
+      "requestedRef": "main",
+      "resolvedCommit": null,
+      "snapshotRef": null,
+      "snapshotHash": null,
+      "files": [],
+      "routes": ["/"],
+      "adapterVersion": null
+    },
+    "context": {
+      "manifestRef": null,
+      "manifestHash": null,
+      "selectedDecisionIds": [],
+      "missing": ["No context manifest was resolved for this synthetic example."]
+    },
+    "execution": {
+      "state": "not-run",
+      "startedAt": null,
+      "completedAt": null,
+      "actualModel": null,
+      "usage": null
+    },
+    "coverage": {
+      "requestedDimensions": ["page-purpose", "seo", "consistency", "visual"],
+      "inspectedDimensions": [],
+      "inspectedFiles": [],
+      "capturedViewports": [],
+      "omissions": [{"scope": "all", "reason": "Planning example; no analysis or browser capture performed."}]
+    },
+    "findings": [],
+    "evidence": [],
+    "outcome": "unavailable",
+    "interpretation": "Empty findings are not a clean review; no dimension was inspected."
+  },
+  "validationNeededBeforeImplementation": [
+    "Versioned envelope and repository-policy schemas",
+    "Non-null immutable subject and request identity for an admitted run",
+    "Repository containment, source and artifact hash verification",
+    "Attempt-bound idempotency and durable result persistence",
+    "Separate advisory status mapping and owner-controlled follow-up policy"
+  ]
+}

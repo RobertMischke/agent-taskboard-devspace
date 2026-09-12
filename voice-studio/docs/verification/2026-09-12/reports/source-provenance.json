@@ -1,0 +1,31 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": "2026-09-12T09:49:22.161Z",
+  "captureTimeBasis": "Timestamp recorded in the original report.",
+  "file": "src/app/content/home.ts",
+  "sourceVersion": "e596c6ef91b9f61a065e9439af6b94c8f819b0f312dd225d77590740ac0ab019",
+  "git": {
+    "available": true,
+    "isRepository": true,
+    "branch": "main",
+    "head": "160f77a9ea4aeebbd55d0bcc98bba1dcf7725985",
+    "relativePath": "04-angular-static-final/src/app/content/home.ts",
+    "status": "clean",
+    "dirty": false,
+    "repositoryDirty": true,
+    "tracked": true
+  },
+  "gitHeadMatches": true,
+  "sourceVersionMatches": true,
+  "historicalTask": {
+    "createdAt": "2026-09-06T21:07:19.4856688+00:00",
+    "status": "applied",
+    "sourceVersion": "a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+    "proposalExpectedVersion": "a26781642cc25aeda76a0acfccd9d69f61d9919b15a312f80198a2e6c6d23eb0",
+    "openSourceVersion": "e596c6ef91b9f61a065e9439af6b94c8f819b0f312dd225d77590740ac0ab019"
+  },
+  "pageErrorCount": 0,
+  "forbiddenRequestCount": 0,
+  "success": true,
+  "scope": "Historical local working-copy observation. main/160f77a9 is not a claim about the current checkout or public deployment. File clean and repository dirty are separate values. Saved task diff is not the current Git diff."
+}

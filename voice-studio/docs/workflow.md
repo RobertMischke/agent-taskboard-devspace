@@ -4,6 +4,19 @@ Preview 0.3 distinguishes a running application from a folder of documents.
 Both retain the original source, durable feedback, explicit source tasks and
 version-checked proposals. The rule wiki explains the shared local checks.
 
+The [language, navigation and review-choice guide](usability.md) covers English/
+German UI, compact and overlay navigation, keep decisions, alternatives and current
+file/Git provenance. The [holistic review design](holistic-review.md) describes
+planned page/project tasks and portable Git context; those evaluators are not part
+of the implemented file workflow below.
+
+## Open and resume Studio
+
+Pair once with the current code and leave **Remember this browser for 7 days**
+selected to return after reloading or reopening the browser. **Log out** revokes
+this browser’s access. The lifetime is fixed; use the same local app address.
+See [browser sessions and the HTTP contract](browser-session.md).
+
 ## Angular applications: browse the running app
 
 Start the application's own development server. Register its project directory
@@ -73,9 +86,9 @@ rejected when the source adapter cannot preserve the structure safely.
 
 1. Browse the application or folder in its normal context.
 2. Open local findings or select an unmarked mapped passage.
-3. Read the rule’s explanation and save contextual feedback beside the source.
+3. Read the rule’s explanation. Keep the wording or compare a suggestion; feedback is optional.
 4. Optionally start a semantic review of the whole selected file.
-5. Write a replacement, or save a task with an instruction and selected feedback.
+5. Explicitly generate alternatives, write an optional replacement, or save a task with an instruction and selected feedback.
 6. Start the saved task explicitly through the Coding-Agent-Runner.
 7. Read its outcome and inspect any complete source diff.
 8. Apply the proposal explicitly.
@@ -162,7 +175,7 @@ explains source mapping, feedback, model choice and language-tool candidates.
 LanguageTool, Vale, CSpell, Hunspell and textlint are not integrated analyzers in
 this preview. See [language tooling](language-tooling.md) and
 [third-party notices](../THIRD_PARTY_NOTICES.md) for engine/data separation and the
-603-entry resolved npm metadata inventory.
+604-entry resolved npm metadata inventory.
 
 The [Agent Studio website review](reviews/agent-studio-website-2026-09-06.md) covers
 all 27 routes and 30 content files. Its 36 findings retain exact quotes, file

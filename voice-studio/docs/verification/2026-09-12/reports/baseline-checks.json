@@ -1,0 +1,25 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": "2026-09-12",
+  "captureTimeBasis": "Date recorded in the original report; exact capture time unavailable.",
+  "checks": {
+    "library": 22,
+    "backend": 91,
+    "runner": 31,
+    "tasks": 40,
+    "projectChecks": 44,
+    "uiState": 17
+  },
+  "total": 245,
+  "build": {
+    "library": "passed",
+    "angular": "passed",
+    "dotnet": "passed",
+    "dotnetWarnings": 0,
+    "dotnetErrors": 0
+  },
+  "browserE2eRerun": false,
+  "liveModelCalls": 0,
+  "websiteCheckRerun": false,
+  "scope": "Baseline recorded earlier on 2026-09-12; does not include every later selection or source-context test."
+}

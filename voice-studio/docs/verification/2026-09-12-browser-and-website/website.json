@@ -1,0 +1,491 @@
+{
+  "capturedAt": "2026-09-12T10:46:51.627Z",
+  "views": [
+    {
+      "route": "home",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "home",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "studio",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "studio",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "library",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "library",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "docs",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "docs",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "project-reviews",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "project-reviews",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/workflow",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/workflow",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/session",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/session",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/usability",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/usability",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/library",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/library",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/library-types",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/library-types",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/live-bridge",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/live-bridge",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/runner-integration",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/runner-integration",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/checks",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/checks",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/agent-integration",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/agent-integration",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/holistic-review",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/holistic-review",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/model-strategy",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/model-strategy",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/language-tooling",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/language-tooling",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/maintaining",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/maintaining",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/commands",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/commands",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/verification",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/verification",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "guides/notices",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "guides/notices",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "home",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "home",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "studio",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "studio",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "library",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "library",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "docs",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "docs",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "project-reviews",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "project-reviews",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/workflow",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/workflow",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/session",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/session",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/usability",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/usability",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/library",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/library",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/library-types",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/library-types",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/live-bridge",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/live-bridge",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/runner-integration",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/runner-integration",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/checks",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/checks",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/agent-integration",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/agent-integration",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/holistic-review",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/holistic-review",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/model-strategy",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/model-strategy",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/language-tooling",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/language-tooling",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/maintaining",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/maintaining",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/commands",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/commands",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/verification",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/verification",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "guides/notices",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "guides/notices",
+      "language": "de",
+      "width": 390
+    }
+  ],
+  "localLinks": 168,
+  "errors": [],
+  "libraryDemo": "actual bundle, marks toggle, native selection, language switch",
+  "guideFeatures": "HTML, local routes and fragments, source download, exact code copy, responsive navigation",
+  "homepage": "real UI screenshot and equal-width typed code panels",
+  "noJavaScript": "English content and all guide navigation available",
+  "build": {
+    "builtAt": "2026-09-12T10:46:29.770Z",
+    "inputs": {
+      "website/site.css": "c9dcde5d592ee53322d1a3af1ec98f41d815100afd36548c81d8a69390204780",
+      "website/docs.css": "834ae109c9608f5cbff3ccdf5f5f82c0e812d7032eac3f70b837607fcaa1f99c",
+      "website/site.js": "1a356c01054024c031cdeee02bc4cd75e753e8cdd948ec10ed445a292b20826b",
+      "website/assets/studio-review.png": "812a75da5a17f371937398ede7f0131084289f3974bf5ddc8cf093349cfec742",
+      "website/assets/studio-review.capture.json": "7983a44aee4088fe84654e6480afe35bf755ad53627058d082e1824b3ab3c8f6",
+      "packages/review/dist/voice-review.js": "7b8761e5b846673cbee005fec59cdd5d63b2a8b2b3826d127823e480dc2596c4",
+      "docs/licenses/npm-inventory.json": "925d3c094935a7d36025f3e8f72ba03cc3139c31756746bf61e1bda345652a46",
+      "packages/review/examples/typescript.ts": "8913fddf00a43604df79632008037ae9bce506b17f6b3da5c75d6e8c09ca2102",
+      "packages/review/examples/javascript.js": "0a2a8f85ed9938187b2243bc88cb009e7fe6a1e0827bfd7faf6993c70a4fb852",
+      "packages/review/examples/standalone.js": "00b44420306d77037fec9db15fe448b94635aa8ed93029fd487a5d0755449169",
+      "scripts/verify-holistic-examples.mjs": "3102effc0da4fb556df32f2967b8f931a7bcff2301f6f68960e93fc0098ccf67",
+      "docs/schemas/holistic-review.v1.schema.json": "14815c10f690bc5be585088ce646cb8bfe5d860f357d035a2bcfdeedd7c6f202",
+      "docs/examples/agt-voice-review-plan.v1.json": "c8ab87d567976cd573c63c92cc2823e620a8d25fc2431706baf922f8ddc41dc5",
+      "docs/examples/holistic-page-request.v1.json": "e07c842dd865b3132368809f6d6bee21d3bbd323592809335bf745daa69bb7a5",
+      "docs/examples/holistic-site-result.v1.json": "f03f7d5e6dd7efca216e848402ca96bcdf26c2a39158f1881be25e39b744d2df",
+      "docs/verification/2026-09-12/manifest.json": "29fd7eac72686ff119b60eee3a06e696975be7336b0e86e9c5412c3aa369adc8",
+      "docs/verification/2026-09-12/README.md": "eae9239844736236a7d58df6d6eda927f336918ba35aa23b51ccd2e9536023ea",
+      "docs/verification/2026-09-12/reports/app-startup.json": "7d8a258c3e3023d9faff495d6080bb28d2e0a0a11bc741f625ae618edc21d1c4",
+      "docs/verification/2026-09-12/reports/baseline-checks.json": "b086758cf87bc24b8f8832eeba29290dac032d81c140ea53e8927c38512d3200",
+      "docs/verification/2026-09-12/reports/dossier-handoff.json": "7c9667a7868103303368c1dc83dc91417c126249305ac132a7f5eda966b02764",
+      "docs/verification/2026-09-12/reports/navigation-language.json": "f1050dd93b7359e28d169b9dfdad3170805aea5883e34ec8e7ba9eb6bf5d9a9b",
+      "docs/verification/2026-09-12/reports/selection-workflow-visual.json": "db55eed6cb53a2002cd2d144f9a19b5c06def49082723c3c41f71531fd18da30",
+      "docs/verification/2026-09-12/reports/source-provenance.json": "96a8d157fdf3a2e8193b72b30e1289f9f70305ca01a5870130e1c5f1749ffb7b",
+      "docs/verification/2026-09-12/reports/voice-website.json": "7c0ae1011caab55c0105dff8fa98b6fefb6b8f78e7030b15d4d5f0ec5cb2de9a",
+      "docs/verification/2026-09-12/screenshots/focus-navigation-mobile.png": "7613c7d9d714e8901fa9d61472ecf259f55abc249cc20983ac9de17318cd9b61",
+      "docs/verification/2026-09-12/screenshots/library-demo-mobile.png": "6d75615b9f8ac487d3a21ac06a76340ece42ba8cf3645f23b8eb748348600d6d",
+      "docs/verification/2026-09-12/screenshots/selection-keep-persisted.png": "42a1c07f8ebc0a0919dafeb6c18085b6651e6e5ec485c956d8579b73f0250ffd",
+      "docs/workflow.md": "b5f0d91e7b1cef964700b1ab3d1c71ad95cddf2a53ed32a5f0b3d1cf2fab8f72",
+      "docs/browser-session.md": "bf964dc338b2f4b1e9ed9037c8e2b8d603f9167be0dba7ceb2081035f0546f40",
+      "docs/usability.md": "19f7f9070513d1621212e1684b1529e9bd74783def5b7f462e26b0cc36f884c4",
+      "packages/review/README.md": "623febd95111514c9421ee55d15e702696650fe99bfaa9734e87593935b034e0",
+      "docs/library-types.md": "a7b626ebc72e683afb96946eb3dabbc0bf7d030f9a41eb94ec069289423c5e1e",
+      "packages/review/LIVE-BRIDGE.md": "dcdae60b89fe8c47b0a270a01851a584ecc4ac2da089eef9eb2dad66fa3ed27b",
+      "docs/runner-integration.md": "1b1ef823d8dd42fc9c1df1c606f9cbede9772189a855d52f39f101e5ec0c402d",
+      "backend/CHECKS.md": "9751f75b9f282082b240227574eba6ce366c2deffdd283c48eeab68f210ce40a",
+      "docs/agent-integration.md": "db32afd4a7f4b84186c42ddfcdfc42e3f645f25d80876ee152c5348ce6cbfe7f",
+      "docs/holistic-review.md": "1ad99ac94ddf9a33fa9deef90b8118dd8d90cdd4ae9882885a85e866531af051",
+      "docs/model-strategy.md": "cc5db0b6833557f9047bb5956d67c228a14a177328a0160b666586d2cc55fc80",
+      "docs/language-tooling.md": "2faab883e2190576633cd0dfc3c89710bec9f60a2f1460cf19e4a63cd2a93300",
+      "docs/maintaining.md": "f4a556dadc5f97e4f0935a3dfb21a1b6b3efba465dcfda7e6436dc4fc45a5e77",
+      "scripts/README.md": "4766f9d265f0e72c76f23d49a1944607b8a507dd878e8b631257ea2b3ecdcd34",
+      "THIRD_PARTY_NOTICES.md": "b54f2c4a6f1705c6371b15d8eb00e96d78a1d268e6446d88852dbcfd0ea8ae9c",
+      "website/site.mjs": "bdca5469889d70bc9ac38fc1328f755bcc520472fe0620f3eff6dae2582ca8df",
+      "website/build.mjs": "86b3ddab267529985bfdbef515fb02ee23ed282ffe92e997baa46f734fce08a7",
+      "website/guides.mjs": "f3fa7f0de9e924c29d466a2f84d14f1030d6eb206e843ae0ce1cc76004a66682",
+      "website/render-guide.mjs": "c6b96be8e525f6f3d96ca801923675627d7b6ec43b33d325627e9b6df66b4aa1",
+      "website/template.mjs": "d87e0dff98712385487b43a57eeb273235a4aa72da152be7a7cb9cb1584170c0",
+      "package-lock.json": "c896602b8a2e7a7d70fffef78b44e7178adec792520e1330a7c799504b343a92"
+    }
+  },
+  "git": {
+    "available": true,
+    "commit": "3f9551469331ea18c153aeb82ec3cfcdf1c7af03",
+    "branch": "main",
+    "sourcePath": "voice-studio/",
+    "workingTreeDirty": true
+  }
+}

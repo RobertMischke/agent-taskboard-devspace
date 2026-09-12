@@ -18,7 +18,7 @@ Pin the portable NuGet package in `VoiceStudio.Api.csproj`:
 
 Version 0.7.0 is available in the local NuGet cache used during implementation.
 It exposes the streaming, permission and clean-context APIs used here. The
-adjacent source checkout is `C:/Projects/coding-agent-runner`; its newer model
+adjacent source checkout is the `coding-agent-runner` repository; its newer model
 discovery API is not assumed to exist in the pinned package. Restore/build use
 normal `dotnet restore` and `dotnet build`. No absolute project reference or
 external checkout is required for consumers.

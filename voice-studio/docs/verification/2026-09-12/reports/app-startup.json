@@ -1,0 +1,17 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": "2026-09-12T08:39:55.857Z",
+  "captureTimeBasis": "Timestamp recorded in the original report.",
+  "studio": {
+    "status": "ok",
+    "service": "voice-studio",
+    "version": "0.3.0"
+  },
+  "managedStudioState": "running",
+  "pairedSuccessfully": true,
+  "mappedUnits": 56,
+  "browserErrorCount": 0,
+  "sourceWrites": 0,
+  "modelCalls": 0,
+  "scope": "Local managed startup and live bridge at capture time. Startup credentials, preview URL and source headline omitted."
+}

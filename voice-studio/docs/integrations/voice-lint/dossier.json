@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "voice-concept-revision",
+  "key": "VL-W1",
+  "title": "Voice Lint and Voice Studio: readiness",
+  "statusText": "2026-09-12, Preview 0.3: seven-day sessions and typed Library verified; 16 HTML guides; broader review and AGT planned",
+  "summary": "Updated 12 September 2026: Voice Studio supports supervised local review with seven-day browser access and logout, English/German UI, compact/overlay navigation, keep decisions, alternatives and file/Git provenance. Session verification passed 34 backend, 16 UI and 18 Chrome checks without model or source writes. The Library has tested TS/checkJs declarations and actual language-service completion/hover checks. Its bilingual website pairs a genuine Studio capture with typed code and renders 16 allowlisted English HTML guides; the expanded website passed 84 desktop/mobile EN/DE views, 168 links/assets/fragments, code copy and the actual Library demo. The owner-approved Agent Studio hero was restored again after the later b9d84b2 override. Goal-based reviews, SEO/consistency/visual tasks and AGT integration remain documented designs. No public deployment, Voice Lint analyzer/CLI/CI release or model qualification is claimed."
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "recordDate": "2026-09-12",
+  "curatedAt": "2026-09-12T10:50:05.193Z",
+  "purpose": "Local browser, Library and website follow-up evidence; no publication or model qualification claim.",
+  "files": [
+    {
+      "path": "website.json",
+      "bytes": 13735,
+      "sha256": "045a9ad9c39a197b2fae15c4244b2f7f39195a3460443b128b7487cd50dbc73c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2907,
+      "sha256": "3b95f480b3d21203dd32c2e6d50f0cfdf7959575c48f7a21ec03c178f23c866f"
+    }
+  ]
+}

@@ -14,9 +14,9 @@ function loadComponent(file, name) {
   const timers = new Map(); let nextTimer = 0;
   const signal = initial => { let value = initial; const get = () => value; get.set = next => { value = next; }; get.update = change => { value = change(value); }; return get; };
   const decorator = () => value => value;
-  const core = { Component: decorator, Input: decorator, Output: decorator, ViewChild: decorator,
+  const core = { Component: decorator, Input: decorator, Output: decorator, ViewChild: decorator, HostListener: decorator,
     EventEmitter: class { values = []; emit(value) { this.values.push(value); } }, signal, computed: fn => fn,
-    inject: () => ({ run: fn => fn(), bypassSecurityTrustHtml: value => value }), NgZone: class {} };
+    inject: () => ({ run: fn => fn(), bypassSecurityTrustHtml: value => value, locale: () => 'de', t: value => value }), NgZone: class {} };
   const compiled = ts.transpileModule(fs.readFileSync(new URL('../frontend/src/app/' + file, import.meta.url), 'utf8'), {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS, experimentalDecorators: true }, reportDiagnostics: true,
   });

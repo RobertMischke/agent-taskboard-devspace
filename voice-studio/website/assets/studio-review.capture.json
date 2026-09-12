@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-09-12T10:36:31.054Z",
+  "width": 1180,
+  "height": 820,
+  "scope": "Authentic local Voice Studio screenshot of the registered Agent Studio website, actual currently served homepage hero, English interface, compact navigation and source-mapped native selection. Read-only capture: no source, feedback, proposal, task or model writes.",
+  "source": "src/app/content/home.ts",
+  "selection": "Agent output scales. Human attention does not.",
+  "navigation": "compact",
+  "locale": "en",
+  "realProject": true
+}

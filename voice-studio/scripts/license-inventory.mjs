@@ -37,7 +37,7 @@ const report = {
 };
 await fs.mkdir(path.join(root, 'docs/licenses'), { recursive: true });
 await fs.writeFile(path.join(root, 'docs/licenses/npm-inventory.json'), JSON.stringify(report, null, 2) + '\n');
-const directNames = new Set(['@angular/common','@angular/compiler','@angular/core','@angular/forms','@angular/platform-browser','@angular/build','@angular/cli','@angular/compiler-cli','rxjs','tslib','typescript','esbuild','jsdom','@playwright/test']);
+const directNames = new Set(['@angular/common','@angular/compiler','@angular/core','@angular/forms','@angular/platform-browser','@angular/build','@angular/cli','@angular/compiler-cli','rxjs','tslib','typescript','esbuild','jsdom','@playwright/test','marked','ajv','ajv-formats']);
 console.log(JSON.stringify({
   packages: packages.length,
   missingLicenseMetadata: packages.filter(item => !item.declaredLicense).map(item => ({name:item.name,version:item.version})),

@@ -3,12 +3,21 @@
  * proposed unicode_code_point analysis contract. These are not core spans. */
 export type DocumentFormat = 'html' | 'markdown' | 'typescript';
 export interface ProjectSummary { id: string; name: string; description: string; documentCount: number; liveUrl?: string | null; sourceRoutes?: Record<string, string>; sourceContexts?: Record<string, string[]>; }
-export interface SourceSpan { start: number; end: number; encoding: 'utf16'; }
+/** Half-open offsets in the original source file, measured in UTF-16 code units.
+ * This is not a DOM-text or Unicode-code-point span; the source adapter maps between them. */
+export interface SourceSpan {
+  /** Inclusive offset into the source string. */
+  start: number;
+  /** Exclusive offset into the source string. */
+  end: number;
+  /** The only supported encoding in the current review contract. */
+  encoding: 'utf16';
+}
 export interface TextUnit { id: string; text: string; sourceSpan: SourceSpan; kind: string; language: string; }
 export interface Finding { id: string; ruleId: string; category: 'structure' | 'claims' | 'wording' | 'meta'; severity: 'info' | 'warning' | 'error'; message: string; explanation: string; quote: string; unitId: string; start: number; end: number; suggestion: string | null; engine: string; }
 export interface Feedback { id: string; unitId: string; quote: string; prefix: string; suffix: string; start: number; end: number; comment: string; category: string; status: 'open' | 'resolved' | 'needs_recheck' | 'needs_reattachment'; sourceVersion: string; createdAt: string; updatedAt: string; }
 export interface DocumentSummary { id: string; path: string; title: string; format: DocumentFormat; language: string; version: string; wordCount: number; findingCount: number; openFeedbackCount: number; }
-export interface DocumentDetail extends DocumentSummary { source: string; renderedHtml: string; units: TextUnit[]; findings: Finding[]; feedback: Feedback[]; reviewRevision: number; coverage: { checkedUnits: number; totalUnits: number; excludedRegions: number; notes: string[] }; }
+export interface DocumentDetail extends DocumentSummary { source: string; renderedHtml: string; units: TextUnit[]; findings: Finding[]; feedback: Feedback[]; reviewRevision: number; decisions?: SelectionDecision[]; coverage: { checkedUnits: number; totalUnits: number; excludedRegions: number; notes: string[] }; }
 export interface ProjectReport { projectId: string; documents: DocumentSummary[]; totalWords: number; findingCount: number; openFeedbackCount: number; categories: Record<string, number>; rules: Record<string, number>; }
 export interface FeedbackInput { unitId: string; quote: string; start: number; end: number; comment: string; category: string; expectedVersion: string; expectedReviewRevision: number; requestId: string; }
 export interface ProposalInput { unitId: string; start: number; end: number; replacement: string; expectedVersion: string; feedbackId?: string; }
@@ -64,3 +73,15 @@ export interface ProjectCheckRun {
   outcome?: 'completed' | 'failed' | 'cancelled';
 }
 export interface ProjectCheckStartInput { expectedSourceVersion: string; expectedConfigurationVersion: string; requestId: string; }
+
+/** A local operator decision; it never suppresses lint rules or changes source. */
+export interface ReviewSelection { unitId: string; start: number; end: number; quote: string; }
+export interface SelectionDecision extends ReviewSelection { id: string; sourceVersion: string; kind: 'keep'; status: 'current' | 'stale'; createdAt: string; findingId?: string | null; note?: string | null; }
+export interface SelectionDecisionInput extends ReviewSelection { expectedVersion: string; expectedReviewRevision: number; requestId: string; findingId?: string; note?: string; }
+export interface SelectionDecisionResult { decision: SelectionDecision; document: DocumentDetail; }
+export interface SelectionSuggestionInput extends ReviewSelection { expectedVersion: string; expectedReviewRevision: number; requestId: string; instruction?: string; }
+export interface SelectionAlternative { id: string; replacement: string; reason: string; }
+export interface SelectionSuggestionRun { id: string; projectId: string; documentId: string; sourceVersion: string; selection: ReviewSelection; status: 'running' | 'cancelling' | 'completed' | 'failed' | 'cancelled' | 'stale' | 'interrupted'; alternatives: SelectionAlternative[]; cli: string; model: string; thinkingLevel: string; createdAt: string; completedAt?: string | null; error?: string | null; }
+
+/** Bearer token stays in browser memory. Remembered access uses an HttpOnly cookie. */
+export interface BrowserSessionResult { token: string; remembered: boolean; expiresAt: string | null; }

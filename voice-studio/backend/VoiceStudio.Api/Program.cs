@@ -54,9 +54,11 @@ if (File.Exists(legacySession)) File.Delete(legacySession);
 builder.Services.AddSingleton(new ProjectStore(home));
 builder.Services.AddSingleton(provider => new RunnerReviewService(provider.GetRequiredService<ProjectStore>(), RunnerReviewOptions.FromEnvironment(), Path.Combine(sessionRoot, "runner")));
 builder.Services.AddSingleton<ImprovementTaskService>();
+builder.Services.AddSingleton<SourceContextService>();
 builder.Services.AddSingleton(provider => new ProjectCheckService(provider.GetRequiredService<ProjectStore>(), Path.Combine(sessionRoot, "checks.json")));
 var app = builder.Build();
 _ = app.Services.GetRequiredService<ProjectCheckService>(); // Freeze private check profiles at startup.
+var browserSessions = new BrowserSessionService(sessionRoot);
 var failedPairings = new Queue<DateTimeOffset>();
 var pairingGate = new object();
 var liveExample = new LiveExampleSite(home);
@@ -65,18 +67,18 @@ app.MapWhen(context => context.Connection.LocalPort == 5189, branch => branch.Ru
 app.Use(async (context, next) =>
 {
     var host = context.Request.Host;
-    var validHost = (host.Host is "localhost" or "127.0.0.1" or "[::1]" or "::1") && (host.Port is 4188 or 5188);
+    var validHost = BrowserSessionService.IsAllowedHost(host);
     if (!validHost) { context.Response.StatusCode = 403; await context.Response.WriteAsJsonAsync(new { error = "Host ist nicht für diese lokale Sitzung zugelassen." }); return; }
     var origin = context.Request.Headers.Origin.ToString();
-    if (!string.IsNullOrEmpty(origin) && !(new[] { "http://localhost:4188", "http://127.0.0.1:4188", "http://localhost:5188", "http://127.0.0.1:5188" }).Contains(origin))
+    if (!string.IsNullOrEmpty(origin) && !BrowserSessionService.IsLocalOrigin(origin))
     { context.Response.StatusCode = 403; await context.Response.WriteAsJsonAsync(new { error = "Origin ist nicht für diese lokale Sitzung zugelassen." }); return; }
     context.Response.Headers["X-Content-Type-Options"] = "nosniff";
     context.Response.Headers["Referrer-Policy"] = "no-referrer";
     if (context.Request.Path.StartsWithSegments("/api"))
     {
         context.Response.Headers.CacheControl = "no-store";
-        var publicEndpoint = context.Request.Path is var p && (p == "/api/session" || p == "/api/session/pair" || p == "/api/health");
-        if (!publicEndpoint && !FixedEquals(context.Request.Headers.Authorization.ToString(), "Bearer " + token))
+        var publicEndpoint = BrowserSessionService.IsPublicSessionPath(context.Request.Path) || context.Request.Path == "/api/health";
+        if (!publicEndpoint && !FixedEquals(context.Request.Headers.Authorization.ToString(), "Bearer " + token) && !browserSessions.Authorizes(context))
         { context.Response.StatusCode = 401; await context.Response.WriteAsJsonAsync(new { error = "Bitte lokale Sitzung mit dem Pairing-Code verbinden." }); return; }
     }
     try { await next(context); }
@@ -86,21 +88,29 @@ app.Use(async (context, next) =>
 });
 
 app.MapVoiceSemanticReview();
+app.MapSelectionReviews();
+app.MapGet("/api/projects/{projectId}/documents/{documentId}/source-context", (string projectId, string documentId, bool? includeGit, SourceContextService service, CancellationToken ct) => service.GetAsync(projectId, documentId, includeGit ?? false, ct));
 app.MapImprovementTasks();
 app.MapProjectChecks();
 app.MapFallback("/api/{**path}", () => Results.NotFound(new { error = "API-Route nicht gefunden.", message = "API-Route nicht gefunden." }));
 app.MapGet("/api/health", () => new { status = "ok", service = "voice-studio", version = "0.3.0" });
-app.MapGet("/api/session", (HttpContext context) => new { paired = FixedEquals(context.Request.Headers.Authorization.ToString(), "Bearer " + token), requiresPairing = true, pairingFile = ".voice-studio/session-location.json", mode = "local" });
-app.MapPost("/api/session/pair", (PairInput input) =>
+app.MapGet("/api/session", (HttpContext context) => new { paired = FixedEquals(context.Request.Headers.Authorization.ToString(), "Bearer " + token) || browserSessions.Authorizes(context), requiresPairing = true, pairingFile = ".voice-studio/session-location.json", mode = "local" });
+app.MapPost("/api/session/pair", (PairInput input, HttpContext context) =>
 {
     lock (pairingGate)
     {
         while (failedPairings.TryPeek(out var time) && time < DateTimeOffset.UtcNow.AddMinutes(-1)) failedPairings.Dequeue();
         if (failedPairings.Count >= 10) throw new ApiError(429, "Zu viele Pairing-Versuche. Bitte eine Minute warten.");
         if (!FixedEquals(input.Code?.Trim() ?? "", pairingCode)) { failedPairings.Enqueue(DateTimeOffset.UtcNow); throw new ApiError(401, "Pairing-Code stimmt nicht."); }
-        return Results.Ok(new { token });
+        return Results.Ok(browserSessions.Pair(context, input.Remember));
     }
 });
+app.MapPost("/api/session/resume", (HttpContext context) =>
+{
+    var result = browserSessions.Resume(context);
+    return result is null ? Results.Ok(new { paired = false }) : Results.Ok(result);
+});
+app.MapPost("/api/session/logout", (HttpContext context) => { browserSessions.Logout(context); return Results.NoContent(); });
 app.MapGet("/api/projects", (ProjectStore store) => store.ListProjects());
 app.MapPost("/api/projects/register", (RegisterInput input, ProjectStore store) => store.Register(input));
 app.MapPatch("/api/projects/{projectId}/browser", (string projectId, BrowserInput input, ProjectStore store) => store.SetBrowser(projectId, input));

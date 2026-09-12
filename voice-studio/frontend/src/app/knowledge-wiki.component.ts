@@ -1,16 +1,18 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KnowledgeService } from './knowledge.service';
+import { I18nService, TranslatePipe } from './i18n.service';
 
 @Component({
   selector: 'voice-knowledge-wiki',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './knowledge-wiki.component.html',
   styleUrl: './knowledge-wiki.component.css',
 })
 export class KnowledgeWikiComponent implements AfterViewInit {
   readonly knowledge = inject(KnowledgeService);
+  readonly i18n = inject(I18nService);
   readonly selectedId = signal('review-basics');
   readonly search = signal('');
   @Input() set articleId(value: string) { this.selectedId.set(value || 'review-basics'); }
@@ -20,8 +22,9 @@ export class KnowledgeWikiComponent implements AfterViewInit {
   @ViewChild('article') articleElement?: ElementRef<HTMLElement>;
   readonly selected = computed(() => this.knowledge.entry(this.selectedId()) ?? this.knowledge.entry('review-basics'));
   readonly results = computed(() => {
-    const terms = this.search().toLocaleLowerCase('de').trim().split(/\s+/).filter(Boolean);
-    return this.knowledge.entries().filter(entry => terms.every(term => JSON.stringify(entry).toLocaleLowerCase('de').includes(term)));
+    const locale = this.i18n.locale();
+    const terms = this.search().toLocaleLowerCase(locale).trim().split(/\s+/).filter(Boolean);
+    return this.knowledge.entries().filter(entry => terms.every(term => JSON.stringify(entry).toLocaleLowerCase(locale).includes(term)));
   });
   readonly sections = computed(() => [...new Set(this.results().map(entry => entry.section))]);
   ngAfterViewInit(): void { this.dialog?.nativeElement.showModal(); }

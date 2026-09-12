@@ -46,6 +46,9 @@ public sealed record SemanticReviewRun
     public string ProjectId { get; init; } = "";
     public string DocumentId { get; init; } = "";
     public string SourceVersion { get; init; } = "";
+    public ReviewSelection? Selection { get; init; }
+    public int? ReviewRevision { get; init; }
+    public SelectionAlternative[] Alternatives { get; init; } = [];
     public string? TaskId { get; init; }
     public string? TaskDisposition { get; init; }
     public string? TaskExplanation { get; init; }
@@ -129,7 +132,7 @@ public sealed class CodingAgentVoiceReviewRunner : IVoiceReviewRunner
 
 /** Runs only on an explicit host request. The model receives staged context,
  * produces advisory JSON, and never receives a source-apply operation. */
-public sealed class RunnerReviewService : IDisposable
+public sealed partial class RunnerReviewService : IDisposable
 {
     private readonly ProjectStore store;
     private readonly RunnerReviewOptions options;
@@ -195,7 +198,7 @@ public sealed class RunnerReviewService : IDisposable
     internal Task<SemanticReviewRun> StartTaskAsync(string projectId, string documentId, SemanticReviewInput input, string taskId, string[] feedbackIds, int reviewRevision, string contextFingerprint, CancellationToken ct = default)
         => StartCoreAsync(projectId, documentId, input, taskId, feedbackIds, reviewRevision, contextFingerprint, ct);
 
-    private async Task<SemanticReviewRun> StartCoreAsync(string projectId, string documentId, SemanticReviewInput input, string? taskId, string[]? feedbackIds, int? reviewRevision, string? contextFingerprint, CancellationToken ct)
+    private async Task<SemanticReviewRun> StartCoreAsync(string projectId, string documentId, SemanticReviewInput input, string? taskId, string[]? feedbackIds, int? reviewRevision, string? contextFingerprint, CancellationToken ct, SelectionSuggestionInput? suggestion = null)
     {
         if (string.IsNullOrWhiteSpace(input.RequestId) || !Regex.IsMatch(input.RequestId, @"^[a-zA-Z0-9_-]{1,160}$")) throw new ApiError(400, "Eine eindeutige Review-Request-ID ist erforderlich.");
         if ((input.Instruction?.Length ?? 0) > 12000) throw new ApiError(400, "Die Review-Anweisung ist zu lang.");
@@ -206,10 +209,12 @@ public sealed class RunnerReviewService : IDisposable
                 ? store.GetReviewRunContext(projectId, documentId, input.ExpectedVersion)
                 : store.GetTaskContext(projectId, documentId, input.ExpectedVersion, reviewRevision.Value);
             if (contextFingerprint is not null && ProjectStore.TaskContextFingerprint(context) != contextFingerprint) throw new ApiError(409, "Task-Kontext wurde vor dem Runner-Start geändert.");
-            var id = ProjectStore.Hash(projectId + "\n" + documentId + "\n" + input.RequestId)[..32];
+            var selection = suggestion is null ? null : new ReviewSelection(suggestion.UnitId, suggestion.Start, suggestion.End, suggestion.Quote);
+            if (selection is not null) ProjectStore.ValidateSelection(context.Document, selection);
+            var id = ProjectStore.Hash(projectId + "\n" + documentId + "\n" + (selection is null ? "" : "selection:") + input.RequestId)[..32];
             var folder = ProjectStore.Contained(context.ProjectRoot, ".voice-lint/semantic-runs/" + id);
             var runFile = ProjectStore.Contained(context.ProjectRoot, ".voice-lint/semantic-runs/" + id + "/run.json");
-            var fingerprint = ProjectStore.Hash(taskId is null ? JsonSerializer.Serialize(input, ProjectStore.Json) : JsonSerializer.Serialize(new { input, taskId, feedbackIds, reviewRevision, contextFingerprint }, ProjectStore.Json));
+            var fingerprint = ProjectStore.Hash(suggestion is not null ? JsonSerializer.Serialize(suggestion, ProjectStore.Json) : taskId is null ? JsonSerializer.Serialize(input, ProjectStore.Json) : JsonSerializer.Serialize(new { input, taskId, feedbackIds, reviewRevision, contextFingerprint }, ProjectStore.Json));
             if (File.Exists(runFile))
             {
                 var existing = ReadRun(runFile);
@@ -227,7 +232,8 @@ public sealed class RunnerReviewService : IDisposable
             if (contextFingerprint is not null && ProjectStore.TaskContextFingerprint(context) != contextFingerprint) throw new ApiError(409, "Task-Kontext wurde während der Runner-Statusprüfung geändert; kein Modelllauf gestartet.");
             var document = context.Document;
             if (document.Units.Length == 0) throw new ApiError(422, "Diese Datei enthält keine unterstützten Textabschnitte für ein semantisches Review.");
-            var contextJson = BuildContextJson(context, feedbackIds);
+            if (selection is not null) ProjectStore.ValidateSelection(document, selection);
+            var contextJson = selection is null ? BuildContextJson(context, feedbackIds) : BuildSuggestionContextJson(context, selection);
             CheckContextSize(contextJson);
             Directory.CreateDirectory(folder); ProjectStore.EnsureNoLinks(folder);
             // A durable claim prevents simultaneous hosts/retries from launching twice.
@@ -237,7 +243,8 @@ public sealed class RunnerReviewService : IDisposable
             {
                 Id = id, ProjectId = projectId, DocumentId = documentId, SourceVersion = document.Version,
                 RequestFingerprint = fingerprint, TaskId = taskId, Cli = options.Cli!, Model = options.Model!, ThinkingLevel = options.ThinkingLevel!,
-                SuppliedUnits = document.Units.Length, UnitsFingerprint = ProjectStore.UnitsFingerprint(document.Units),
+                Selection = selection, ReviewRevision = suggestion?.ExpectedReviewRevision,
+                SuppliedUnits = selection is null ? document.Units.Length : 1, UnitsFingerprint = ProjectStore.UnitsFingerprint(document.Units),
                 ContextFiles = context.ContextFiles.Select(file => new SemanticContextFile(file.Path, (file.Version ?? ProjectStore.Hash(file.Source)), file.Source.Length, file.Truncated)).ToArray(),
                 Notes = ["Provisorisches semantisches Review über CodingAgentRunner; keine Voice-Modellqualifikation und keine automatische Quellenänderung.", "Zeit- und Ausgabegrenzen sind aktiv. Ein harter Token- oder Kostenhöchstbetrag wird vom CLI-Runner nicht garantiert."]
             };
@@ -262,12 +269,12 @@ public sealed class RunnerReviewService : IDisposable
         if (run.ProjectId != projectId || run.DocumentId != documentId) throw new ApiError(404, "Review gehört zu einer anderen Datei.");
         if (run.Status == "completed" && !ContextUnchanged(run))
         {
-            run = run with { Status = "stale", Findings = [], Error = "Quelle oder Textzuordnung oder Komponentenkontext wurde geändert. Ergebnisse werden nicht auf den neuen Text angewendet." };
+            run = run with { Status = "stale", Findings = [], Alternatives = [], Error = "Quelle oder Textzuordnung oder Komponentenkontext wurde geändert. Ergebnisse werden nicht auf den neuen Text angewendet." };
             SaveRun(path, run);
         }
         return run;
     }
-    public SemanticReviewRun[] ListRuns(string projectId, string documentId)
+    public SemanticReviewRun[] ListRuns(string projectId, string documentId, bool alternativesOnly = false)
     {
         var detail = store.GetDocument(projectId, documentId);
         var context = store.GetReviewRunContext(projectId, documentId, detail.Version);
@@ -282,7 +289,7 @@ public sealed class RunnerReviewService : IDisposable
             if (!File.Exists(path)) continue;
             var run = ReadRun(path);
             if (run.Id != id) throw new ApiError(409, "Stored review ID does not match its directory.");
-            if (run.ProjectId == projectId && run.DocumentId == documentId) runs.Add(run);
+            if (run.ProjectId == projectId && run.DocumentId == documentId && (run.Selection is not null) == alternativesOnly) runs.Add(run);
         }
         return runs.OrderByDescending(run => run.CreatedAt, StringComparer.Ordinal).Take(100).Select(run =>
         {
@@ -290,7 +297,7 @@ public sealed class RunnerReviewService : IDisposable
             var current = RecoverOrRead(run, path);
             if (current.Status == "completed" && !ContextMatches(current, context))
             {
-                current = current with { Status = "stale", Findings = [], Error = "Quelle, Textzuordnung oder Komponentenkontext wurde geaendert. Erneutes Review erforderlich." };
+                current = current with { Status = "stale", Findings = [], Alternatives = [], Error = "Quelle, Textzuordnung oder Komponentenkontext wurde geaendert. Erneutes Review erforderlich." };
                 SaveRun(path, current);
             }
             return current;
@@ -320,7 +327,7 @@ public sealed class RunnerReviewService : IDisposable
             {
                 RunId = run.Id, WorkingDirectory = workspace, Model = run.Model, ThinkingLevel = run.ThinkingLevel,
                 PermissionMode = CliPermissionModes.ReadOnly, ContextMode = CliContextModes.Clean,
-                Prompt = run.TaskId is null ? BuildPrompt(contextJson, instruction) : BuildTaskPrompt(contextJson, instruction)
+                Prompt = run.Selection is not null ? BuildSuggestionsPrompt(contextJson, instruction) : run.TaskId is null ? BuildPrompt(contextJson, instruction) : BuildTaskPrompt(contextJson, instruction)
             };
             await foreach (var item in runner.StreamAsync(request, cancellation.Token))
             {
@@ -340,12 +347,22 @@ public sealed class RunnerReviewService : IDisposable
             cancellation.Token.ThrowIfCancellationRequested();
             if (ended is null || ended.Outcome != RunOutcome.Completed || ended.ExitCode != 0)
                 throw new ApiError(422, "Runner hat das Review nicht erfolgreich abgeschlossen: " + (ended?.Reason ?? "kein erfolgreicher Abschluss"));
-            var result = ValidateOutput(output.ToString(), document, run.Id, run.Cli, actualModel ?? run.Model, run.TaskId is not null);
-            if (!ContextUnchanged(run)) run = run with { Status = "stale", Error = "Quelle, Textzuordnung oder Komponentenkontext hat sich während des Reviews geändert. Erneut prüfen; keine aktuellen Befunde übernommen." };
-            else run = run with { Status = "completed", Findings = result.Findings, ReviewedUnitIds = result.ReviewedUnitIds, Notes = [.. run.Notes, .. result.Notes], TaskDisposition = result.TaskDisposition, TaskExplanation = result.TaskExplanation };
+            if (run.Selection is not null)
+            {
+                var alternatives = ValidateSuggestionsOutput(output.ToString(), document, run.Selection, run.Id);
+                run = !ContextUnchanged(run)
+                    ? run with { Status = "stale", Alternatives = [], Error = "The selected source or review context changed. Generate new alternatives for the current version." }
+                    : run with { Status = "completed", Alternatives = alternatives };
+            }
+            else
+            {
+                var result = ValidateOutput(output.ToString(), document, run.Id, run.Cli, actualModel ?? run.Model, run.TaskId is not null);
+                if (!ContextUnchanged(run)) run = run with { Status = "stale", Error = "Quelle, Textzuordnung oder Komponentenkontext hat sich während des Reviews geändert. Erneut prüfen; keine aktuellen Befunde übernommen." };
+                else run = run with { Status = "completed", Findings = result.Findings, ReviewedUnitIds = result.ReviewedUnitIds, Notes = [.. run.Notes, .. result.Notes], TaskDisposition = result.TaskDisposition, TaskExplanation = result.TaskExplanation };
+            }
         }
-        catch (OperationCanceledException) { runner.Stop(run.Id); run = run with { Status = "cancelled", Findings = [], Error = "Review wurde abgebrochen oder hat die konfigurierte Laufzeit überschritten." }; }
-        catch (Exception error) { runner.Stop(run.Id); run = run with { Status = "failed", Findings = [], Error = error.Message }; }
+        catch (OperationCanceledException) { runner.Stop(run.Id); run = run with { Status = "cancelled", Findings = [], Alternatives = [], Error = "Review wurde abgebrochen oder hat die konfigurierte Laufzeit überschritten." }; }
+        catch (Exception error) { runner.Stop(run.Id); run = run with { Status = "failed", Findings = [], Alternatives = [], Error = error.Message }; }
         finally
         {
             try
@@ -381,7 +398,7 @@ public sealed class RunnerReviewService : IDisposable
         catch (ApiError) { return false; }
     }
     private static bool ContextMatches(SemanticReviewRun run, ReviewRunContext current)
-        => current.Document.Version == run.SourceVersion && run.UnitsFingerprint == ProjectStore.UnitsFingerprint(current.Document.Units) && current.ContextFiles
+        => current.Document.Version == run.SourceVersion && (run.Selection is null || run.ReviewRevision == current.Document.ReviewRevision) && run.UnitsFingerprint == ProjectStore.UnitsFingerprint(current.Document.Units) && current.ContextFiles
             .Select(file => new SemanticContextFile(file.Path, (file.Version ?? ProjectStore.Hash(file.Source)), file.Source.Length, file.Truncated))
             .SequenceEqual(run.ContextFiles);
     private string RunPath(string projectId, string documentId, string runId)

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "recordDate": "2026-09-12",
+  "curatedAt": "2026-09-12T10:09:25.035Z",
+  "purpose": "Git-ready historical evidence; not runtime product data.",
+  "capturePolicy": "capturedAt is present only when recorded by the original evidence. sourceModifiedAt is filesystem metadata, not a claimed execution time.",
+  "integrityPolicy": "SHA-256 and byte length for every retained file except this self-referential manifest.",
+  "originalPathPolicy": "source fields are logical paths at capture time, not live links or absolute host paths.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 7805,
+      "sha256": "eae9239844736236a7d58df6d6eda927f336918ba35aa23b51ccd2e9536023ea",
+      "capturedAt": null,
+      "captureTimeBasis": "Documentation created during curation; no test capture."
+    },
+    {
+      "path": "reports/app-startup.json",
+      "bytes": 534,
+      "sha256": "7d8a258c3e3023d9faff495d6080bb28d2e0a0a11bc741f625ae618edc21d1c4",
+      "source": "artifacts/voice-readiness-2026-09-12/app-startup/verification.json",
+      "sourceModifiedAt": "2026-09-12T08:41:40.050Z",
+      "sourceSha256": "4ada9d724bd4a34b0585e8d7c915b579bb8b2c5656204ad10eca12c3053de4d5",
+      "capturedAt": "2026-09-12T08:39:55.857Z",
+      "captureTimeBasis": "Timestamp recorded in the original report.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/baseline-checks.json",
+      "bytes": 660,
+      "sha256": "b086758cf87bc24b8f8832eeba29290dac032d81c140ea53e8927c38512d3200",
+      "source": "artifacts/voice-readiness-2026-09-12/verification.json",
+      "sourceModifiedAt": "2026-09-12T08:39:02.366Z",
+      "sourceSha256": "f3d2dfc7379c4dc32d48dabcb11893dc834c0c96e144bd25cd3d8f058fb6aee9",
+      "capturedAt": "2026-09-12",
+      "captureTimeBasis": "Date recorded in the original report; exact capture time unavailable.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/dossier-handoff.json",
+      "bytes": 642,
+      "sha256": "7c9667a7868103303368c1dc83dc91417c126249305ac132a7f5eda966b02764",
+      "source": "voice-studio/test-results/usability-2026-09-12/handoff.json",
+      "sourceModifiedAt": "2026-09-12T09:58:38.114Z",
+      "sourceSha256": "04e7a62217b625600baf59c178f21380e3a191579a464d871b75b4ec4f2231cf",
+      "capturedAt": null,
+      "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/navigation-language.json",
+      "bytes": 562,
+      "sha256": "f1050dd93b7359e28d169b9dfdad3170805aea5883e34ec8e7ba9eb6bf5d9a9b",
+      "source": "voice-studio/test-results/usability-2026-09-12/navigation-language.json",
+      "sourceModifiedAt": "2026-09-12T09:45:29.528Z",
+      "sourceSha256": "2f06b34d77a23a179752f44136d079c034ed7c1511b1bd3c713d092715f5ccd3",
+      "capturedAt": null,
+      "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/selection-workflow-visual.json",
+      "bytes": 949,
+      "sha256": "db55eed6cb53a2002cd2d144f9a19b5c06def49082723c3c41f71531fd18da30",
+      "source": "voice-studio/test-results/selection-keep-persisted.png",
+      "sourceModifiedAt": "2026-09-12T09:42:17.888Z",
+      "sourceSha256": "42a1c07f8ebc0a0919dafeb6c18085b6651e6e5ec485c956d8579b73f0250ffd",
+      "capturedAt": null,
+      "captureTimeBasis": "PNG has no embedded capture timestamp used here; source file modification time is recorded separately in the manifest.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/source-provenance.json",
+      "bytes": 1337,
+      "sha256": "96a8d157fdf3a2e8193b72b30e1289f9f70305ca01a5870130e1c5f1749ffb7b",
+      "source": "voice-studio/test-results/usability-2026-09-12/real-source-provenance.json",
+      "sourceModifiedAt": "2026-09-12T09:49:26.485Z",
+      "sourceSha256": "1517f3f4f8bf6cfcd4cfdf06ed4b0c52fbc5466ba076e259a7be9f9fcc863366",
+      "capturedAt": "2026-09-12T09:49:22.161Z",
+      "captureTimeBasis": "Timestamp recorded in the original report.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "reports/voice-website.json",
+      "bytes": 2427,
+      "sha256": "7c0ae1011caab55c0105dff8fa98b6fefb6b8f78e7030b15d4d5f0ec5cb2de9a",
+      "source": "voice-studio/test-results/voice-website/verification.json",
+      "sourceModifiedAt": "2026-09-12T09:56:16.035Z",
+      "sourceSha256": "23cb99dbf9df048dc87692285d57257edeb52f639ab828a5779e4c4c7ae80ae4",
+      "capturedAt": null,
+      "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+      "transformation": "Allowlisted factual fields; not a new test execution."
+    },
+    {
+      "path": "screenshots/focus-navigation-mobile.png",
+      "bytes": 70147,
+      "sha256": "7613c7d9d714e8901fa9d61472ecf259f55abc249cc20983ac9de17318cd9b61",
+      "source": "voice-studio/test-results/usability-2026-09-12/focus-navigation-mobile.png",
+      "sourceModifiedAt": "2026-09-12T09:45:29.317Z",
+      "sourceSha256": "7613c7d9d714e8901fa9d61472ecf259f55abc249cc20983ac9de17318cd9b61",
+      "capturedAt": null,
+      "captureTimeBasis": "Exact capture timestamp unavailable; source file modification time recorded separately. Associated with the 2026-09-12 historical verification.",
+      "transformation": "Original PNG copied byte-for-byte after visual review; no credentials or absolute host filesystem paths visible."
+    },
+    {
+      "path": "screenshots/library-demo-mobile.png",
+      "bytes": 113008,
+      "sha256": "6d75615b9f8ac487d3a21ac06a76340ece42ba8cf3645f23b8eb748348600d6d",
+      "source": "voice-studio/test-results/voice-website/library-390.png",
+      "sourceModifiedAt": "2026-09-12T09:56:14.801Z",
+      "sourceSha256": "6d75615b9f8ac487d3a21ac06a76340ece42ba8cf3645f23b8eb748348600d6d",
+      "capturedAt": null,
+      "captureTimeBasis": "Exact capture timestamp unavailable; source file modification time recorded separately. Associated with the 2026-09-12 historical verification.",
+      "transformation": "Original PNG copied byte-for-byte after visual review; no credentials or absolute host filesystem paths visible."
+    },
+    {
+      "path": "screenshots/selection-keep-persisted.png",
+      "bytes": 90396,
+      "sha256": "42a1c07f8ebc0a0919dafeb6c18085b6651e6e5ec485c956d8579b73f0250ffd",
+      "source": "voice-studio/test-results/selection-keep-persisted.png",
+      "sourceModifiedAt": "2026-09-12T09:42:17.888Z",
+      "sourceSha256": "42a1c07f8ebc0a0919dafeb6c18085b6651e6e5ec485c956d8579b73f0250ffd",
+      "capturedAt": null,
+      "captureTimeBasis": "Exact capture timestamp unavailable; source file modification time recorded separately. Associated with the 2026-09-12 historical verification.",
+      "transformation": "Original PNG copied byte-for-byte after visual review; no credentials or absolute host filesystem paths visible."
+    }
+  ]
+}

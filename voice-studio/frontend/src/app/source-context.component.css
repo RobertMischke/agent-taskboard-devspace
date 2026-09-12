@@ -1,0 +1,13 @@
+:host { display:block; min-width:0; }
+.source-context { border-bottom:1px solid var(--line); background:var(--paper); font-size:13px; }
+.source-context > summary { padding:7px 20px; cursor:pointer; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.context-toggle { margin-left:auto; text-decoration:underline; text-underline-offset:3px; }
+.source-context-body { padding:4px 20px 14px; max-width:100%; }
+.source-context-body p { margin:8px 0; }
+dl { display:grid; grid-template-columns:minmax(80px,120px) minmax(0,1fr); gap:5px 12px; margin:12px 0; }
+dt { color:var(--muted); }
+dd { margin:0; overflow-wrap:anywhere; }
+code { font-size:12px; overflow-wrap:anywhere; }
+.git-details > summary { cursor:pointer; padding:5px 0; }
+.context-error { color:#7a3328; }
+@media(max-width:560px) { .source-context > summary { padding:7px 12px; gap:6px; } .source-context-body { padding:4px 12px 12px; } }

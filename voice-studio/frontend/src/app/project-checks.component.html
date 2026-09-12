@@ -1,21 +1,20 @@
-<section class="project-checks" aria-label="Lokale Projektprüfung">
+<section class="project-checks" [attr.aria-label]="'Lokale Projektprüfung' | t">
   <div class="check-heading">
-    <h3>Projekt prüfen</h3>
+    <h3>{{ 'Projekt prüfen' | t }}</h3>
     <button
       type="button"
       class="text-button"
       [disabled]="loading() || mutating()"
       (click)="reload()"
     >
-      Stand aktualisieren
+      {{ 'Stand aktualisieren' | t }}
     </button>
   </div>
   <p class="check-intro">
-    Führt den eingerichteten Build oder Test für das Projekt aus. Startet nur
-    auf deinen Klick.
+    {{ 'Führt den eingerichteten Build oder Test für das Projekt aus. Startet nur auf deinen Klick.' | t }}
   </p>
   @if (loading()) {
-    <p class="check-meta" role="status">Prüfstand wird geladen …</p>
+    <p class="check-meta" role="status">{{ 'Prüfstand wird geladen …' | t }}</p>
   }
   @if (configuration(); as config) {
     @if (config.label) {
@@ -24,7 +23,7 @@
       </p>
     }
     @if (config.message) {
-      <p class="check-meta">{{ config.message }}</p>
+      <p class="check-meta">{{ config.message | t }}</p>
     }
     @if (config.configured) {
       <button
@@ -33,16 +32,15 @@
         [disabled]="!canStart()"
         (click)="start()"
       >
-        Lokale Prüfung starten
+        {{ 'Lokale Prüfung starten' | t }}
       </button>
       <p class="check-meta">
-        Prüft den aktuellen Projektstand; ein früheres Ergebnis gilt nach
-        Änderungen als veraltet.
+        {{ 'Prüft den aktuellen Projektstand; ein früheres Ergebnis gilt nach Änderungen als veraltet.' | t }}
       </p>
     }
   }
   @if (error()) {
-    <p class="check-error" role="alert">{{ error() }}</p>
+    <p class="check-error" role="alert">{{ error() | t }}</p>
   }
   @if (activeRun(); as active) {
     @if (selectedRun()?.id !== active.id) {
@@ -51,48 +49,44 @@
         class="button secondary wide"
         (click)="selectRun(active)"
       >
-        Laufende Prüfung anzeigen
+        {{ 'Laufende Prüfung anzeigen' | t }}
       </button>
     }
   }
   @if (selectedRun(); as run) {
     <article class="check-result" [attr.data-status]="resultStatus(run)">
-      <h4 aria-live="polite">{{ label(run) }}</h4>
+      <h4 aria-live="polite">{{ label(run) | t }}</h4>
       <p class="check-meta">
-        {{ run.label }} · {{ run.startedAt | date: "dd.MM.yyyy, HH:mm" }}
+        {{ run.label }} · {{ formatDate(run.startedAt) }}
       </p>
       @if (!isActive(run) && !currentStandKnown()) {
         <p class="check-stale">
-          Der aktuelle Projektstand konnte noch nicht bestätigt werden. Das
-          frühere Ergebnis gilt bis zur Aktualisierung nicht als aktuelle
-          Prüfung.
+          {{ 'Der aktuelle Projektstand konnte noch nicht bestätigt werden. Das frühere Ergebnis gilt bis zur Aktualisierung nicht als aktuelle Prüfung.' | t }}
         </p>
       }
       @if (isStale(run)) {
         <p class="check-stale">
-          Quelle oder Prüfkonfiguration haben sich geändert. Dieses Ergebnis
-          bestätigt den aktuellen Stand nicht.
+          {{ 'Quelle oder Prüfkonfiguration haben sich geändert. Dieses Ergebnis bestätigt den aktuellen Stand nicht.' | t }}
         </p>
         @if (run.outcome) {
-          <p>Früheres Ergebnis: {{ outcome(run) }}.</p>
+          <p>{{ 'Früheres Ergebnis: {outcome}.' | t: { outcome: i18n.t(outcome(run)) } }}</p>
         }
       }
       @if (run.status === "running") {
-        <p>Die Prüfung läuft. Ausgabe und Status werden aktualisiert.</p>
+        <p>{{ 'Die Prüfung läuft. Ausgabe und Status werden aktualisiert.' | t }}</p>
       }
       @if (run.status === "cancelling") {
         <p>
-          Die Prüfung wird beendet. Der endgültige Status folgt nach
-          Prozessende.
+          {{ 'Die Prüfung wird beendet. Der endgültige Status folgt nach Prozessende.' | t }}
         </p>
       }
       @if (run.exitCode !== undefined && run.exitCode !== null) {
         <p class="check-exit">
-          Exitcode <strong>{{ run.exitCode }}</strong>
+          {{ 'Exitcode' | t }} <strong>{{ run.exitCode }}</strong>
         </p>
       }
       @if (run.error) {
-        <p class="check-error">{{ run.error }}</p>
+        <p class="check-error">{{ run.error | t }}</p>
       }
       @if (run.status === "running") {
         <button
@@ -101,29 +95,28 @@
           [disabled]="isBusy()"
           (click)="cancel(run)"
         >
-          Prüfung abbrechen
+          {{ 'Prüfung abbrechen' | t }}
         </button>
       }
       <details class="check-logs" [open]="run.status === 'failed'">
-        <summary>Prüfausgabe ansehen</summary>
-        <pre>{{ run.log || "Noch keine Ausgabe." }}</pre>
+        <summary>{{ 'Prüfausgabe ansehen' | t }}</summary>
+        <pre>{{ run.log || ('Noch keine Ausgabe.' | t) }}</pre>
         @if (run.logTruncated) {
           <p class="check-meta">
-            Die gespeicherte Ausgabe wurde auf
-            {{ configuration()?.logLimitChars ?? 65536 }} Zeichen begrenzt.
+            {{ 'Die gespeicherte Ausgabe wurde auf {count} Zeichen begrenzt.' | t: { count: configuration()?.logLimitChars ?? 65536 } }}
           </p>
         }
       </details>
       <p class="check-meta">
-        {{ run.inputFileCount }} Dateien im geprüften Projektstand.
+        {{ '{count} Dateien im geprüften Projektstand.' | t: { count: run.inputFileCount } }}
       </p>
     </article>
   } @else if (!loading() && configuration()?.configured) {
-    <p class="check-meta">Noch keine Prüfung gespeichert.</p>
+    <p class="check-meta">{{ 'Noch keine Prüfung gespeichert.' | t }}</p>
   }
   @if (runs().length > 1) {
     <details class="check-history">
-      <summary>Frühere Prüfungen ({{ runs().length }})</summary>
+      <summary>{{ 'Frühere Prüfungen ({count})' | t: { count: runs().length } }}</summary>
       @for (run of runs(); track run.id) {
         <button
           type="button"
@@ -132,9 +125,9 @@
           [disabled]="mutating()"
           (click)="selectRun(run)"
         >
-          <strong>{{ label(run) }}</strong
+          <strong>{{ label(run) | t }}</strong
           ><span
-            >{{ run.startedAt | date: "dd.MM.yyyy, HH:mm" }} ·
+            >{{ formatDate(run.startedAt) }} ·
             {{ run.label }}</span
           >
         </button>

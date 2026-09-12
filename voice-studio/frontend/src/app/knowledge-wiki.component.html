@@ -1,13 +1,13 @@
 <dialog #dialog class="wiki-dialog" aria-labelledby="wiki-title" (cancel)="close($event)">
   <header class="wiki-header">
-    <div><span class="eyebrow">VOICE STUDIO · WISSEN</span><h1 id="wiki-title">Regel-Wiki</h1></div>
-    <button type="button" (click)="close()" aria-label="Wiki schließen">Zurück ×</button>
+    <div><span class="eyebrow">{{ 'VOICE STUDIO · WISSEN' | t }}</span><h1 id="wiki-title">{{ 'Regel-Wiki' | t }}</h1></div>
+    <button type="button" (click)="close()" [attr.aria-label]="'Wiki schließen' | t">{{ 'Zurück ×' | t }}</button>
   </header>
   <div class="wiki-workspace">
-    <nav class="wiki-nav" aria-label="Wiki-Artikel">
-      <label for="wiki-search">Wiki durchsuchen</label>
-      <input id="wiki-search" type="search" [ngModel]="search()" (ngModelChange)="search.set($event)" placeholder="z. B. leistungsstark, Belege, Angular" autofocus />
-      <p class="search-count">{{ results().length }} Artikel · {{ knowledge.data()?.version }}</p>
+    <nav class="wiki-nav" [attr.aria-label]="'Wiki-Artikel' | t">
+      <label for="wiki-search">{{ 'Wiki durchsuchen' | t }}</label>
+      <input id="wiki-search" type="search" [ngModel]="search()" (ngModelChange)="search.set($event)" [placeholder]="'z. B. leistungsstark, Belege, Angular' | t" autofocus />
+      <p class="search-count">{{ results().length }} {{ 'Artikel' | t }} · {{ knowledge.data()?.version }}</p>
       @for (section of sections(); track section) {
         <h2>{{ section }}</h2>
         @for (entry of results(); track entry.id) {
@@ -16,67 +16,67 @@
           }
         }
       } @empty {
-        <p>Kein passender Artikel. Versuche einen kürzeren Suchbegriff.</p>
+        <p>{{ 'Kein passender Artikel. Versuche einen kürzeren Suchbegriff.' | t }}</p>
       }
     </nav>
     <article #article class="wiki-article">
       @if (knowledge.error()) {
-        <p role="alert">{{ knowledge.error() }}</p><button type="button" (click)="knowledge.load()">Erneut laden</button>
+        <p role="alert">{{ knowledge.error() }}</p><button type="button" (click)="knowledge.load()">{{ 'Erneut laden' | t }}</button>
       } @else if (selected(); as entry) {
-        <div class="article-meta"><span>{{ entry.section ?? 'Regeln' }}</span><button type="button" (click)="copyLink()">{{ linkCopied() ? 'Link kopiert' : 'Artikel-Link kopieren' }}</button></div>
+        <div class="article-meta"><span>{{ entry.section ?? ('Regeln' | t) }}</span><button type="button" (click)="copyLink()">{{ (linkCopied() ? 'Link kopiert' : 'Artikel-Link kopieren') | t }}</button></div>
         <h2>{{ entry.title }}</h2>
         <p class="article-lead">{{ entry.summary }}</p>
         @if (entry.question) {
-          <section class="decision-card"><h3>Die entscheidende Frage</h3><p>{{ entry.question }}</p><p>{{ entry.nextStep }}</p></section>
+          <section class="decision-card"><h3>{{ 'Die entscheidende Frage' | t }}</h3><p>{{ entry.question }}</p><p>{{ entry.nextStep }}</p></section>
         }
         @for (paragraph of entry.paragraphs; track $index) { <p>{{ paragraph }}</p> }
         @if (entry.acceptable?.length) {
-          <h3>Wann die Formulierung passen kann</h3><ul>@for (item of entry.acceptable; track $index) { <li>{{ item }}</li> }</ul>
+          <h3>{{ 'Wann die Formulierung passen kann' | t }}</h3><ul>@for (item of entry.acceptable; track $index) { <li>{{ item }}</li> }</ul>
         }
         @if (entry.examples?.length) {
-          <h3>Beispiele mit Begründung</h3>
+          <h3>{{ 'Beispiele mit Begründung' | t }}</h3>
           @for (example of entry.examples; track $index) {
             <section class="wiki-example">
               <span class="example-language">{{ example.language }}</span>
-              <div class="example-pair"><div><h4>Ausgangstext</h4><blockquote>{{ example.before }}</blockquote></div><div><h4>{{ example.before === example.after ? 'Begründet beibehalten' : 'Mögliche Überarbeitung' }}</h4><blockquote>{{ example.after }}</blockquote></div></div>
+              <div class="example-pair"><div><h4>{{ 'Ausgangstext' | t }}</h4><blockquote [attr.lang]="example.language.toLowerCase()">{{ example.before }}</blockquote></div><div><h4>{{ (example.before === example.after ? 'Begründet beibehalten' : 'Mögliche Überarbeitung') | t }}</h4><blockquote [attr.lang]="example.language.toLowerCase()">{{ example.after }}</blockquote></div></div>
               <p>{{ example.why }}</p>
             </section>
           }
         }
         @if (entry.tools?.length) {
-          <h3>Werkzeuge, Zweck und Lizenz</h3>
-          <div class="tool-table-wrap"><table class="tool-table"><thead><tr><th>Werkzeug</th><th>Aufgabe</th><th>Lizenz und Status</th></tr></thead><tbody>
+          <h3>{{ 'Werkzeuge, Zweck und Lizenz' | t }}</h3>
+          <div class="tool-table-wrap"><table class="tool-table"><thead><tr><th>{{ 'Werkzeug' | t }}</th><th>{{ 'Zweck' | t }}</th><th>{{ 'Lizenz und Status' | t }}</th></tr></thead><tbody>
             @for (tool of entry.tools; track tool.name) {
               <tr><th scope="row">{{ tool.name }}</th><td>{{ tool.purpose }}</td><td><p>{{ tool.license }}</p><small>{{ tool.status }}</small></td></tr>
             }
           </tbody></table></div>
         }
         @if (entry.steps?.length) {
-          <h3>So gehst du vor</h3><ol>@for (step of entry.steps; track $index) { <li>{{ step }}</li> }</ol>
+          <h3>{{ 'So gehst du vor' | t }}</h3><ol>@for (step of entry.steps; track $index) { <li>{{ step }}</li> }</ol>
         }
         @if (entry.limitations?.length) {
-          <h3>Was die Regel nicht entscheiden kann</h3><ul>@for (item of entry.limitations; track $index) { <li>{{ item }}</li> }</ul>
+          <h3>{{ 'Was die Regel nicht entscheiden kann' | t }}</h3><ul>@for (item of entry.limitations; track $index) { <li>{{ item }}</li> }</ul>
         }
         @if (entry.category) {
           <details class="algorithm">
-            <summary>Algorithmus und genaue Erkennung</summary>
-            <p>Die Regel prüft jede vom Source-Adapter gelieferte Text-Unit einzeln. Sie verwendet kein Sprachmodell und liest keine externen Belege.</p>
+            <summary>{{ 'Algorithmus und genaue Erkennung' | t }}</summary>
+            <p>{{ 'Die Regel prüft jede vom Source-Adapter gelieferte Text-Unit einzeln. Sie verwendet kein Sprachmodell und liest keine externen Belege.' | t }}</p>
             @if (entry.pattern) {
-              <p>Jeder Treffer dieses regulären Ausdrucks erzeugt einen Befund. Groß- und Kleinschreibung werden ignoriert; eine zusätzliche statistische Schwelle gibt es nicht.</p><pre><code>{{ entry.pattern }}</code></pre>
+              <p>{{ 'Jeder Treffer dieses regulären Ausdrucks erzeugt einen Befund. Groß- und Kleinschreibung werden ignoriert; eine zusätzliche statistische Schwelle gibt es nicht.' | t }}</p><pre><code>{{ entry.pattern }}</code></pre>
             } @else {
-              <p>Der Typ der Unit beginnt mit <code>h</code> und hat zwei Zeichen. Ihr Text endet mit einem Punkt, aber nicht mit drei Punkten. Nur der letzte Punkt wird markiert; der vorgeschlagene Ersatz ist leer.</p>
+              <p>{{ 'Der Typ der Unit beginnt mit' | t }} <code>h</code> {{ 'und hat zwei Zeichen. Ihr Text endet mit einem Punkt, aber nicht mit drei Punkten. Nur der letzte Punkt wird markiert; der vorgeschlagene Ersatz ist leer.' | t }}</p>
             }
-            <p>Der Befund enthält die genaue Fundstelle, das Zitat und eine stabile Regel-ID. Die UI und der Analyzer verwenden denselben versionierten Regelkatalog.</p>
+            <p>{{ 'Der Befund enthält die genaue Fundstelle, das Zitat und eine stabile Regel-ID. Die UI und der Analyzer verwenden denselben versionierten Regelkatalog.' | t }}</p>
           </details>
         }
         @if (entry.sources?.length) {
-          <h3>Quellen und Lizenzdateien</h3>
+          <h3>{{ 'Quellen und Lizenzdateien' | t }}</h3>
           <ul class="wiki-sources">@for (source of entry.sources; track source.url) { <li><a [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.title }} ↗</a></li> }</ul>
         }
-        <section class="related"><h3>Weiterlesen</h3><div>@for (id of entry.related; track id) { @if (knowledge.entry(id); as related) { <button type="button" (click)="choose(id)">{{ related.title }} →</button> } }</div></section>
-        <footer class="article-source"><p>Implementierung und Dokumentation</p><code>{{ sourceFor(entry.id) }}</code><p>Stand {{ knowledge.data()?.updatedAt }} · Geplante Funktionen sind im jeweiligen Artikel ausdrücklich benannt.</p></footer>
+        <section class="related"><h3>{{ 'Weiterlesen' | t }}</h3><div>@for (id of entry.related; track id) { @if (knowledge.entry(id); as related) { <button type="button" (click)="choose(id)">{{ related.title }} →</button> } }</div></section>
+        <footer class="article-source"><p>{{ 'Implementierung und Dokumentation' | t }}</p><code>{{ sourceFor(entry.id) }}</code><p>{{ 'Stand' | t }} {{ knowledge.data()?.updatedAt }} · {{ 'Geplante Funktionen sind im jeweiligen Artikel ausdrücklich benannt.' | t }}</p></footer>
       } @else {
-        <p>Wiki wird geladen …</p>
+        <p>{{ 'Wiki wird geladen …' | t }}</p>
       }
     </article>
   </div>

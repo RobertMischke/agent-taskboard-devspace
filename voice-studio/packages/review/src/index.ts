@@ -1,4 +1,4 @@
-export type { Feedback, FeedbackInput, Finding, SelectionTarget, TextUnit, ReviewClient } from '@voice/contracts';
+export type { DocumentDetail, Feedback, FeedbackInput, Finding, SelectionTarget, SourceSpan, TextUnit, ReviewClient } from '@voice/contracts';
 export { createTextRange, createTextRanges, findUnitElement, getUnitText, selectionToTarget, codePointOffsetToUtf16 } from './anchors.js';
 export { createReviewClient, ReviewApiError } from './client.js';
 export type { ReviewClientOptions } from './client.js';

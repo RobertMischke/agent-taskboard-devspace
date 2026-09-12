@@ -1,35 +1,35 @@
 <details class="semantic-review">
-  <summary>Semantisches Review über den Coding-Agent-Runner</summary>
-  <p>Ein Coding-Agent prüft die ganze Datei auf Verständlichkeit, Ton und unbelegte Aussagen. Bei Angular erhält er zusätzlich die zugeordneten Komponenten als Kontext. Die Quelle bleibt unverändert.</p>
+  <summary>{{ 'Semantisches Review über den Coding-Agent-Runner' | t }}</summary>
+  <p>{{ 'Ein Coding-Agent prüft die ganze Datei auf Verständlichkeit, Ton und unbelegte Aussagen. Bei Angular erhält er zusätzlich die zugeordneten Komponenten als Kontext. Die Quelle bleibt unverändert.' | t }}</p>
   @if (status(); as route) {
     @if (route.configured) {
       <p class="runner-route"><strong>{{ route.cli }} · {{ route.model }}</strong> · {{ route.thinkingLevel }}</p>
-      <p class="small-muted">Coding-Agent-Runner · Nur lesen · Vorläufige Modellroute</p>
-      <p class="small-muted">{{ route.message }}</p>
+      <p class="small-muted">{{ 'Coding-Agent-Runner · Nur lesen · Vorläufige Modellroute' | t }}</p>
+      <p class="small-muted">{{ route.message | t }}</p>
     } @else {
-      <p class="runner-setup">Coding-Agent-Runner ist angebunden. Die Modellroute ist auf diesem Server noch nicht konfiguriert.</p>
-      <details><summary>Lokale Route einrichten</summary><p>Vor dem Serverstart VOICE_REVIEW_CLI, VOICE_REVIEW_MODEL und VOICE_REVIEW_THINKING setzen. Der Runner verwendet deine lokal installierte CLI und deren Anmeldung. Eine Voice-Qualifikation oder Token-Economy-Zulassung wird dadurch nicht behauptet.</p></details>
+      <p class="runner-setup">{{ 'Coding-Agent-Runner ist angebunden. Die Modellroute ist auf diesem Server noch nicht konfiguriert.' | t }}</p>
+      <details><summary>{{ 'Lokale Route einrichten' | t }}</summary><p>{{ 'Vor dem Serverstart VOICE_REVIEW_CLI, VOICE_REVIEW_MODEL und VOICE_REVIEW_THINKING setzen. Der Runner verwendet deine lokal installierte CLI und deren Anmeldung. Eine Voice-Qualifikation oder Token-Economy-Zulassung wird dadurch nicht behauptet.' | t }}</p></details>
     }
-    <label for="semantic-instruction">Worauf soll der Agent achten? <span class="optional">optional</span></label>
-    <textarea id="semantic-instruction" name="semanticInstruction" [(ngModel)]="instruction" placeholder="Zum Beispiel: Erklärt der Einstieg den Nutzen oder nur interne Begriffe?" rows="3"></textarea>
-    <button type="button" class="button primary wide" [disabled]="busy() || !route.available || hasActiveRun()" (click)="start()">Semantisches Review starten</button>
-    <p class="small-muted">Der Klick startet einen Modellaufruf über die angezeigte Route. Vorschläge werden erst nach deiner Prüfung als Quelldiff übernommen.</p>
-  } @else { <p class="small-muted">Runner-Verbindung wird geprüft …</p> }
-  @if (error()) { <p class="error-message" role="alert">{{ error() }}</p> }
+    <label for="semantic-instruction">{{ 'Worauf soll der Agent achten?' | t }} <span class="optional">{{ 'optional' | t }}</span></label>
+    <textarea id="semantic-instruction" name="semanticInstruction" [(ngModel)]="instruction" [placeholder]="'Zum Beispiel: Erklärt der Einstieg den Nutzen oder nur interne Begriffe?' | t" rows="3"></textarea>
+    <button type="button" class="button primary wide" [disabled]="busy() || !route.available || hasActiveRun()" (click)="start()">{{ 'Semantisches Review starten' | t }}</button>
+    <p class="small-muted">{{ 'Der Klick startet einen Modellaufruf über die angezeigte Route. Vorschläge werden erst nach deiner Prüfung als Quelldiff übernommen.' | t }}</p>
+  } @else { <p class="small-muted">{{ 'Runner-Verbindung wird geprüft …' | t }}</p> }
+  @if (error()) { <p class="error-message" role="alert">{{ error() | t }}</p> }
   @if (run(); as current) {
     <div class="semantic-result" role="status">
-      <h4>{{ label(current) }}</h4>
-      @if (current.status === 'running') { <button class="button secondary" type="button" [disabled]="busy()" (click)="cancel()">Review abbrechen</button> }
-      @if (current.error) { <p>{{ current.error }}</p> }
+      <h4>{{ label(current) | t }}</h4>
+      @if (current.status === 'running') { <button class="button secondary" type="button" [disabled]="busy()" (click)="cancel()">{{ 'Review abbrechen' | t }}</button> }
+      @if (current.error) { <p>{{ current.error | t }}</p> }
       @if (current.status === 'completed' && isCurrent(current)) {
-        <p>{{ current.reviewedUnitIds.length }} Textabschnitte in der Antwort erfasst · {{ current.findings.length }} semantische Befunde</p>
+        <p>{{ '{count} Textabschnitte in der Antwort erfasst · {findings} semantische Befunde' | t: { count: current.reviewedUnitIds.length, findings: current.findings.length } }}</p>
         @for (finding of current.findings; track finding.id) {
-          <button type="button" class="finding-card semantic-finding" (click)="chooseFinding.emit(finding)"><h4>{{ finding.message }}</h4><blockquote>{{ finding.quote }}</blockquote><p>{{ finding.explanation }}</p><p><strong>Begründung:</strong> {{ finding.evidence }}</p><span class="text-button">Textstelle und Vorschlag öffnen →</span></button>
-        } @empty { <p>Der Agent hat keine zusätzlichen Befunde gemeldet. Das ersetzt keine fachliche Freigabe.</p> }
+          <button type="button" class="finding-card semantic-finding" (click)="chooseFinding.emit(finding)"><h4>{{ finding.message }}</h4><blockquote>{{ finding.quote }}</blockquote><p>{{ finding.explanation }}</p><p><strong>{{ 'Begründung:' | t }}</strong> {{ finding.evidence }}</p><span class="text-button">{{ 'Textstelle und Vorschlag öffnen →' | t }}</span></button>
+        } @empty { <p>{{ 'Der Agent hat keine zusätzlichen Befunde gemeldet. Das ersetzt keine fachliche Freigabe.' | t }}</p> }
       }
       @for (note of current.notes; track $index) { <p class="small-muted">{{ note }}</p> }
-      @if (current.contextFiles.length) { <details><summary>Mitgeprüfter Komponentenkontext</summary>@for (file of current.contextFiles; track file.path) { <p><code>{{ file.path }}</code>{{ file.truncated ? ' · gekürzt' : '' }}</p> }</details> }
+      @if (current.contextFiles.length) { <details><summary>{{ 'Mitgeprüfter Komponentenkontext' | t }}</summary>@for (file of current.contextFiles; track file.path) { <p><code>{{ file.path }}</code>{{ (file.truncated ? ' · gekürzt' : '') | t }}</p> }</details> }
     </div>
   }
-  @if (history().length > 1) { <details class="semantic-history"><summary>Gespeicherte Reviews ({{ history().length }})</summary>@for (item of history(); track item.id) { <button class="history-proposal" type="button" [disabled]="busy()" (click)="openRun(item)">{{ label(item) }} · {{ item.model }}<small>{{ item.createdAt }}</small></button> }</details> }
+  @if (history().length > 1) { <details class="semantic-history"><summary>{{ 'Gespeicherte Reviews ({count})' | t: { count: history().length } }}</summary>@for (item of history(); track item.id) { <button class="history-proposal" type="button" [disabled]="busy()" (click)="openRun(item)">{{ label(item) | t }} · {{ item.model }}<small>{{ formatDate(item.createdAt) }}</small></button> }</details> }
 </details>

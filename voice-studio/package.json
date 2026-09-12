@@ -25,9 +25,35 @@
     "test:wiki-tasks": "node scripts/verify-wiki-tasks.mjs",
     "licenses:inventory": "node scripts/license-inventory.mjs",
     "review:website": "node scripts/import-website-review.mjs",
-    "test:checks": "dotnet run --project backend/VoiceStudio.CheckTests/VoiceStudio.CheckTests.csproj"
+    "test:checks": "dotnet run --project backend/VoiceStudio.CheckTests/VoiceStudio.CheckTests.csproj",
+    "website:build": "npm run build:library && node scripts/build-website.mjs",
+    "website:preview": "npm run website:build && node scripts/serve-website.mjs",
+    "test:selection": "dotnet run --project backend/VoiceStudio.SelectionTests",
+    "test:selection-ui": "node scripts/verify-selection-ui.mjs",
+    "pairing-code": "node scripts/pairing-code.mjs",
+    "build:frontend:staged": "npm run build -w @voice/studio -- --output-path dist/voice-studio-next",
+    "frontend:publish-local": "node scripts/publish-built-frontend.mjs",
+    "test:source-provenance": "node scripts/verify-source-provenance.mjs",
+    "docs:dossier:check": "node scripts/integrations/sync-voice-lint-dossier.mjs",
+    "docs:dossier:sync": "node scripts/integrations/sync-voice-lint-dossier.mjs --write",
+    "test:dossier": "node scripts/integrations/verify-voice-lint-dossier.mjs",
+    "test:holistic-schema": "node scripts/verify-holistic-examples.mjs",
+    "test:website": "node scripts/verify-website.mjs",
+    "test:selection-workflow": "node scripts/verify-selection-workflow.mjs",
+    "test:navigation": "node scripts/verify-navigation-language.mjs",
+    "test:wiki-i18n": "node scripts/verify-wiki-i18n.mjs",
+    "test:evidence": "node scripts/verify-evidence.mjs",
+    "test:session": "dotnet run --project backend/VoiceStudio.SessionTests",
+    "test:session-ui": "node scripts/verify-session-ui-state.mjs",
+    "test:browser-session": "node scripts/verify-browser-session.mjs",
+    "test:library-types": "npm run test:types -w @voice/review"
   },
   "devDependencies": {
-    "@playwright/test": "^1.59.1"
+    "@playwright/test": "^1.59.1",
+    "ajv": "8.18.0",
+    "ajv-formats": "3.0.1",
+    "jsdom": "26.1.0",
+    "marked": "18.0.12",
+    "typescript": "5.9.3"
   }
 }

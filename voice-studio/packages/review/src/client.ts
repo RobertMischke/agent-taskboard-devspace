@@ -7,9 +7,13 @@ export class ReviewApiError extends Error {
   }
 }
 
+/** Connection settings for a host-authorized Voice Studio API. */
 export interface ReviewClientOptions {
+  /** API prefix, default /api. Use the same origin or the host's local development proxy. */
   baseUrl?: string;
+  /** Host-owned in-memory bearer token. A getter supports rotation; never put tokens in URLs or source. */
   token?: string | (() => string | null | undefined);
+  /** Optional fetch implementation for a host adapter or deterministic tests. */
   fetch?: typeof globalThis.fetch;
 }
 

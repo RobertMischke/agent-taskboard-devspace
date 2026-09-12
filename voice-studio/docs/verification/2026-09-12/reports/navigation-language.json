@@ -1,0 +1,11 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": null,
+  "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+  "results": [
+    "English default despite German browser; live DE/EN switch preserves reviewed website text.",
+    "Compact and focus layouts, full mobile viewport, overlays, Escape, saved language and navigation preferences."
+  ],
+  "browserErrorCount": 0,
+  "scope": "UI language and navigation preference persistence; not authentication persistence."
+}

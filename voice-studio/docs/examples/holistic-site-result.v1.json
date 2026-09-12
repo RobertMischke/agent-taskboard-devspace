@@ -1,0 +1,731 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "voice-studio.holistic-review",
+  "evidenceClass": "illustrative",
+  "id": "example-site-result",
+  "createdAt": "2026-09-12T10:00:00Z",
+  "status": "completed",
+  "subject": {
+    "primaryRepositoryId": "website",
+    "repositories": [
+      {
+        "id": "website",
+        "canonicalUrl": "https://example.invalid/ags-website.git",
+        "requestedRef": "refs/heads/main",
+        "resolvedCommit": "1111111111111111111111111111111111111111"
+      },
+      {
+        "id": "marketing",
+        "canonicalUrl": "https://example.invalid/ags-marketing.git",
+        "requestedRef": "refs/heads/main",
+        "resolvedCommit": "2222222222222222222222222222222222222222"
+      }
+    ],
+    "inputMode": "working-copy",
+    "scope": {
+      "kind": "site",
+      "routes": [
+        "/",
+        "/get-started",
+        "/about"
+      ],
+      "files": [
+        "src/content/home.ts",
+        "src/content/get-started.ts",
+        "src/content/about.ts"
+      ],
+      "exclusions": [
+        "Production index status and analytics are unavailable.",
+        "Visual scope is the homepage at two declared viewports, not every route."
+      ]
+    },
+    "workingCopy": {
+      "snapshotHash": "723d30e06fce16a1ed030f808aadd56e6ef0c24f4f7b5a4dcc59ac8913478908",
+      "files": [
+        {
+          "path": "src/content/home.ts",
+          "change": "modified",
+          "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05"
+        },
+        {
+          "path": "src/content/get-started.ts",
+          "change": "unchanged",
+          "contentHash": "2380a62dd4d8e6fb0a083a307068d529f8e22a7138ade4a916be6080c1adeff9"
+        },
+        {
+          "path": "src/content/about.ts",
+          "change": "unchanged",
+          "contentHash": "eb3fd90f43f74421cdc3f9c864dcbfb4c62e44bf614ff3389f082b31bad7911a"
+        }
+      ],
+      "snapshotArtifactId": "artifact-source"
+    }
+  },
+  "context": {
+    "manifestHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+    "entries": [
+      {
+        "id": "goal-understand",
+        "kind": "goal",
+        "text": "Help a developer evaluating coding-agent work understand the product role and inspect one concrete task-to-review example.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "audience-developer",
+        "kind": "audience",
+        "text": "Developers evaluating an early product using existing coding-agent CLIs; do not imply an enterprise SaaS service.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/00-ueberblick/produkt-one-pager-assisted-coding-harness.md",
+            "contentHash": "771fca919059753543bc9eed18c951e32d8b011a82de52fc203e155ac453a3d3",
+            "locator": "Audience"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "claim-management",
+        "kind": "claim",
+        "text": "The coding-agent management layer.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "constraint-no-release-claim",
+        "kind": "constraint",
+        "text": "An installer release target does not establish an already shipped installation path.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "decision-cta-unresolved",
+        "kind": "decision",
+        "text": "Resolve whether the hero primary action is product proof or GitHub stars before rewriting the CTA.",
+        "authority": "disputed",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          },
+          {
+            "kind": "operator",
+            "recordId": "illustrative-context-question",
+            "capturedAt": "2026-09-12T10:00:00Z"
+          }
+        ],
+        "supersedes": [],
+        "rationale": "Synthetic example of a scoped authority conflict, not a new AGS decision."
+      }
+    ]
+  },
+  "taskContractVersion": "holistic-analysis/1",
+  "executionPolicy": {
+    "invocation": "explicit-operator",
+    "automaticModelRuns": false,
+    "automaticApply": false,
+    "automaticCommit": false,
+    "automaticPublish": false,
+    "delegation": "explicit-bounded",
+    "maximumTasks": 4,
+    "maximumParallelism": 1,
+    "timeoutSeconds": 300,
+    "maximumOutputCharacters": 200000,
+    "limitsNote": "Time and output bounds do not guarantee a hard token or monetary cap."
+  },
+  "tasks": [
+    {
+      "id": "task-1",
+      "dimension": "seo",
+      "objective": "Illustrative seo analysis of the declared routes and pinned context.",
+      "scope": {
+        "routes": [
+          "/",
+          "/get-started",
+          "/about"
+        ],
+        "files": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ]
+      },
+      "contextEntryIds": [
+        "goal-understand",
+        "audience-developer",
+        "claim-management",
+        "constraint-no-release-claim",
+        "decision-cta-unresolved"
+      ],
+      "status": "completed",
+      "authorization": {
+        "actorId": "example-operator",
+        "requestId": "explicit-example-1",
+        "confirmedAt": "2026-09-12T10:00:30Z"
+      },
+      "run": {
+        "id": "run-1",
+        "status": "completed",
+        "startedAt": "2026-09-12T10:01:00Z",
+        "completedAt": "2026-09-12T10:02:00Z",
+        "configuredRoute": {
+          "cli": "fixture-cli",
+          "model": "fixture-model",
+          "thinkingLevel": "fixture-effort"
+        },
+        "actualModel": null,
+        "permissionMode": "read-only",
+        "contextMode": "clean",
+        "environmentRef": "example-private-host-profile",
+        "inputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c"
+      }
+    },
+    {
+      "id": "task-2",
+      "dimension": "cross-page-consistency",
+      "objective": "Illustrative cross-page-consistency analysis of the declared routes and pinned context.",
+      "scope": {
+        "routes": [
+          "/",
+          "/get-started",
+          "/about"
+        ],
+        "files": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ]
+      },
+      "contextEntryIds": [
+        "goal-understand",
+        "audience-developer",
+        "claim-management",
+        "constraint-no-release-claim",
+        "decision-cta-unresolved"
+      ],
+      "status": "completed",
+      "authorization": {
+        "actorId": "example-operator",
+        "requestId": "explicit-example-2",
+        "confirmedAt": "2026-09-12T10:00:30Z"
+      },
+      "run": {
+        "id": "run-2",
+        "status": "completed",
+        "startedAt": "2026-09-12T10:01:00Z",
+        "completedAt": "2026-09-12T10:02:00Z",
+        "configuredRoute": {
+          "cli": "fixture-cli",
+          "model": "fixture-model",
+          "thinkingLevel": "fixture-effort"
+        },
+        "actualModel": null,
+        "permissionMode": "read-only",
+        "contextMode": "clean",
+        "environmentRef": "example-private-host-profile",
+        "inputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c"
+      }
+    },
+    {
+      "id": "task-3",
+      "dimension": "visual",
+      "objective": "Illustrative visual analysis of the declared routes and pinned context.",
+      "scope": {
+        "routes": [
+          "/"
+        ],
+        "files": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ]
+      },
+      "contextEntryIds": [
+        "goal-understand",
+        "audience-developer",
+        "claim-management",
+        "constraint-no-release-claim",
+        "decision-cta-unresolved"
+      ],
+      "status": "completed",
+      "authorization": {
+        "actorId": "example-operator",
+        "requestId": "explicit-example-3",
+        "confirmedAt": "2026-09-12T10:00:30Z"
+      },
+      "run": {
+        "id": "run-3",
+        "status": "completed",
+        "startedAt": "2026-09-12T10:01:00Z",
+        "completedAt": "2026-09-12T10:02:00Z",
+        "configuredRoute": {
+          "cli": "fixture-cli",
+          "model": "fixture-model",
+          "thinkingLevel": "fixture-effort"
+        },
+        "actualModel": null,
+        "permissionMode": "read-only",
+        "contextMode": "clean",
+        "environmentRef": "example-private-host-profile",
+        "inputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c"
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "result-1",
+      "taskId": "task-1",
+      "runId": "run-1",
+      "summary": "Illustrative seo result; not an actual site assessment.",
+      "verdict": "needs-evidence",
+      "coverage": {
+        "reviewedRoutes": [
+          "/",
+          "/get-started",
+          "/about"
+        ],
+        "excludedRoutes": [],
+        "reviewedFiles": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ],
+        "limitations": [
+          "Synthetic demonstration only."
+        ]
+      },
+      "findings": [
+        {
+          "id": "finding-canonical",
+          "dimension": "seo",
+          "title": "Confirm the public canonical target",
+          "observation": "This synthetic example has no production observation with which to verify its source canonical link.",
+          "contextEntryIds": [
+            "goal-understand"
+          ],
+          "sourceRefs": [
+            {
+              "kind": "snapshot",
+              "repositoryId": "website",
+              "path": "src/content/home.ts",
+              "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+              "snapshotArtifactId": "artifact-source",
+              "locator": "home.hero"
+            }
+          ],
+          "evidenceArtifactIds": [
+            "artifact-seo"
+          ],
+          "tradeoffs": [
+            "A local build can validate markup but cannot prove public indexing."
+          ],
+          "suggestedActions": [
+            {
+              "id": "action-production-proof",
+              "kind": "gather-evidence",
+              "description": "Create an explicit follow-up to observe the authorized production route and declared canonical target."
+            }
+          ]
+        }
+      ],
+      "artifactIds": [
+        "artifact-seo"
+      ]
+    },
+    {
+      "id": "result-2",
+      "taskId": "task-2",
+      "runId": "run-2",
+      "summary": "Illustrative cross-page-consistency result; not an actual site assessment.",
+      "verdict": "inconclusive",
+      "coverage": {
+        "reviewedRoutes": [
+          "/",
+          "/get-started",
+          "/about"
+        ],
+        "excludedRoutes": [],
+        "reviewedFiles": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ],
+        "limitations": [
+          "Synthetic demonstration only."
+        ]
+      },
+      "findings": [
+        {
+          "id": "finding-maturity",
+          "dimension": "cross-page-consistency",
+          "title": "Keep the explicit release boundary",
+          "observation": "The illustrative source correctly distinguishes current setup from a future installer target.",
+          "contextEntryIds": [
+            "constraint-no-release-claim"
+          ],
+          "sourceRefs": [
+            {
+              "kind": "snapshot",
+              "repositoryId": "website",
+              "path": "src/content/home.ts",
+              "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+              "snapshotArtifactId": "artifact-source",
+              "locator": "home.hero"
+            },
+            {
+              "kind": "git",
+              "repositoryId": "marketing",
+              "commit": "2222222222222222222222222222222222222222",
+              "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+              "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+              "locator": "Lead decision and proof boundary"
+            }
+          ],
+          "evidenceArtifactIds": [
+            "artifact-consistency"
+          ],
+          "tradeoffs": [
+            "The extra qualification adds words but avoids claiming a shipped installer."
+          ],
+          "suggestedActions": [
+            {
+              "id": "action-keep-boundary",
+              "kind": "keep",
+              "description": "Retain the maturity qualification for this context revision."
+            }
+          ]
+        },
+        {
+          "id": "finding-cta",
+          "dimension": "cross-page-consistency",
+          "title": "Resolve the scoped action conflict",
+          "observation": "The synthetic context deliberately retains two unresolved priorities for the hero action.",
+          "contextEntryIds": [
+            "decision-cta-unresolved"
+          ],
+          "sourceRefs": [
+            {
+              "kind": "git",
+              "repositoryId": "marketing",
+              "commit": "2222222222222222222222222222222222222222",
+              "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+              "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+              "locator": "Lead decision and proof boundary"
+            }
+          ],
+          "evidenceArtifactIds": [
+            "artifact-consistency"
+          ],
+          "tradeoffs": [
+            "Product explanation and repository awareness are different goals."
+          ],
+          "suggestedActions": [
+            {
+              "id": "action-clarify-cta",
+              "kind": "clarify-context",
+              "description": "Record which goal governs this hero before changing its primary action."
+            }
+          ]
+        }
+      ],
+      "artifactIds": [
+        "artifact-consistency"
+      ]
+    },
+    {
+      "id": "result-3",
+      "taskId": "task-3",
+      "runId": "run-3",
+      "summary": "Illustrative visual result; not an actual site assessment.",
+      "verdict": "needs-changes",
+      "coverage": {
+        "reviewedRoutes": [
+          "/"
+        ],
+        "excludedRoutes": [
+          "/get-started",
+          "/about"
+        ],
+        "reviewedFiles": [
+          "src/content/home.ts",
+          "src/content/get-started.ts",
+          "src/content/about.ts"
+        ],
+        "limitations": [
+          "Only the homepage in English/light at desktop and mobile sizes; dark mode and other routes are unreviewed."
+        ]
+      },
+      "findings": [
+        {
+          "id": "finding-proof-density",
+          "dimension": "visual",
+          "title": "Review the proposed proof crop",
+          "observation": "This synthetic result proposes a tighter crop; its mobile caption would lose the task identity.",
+          "contextEntryIds": [
+            "goal-understand"
+          ],
+          "sourceRefs": [
+            {
+              "kind": "snapshot",
+              "repositoryId": "website",
+              "path": "src/content/home.ts",
+              "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+              "snapshotArtifactId": "artifact-source",
+              "locator": "home.hero"
+            }
+          ],
+          "evidenceArtifactIds": [
+            "artifact-desktop",
+            "artifact-mobile"
+          ],
+          "tradeoffs": [
+            "A tighter crop is more readable but can remove the evidence needed to connect the image to a real task."
+          ],
+          "suggestedActions": [
+            {
+              "id": "action-crop",
+              "kind": "edit",
+              "description": "Tighten the screenshot crop while retaining task identity."
+            }
+          ]
+        }
+      ],
+      "artifactIds": [
+        "artifact-desktop",
+        "artifact-mobile"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "artifact-source",
+      "kind": "source-snapshot",
+      "path": ".voice-review/reviews/example-site-result/artifacts/source-snapshot.zip",
+      "contentHash": "b9f8ccf8fc3135f469adeaf6a74b14edb0aeb37f33605e74fb27d75e4371e108",
+      "availability": "illustrative",
+      "access": "repository",
+      "producedByRunId": "run-1"
+    },
+    {
+      "id": "artifact-seo",
+      "kind": "report",
+      "path": ".voice-review/reviews/example-site-result/artifacts/seo.md",
+      "contentHash": "deede7efe3990e46244ce47b190109a7bf2f657a40ca54bb1fe5e2493094b6d0",
+      "availability": "illustrative",
+      "access": "repository",
+      "producedByRunId": "run-1"
+    },
+    {
+      "id": "artifact-consistency",
+      "kind": "report",
+      "path": ".voice-review/reviews/example-site-result/artifacts/consistency.md",
+      "contentHash": "8d151edb4c6c8c0672bc6fee9d1c54b59aaf832f8698b239cbd87470653da20a",
+      "availability": "illustrative",
+      "access": "repository",
+      "producedByRunId": "run-2"
+    },
+    {
+      "id": "artifact-desktop",
+      "kind": "screenshot",
+      "path": ".voice-review/reviews/example-site-result/artifacts/artifact-desktop--illustrative.png",
+      "contentHash": "1412a74c0c9a934bfdd9e87bf605a050cd2d9cb9617525ffb6fe322329f44542",
+      "availability": "illustrative",
+      "access": "repository",
+      "producedByRunId": "run-3",
+      "capturedAt": "2026-09-12T10:02:00Z",
+      "capture": {
+        "route": "/",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "deviceScaleFactor": 1
+        },
+        "locale": "en",
+        "theme": "light",
+        "browser": "Illustrative browser version",
+        "state": "Initial viewport, navigation collapsed, no review overlays",
+        "build": {
+          "repositoryId": "website",
+          "commit": "1111111111111111111111111111111111111111",
+          "workingCopySnapshotHash": "723d30e06fce16a1ed030f808aadd56e6ef0c24f4f7b5a4dcc59ac8913478908",
+          "identityVerified": true
+        }
+      }
+    },
+    {
+      "id": "artifact-mobile",
+      "kind": "screenshot",
+      "path": ".voice-review/reviews/example-site-result/artifacts/artifact-mobile--illustrative.png",
+      "contentHash": "e423a93ea0f054a624a6188c995c1812d1e78204d2be2858d0bb4dce57bb6bd7",
+      "availability": "illustrative",
+      "access": "repository",
+      "producedByRunId": "run-3",
+      "capturedAt": "2026-09-12T10:02:00Z",
+      "capture": {
+        "route": "/",
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "deviceScaleFactor": 1
+        },
+        "locale": "en",
+        "theme": "light",
+        "browser": "Illustrative browser version",
+        "state": "Initial viewport, navigation collapsed, no review overlays",
+        "build": {
+          "repositoryId": "website",
+          "commit": "1111111111111111111111111111111111111111",
+          "workingCopySnapshotHash": "723d30e06fce16a1ed030f808aadd56e6ef0c24f4f7b5a4dcc59ac8913478908",
+          "identityVerified": true
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "id": "decision-1",
+      "findingId": "finding-canonical",
+      "actionId": "action-production-proof",
+      "disposition": "accepted",
+      "rationale": "Accept the evidence-gathering follow-up as a proposed next task; this records no execution or deployment approval.",
+      "actorId": "example-operator",
+      "decidedAt": "2026-09-12T10:10:00Z",
+      "sourceRevisions": [
+        {
+          "kind": "snapshot",
+          "repositoryId": "website",
+          "path": "src/content/home.ts",
+          "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+          "snapshotArtifactId": "artifact-source",
+          "locator": "home.hero"
+        }
+      ],
+      "contextHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+      "reviewInputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c",
+      "status": "current"
+    },
+    {
+      "id": "decision-2",
+      "findingId": "finding-maturity",
+      "actionId": "action-keep-boundary",
+      "disposition": "keep",
+      "rationale": "Retain the release qualification because the current context does not establish a shipped installer.",
+      "actorId": "example-operator",
+      "decidedAt": "2026-09-12T10:10:00Z",
+      "sourceRevisions": [
+        {
+          "kind": "snapshot",
+          "repositoryId": "website",
+          "path": "src/content/home.ts",
+          "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+          "snapshotArtifactId": "artifact-source",
+          "locator": "home.hero"
+        },
+        {
+          "kind": "git",
+          "repositoryId": "marketing",
+          "commit": "2222222222222222222222222222222222222222",
+          "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+          "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+          "locator": "Lead decision and proof boundary"
+        }
+      ],
+      "contextHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+      "reviewInputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c",
+      "status": "current"
+    },
+    {
+      "id": "decision-3",
+      "findingId": "finding-cta",
+      "actionId": "action-clarify-cta",
+      "disposition": "defer",
+      "rationale": "Defer a CTA rewrite until the authority conflict is resolved in context.",
+      "actorId": "example-operator",
+      "decidedAt": "2026-09-12T10:10:00Z",
+      "sourceRevisions": [
+        {
+          "kind": "git",
+          "repositoryId": "marketing",
+          "commit": "2222222222222222222222222222222222222222",
+          "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+          "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+          "locator": "Lead decision and proof boundary"
+        }
+      ],
+      "contextHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+      "reviewInputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c",
+      "status": "current"
+    },
+    {
+      "id": "decision-4",
+      "findingId": "finding-proof-density",
+      "actionId": "action-crop",
+      "disposition": "reject",
+      "rationale": "Reject this crop because it removes the task identity needed to interpret the proof.",
+      "actorId": "example-operator",
+      "decidedAt": "2026-09-12T10:10:00Z",
+      "sourceRevisions": [
+        {
+          "kind": "snapshot",
+          "repositoryId": "website",
+          "path": "src/content/home.ts",
+          "contentHash": "710770b9d4679342b5697d06b7d0ec73090527d908827527098ff00382586d05",
+          "snapshotArtifactId": "artifact-source",
+          "locator": "home.hero"
+        }
+      ],
+      "contextHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+      "reviewInputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c",
+      "status": "current"
+    }
+  ],
+  "validity": {
+    "state": "current",
+    "reviewInputHash": "7e276c68f4761c12a0335a768c3648e327bc8a76ef6773fcfdfcc15827d53b9c",
+    "checkedAt": "2026-09-12T10:10:00Z",
+    "events": []
+  },
+  "limitations": [
+    "Design example only: commits, working-copy hashes, model runs, findings and screenshot paths are synthetic. No evaluator or site observation is represented.",
+    "A completed analysis process does not mean the site is approved.",
+    "Public deployment, rankings, traffic and conversion are unverified."
+  ]
+}

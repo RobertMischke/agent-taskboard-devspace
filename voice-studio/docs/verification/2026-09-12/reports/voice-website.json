@@ -1,0 +1,118 @@
+{
+  "recordType": "historical-verification",
+  "capturedAt": null,
+  "captureTimeBasis": "Original report has no capture timestamp; source file modification time is recorded separately in the manifest.",
+  "views": [
+    {
+      "route": "home",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "home",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "studio",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "studio",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "library",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "library",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "docs",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "docs",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "project-reviews",
+      "language": "en",
+      "width": 1440
+    },
+    {
+      "route": "project-reviews",
+      "language": "de",
+      "width": 1440
+    },
+    {
+      "route": "home",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "home",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "studio",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "studio",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "library",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "library",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "docs",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "docs",
+      "language": "de",
+      "width": 390
+    },
+    {
+      "route": "project-reviews",
+      "language": "en",
+      "width": 390
+    },
+    {
+      "route": "project-reviews",
+      "language": "de",
+      "width": 390
+    }
+  ],
+  "browserErrorCount": 0,
+  "libraryDemo": "actual bundle, marks toggle, native selection, language switch",
+  "noJavaScript": "English content and navigation available",
+  "buildGit": {
+    "available": true,
+    "commit": "3f9551469331ea18c153aeb82ec3cfcdf1c7af03",
+    "branch": "main",
+    "sourcePath": "voice-studio/",
+    "workingTreeDirty": true
+  },
+  "scope": "Local preview route/language/viewport and real library-demo evidence. Build Git metadata identifies that historical build, not a public deployment or pristine commit-only build."
+}

@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "kind": "voice-studio.holistic-review",
+  "evidenceClass": "illustrative",
+  "id": "example-page-purpose",
+  "createdAt": "2026-09-12T10:00:00Z",
+  "status": "draft",
+  "subject": {
+    "primaryRepositoryId": "website",
+    "repositories": [
+      {
+        "id": "website",
+        "canonicalUrl": "https://example.invalid/ags-website.git",
+        "requestedRef": "refs/heads/main",
+        "resolvedCommit": "1111111111111111111111111111111111111111"
+      },
+      {
+        "id": "marketing",
+        "canonicalUrl": "https://example.invalid/ags-marketing.git",
+        "requestedRef": "refs/heads/main",
+        "resolvedCommit": "2222222222222222222222222222222222222222"
+      }
+    ],
+    "inputMode": "git-commit",
+    "scope": {
+      "kind": "page",
+      "routes": [
+        "/"
+      ],
+      "files": [
+        "src/content/home.ts"
+      ],
+      "exclusions": [
+        "Production indexing, analytics and visitor conversion are not observed."
+      ]
+    }
+  },
+  "context": {
+    "manifestHash": "491240e0b3eb6299222eea4669251f00f754e0db8f39c017f6efb9d8f06f2547",
+    "entries": [
+      {
+        "id": "goal-understand",
+        "kind": "goal",
+        "text": "Help a developer evaluating coding-agent work understand the product role and inspect one concrete task-to-review example.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "audience-developer",
+        "kind": "audience",
+        "text": "Developers evaluating an early product using existing coding-agent CLIs; do not imply an enterprise SaaS service.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/00-ueberblick/produkt-one-pager-assisted-coding-harness.md",
+            "contentHash": "771fca919059753543bc9eed18c951e32d8b011a82de52fc203e155ac453a3d3",
+            "locator": "Audience"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "claim-management",
+        "kind": "claim",
+        "text": "The coding-agent management layer.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "constraint-no-release-claim",
+        "kind": "constraint",
+        "text": "An installer release target does not establish an already shipped installation path.",
+        "authority": "approved",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          }
+        ],
+        "supersedes": []
+      },
+      {
+        "id": "decision-cta-unresolved",
+        "kind": "decision",
+        "text": "Resolve whether the hero primary action is product proof or GitHub stars before rewriting the CTA.",
+        "authority": "disputed",
+        "sourceRefs": [
+          {
+            "kind": "git",
+            "repositoryId": "marketing",
+            "commit": "2222222222222222222222222222222222222222",
+            "path": "06-website-planung/01-positionierung-und-claims/zentrale-claim-hierarchie.md",
+            "contentHash": "b2c1a7122ed9641004f19728a4377bfead63d44ae7328b9472ada9341c770783",
+            "locator": "Lead decision and proof boundary"
+          },
+          {
+            "kind": "operator",
+            "recordId": "illustrative-context-question",
+            "capturedAt": "2026-09-12T10:00:00Z"
+          }
+        ],
+        "supersedes": [],
+        "rationale": "Synthetic example of a scoped authority conflict, not a new AGS decision."
+      }
+    ]
+  },
+  "taskContractVersion": "holistic-analysis/1",
+  "executionPolicy": {
+    "invocation": "explicit-operator",
+    "automaticModelRuns": false,
+    "automaticApply": false,
+    "automaticCommit": false,
+    "automaticPublish": false,
+    "delegation": "explicit-bounded",
+    "maximumTasks": 4,
+    "maximumParallelism": 1,
+    "timeoutSeconds": 300,
+    "maximumOutputCharacters": 200000,
+    "limitsNote": "Time and output bounds do not guarantee a hard token or monetary cap."
+  },
+  "tasks": [
+    {
+      "id": "task-page",
+      "dimension": "page-purpose",
+      "objective": "Assess the homepage as a whole against the declared audience, goal, claims and unresolved action choice.",
+      "scope": {
+        "routes": [
+          "/"
+        ],
+        "files": [
+          "src/content/home.ts"
+        ]
+      },
+      "contextEntryIds": [
+        "goal-understand",
+        "audience-developer",
+        "claim-management",
+        "constraint-no-release-claim",
+        "decision-cta-unresolved"
+      ],
+      "status": "planned"
+    }
+  ],
+  "results": [],
+  "artifacts": [],
+  "decisions": [],
+  "validity": {
+    "state": "unreviewed",
+    "reviewInputHash": "ad0490d5f9f1ef218edf1f89828bb8c586f7ad1c0fb767f28d88757894a2c2a0",
+    "events": []
+  },
+  "limitations": [
+    "Design example only: all repository pins and any implied source contents are synthetic. No review or model run took place."
+  ]
+}

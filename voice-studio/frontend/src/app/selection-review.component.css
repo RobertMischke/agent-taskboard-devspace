@@ -1,0 +1,28 @@
+:host { display: block; min-width: 0; }
+.selection-review { display: grid; gap: 18px; margin: 20px 0; color: var(--ink); }
+.selection-review h4 { margin: 0; font-size: 17px; line-height: 1.5; }
+.keep-choice, .generate-choice { display: grid; gap: 10px; }
+.optional-details { margin: 0; font-size: 14px; }
+summary { cursor: pointer; min-height: 32px; padding: 4px 0; font-weight: 600; }
+label { margin: 12px 0 6px; font-size: 14px; }
+textarea { min-height: 82px; font-size: 15px; }
+.saved-decision { padding: 12px 14px; background: #e8f0e2; border: 1px solid #b9cbb0; border-radius: 6px; color: #294724; font-weight: 650; }
+.decision-note { font-size: 15px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.alternative-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.alternative-list > li { display: grid; gap: 12px; padding: 15px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.alternative-list > li.chosen { border-color: var(--forest); background: #f1f6ed; }
+.alternative-label { font-size: 13px; font-weight: 650; color: var(--muted); }
+.replacement { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 17px; line-height: 1.65; }
+.removal { color: #804532; font-style: italic; }
+.alternative-reason { font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.small-muted { margin: 0; font-size: 13px; overflow-wrap: anywhere; }
+.suggestion-status { padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: #f3f5ef; font-size: 14px; }
+.suggestion-status[data-status="running"], .suggestion-status[data-status="cancelling"] { background: #eef3f8; color: #28486a; }
+.suggestion-status[data-status="failed"], .suggestion-status[data-status="stale"], .selection-error { background: #fff0e9; color: #7b3823; }
+.selection-error { padding: 12px 14px; border-radius: 6px; font-size: 14px; overflow-wrap: anywhere; }
+.error-detail { margin-top: 8px; overflow-wrap: anywhere; }
+.suggestion-history { border-top: 1px solid var(--line); padding-top: 10px; font-size: 14px; }
+.suggestion-history button { display: grid; gap: 4px; width: 100%; padding: 11px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.suggestion-history button.selected { font-weight: 650; }
+.suggestion-history small { font-weight: 400; color: var(--muted); overflow-wrap: anywhere; }
+@media (max-width: 480px) { .alternative-list > li { padding: 12px; } }

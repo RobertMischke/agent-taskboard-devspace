@@ -1,8 +1,10 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   NgZone,
   OnDestroy,
+  OnInit,
   ViewChild,
   computed,
   inject,
@@ -22,6 +24,7 @@ import type {
   ProjectSummary,
   Proposal,
   SelectionTarget,
+  BrowserSessionResult,
 } from "@voice/contracts";
 
 import { SemanticReviewComponent, type StudioApi } from './semantic-review.component';
@@ -31,18 +34,65 @@ import { KnowledgeWikiComponent } from './knowledge-wiki.component';
 import { SourceTasksComponent, type SourceTaskDocumentApplied } from './source-tasks.component';
 import { ProjectChecksComponent } from './project-checks.component';
 
+import { SelectionReviewComponent } from './selection-review.component';
+import { SourceContextComponent } from './source-context.component';
+import { I18nService, TranslatePipe } from './i18n.service';
+
+type NavigationMode = 'full' | 'compact' | 'focus';
+function savedNavigation(): NavigationMode {
+  try { const mode = localStorage.getItem('voice-studio:navigation'); return mode === 'compact' || mode === 'focus' ? mode : 'full'; } catch { return 'full'; }
+}
+
 type StudioTab = "preview" | "source" | "file" | "project";
 
 @Component({
   selector: "voice-studio",
   standalone: true,
-  imports: [CommonModule, FormsModule, LiveBrowserComponent, SemanticReviewComponent, KnowledgeWikiComponent, SourceTasksComponent, ProjectChecksComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, SourceContextComponent, SelectionReviewComponent, LiveBrowserComponent, SemanticReviewComponent, KnowledgeWikiComponent, SourceTasksComponent, ProjectChecksComponent],
   templateUrl: "./app.component.html",
+  host: { '[class.compact-navigation]': 'navigationMode() === "compact"', '[class.focus-navigation]': 'focusNavigation()', '[class.navigation-open]': 'navigationOpen()' },
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
+  readonly i18n = inject(I18nService);
+  readonly navigationMode = signal<NavigationMode>(savedNavigation());
+  readonly navigationOpen = signal(false);
+  readonly focusNavigation = computed(() => this.connected() && this.navigationMode() === 'focus' && this.tab() === 'preview');
+  @ViewChild(LiveBrowserComponent) liveBrowser?: LiveBrowserComponent;
+  private returnNavigationFocus: HTMLElement | null = null;
+  setNavigationMode(value: string): void {
+    if (value !== 'full' && value !== 'compact' && value !== 'focus') return;
+    this.navigationMode.set(value); this.navigationOpen.set(false);
+    if (value === 'focus') { this.sidebarCollapsed.set(true); this.reviewOpen.set(false); }
+    try { localStorage.setItem('voice-studio:navigation', value); } catch { /* Optional UI preference. */ }
+  }
+  toggleNavigation(): void {
+    if (this.navigationOpen()) { this.closeNavigation(); return; }
+    this.returnNavigationFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    this.navigationOpen.set(true); this.reviewOpen.set(false);
+    setTimeout(() => document.querySelector<HTMLElement>('#workspace-navigation button')?.focus());
+  }
+  closeNavigation(): void { this.navigationOpen.set(false); this.returnNavigationFocus?.focus(); }
+  toggleProjects(): void { this.sidebarCollapsed.update(value => !value); this.navigationOpen.set(false); }
+  openFocusAddress(address: string): void { if (this.liveBrowser) { this.liveBrowser.address = address; this.liveBrowser.openAddress(); this.closeNavigation(); } }
+  @HostListener('document:keydown.escape') escapeOverlay(): void {
+    if (!this.focusNavigation()) return;
+    if (this.navigationOpen()) this.closeNavigation(); else { this.reviewOpen.set(false); this.sidebarCollapsed.set(true); }
+  }
+  navigationKeydown(event: KeyboardEvent): void {
+    if (!this.focusNavigation() || !this.navigationOpen() || event.key !== 'Tab') return;
+    const controls = Array.from(document.querySelectorAll<HTMLElement>('#workspace-navigation button:not([disabled]), #workspace-navigation input, #workspace-navigation select, #workspace-navigation a[href]')).filter(element => element.getClientRects().length);
+    const first = controls[0], last = controls.at(-1);
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+  }
   private readonly sanitizer = inject(DomSanitizer);
   private readonly zone = inject(NgZone);
   private token = "";
+  private resumeRequest: Promise<boolean> | null = null;
+  private sessionSequence = 0;
+  readonly resumingSession = signal(true);
+  readonly rememberedUntil = signal<string | null>(null);
+  rememberBrowser = true;
   private review: ReturnType<typeof mountVoiceReview> | null = null;
   private detachPreviewLinks: (() => void) | null = null;
   private loadSequence = 0;
@@ -126,25 +176,80 @@ export class AppComponent implements OnDestroy {
     { id: "meta", label: "Meta & Kontext" },
   ];
 
+  ngOnInit(): void { void this.restoreSession(); }
+
+  private async restoreSession(): Promise<void> {
+    this.resumingSession.set(true);
+    try { if (await this.resumeToken()) await this.loadSessionProjects(); }
+    catch (error) { this.handleError(error); }
+    finally { this.resumingSession.set(false); }
+  }
+
+  private resumeToken(): Promise<boolean> {
+    if (this.resumeRequest) return this.resumeRequest;
+    const sequence = this.sessionSequence;
+    this.resumeRequest = this.api<BrowserSessionResult | { paired: false }>("/api/session/resume", "POST", {})
+      .then(result => {
+        if (sequence !== this.sessionSequence || !("token" in result)) return false;
+        this.acceptSession(result);
+        return true;
+      }).finally(() => { this.resumeRequest = null; });
+    return this.resumeRequest;
+  }
+
+  private acceptSession(result: BrowserSessionResult): void {
+    ++this.sessionSequence;
+    this.token = result.token;
+    this.rememberedUntil.set(result.remembered ? result.expiresAt : null);
+    this.connected.set(true);
+  }
+
+  private async loadSessionProjects(): Promise<void> {
+    const sequence = this.sessionSequence;
+    const projects = await this.api<ProjectSummary[]>("/api/projects");
+    if (sequence !== this.sessionSequence || !this.connected()) return;
+    this.projects.set(projects);
+    const requested = new URLSearchParams(location.search).get('project');
+    let remembered: string | null = null;
+    try { remembered = localStorage.getItem('voice-studio:last-project'); } catch { /* Storage is optional. */ }
+    const first = this.projects().find(project => project.id === (requested ?? remembered)) ?? this.projects()[0];
+    if (first) await this.openProject(first);
+    this.notice.set("");
+  }
+
   async pair(): Promise<void> {
-    if (!this.pairingCode.trim() || this.busy()) return;
+    if (!this.pairingCode.trim() || this.busy() || this.resumingSession()) return;
     await this.run(async () => {
-      const result = await this.api<{ token: string }>(
-        "/api/session/pair",
-        "POST",
-        { code: this.pairingCode.trim() },
-      );
-      this.token = result.token;
+      const result = await this.api<BrowserSessionResult>("/api/session/pair", "POST", { code: this.pairingCode.trim(), remember: this.rememberBrowser });
+      this.acceptSession(result);
       this.pairingCode = "";
-      this.connected.set(true);
-      this.projects.set(await this.api<ProjectSummary[]>("/api/projects"));
-      const requested = new URLSearchParams(location.search).get('project');
-      let remembered: string | null = null;
-      try { remembered = localStorage.getItem('voice-studio:last-project'); } catch { /* Storage is optional. */ }
-      const first = this.projects().find(project => project.id === (requested ?? remembered)) ?? this.projects()[0];
-      if (first) await this.openProject(first);
-      this.notice.set("");
+      await this.loadSessionProjects();
     });
+  }
+
+  async logout(): Promise<void> {
+    if (this.busy()) return;
+    await this.run(async () => {
+      // Keep the session visible if revocation could not be confirmed; never claim the browser was forgotten on a lost response.
+      await this.api("/api/session/logout", "POST", {});
+      this.clearSession();
+      this.error.set(""); this.notice.set("");
+    });
+  }
+
+  private clearSession(): void {
+    ++this.sessionSequence; ++this.loadSequence;
+    this.token = ""; this.pairingCode = "";
+    this.connected.set(false); this.rememberedUntil.set(null);
+    this.disposeReview(); this.selectedProject.set(null); this.projects.set([]);
+    this.document.set(null); this.documents.set([]); this.projectReport.set(null);
+    this.savedProposals.set([]); this.savedRequests.set([]); this.clearSelection();
+    this.navigationOpen.set(false); this.reviewOpen.set(false); this.loading.set(false);
+  }
+
+  rememberedDate(): string {
+    const date = this.rememberedUntil();
+    return date ? new Intl.DateTimeFormat(this.i18n.locale(), { dateStyle: 'medium' }).format(new Date(date)) : '';
   }
 
   openWiki(articleId = 'review-basics'): void {
@@ -476,6 +581,17 @@ export class AppComponent implements OnDestroy {
     );
   }
 
+  selectionProposalCreated(proposal: Proposal): void {
+    if (proposal.documentId !== this.document()?.id || proposal.expectedVersion !== this.document()?.version) return;
+    this.proposal.set(proposal);
+    this.savedProposals.update(items => [proposal, ...items.filter(item => item.id !== proposal.id)]);
+    this.notice.set('Änderung vorbereitet. Quelltext-Diff vor dem Anwenden prüfen.');
+  }
+  selectionDecisionSaved(document: DocumentDetail): void {
+    if (document.id !== this.document()?.id || document.version !== this.document()?.version) return;
+    this.setDocument(document);
+    this.notice.set('Entscheidung gespeichert: Diese Textstelle soll so bleiben.');
+  }
   openSavedProposal(proposal: Proposal): void {
     this.reviewOpen.set(true);
     this.clearSelection();
@@ -575,6 +691,10 @@ export class AppComponent implements OnDestroy {
     if (detail) this.review?.update({ findings: [...detail.findings, ...findings] });
   }
 
+  findingExplanation(finding: Finding): string {
+    const rule = finding.engine.startsWith('voice-studio/local') ? this.knowledge.entry(finding.ruleId) : null;
+    return rule ? this.i18n.t(rule.explanation, { quote: finding.quote }) : finding.explanation;
+  }
   categoryLabel(category: string): string {
     return (
       this.categories.find((item) => item.id === category)?.label ?? category
@@ -627,15 +747,39 @@ export class AppComponent implements OnDestroy {
     path: string,
     method = "GET",
     body?: unknown,
+    retried = false,
   ): Promise<T> {
+    const requestSequence = this.sessionSequence, requestToken = this.token;
     const response = await fetch(path, {
       method,
+      credentials: "same-origin",
       headers: {
+        ...(path.startsWith("/api/session/") ? { "X-Voice-Studio-Session": "1" } : {}),
         ...(body ? { "Content-Type": "application/json" } : {}),
         ...(this.token ? { Authorization: `Bearer ${this.token}` } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
     });
+    const sessionApi = path.startsWith("/api/session/");
+    if (response.status === 401 && !sessionApi && (requestSequence !== this.sessionSequence || requestToken !== this.token)) {
+      if (this.token && method === "GET" && !retried) return this.api<T>(path, method, body, true);
+      throw new Error("Die Sitzung hat sich geändert. Bitte führe die letzte Aktion erneut aus.");
+    }
+    if (response.status === 401 && !retried && !sessionApi) {
+      if (await this.resumeToken()) {
+        if (method === "GET") return this.api<T>(path, method, body, true);
+        // Restore login, but never replay a source mutation or a model launch automatically.
+        throw new Error("Die Sitzung wurde wiederhergestellt. Bitte führe die letzte Aktion erneut aus.");
+      }
+    }
+    if (response.status === 401 && !sessionApi && requestSequence !== this.sessionSequence) {
+      throw new Error("Die Sitzung hat sich geändert. Bitte führe die letzte Aktion erneut aus.");
+    }
+    const sessionExpired = response.status === 401 && !sessionApi && requestSequence === this.sessionSequence;
+    if (sessionExpired) {
+      this.clearSession();
+      this.error.set("Die Sitzung ist abgelaufen. Bitte mit dem aktuellen Code erneut verbinden.");
+    }
     const value = await response.json().catch(() => ({}));
     if (!response.ok) {
       const message =
@@ -646,8 +790,13 @@ export class AppComponent implements OnDestroy {
         `Anfrage fehlgeschlagen (${response.status}).`;
       const error = new Error(
         typeof message === "string" ? message : JSON.stringify(message),
-      ) as Error & { status: number };
+      ) as Error & { status: number; suggestionRequestId?: string; suggestionRequestAccepted?: boolean };
       error.status = response.status;
+      if (sessionExpired) Object.assign(error, { sessionExpired: true });
+      if (value.suggestionRequestAccepted === false && typeof value.suggestionRequestId === "string") {
+        error.suggestionRequestId = value.suggestionRequestId;
+        error.suggestionRequestAccepted = false;
+      }
       throw error;
     }
     return value as T;
@@ -684,6 +833,7 @@ export class AppComponent implements OnDestroy {
     }
   }
   private handleError(error: unknown): void {
+    if ((error as { sessionExpired?: boolean })?.sessionExpired) return; // Central API lifecycle already handled this generation.
     const status = (error as { status?: number })?.status;
     if (status === 409 || status === 412) {
       this.stale.set(true);
@@ -692,13 +842,11 @@ export class AppComponent implements OnDestroy {
       );
     } else if (status === 401) {
       this.error.set(
-        this.connected()
+        (this.connected() || (error as { sessionExpired?: boolean })?.sessionExpired)
           ? "Die Sitzung ist abgelaufen. Bitte mit dem aktuellen Code erneut verbinden."
           : "Der Code ist ungültig. Verwende den Code aus dem laufenden Voice-Studio-Terminal.",
       );
-      this.token = "";
-      this.disposeReview();
-      this.connected.set(false);
+      // API expiry already clears the matching session generation. An invalid pair must not clear a newer login.
     } else
       this.error.set(
         error instanceof Error

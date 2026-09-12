@@ -1,0 +1,27 @@
+<details class="source-context" data-testid="source-context">
+  <summary>
+    <span>{{ 'Lokaler Arbeitsstand' | t }}</span>
+    @if (context()?.git; as git) {
+      @if (git.isRepository && git.head) { <strong>{{ git.branch || ('Detached HEAD' | t) }}</strong><code>{{ git.head.slice(0, 8) }}</code><span>{{ (git.repositoryDirty === true || git.dirty === true ? 'Lokale Änderungen' : git.repositoryDirty === false && git.dirty === false ? 'Arbeitsverzeichnis sauber' : 'Git-Status nicht verfügbar') | t }}</span> }
+    }
+    <span class="context-toggle">{{ 'Datei und Git' | t }}</span>
+  </summary>
+  <div class="source-context-body">
+    <p>{{ 'Diese Vorschau liest die lokale Arbeitskopie. Der veröffentlichte Stand kann davon abweichen.' | t }}</p>
+    <dl><dt>{{ 'Datei' | t }}</dt><dd><code>{{ document.path }}</code></dd>
+    <dt>{{ 'Quellversion' | t }}</dt><dd><code>{{ context()?.sourceVersion || document.version }}</code></dd></dl>
+    @if (context(); as current) {
+      <details class="git-details" [open]="showGit()" (toggle)="showGit.set($any($event.target).open)">
+        <summary>{{ 'Git-Details (optional)' | t }}</summary>
+        @if (current.git?.isRepository && current.git?.head) {
+          <dl><dt>{{ 'Repository' | t }}</dt><dd><code>{{ current.git?.repositoryRoot }}</code></dd>
+          <dt>{{ 'Branch' | t }}</dt><dd>{{ current.git?.branch || 'Detached HEAD' }}</dd>
+          <dt>{{ 'Commit' | t }}</dt><dd><code>{{ current.git?.head }}</code></dd>
+          <dt>{{ 'Dateistatus' | t }}</dt><dd>{{ (current.git?.tracked === false ? 'Nicht von Git erfasst' : current.git?.dirty === true ? 'Datei lokal geändert' : current.git?.dirty === false && current.git?.tracked === true ? 'Datei entspricht dem Commit' : 'Dateistatus nicht verfügbar') | t }}</dd></dl>
+        } @else { <p>{{ 'Für diese Datei ist kein Git-Stand verfügbar.' | t }}</p> }
+      </details>
+    }
+    @if (error()) { <p class="context-error" role="status">{{ 'Quellkontext konnte nicht geladen werden.' | t }} {{ error() | t }}</p> }
+    <button type="button" class="button small" (click)="refresh()" [disabled]="loading()">{{ (loading() ? 'Lade …' : 'Stand aktualisieren') | t }}</button>
+  </div>
+</details>

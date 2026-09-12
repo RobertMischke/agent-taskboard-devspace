@@ -1,0 +1,91 @@
+<section class="selection-review" [attr.aria-label]="'Ausgewählte Textstelle prüfen' | t">
+  <div class="keep-choice">
+    @if (savedDecision(); as decision) {
+      <p class="saved-decision" role="status">✓ {{ 'Als passend gespeichert' | t }}</p>
+      <p class="small-muted">{{ 'Für diese Textstelle und Quellversion gespeichert. Regeln und CI-Prüfungen bleiben aktiv.' | t }}</p>
+      @if (decision.note) { <p class="decision-note">{{ decision.note }}</p> }
+    } @else {
+      <button type="button" class="button primary wide" [disabled]="disabled || busy() || !validSelection()" (click)="keep()">{{ 'So beibehalten' | t }}</button>
+      <details class="optional-details">
+        <summary>{{ 'Begründung ergänzen' | t }} <span class="optional">{{ 'optional' | t }}</span></summary>
+        <label for="selection-keep-note">{{ 'Warum passt die Formulierung?' | t }}</label>
+        <textarea id="selection-keep-note" name="selectionKeepNote" [(ngModel)]="note" rows="2" maxlength="4000" [disabled]="disabled || busy()" [placeholder]="'Zum Beispiel: Der folgende Satz nennt bereits einen konkreten Beleg.' | t"></textarea>
+      </details>
+    }
+  </div>
+
+  @if (alternatives().length) {
+    <h4>{{ (hasGeneratedAlternatives() ? 'Formulierungsalternativen' : 'Vorhandener Änderungsvorschlag') | t }}</h4>
+    <ol class="alternative-list">
+      @for (alternative of alternatives(); track alternative.id; let index = $index) {
+        <li [class.chosen]="chosenId() === alternative.id">
+          <span class="alternative-label">{{ (hasGeneratedAlternatives() ? 'Alternative {number}' : 'Vorschlag zum Befund') | t: { number: index + 1 } }}</span>
+          @if (alternative.replacement === '') {
+            <p class="replacement removal">{{ '(Text entfernen)' | t }}</p>
+          } @else {
+            <p class="replacement" [attr.lang]="document.language">{{ alternative.replacement }}</p>
+          }
+          <p class="alternative-reason">{{ alternative.reason }}</p>
+          <button type="button" class="button secondary wide" [disabled]="disabled || busy() || !validSelection() || chosenId() === alternative.id" (click)="choose(alternative)">{{ (chosenId() === alternative.id ? 'Quelldiff vorbereitet' : 'Diese Änderung prüfen') | t }}</button>
+        </li>
+      }
+    </ol>
+    <p class="small-muted">{{ 'Die Auswahl bereitet einen Quelldiff vor. Du prüfst ihn vor der Übernahme.' | t }}</p>
+  }
+
+  <div class="generate-choice">
+    <details class="optional-details">
+      <summary>{{ 'Richtung für Alternativen' | t }} <span class="optional">{{ 'optional' | t }}</span></summary>
+      <label for="selection-suggestion-instruction">{{ 'Was soll anders werden?' | t }}</label>
+      <textarea id="selection-suggestion-instruction" name="selectionSuggestionInstruction" [(ngModel)]="instruction" rows="2" maxlength="4000" [disabled]="disabled || busy() || hasActiveRun() || !!pendingRequest()" [placeholder]="'Zum Beispiel: Kürzer, mit dem konkreten Nutzen beginnen.' | t"></textarea>
+    </details>
+    <button type="button" class="button secondary wide" [disabled]="busy() || loading() || (!pendingRequest() && (disabled || !status()?.available || hasActiveRun() || !validSelection()))" (click)="generate()">{{ (pendingRequest() ? 'Vorherige Anfrage erneut prüfen' : hasGeneratedAlternatives() ? 'Neue Alternativen erstellen' : 'Alternativen erstellen') | t }}</button>
+    @if (pendingRequest(); as pending) {
+      <p class="small-muted" role="status">{{ 'Die vorherige Anfrage ist noch unbestätigt. Erneut prüfen verwendet dieselbe Anfrage und ursprüngliche Auswahl.' | t }}</p>
+      <details class="optional-details"><summary>{{ 'Ursprüngliche Auswahl der Anfrage' | t }}</summary><p class="replacement">{{ pending.input.quote }}</p></details>
+    }
+    @if (status(); as route) {
+      @if (route.available) {
+        <p class="small-muted">{{ 'Startet einen Modellaufruf für die Auswahl über' | t }} <strong>{{ route.cli }} · {{ route.model }} · {{ route.thinkingLevel }}</strong>.</p>
+      } @else {
+        <p class="small-muted">{{ 'Für Alternativen muss eine verfügbare Modellroute eingerichtet sein.' | t }} {{ route.message | t }}</p>
+      }
+    } @else if (loading()) {
+      <p class="small-muted" role="status">{{ 'Gespeicherte Alternativen und Modellroute werden geladen …' | t }}</p>
+    }
+  </div>
+
+  @for (active of activeRuns(); track active.id) {
+    <div class="suggestion-status" [attr.data-status]="active.status">
+      <p role="status">{{ label(active) | t }}</p>
+      @if (!isCurrent(active)) {
+        <p class="small-muted">{{ 'Dieser Lauf gehört zu einer anderen Auswahl oder Quellversion dieses Dokuments.' | t }}</p>
+        <p class="replacement">{{ active.selection.quote }}</p>
+      }
+      @if (active.status === 'running') {
+        <button type="button" class="text-button" [disabled]="busy() || loading()" (click)="cancel(active)">{{ 'Erstellung abbrechen' | t }}</button>
+      }
+    </div>
+  }
+  @if (run(); as current) { @if (!isActive(current)) {
+    <div class="suggestion-status" [attr.data-status]="current.status">
+      <p role="status">{{ label(current) | t }}</p>
+      @if (current.error) { <p class="error-detail">{{ current.error | t }}</p> }
+      @if (current.status === 'completed' && isCurrent(current) && !current.alternatives.length) {
+        <p>{{ 'Der Lauf enthält keine verwendbaren Alternativen.' | t }}</p>
+      }
+    </div>
+  } }
+  @if (error()) {
+    <div class="selection-error"><p role="alert">{{ error() | t }}</p><button type="button" class="text-button" [disabled]="loading() || busy()" (click)="reload()">{{ 'Status erneut laden' | t }}</button></div>
+  }
+  @if (!validSelection()) { <p class="selection-error" role="alert">{{ 'Die Auswahl passt nicht mehr zur Quelle. Bitte wähle die Textstelle erneut.' | t }}</p> }
+  @if (history().length > 1) {
+    <details class="suggestion-history">
+      <summary>{{ 'Gespeicherte Alternativen ({count})' | t: { count: history().length } }}</summary>
+      @for (item of history(); track item.id) {
+        <button type="button" [class.selected]="run()?.id === item.id" [disabled]="busy() || loading()" (click)="openRun(item)"><span>{{ label(item) | t }}</span><small>{{ formatDate(item.createdAt) }} · {{ item.model }}</small></button>
+      }
+    </details>
+  }
+</section>

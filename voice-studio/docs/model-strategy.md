@@ -217,7 +217,7 @@ zero model calls; an explicitly configured operator action can launch one.
 
 ## Local sources and scope of claims
 
-Read on 2026-09-06 in `C:/Projects/coding-agent-token-economy`:
+Read on 2026-09-06 in the `coding-agent-token-economy` repository:
 
 - `docs/model-routing-api.md`
 - `docs/system/domains/model-routing-policy.md`

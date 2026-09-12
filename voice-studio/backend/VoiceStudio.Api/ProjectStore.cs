@@ -245,11 +245,12 @@ public sealed partial class ProjectStore
         };
         if (format == "typescript") notes.Add("TypeScript-Quelladapter: Nur freigegebene Content-Dateien und Textliterale aus exportierten Objekt-/Arraywerten werden geprüft. Importierte Werte, Funktionen, interpolierte Templates, URLs und technische Schlüssel sind ausgeschlossen. Keine vollständige Komponenten- oder Laufzeitanalyse.");
         if (source.Contains("data-i18n", StringComparison.OrdinalIgnoreCase)) notes.Add("data-i18n erkannt: Der Quelltextbericht erfasst nur statische Fallback-Texte. Übersetzungs-Dictionaries werden nicht analysiert; Änderungen an gebundenen Textstellen sind gesperrt.");
-        return new(doc.Id, doc.RelativePath, title, format, parsed.Language, version, parsed.Units.Sum(u => Regex.Matches(u.Text, @"\S+").Count), findings.Length, review.Feedback.Count(f => f.Status != "resolved"), source, parsed.Html, parsed.Units, findings, review.Feedback.ToArray(), review.Revision, new(parsed.Units.Length, parsed.Units.Length, parsed.ExcludedRegions, notes.ToArray()));
+        return new(doc.Id, doc.RelativePath, title, format, parsed.Language, version, parsed.Units.Sum(u => Regex.Matches(u.Text, @"\S+").Count), findings.Length, review.Feedback.Count(f => f.Status != "resolved"), source, parsed.Html, parsed.Units, findings, review.Feedback.ToArray(), review.Revision, new(parsed.Units.Length, parsed.Units.Length, parsed.ExcludedRegions, notes.ToArray()), CurrentDecisions(review, version, parsed.Units));
     }
 
     private static void Reanchor(ReviewFile review, ParsedDocument parsed, string version)
     {
+        review.Decisions = review.Decisions.Select(decision => decision with { Status = "stale" }).ToList();
         review.Feedback = review.Feedback.Select(feedback =>
         {
             var matches = new List<(TextUnit Unit, int Start)>();

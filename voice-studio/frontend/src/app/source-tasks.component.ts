@@ -1,4 +1,4 @@
-import { DatePipe } from "@angular/common";
+import { I18nService, TranslatePipe } from './i18n.service';
 import {
   Component,
   EventEmitter,
@@ -30,11 +30,22 @@ export interface SourceTaskDocumentApplied {
 @Component({
   selector: "voice-source-tasks",
   standalone: true,
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: "./source-tasks.component.html",
   styleUrl: "./source-tasks.component.css",
 })
 export class SourceTasksComponent implements OnChanges, OnDestroy {
+  readonly i18n = inject(I18nService);
+
+  formatDate(value: string): string {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat(this.i18n.locale() === 'de' ? 'de-DE' : 'en-GB', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    }).format(date);
+  }
+
   @Input({ required: true }) projectId = "";
   @Input({ required: true }) document!: DocumentDetail;
   @Input({ required: true }) api!: StudioApi;
@@ -256,7 +267,7 @@ export class SourceTasksComponent implements OnChanges, OnDestroy {
         .replace(/^\[[^\]\r\n]+\]\s*/, "")
         .split(/\r?\n/)
         .find((line) => line.trim())
-        ?.trim() ?? "Rückmeldung";
+        ?.trim() ?? this.i18n.t("Rückmeldung");
     return this.feedbackExcerpt(firstLine, 130);
   }
   feedbackExcerpt(value: string, limit = 110): string {

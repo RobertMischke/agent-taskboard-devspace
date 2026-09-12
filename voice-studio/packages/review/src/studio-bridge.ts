@@ -31,7 +31,13 @@ export interface ConnectVoiceStudioOptions {
   /** Optional target browsing context; normally omit on the integrated page. */
   window?: Window & typeof globalThis;
 }
-export interface VoiceStudioConnection { refresh(): void; dispose(): void; }
+/** Explicit live-page bridge; backend credentials never cross this transport. */
+export interface VoiceStudioConnection {
+  /** Re-evaluate source-to-DOM mapping after the host renders new content. */
+  refresh(): void;
+  /** Remove the bridge, its overlays and listeners, restoring wrapped history methods. */
+  dispose(): void;
+}
 type ReviewMessage = Extract<VoiceStudioParentMessage, { type: 'voice-studio:review' }>;
 const bridges = new WeakMap<Window, VoiceStudioConnection>();
 const excludedSelector = 'script,style,noscript,template,iframe,object,embed,code,pre,textarea,input,select,option,svg,math,[hidden],[aria-hidden="true"],[data-voice-exclude],[data-voice-overlay],[contenteditable]:not([contenteditable="false"])';

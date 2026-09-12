@@ -1,3 +1,4 @@
+import { I18nService, TranslatePipe } from './i18n.service';
 import { Component, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { DocumentDetail, Finding } from '@voice/contracts';
@@ -7,8 +8,19 @@ interface SemanticFinding extends Finding { evidence: string; }
 interface SemanticRun { id: string; projectId: string; documentId: string; sourceVersion: string; status: string; cli: string; model: string; thinkingLevel: string; actualModel: string | null; createdAt: string; completedAt: string | null; suppliedUnits: number; reviewedUnitIds: string[]; findings: SemanticFinding[]; notes: string[]; usageSummaries: string[]; error: string | null; contextFiles: {path: string; truncated: boolean}[]; }
 export type StudioApi = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 
-@Component({ selector: 'voice-semantic-review', standalone: true, imports: [FormsModule], templateUrl: './semantic-review.component.html' })
+@Component({ selector: 'voice-semantic-review', standalone: true, imports: [FormsModule, TranslatePipe], templateUrl: './semantic-review.component.html' })
 export class SemanticReviewComponent implements OnChanges, OnDestroy {
+  readonly i18n = inject(I18nService);
+
+  formatDate(value: string): string {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat(this.i18n.locale() === 'de' ? 'de-DE' : 'en-GB', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    }).format(date);
+  }
+
   @Input({ required: true }) projectId = '';
   @Input({ required: true }) document!: DocumentDetail;
   @Input({ required: true }) api!: StudioApi;
