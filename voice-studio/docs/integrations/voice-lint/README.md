@@ -41,3 +41,19 @@ reference service; it does not start that service or mutate its data.
 The older patch scripts also rewrote historical introductions, fixed one
 particular table or patched source strings. Those completed migrations are local
 maintenance history. They are not part of this reusable synchronizer.
+
+## Separate application and documentation launch entries
+
+The local project sidebar exposes two explicit, startable entries. Both commands
+run in the operator’s Voice Studio checkout; the project host stores the resolved
+local working directory. The Studio application and the public documentation
+preview are separate processes and pages.
+
+| Label | Start command | Local page |
+| --- | --- | --- |
+| Voice Studio öffnen | `npm start` | `http://127.0.0.1:5188/` |
+| Website und Doku öffnen | `npm run website:preview` | `http://127.0.0.1:5187/voice/` |
+
+The latter opens the Library/UI homepage, examples and HTML technical guides.
+Starting Studio alone does not open that product website. Local project/URL IDs
+are host metadata; they are not a portable product API or a deployment target.
