@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-09-12T11:52:50.910Z",
+  "filename": "studio-live-review",
+  "width": 1180,
+  "height": 780,
+  "scope": "Actual registered Agent Studio homepage with its restored hero, source-mapped native lead selection and live review panel. No source, feedback, decision, proposal, task or model writes.",
+  "source": "src/app/content/home.ts",
+  "locale": "en",
+  "navigation": "compact",
+  "realProject": true,
+  "readOnly": true,
+  "sourceAndReviewUnchanged": true
+}

@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-09-12T12:14:53.813Z",
+  "scope": "Actual documentation renderer and viewer modules in an isolated loopback fixture; no running Studio, product build, project writes or model calls.",
+  "checks": [
+    "Verification content contains only nine dated JSON record links and no image or Markdown links.",
+    "Actual retained record opens in-place and is formatted with two-space indentation.",
+    "Native modal keeps keyboard focus within Close and the keyboard-scrollable JSON region.",
+    "Escape closes the dialog, restores link focus and restores page scrolling.",
+    "HTML-looking JSON values remain escaped text and never execute.",
+    "Mobile modal fits the viewport and long JSON lines scroll inside the record.",
+    "Malformed JSON has a clear error, clears prior content and can be retried.",
+    "Oversize responses are bounded before JSON parsing.",
+    "Loading state is announced; closing aborts a pending record and late data cannot replace the next record.",
+    "Missing records and dialog controls support German interface language.",
+    "Without JavaScript each record remains a normal JSON link.",
+    "No browser exceptions; fixture requests are read-only GETs."
+  ]
+}

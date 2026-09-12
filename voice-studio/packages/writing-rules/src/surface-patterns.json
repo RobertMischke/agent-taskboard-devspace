@@ -1,0 +1,98 @@
+[
+  {
+    "id": "meta-en",
+    "ruleId": "meta-framing",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:it is worth noting|this section clearly explains|the key thing to understand)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "meta-de",
+    "ruleId": "meta-framing",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:es ist wichtig zu betonen|dieser Abschnitt erklärt deutlich|entscheidend zu verstehen ist)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "record-en",
+    "ruleId": "concrete-subject",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])Git is the preferred source of record(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "record-de",
+    "ruleId": "concrete-subject",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])Git ist die bevorzugte (?:verbindliche )?Datenquelle(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "contrast-en",
+    "ruleId": "unsupported-contrast",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:this is(?:n't| not) (?:just|only)|(?:it|this) is not about)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "contrast-de",
+    "ruleId": "unsupported-contrast",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:das ist nicht (?:nur|bloß)|es geht nicht (?:nur )?um)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "hedge-en",
+    "ruleId": "calibrated-uncertainty",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:may generally|generally may|could perhaps|might possibly)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "hedge-de",
+    "ruleId": "calibrated-uncertainty",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:könnte möglicherweise|im Allgemeinen vielleicht|eventuell möglicherweise)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "cause-en",
+    "ruleId": "unsupported-causality",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:therefore (?:reduces?|ensures?)|this ensures)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "cause-de",
+    "ruleId": "unsupported-causality",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:das gewährleistet|deshalb verbessert)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "claims-en",
+    "ruleId": "claims-evidence",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:guaranteed?|production-ready)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "claims-de",
+    "ruleId": "claims-evidence",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:garantiert|produktionsreif)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "stock-en",
+    "ruleId": "word-choice",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:seamless(?:ly)?|powerful|effortless(?:ly)?)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "stock-de",
+    "ruleId": "word-choice",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:leistungsstark(?:e[nmrs]?)?|nahtlos(?:e[nmrs]?)?|mühelos(?:e[nmrs]?)?)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "evidence-en",
+    "ruleId": "reported-evidence",
+    "language": "en",
+    "source": "(?<![\\p{L}\\p{N}_])(?:fully verified|all tests passed)(?![\\p{L}\\p{N}_])"
+  },
+  {
+    "id": "evidence-de",
+    "ruleId": "reported-evidence",
+    "language": "de",
+    "source": "(?<![\\p{L}\\p{N}_])(?:vollständig geprüft|alle Tests bestanden)(?![\\p{L}\\p{N}_])"
+  }
+]

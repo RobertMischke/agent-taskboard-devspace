@@ -1,13 +1,10 @@
 # Typed Library integration
 
-`@voice/review` is the framework-independent annotation and live-page bridge
-library. Its ESM entry includes TypeScript declarations, callback inference,
-completion information and API documentation. Plain JavaScript gets the same
-information through `// @ts-check` and JSDoc imports. The classic browser bundle
-also has an explicit type-only reference for its `VoiceReview` global.
-
-This library renders findings supplied by a host. It does not analyze a page,
-call an AI model, edit a source file, or implement the planned Voice Lint CLI.
+`@voice/review` renders findings supplied by your host application. Its ESM
+entry includes TypeScript declarations and JSDoc for completion, callback
+inference and hover help. JavaScript consumers can use `// @ts-check`; classic
+scripts can reference types for the `VoiceReview` global. Analysis and source
+editing belong to the host, outside this library's API.
 
 ## Build and editor setup
 
@@ -20,9 +17,8 @@ npm run test:types -w @voice/review
 
 Resolve imports by the package name `@voice/review`, not by a private `src/`
 path. The package's `exports` and `types` entries point at built declarations.
-Use the built local package in another project; this documentation does not
-claim that a registry release is available. `NodeNext` and `Bundler` module
-resolution are exercised by the consumer test.
+Build the local package before consuming it in another project. The consumer
+test exercises `NodeNext` and `Bundler` module resolution.
 
 For JavaScript projects, `// @ts-check` enables checking in the current file.
 A project can instead set `allowJs`, `checkJs`, `strict`, and `noEmit` in its

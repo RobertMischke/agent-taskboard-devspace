@@ -1,5 +1,10 @@
 # Voice Studio
 
+[Explore the AI writing research](http://127.0.0.1:5187/voice/research/):
+practice articles, original studies, counter-strategies and existing libraries.
+The native website area uses maintained [research records](website/research/README.md)
+with methods, limits and links to the reusable pattern catalogue.
+
 Voice Studio is the local review UI; `@voice/review` is its separately reusable,
 framework-independent typed Library. Preview 0.3 opens a real local website or
 supported source folder, preserves review decisions and prepares guarded source
@@ -8,7 +13,7 @@ not require Git.
 
 The Library supplies annotations, native selection and an explicit live-page
 bridge. It renders host-supplied findings; it does not run an analyzer or call a
-model. The broader Voice Lint analyzer/CLI/CI layer remains planned. Studio uses
+model. `@voice/writing-rules` supplies editorial rules, local surface cues and prompt composition. Studio uses
 Angular, a .NET 10 backend and shared UTF-16 transport contracts.
 
 ## Start
@@ -60,7 +65,8 @@ The homepage gives Studio and the typed Library equal entry points, with an
 actual local Studio screenshot and a complete typed mount/dispose example.
 It explains both Git repositories and ordinary source folders.
 
-Five product pages support English and German. Sixteen technical guides are
+Six product pages have English and German navigation and introductions; the
+Research analysis is in English. Sixteen technical guides are
 rendered as HTML from an explicit source catalogue, with code examples,
 navigation, section links and optional source downloads. Guide bodies remain
 English; the surrounding controls support EN/DE. Start with:
@@ -69,17 +75,15 @@ English; the surrounding controls support EN/DE. Start with:
 - [Library types and IntelliSense](http://127.0.0.1:5187/voice/guides/library-types/)
 - [Seven-day browser sessions](http://127.0.0.1:5187/voice/guides/session/)
 - [Supported commands](http://127.0.0.1:5187/voice/guides/commands/)
-- [AI integration and the AGT plan](http://127.0.0.1:5187/voice/guides/agent-integration/)
+- [AI findings and Library integration](http://127.0.0.1:5187/voice/guides/agent-integration/)
 
 The [website and deployment guide](website/README.md) describes the allowlisted
 static output for the ecosystem's `/voice/` path. It has not been published.
 The local Studio application starts independently on port 5188.
 
-The [holistic review design](docs/holistic-review.md) describes goal-based page
-review and project-wide SEO, consistency and visual tasks with Git-pinned
-context, results and decisions. [Agent integration](docs/agent-integration.md)
-separates today's host-driven use from the proposed AGT pipeline step. The
-broader evaluator and AGT adapter are documented plans, not implemented features.
+The [Git workflow](docs/holistic-review.md) explains current source and review storage.
+Internal [holistic-review](docs/plans/holistic-review.md) and
+[AGT pipeline](docs/plans/agt-voice-pipeline.md) designs remain in the repository.
 
 ## Browse an Angular application
 
@@ -149,6 +153,25 @@ the result `stale` while retaining its original outcome and exit code. Commands
 come only from private host configuration outside the target repository. They
 execute trusted project code with the host user's permissions, independently of
 model runs. See [local project checks](backend/CHECKS.md) for setup and limits.
+
+## AI writing anti-patterns and review prompts
+
+The separate `@voice/writing-rules` package provides twenty contextual rules,
+four task profiles, named anti-patterns with reader costs, English/German examples
+and counter-prompts, and local pattern
+matching for eight rules. `composeWritingReviewPrompt` prepares instructions;
+`findWritingSignals` returns exact UTF-16 candidate spans and coverage.
+Neither function calls a model, changes source or determines authorship.
+
+`npm run build:writing-rules` builds the ESM package and declarations.
+`npm run test:writing-rules` checks rules, composition, signals and consumers.
+The [writing-patterns website](http://127.0.0.1:5187/voice/writing-patterns/)
+uses the actual package for its local check and prompt composer. See the
+[API guide](docs/writing-rules.md) and [AI-text research](docs/ai-text-signals.md).
+
+Studio's existing backend continues to use its four local rules and configured
+Runner prompts. It does not automatically load the new writing catalogue.
+Hosts can integrate the package using the [AI findings workflow](docs/agent-integration.md).
 
 ## Rule wiki and language tooling
 
@@ -290,6 +313,7 @@ evidence, and one-off maintenance patches remain in an ignored local archive.
 | `frontend/` | Angular Studio, real website browser, folder navigation, reports and review |
 | `backend/` | Local projects, source adapters, persistence, guarded edits and Runner tasks |
 | `packages/review/` | Framework-independent annotations, selection and local-site bridge |
+| `packages/writing-rules/` | Versioned writing rules, task profiles, prompt composition and surface signals |
 | `packages/contracts/` | Shared transport contracts; explicitly UTF-16 source coordinates |
 | `examples/` | Website, Markdown and standalone library projects |
 | `knowledge/` | Shared local-rule definitions and explanatory wiki articles |

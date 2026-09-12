@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "revision": 1,
+  "documentPath": "guide.md",
+  "sourceVersion": "9d00338d8e6eb8d59d63e795caf37e041f3eb57b461c16aa9c5e051e94ff3ded",
+  "unitsFingerprint": "115aff2dd6efca09596abbbc7373b3734bc110de47702331473806e25d071f75",
+  "feedback": [],
+  "decisions": [
+    {
+      "id": "321104c66b3cd4dc1ada9b11f09c3119",
+      "unitId": "u-0",
+      "start": 0,
+      "end": 5,
+      "quote": "Clear",
+      "sourceVersion": "9d00338d8e6eb8d59d63e795caf37e041f3eb57b461c16aa9c5e051e94ff3ded",
+      "kind": "keep",
+      "status": "current",
+      "createdAt": "2026-01-01T12:00:00.0000000+00:00",
+      "findingId": null,
+      "note": "Keep the opening word in this synthetic example."
+    }
+  ],
+  "requestIds": {
+    "keep:synthetic-keep-1": "481c5a0873dc77617b33e1bc8e10549fb0e9a0245b456fe121f38046fa20135d"
+  },
+  "proposals": [],
+  "improvementRequests": []
+}

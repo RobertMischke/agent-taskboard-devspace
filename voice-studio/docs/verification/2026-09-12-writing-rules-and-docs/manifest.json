@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "record": "writing-rules-and-docs",
+  "curatedAt": "2026-09-12T12:28:45.101Z",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 952,
+      "sha256": "9bc020b483d7fd279bf99ec86b5e2fa4003a1f6f5652e79c601f4a1ac55b0027"
+    },
+    {
+      "path": "website.json",
+      "bytes": 16405,
+      "sha256": "37832743afb205140ed848d7361931cb35ccd44d3a34ec35a9fecaf7d413d24c"
+    },
+    {
+      "path": "writing-patterns.json",
+      "bytes": 10122,
+      "sha256": "4bb16e68f2d955b6265c247a03aa7cbafec322e9096023693f17fae9e1f165c6"
+    },
+    {
+      "path": "json-viewer.json",
+      "bytes": 1216,
+      "sha256": "1155bebf246cf2260f8316b5e5e8bfb78f7ccae46924ea485d1b9ce92d2283f1"
+    }
+  ]
+}

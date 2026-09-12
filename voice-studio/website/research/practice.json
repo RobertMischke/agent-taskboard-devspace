@@ -1,0 +1,273 @@
+[
+  {
+    "id": "furze-problem-patterns",
+    "title": "Problem Patterns in AI: Beyond Hallucinations",
+    "authors": [
+      "Leon Furze"
+    ],
+    "date": "2026-07-26",
+    "url": "https://leonfurze.com/2026/07/26/problem-patterns-in-ai-beyond-hallucinations/",
+    "kind": "practice",
+    "observation": "Furze describes Claude adding interpretive subtitles to requested slide headings. His proposed categories cover faithfulness, judgment, communication and aesthetics alongside truth: an accurate addition can still distort emphasis or waste attention.",
+    "limits": "A practitioner's taxonomy and examples, with an explicitly informal poll. It does not measure model failure rates or establish the proposed technical causes.",
+    "voiceImplication": "Ask what each heading or explanation contributes to the reader's task. Compare emphasis with the supplied source and remove unsupported interpretation.",
+    "readingDepth": "Article, examples, proposed categories and poll qualification read on 2026-09-12.",
+    "relatedRuleIds": [
+      "meta-framing",
+      "reader-goal",
+      "task-relevance",
+      "unsupported-causality",
+      "forced-template"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Frame heading review around the supplied audience and goal."
+        },
+        {
+          "symbol": "selectWritingRules",
+          "purpose": "Select reader-goal, task-relevance and meta-framing instructions."
+        }
+      ],
+      "currentUse": "A host can supply the brief alongside generated headings for an agent to review. The library prepares instructions; it does not compare their emphasis.",
+      "missingCapability": "A context builder connecting page purpose, source statements and heading roles, followed by a review result with verifiable references.",
+      "releaseFunctionIds": [
+        "contextual-review",
+        "result-validation"
+      ]
+    }
+  },
+  {
+    "id": "gorrie-rhetorical-slop",
+    "title": "Why ChatGPT writes like that: A rhetorical analysis of AI ‘slop’",
+    "authors": [
+      "Colin Gorrie"
+    ],
+    "date": "2025-07-09",
+    "url": "https://www.deadlanguagesociety.com/p/rhetorical-analysis-ai",
+    "kind": "practice",
+    "observation": "Gorrie analyzes parallelism, antithesis and three-part constructions, including a disclosed Claude Sonnet 4 letter prompt. These devices have a human rhetorical history; concentration and predictable repetition can make them feel synthetic.",
+    "limits": "Illustrative rhetorical analysis, not a sampled corpus or controlled comparison between providers. An effective contrast or three-part headline is not automatically a defect.",
+    "voiceImplication": "Review recurrence and meaning across the page. Preserve a deliberate, accepted headline; suggest alternatives when a rhetorical structure invents an opposition or substitutes rhythm for substance.",
+    "readingDepth": "Article and model/prompt footnote read on 2026-09-12.",
+    "relatedRuleIds": [
+      "unsupported-contrast",
+      "forced-template",
+      "repetition",
+      "format-fit"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "findWritingSignals",
+          "purpose": "Locate supported unsupported-contrast phrase patterns."
+        },
+        {
+          "symbol": "getWritingRule",
+          "purpose": "Retrieve contrast exceptions and conditional examples."
+        }
+      ],
+      "currentUse": "Current matches can start a rhetorical review, but they do not recognize every antithesis, parallel structure or deliberate three-part headline.",
+      "missingCapability": "Compare rhetorical choices against the page goal and recurring structures across Git files, preserving effective contrasts while offering substantively different alternatives.",
+      "releaseFunctionIds": [
+        "contextual-review",
+        "alternative-comparison",
+        "project-consistency"
+      ]
+    }
+  },
+  {
+    "id": "amatriain-assisted-writing",
+    "title": "On AI-assisted writing, AI slop, and the line between them",
+    "authors": [
+      "Xavier Amatriain"
+    ],
+    "date": "2026-08-30",
+    "url": "https://amatria.in/blog/aislop",
+    "kind": "practice",
+    "observation": "Amatriain describes AI-assisted editing as useful for language and structure while warning that revisions can shift emphasis, caveats and claims. He discloses assistance in the essay itself and places responsibility for its ideas with the author.",
+    "limits": "A first-person position, including anecdotal detector experience. It does not establish a general productivity gain, an authorship threshold or detector accuracy.",
+    "voiceImplication": "Evaluate whether assistance preserves the intended claim. Keep factual qualifications and author choices visible when comparing revisions, including decisions to retain the original.",
+    "readingDepth": "Full essay, editing examples and assistance disclosure read on 2026-09-12.",
+    "relatedRuleIds": [
+      "reader-goal",
+      "claims-evidence",
+      "calibrated-uncertainty",
+      "word-choice"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Request alternatives that preserve facts, qualifications and accepted decisions."
+        },
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Display host-supplied findings beside the original passage."
+        }
+      ],
+      "currentUse": "The prompt expresses preservation requirements; the overlay lets a reviewer inspect quoted passages. Neither API proves that a suggested rewrite preserves emphasis.",
+      "missingCapability": "Compare claim changes between alternatives and protect recorded author decisions against the exact source revision.",
+      "releaseFunctionIds": [
+        "alternative-comparison",
+        "decision-preservation",
+        "claim-evidence"
+      ]
+    }
+  },
+  {
+    "id": "hughes-negative-contrast",
+    "title": "The ‘Negative Contrast Trap’: Why AI Writing Overuses ‘Not X, But Y’",
+    "authors": [
+      "Ernan Hughes"
+    ],
+    "date": null,
+    "url": "https://www.programmer.ie/post/not/",
+    "kind": "practice",
+    "observation": "Hughes demonstrates requesting an affirmative rewrite of a negative contrast and suggests checking repeated sentence openings after generation. The article provides an accessible example of converting a stylistic complaint into an editing instruction.",
+    "limits": "The examples and illustrative heuristics are not an evaluated detector. Claims about frequency and training mechanisms are hypotheses here, rather than measured results.",
+    "voiceImplication": "Flag the quoted contrast, establish whether its rejected alternative is relevant, then offer a direct statement. Retain contrasts that resolve an actual misconception.",
+    "readingDepth": "Article, rewrite demonstration and heuristic examples read on 2026-09-12. Publication date not established.",
+    "relatedRuleIds": [
+      "unsupported-contrast",
+      "repetition",
+      "complete-sentences"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "findWritingSignals",
+          "purpose": "Find the catalogue's supported English and German contrast openings."
+        },
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Ask for grounded alternatives under unsupported-contrast."
+        }
+      ],
+      "currentUse": "The matcher covers selected prefixes, not every “not X, but Y” construction. A reviewer must establish whether the rejected alternative matters.",
+      "missingCapability": "Construct the relevant misconception context and compare an affirmative rewrite with the original without discarding a useful distinction.",
+      "releaseFunctionIds": [
+        "contextual-review",
+        "alternative-comparison"
+      ]
+    }
+  },
+  {
+    "id": "ossama-tropes",
+    "title": "Tropes: AI Writing Pattern Directory",
+    "authors": [
+      "ossama.is"
+    ],
+    "date": null,
+    "url": "https://tropes.fyi/",
+    "kind": "practice",
+    "observation": "This practitioner directory names recurring word, sentence, tone and composition patterns and distributes prompt instructions. Its examples include negative parallelism, announcement-like conclusions and diluting one point through repeated restatement.",
+    "limits": "A strongly opinionated directory, not a validated authorship benchmark. Its prompt includes categorical bans that can conflict with useful explanation or enumeration. The site's previewed tools do not establish efficacy.",
+    "voiceImplication": "Use such observations to generate conditional review hypotheses. Supply counterexamples and reader costs instead of importing a universal banned-word or punctuation list.",
+    "readingDepth": "Directory landing page, visible prompt excerpts and scope statements read on 2026-09-12; linked tools were not evaluated.",
+    "relatedRuleIds": [
+      "unsupported-contrast",
+      "meta-framing",
+      "repetition",
+      "exhaustive-checklist",
+      "forced-template"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "getWritingRule",
+          "purpose": "Inspect a conditional rule with legitimate keep examples."
+        },
+        {
+          "symbol": "selectWritingRules",
+          "purpose": "Choose relevant catalogue rules instead of a universal ban list."
+        }
+      ],
+      "currentUse": "Voice exposes its own curated rules; it neither imports this directory nor executes its prompt files. Composition-level judgments still require a reviewer.",
+      "missingCapability": "Benchmark selected instructions against both unwanted repetition and legitimate enumeration, recording false positives and preservation decisions.",
+      "releaseFunctionIds": [
+        "prompt-benchmarks",
+        "decision-preservation"
+      ]
+    }
+  },
+  {
+    "id": "wikipedia-signs",
+    "title": "Wikipedia: Signs of AI writing",
+    "authors": [
+      "WikiProject AI Cleanup contributors"
+    ],
+    "date": null,
+    "url": "https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing",
+    "kind": "practice",
+    "observation": "Editors collect examples of inflated significance, superficial analysis, vague attribution, promotional language and leaked assistant markup. The advice page explicitly treats its list as observations and warns that visible signs can conceal deeper sourcing problems.",
+    "limits": "Community advice, not Wikipedia policy or a detector benchmark; some examples depend on encyclopedic conventions. Human texts can share these features, and the page flags outdated coverage of recent models.",
+    "voiceImplication": "Review claims and cited evidence alongside wording. Keep genre-specific rules separate, and distinguish malformed citation artifacts from ordinary punctuation or vocabulary.",
+    "readingDepth": "Scope/caveats and sections on significance, superficial analysis, promotion, attribution and citation artifacts read on 2026-09-12.",
+    "relatedRuleIds": [
+      "claims-evidence",
+      "unsupported-causality",
+      "word-choice",
+      "meta-framing",
+      "reported-evidence"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Select claims-evidence and reported-evidence for a sourcing review."
+        },
+        {
+          "symbol": "findWritingSignals",
+          "purpose": "Locate the catalogue's limited claim and verification phrases."
+        }
+      ],
+      "currentUse": "An agent can receive cited material separately. Current signals neither resolve references nor identify all malformed citation artifacts; encyclopedic conventions need host context.",
+      "missingCapability": "Connect each claim to retrievable evidence and validate source locators and citation artifacts within the selected document genre.",
+      "releaseFunctionIds": [
+        "claim-evidence",
+        "result-validation",
+        "contextual-review"
+      ]
+    }
+  },
+  {
+    "id": "slopt-prompt-market",
+    "title": "slopt: Stop sounding like ChatGPT",
+    "authors": [
+      "slopt"
+    ],
+    "date": null,
+    "url": "https://www.slopt.org/",
+    "kind": "practice",
+    "observation": "A commercial catalogue packages anti-pattern instructions as prompt or skill files. Its public examples use punctuation and rhetorical prohibitions; the FAQ acknowledges that prompts cannot guarantee compliance.",
+    "limits": "Marketing claims about pattern counts, crawls and model coverage were not independently verified. No auditable evaluation supporting the advertised effect was established from the page; no paid material or product was tested.",
+    "voiceImplication": "Evaluate counter-prompts on preserved originals and legitimate exceptions. A larger instruction catalogue alone does not demonstrate better writing, and English claims do not qualify German behavior.",
+    "readingDepth": "Public examples, coverage claims and FAQ read on 2026-09-12. Publication date not established.",
+    "relatedRuleIds": [
+      "forced-template",
+      "format-fit",
+      "reported-evidence",
+      "word-choice"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Build local, selected-rule instructions with conditional examples."
+        },
+        {
+          "symbol": "selectWritingRules",
+          "purpose": "Keep the instruction set specific to the writing task."
+        }
+      ],
+      "currentUse": "Consumers can inspect the generated prompt before using their own agent. Voice does not include or execute this vendor's paid material or promise prompt compliance.",
+      "missingCapability": "A reproducible English/German prompt comparison using preserved originals, warranted revisions and legitimate exceptions to stylistic prohibitions.",
+      "releaseFunctionIds": [
+        "prompt-benchmarks",
+        "alternative-comparison"
+      ]
+    }
+  }
+]

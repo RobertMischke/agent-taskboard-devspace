@@ -1,0 +1,57 @@
+{
+  "task": {
+    "id": "4354b61ec302dd4963c5264d0e313b25",
+    "projectId": "project-32d71e3be575",
+    "documentId": "doc-dc0dbe13416a77d1",
+    "instruction": "Replace the vague noun with instructions; preserve the opening word.",
+    "feedbackIds": [],
+    "sourceVersion": "9d00338d8e6eb8d59d63e795caf37e041f3eb57b461c16aa9c5e051e94ff3ded",
+    "reviewRevision": 1,
+    "revision": 3,
+    "status": "ready",
+    "createdAt": "2026-01-01T12:00:00.0000000+00:00",
+    "updatedAt": "2026-01-01T12:01:00.0000000+00:00",
+    "runId": "644e8e50d6185aee1c92635408fe1af8",
+    "proposalId": "1edf21d420d5a71fa53e5a7395988f91",
+    "error": null,
+    "proposal": {
+      "id": "1edf21d420d5a71fa53e5a7395988f91",
+      "documentId": "doc-dc0dbe13416a77d1",
+      "before": "copy",
+      "after": "instructions",
+      "replacement": "instructions",
+      "sourceBefore": "Clear copy.\n",
+      "sourceAfter": "Clear instructions.\n",
+      "expectedVersion": "9d00338d8e6eb8d59d63e795caf37e041f3eb57b461c16aa9c5e051e94ff3ded",
+      "sourceSpan": {
+        "start": 6,
+        "end": 10,
+        "encoding": "utf16"
+      },
+      "feedbackId": null,
+      "reason": "Synthetic task example: name the type of content.",
+      "state": "pending",
+      "taskId": "4354b61ec302dd4963c5264d0e313b25",
+      "runId": "644e8e50d6185aee1c92635408fe1af8",
+      "edits": [
+        {
+          "unitId": "u-0",
+          "start": 6,
+          "end": 10,
+          "quote": "copy",
+          "replacement": "instructions",
+          "reason": "Name the type of content."
+        }
+      ]
+    },
+    "notes": [
+      "Synthetic documentation example; no model was run."
+    ],
+    "resolution": null
+  },
+  "creationFingerprint": "695fa2a48d37ae76d9f7d0a3bb594aeeff47ef13eada8185a79176890b5a2b82",
+  "contextFingerprint": "25798505a02d1439b8b14b1eaad6684d79ee5ec81c2a60b83288e454ad8839af",
+  "prompt": "SYNTHETIC PLACEHOLDER: a real record contains the prepared task prompt and embedded source/context; it is not reproduced here.",
+  "startRequestId": "synthetic-start-task-1",
+  "startFingerprint": "3081ea88cfbe1fc971575d41d0cb6e89b9bb03913dfdd3bb5b44f5afdae408d6"
+}

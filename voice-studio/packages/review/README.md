@@ -4,7 +4,7 @@ A framework-independent JavaScript library for reviewing text on a local web
 page. Angular, plain HTML and same-origin iframe hosts use the same controller.
 It draws supplied analysis findings as solid underlines and human feedback as
 dotted underlines, while native text selection supplies new feedback anchors.
-It does not run a second linter or change a document's source text.
+The host supplies the analysis; source editing is outside the library API.
 
 ## Build and consume
 
@@ -36,10 +36,9 @@ For a normal browser script, use
 load `voice-review.js` separately with a classic `<script>` tag. The reference
 does not load runtime code. Use the main entry for ESM imports.
 
-`npm run test:types -w @voice/review` verifies isolated consumers with NodeNext
-and Bundler resolution, intentional type errors, and actual TypeScript language
-service completion/hover results. It does not drive the VS Code user interface.
-The full workspace guide is [Typed Library integration](../../docs/library-types.md).
+Run `npm run test:types -w @voice/review` to verify the declarations and editor
+metadata. [Typed Library integration](../../docs/library-types.md) contains
+complete setup examples and describes the consumer checks.
 
 ## Mount on existing HTML
 
@@ -115,14 +114,25 @@ const api = createReviewClient({
 });
 let detail = await api.getDocument(projectId, documentId);
 
-async function persistFeedback(selection, comment, category) {
+/**
+ * @param {import('@voice/review').SelectionTarget} selection
+ * @param {string} comment
+ * @param {string} category
+ * @returns {Readonly<import('@voice/review').FeedbackInput>}
+ */
+function prepareFeedback(selection, comment, category) {
+  return Object.freeze({
+    ...selection, comment, category,
+    expectedVersion: detail.version,
+    expectedReviewRevision: detail.reviewRevision,
+    requestId: crypto.randomUUID()
+  });
+}
+
+/** @param {Readonly<import('@voice/review').FeedbackInput>} input */
+async function persistFeedback(input) {
   try {
-    detail = await api.saveFeedback(projectId, documentId, {
-      ...selection, comment, category,
-      expectedVersion: detail.version,
-      expectedReviewRevision: detail.reviewRevision,
-      requestId: crypto.randomUUID()
-    });
+    detail = await api.saveFeedback(projectId, documentId, input);
     controller.update({ units: detail.units, findings: detail.findings, feedback: detail.feedback });
   } catch (error) {
     if (error instanceof ReviewApiError && error.status === 409) {
@@ -136,12 +146,14 @@ async function persistFeedback(selection, comment, category) {
 }
 ```
 
-Keep the same `requestId` when retrying an identical request after a network
-failure. Use a new ID for a new or edited note. Pairing is performed by the host
-at `POST /api/session/pair`; do not put tokens in page URLs, source code or reports.
-The backend intentionally has no cross-origin API access. Host the preview on
-the Studio origin, or configure the consuming app's local development proxy.
-Examples using temporary browser memory are demos, not durable persistence.
+Call `prepareFeedback` once for a new or edited note, retain the returned payload,
+then pass it to `persistFeedback`. After an uncertain network failure, retry
+`persistFeedback` with that same payload, including its request ID and version
+preconditions. After a 409 conflict, reload and review the anchor before preparing
+a new payload. Pairing is performed by the host at `POST /api/session/pair`;
+do not put tokens in page URLs, source code or reports.
+The backend has no cross-origin API access. Host the preview on the Studio origin,
+or configure the consuming app's local development proxy.
 
 ## Browser and source coordinates
 
@@ -165,9 +177,8 @@ marks. `getDiagnostics()` reports missing/mismatched units and stale anchors.
 Resolved notes and notes needing reattachment are not shown as current marks.
 Overlapping findings and human notes receive separate underline lanes.
 
-Category colors follow the concept specimen: structure blue, claims orange,
-wording purple and meta ochre. The layer uses range geometry and pointer events
-pass through it. Clicking text selects its most precise annotation; native
+Category colors are structure blue, claims orange, wording purple and meta ochre.
+The layer uses range geometry and pointer events pass through it. Clicking text selects its most precise annotation; native
 links, buttons and editable controls retain their normal interaction. Supply an
 accessible findings list in the host for keyboard navigation and annotations
 inside links. `selectFinding(id)` highlights and scrolls to a selected finding.
@@ -178,8 +189,6 @@ be same-origin. The Studio's imported preview uses a sandbox without scripts.
 Arbitrary remote cross-origin pages and closed shadow roots cannot be inspected
 by this adapter; they need an explicit integration/import route. A site's CSP
 must permit the library asset and its inline annotation styles in development.
-Changes to a rendered DOM alone never constitute a source-code fix: that action
-belongs to the project's backend source adapter and reviewed proposal workflow.
 
 ## Live development websites
 

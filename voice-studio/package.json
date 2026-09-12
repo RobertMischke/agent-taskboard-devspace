@@ -5,13 +5,14 @@
   "workspaces": [
     "packages/contracts",
     "packages/review",
-    "frontend"
+    "frontend",
+    "packages/writing-rules"
   ],
   "scripts": {
     "build:library": "npm run build -w @voice/review",
     "build:frontend": "npm run build -w @voice/studio",
     "build:backend": "dotnet build backend/VoiceStudio.Api/VoiceStudio.Api.csproj",
-    "build": "npm run build:library && npm run build:frontend && npm run build:backend",
+    "build": "npm run build:library && npm run build:writing-rules && npm run build:frontend && npm run build:backend",
     "start": "bash scripts/start.sh",
     "test:library": "npm test -w @voice/review",
     "test:e2e": "node scripts/verify-e2e.mjs",
@@ -26,7 +27,7 @@
     "licenses:inventory": "node scripts/license-inventory.mjs",
     "review:website": "node scripts/import-website-review.mjs",
     "test:checks": "dotnet run --project backend/VoiceStudio.CheckTests/VoiceStudio.CheckTests.csproj",
-    "website:build": "npm run build:library && node scripts/build-website.mjs",
+    "website:build": "npm run build:library && npm run build:writing-rules && node scripts/build-website.mjs",
     "website:preview": "npm run website:build && node scripts/serve-website.mjs",
     "test:selection": "dotnet run --project backend/VoiceStudio.SelectionTests",
     "test:selection-ui": "node scripts/verify-selection-ui.mjs",
@@ -46,7 +47,16 @@
     "test:session": "dotnet run --project backend/VoiceStudio.SessionTests",
     "test:session-ui": "node scripts/verify-session-ui-state.mjs",
     "test:browser-session": "node scripts/verify-browser-session.mjs",
-    "test:library-types": "npm run test:types -w @voice/review"
+    "test:library-types": "npm run test:types -w @voice/review",
+    "build:writing-rules": "npm run build -w @voice/writing-rules",
+    "test:writing-rules": "npm test -w @voice/writing-rules",
+    "test:json-viewer": "node website/verify-json-viewer.mjs",
+    "test:writing-patterns": "node website/verify-writing-patterns.mjs",
+    "test:research": "node website/verify-research.mjs",
+    "benchmark:writing-review": "npm run build:writing-rules && node benchmarks/writing-review/run.mjs",
+    "benchmark:writing-review:retain": "node benchmarks/writing-review/retain.mjs",
+    "benchmark:writing-review:prepare-models": "npm run build:writing-rules && node benchmarks/writing-review/prepare-model-comparison.mjs",
+    "test:writing-review-models": "npm run build:writing-rules && node benchmarks/writing-review/verify-model-comparison.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",

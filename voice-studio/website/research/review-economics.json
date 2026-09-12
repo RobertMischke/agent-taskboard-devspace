@@ -1,0 +1,688 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-09-12T13:48:56.129Z",
+  "benchmark": "voice-writing-review-authored-v1",
+  "catalogueVersion": "voice-writing-rules/0.2.0",
+  "execution": {
+    "offline": true,
+    "providerRequestsSent": 0,
+    "runnerExecutions": 0,
+    "modelResponsesEvaluated": 0
+  },
+  "provenance": {
+    "fixtureSha256": "caa45260f4c077434ec76098b8e9a57585111d7c604549fd61f6a4db22ca29e4",
+    "runnerSha256": "010df8edeb97ac298af1e856ee59ea164d44737f51f086203259fb96a380a638",
+    "librarySha256": "0b761d41398e2e89a730e426758439cb1a12cb70ecc3ed812845ffbc147cf41a",
+    "authoredFixtureNotice": "Fixtures authored for this offline benchmark. These are editorial test cases, not sampled model responses, a representative corpus, or independent ground truth.",
+    "labelling": "expectedReview lists the exact passage and rule that an editor judged worth reviewing. An empty list means keep this fixture in its stated context. A scanner candidate on a keep fixture is a false positive for this editorial decision, not a scanner malfunction."
+  },
+  "tokenizer": {
+    "status": "unavailable",
+    "attempts": [
+      {
+        "package": "js-tiktoken",
+        "status": "unavailable",
+        "reason": "MODULE_NOT_FOUND"
+      },
+      {
+        "package": "tiktoken",
+        "status": "unavailable",
+        "reason": "MODULE_NOT_FOUND"
+      }
+    ],
+    "meaning": "No token estimates. UTF-16 code units and UTF-8 bytes are measured directly and are not token counts."
+  },
+  "promptMeasurement": {
+    "audience": "People deciding how to use a local text-review product, including editors and application developers.",
+    "goal": "Explain the current product behavior and the next useful action. Preserve factual technical explanations and explicitly quoted examples. Review wording in its supplied context; do not infer authorship.",
+    "maxFindingsPerRequest": 3,
+    "format": "JSON.stringify({ instructions: composed.prompt, source: { language, context, text } })",
+    "sameCoverageComparisons": [
+      {
+        "separate": "all-rules-separate",
+        "together": "all-rules-together",
+        "sameRuleCoverage": true,
+        "requestReduction": 570,
+        "payloadUtf8BytesSaved": 741931,
+        "payloadUtf8ReductionFraction": 0.587558751440326,
+        "repeatedSourceUtf8BytesSaved": 107806,
+        "encodedTokensSaved": null
+      },
+      {
+        "separate": "profile-separate",
+        "together": "profile-together",
+        "sameRuleCoverage": true,
+        "requestReduction": 150,
+        "payloadUtf8BytesSaved": 195245,
+        "payloadUtf8ReductionFraction": 0.5120589361490084,
+        "repeatedSourceUtf8BytesSaved": 28370,
+        "encodedTokensSaved": null
+      }
+    ],
+    "summaries": [
+      {
+        "id": "all-rules-separate",
+        "label": "One request per rule, all rules",
+        "ruleCountPerFixture": 20,
+        "fixtureCount": 30,
+        "totalRequests": 600,
+        "totalInstructions": {
+          "utf16CodeUnits": 1114605,
+          "utf8Bytes": 1122855
+        },
+        "totalRepeatedSource": {
+          "utf16CodeUnits": 112520,
+          "utf8Bytes": 113480
+        },
+        "totalPayload": {
+          "utf16CodeUnits": 1253525,
+          "utf8Bytes": 1262735
+        },
+        "totalEncodedTokens": null
+      },
+      {
+        "id": "all-rules-together",
+        "label": "One request, all rules",
+        "ruleCountPerFixture": 20,
+        "fixtureCount": 30,
+        "totalRequests": 30,
+        "totalInstructions": {
+          "utf16CodeUnits": 504135,
+          "utf8Bytes": 508680
+        },
+        "totalRepeatedSource": {
+          "utf16CodeUnits": 5626,
+          "utf8Bytes": 5674
+        },
+        "totalPayload": {
+          "utf16CodeUnits": 516211,
+          "utf8Bytes": 520804
+        },
+        "totalEncodedTokens": null
+      },
+      {
+        "id": "profile-separate",
+        "label": "One request per public-docs rule",
+        "ruleCountPerFixture": 6,
+        "fixtureCount": 30,
+        "totalRequests": 180,
+        "totalInstructions": {
+          "utf16CodeUnits": 336810,
+          "utf8Bytes": 339330
+        },
+        "totalRepeatedSource": {
+          "utf16CodeUnits": 33756,
+          "utf8Bytes": 34044
+        },
+        "totalPayload": {
+          "utf16CodeUnits": 378486,
+          "utf8Bytes": 381294
+        },
+        "totalEncodedTokens": null
+      },
+      {
+        "id": "profile-together",
+        "label": "One request, public-docs profile",
+        "ruleCountPerFixture": 6,
+        "fixtureCount": 30,
+        "totalRequests": 30,
+        "totalInstructions": {
+          "utf16CodeUnits": 176160,
+          "utf8Bytes": 177705
+        },
+        "totalRepeatedSource": {
+          "utf16CodeUnits": 5626,
+          "utf8Bytes": 5674
+        },
+        "totalPayload": {
+          "utf16CodeUnits": 184456,
+          "utf8Bytes": 186049
+        },
+        "totalEncodedTokens": null
+      }
+    ],
+    "limitations": [
+      "The six-rule profile has a smaller scope than all twenty rules. Their cost difference is not an equal-coverage comparison.",
+      "The per-request finding cap is identical, so separate requests can yield more total findings. No output length or review quality was measured.",
+      "Counts include repeated source context and actual composed instructions, but no provider message framing, caching, retries, latency, hidden reasoning or output.",
+      "Prompt batching can reduce repeated input while changing reviewer behavior. This offline run does not establish the best batch size or model strategy."
+    ]
+  },
+  "surfaceEvaluation": {
+    "fixtureCount": 30,
+    "candidateCount": 24,
+    "candidatesAgreeingWithEditorialLabel": 16,
+    "candidatesNotAgreeingWithEditorialLabel": 8,
+    "candidatePrecisionAgainstAuthoredLabels": 0.6666666666666666,
+    "lexicalProblemCases": 16,
+    "lexicalProblemCasesWithExpectedCandidate": 16,
+    "keepOrCleanCases": 10,
+    "keepOrCleanCasesWithCandidate": 8,
+    "semanticProblemCases": 4,
+    "semanticProblemCasesWithNoCandidate": 4,
+    "byLanguage": [
+      {
+        "language": "en",
+        "cases": 15,
+        "candidates": 12,
+        "agreeingCandidates": 8,
+        "coverage": {
+          "language": "en",
+          "scannedRuleIds": [
+            "meta-framing",
+            "concrete-subject",
+            "unsupported-contrast",
+            "calibrated-uncertainty",
+            "unsupported-causality",
+            "claims-evidence",
+            "word-choice",
+            "reported-evidence"
+          ],
+          "unscannedRuleIds": [
+            "reader-goal",
+            "current-state",
+            "process-history",
+            "invented-labels",
+            "repetition",
+            "format-fit",
+            "complete-sentences",
+            "task-relevance",
+            "unearned-praise",
+            "false-balance",
+            "exhaustive-checklist",
+            "forced-template"
+          ],
+          "semanticReviewRequired": true,
+          "maxSignals": 50,
+          "truncated": false
+        }
+      },
+      {
+        "language": "de",
+        "cases": 15,
+        "candidates": 12,
+        "agreeingCandidates": 8,
+        "coverage": {
+          "language": "de",
+          "scannedRuleIds": [
+            "meta-framing",
+            "concrete-subject",
+            "unsupported-contrast",
+            "calibrated-uncertainty",
+            "unsupported-causality",
+            "claims-evidence",
+            "word-choice",
+            "reported-evidence"
+          ],
+          "unscannedRuleIds": [
+            "reader-goal",
+            "current-state",
+            "process-history",
+            "invented-labels",
+            "repetition",
+            "format-fit",
+            "complete-sentences",
+            "task-relevance",
+            "unearned-praise",
+            "false-balance",
+            "exhaustive-checklist",
+            "forced-template"
+          ],
+          "semanticReviewRequired": true,
+          "maxSignals": 50,
+          "truncated": false
+        }
+      }
+    ],
+    "limitations": [
+      "These authored examples are deliberately balanced for demonstration. Candidate precision is local to this fixture set and is not model accuracy or representative product quality.",
+      "The scanner sees only text and language, not the supplied editorial context. Quoted examples and warranted causal statements therefore remain candidates.",
+      "Missed semantic cases require a reviewer. No candidates never establishes that a document is good, correct or ready to publish.",
+      "The catalogue currently exposes lexical patterns for eight rules. The returned unscannedRuleIds identify the twelve rules without lexical coverage."
+    ]
+  },
+  "modelPricing": {
+    "schemaVersion": 1,
+    "checkedAt": "2026-09-12",
+    "scope": "Candidate text-review APIs and public USD token rates. Documentation research only: no inference requests, account-access checks or quality benchmark were run.",
+    "qualification": "All candidates remain unqualified for Voice's English and German writing rules. Provider positioning selects a test cohort; it does not establish detection accuracy or a quality ranking.",
+    "sources": [
+      {
+        "id": "openai-models",
+        "url": "https://developers.openai.com/api/docs/models",
+        "read": "Current model catalogue and efficiency/flagship positioning."
+      },
+      {
+        "id": "openai-luna",
+        "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+        "read": "Model ID, snapshot, context limits, supported endpoints, features and reasoning levels."
+      },
+      {
+        "id": "openai-astra",
+        "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "read": "Model ID, snapshot, context limits, supported endpoints and pricing notes."
+      },
+      {
+        "id": "openai-pricing",
+        "url": "https://developers.openai.com/api/docs/pricing",
+        "read": "Standard and Batch text-token tables, including short/long context and cache writes."
+      },
+      {
+        "id": "openai-cache",
+        "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
+        "read": "GPT-5.6-and-later cache minimum, prefix matching, explicit breakpoints, write charging and lifetime."
+      },
+      {
+        "id": "openai-batch",
+        "url": "https://developers.openai.com/api/docs/guides/batch",
+        "read": "Asynchronous processing, discount, 24-hour completion window and expiration state."
+      },
+      {
+        "id": "openai-reasoning",
+        "url": "https://developers.openai.com/api/docs/guides/reasoning",
+        "read": "Reasoning-token billing and incomplete responses at output limits."
+      },
+      {
+        "id": "claude-haiku",
+        "url": "https://platform.claude.com/docs/en/models/haiku-4-5/overview",
+        "read": "Pinned API ID, alias, active status, context limits, manual extended thinking and rates."
+      },
+      {
+        "id": "claude-pricing",
+        "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "read": "First-party Standard/Batch rates and cache-write/read prices."
+      },
+      {
+        "id": "claude-cache",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "read": "Haiku cache minimum, TTLs, usage fields, concurrent cache availability and billing multipliers."
+      },
+      {
+        "id": "claude-batch",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
+        "read": "Asynchronous processing, expiration and best-effort cache hits when batching."
+      },
+      {
+        "id": "google-flash-lite",
+        "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash-lite",
+        "read": "Model code, throughput positioning, input/output limits and structured output/caching capabilities."
+      },
+      {
+        "id": "google-pricing",
+        "url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite",
+        "read": "Paid Standard/Batch text rates, thinking-token inclusion, cache rate and storage charges."
+      },
+      {
+        "id": "google-cache",
+        "url": "https://ai.google.dev/gemini-api/docs/caching",
+        "read": "Implicit caching, prefix guidance, API distinction and published minimum-token table."
+      },
+      {
+        "id": "google-batch",
+        "url": "https://ai.google.dev/gemini-api/docs/batch-api",
+        "read": "generateContent-only batching, turnaround target and cache-pricing statement."
+      }
+    ],
+    "candidates": [
+      {
+        "id": "openai-luna",
+        "provider": "OpenAI",
+        "modelId": "gpt-5.6-luna",
+        "documentedSnapshot": "gpt-5.6-luna",
+        "role": "Low-cost candidate for bounded rule review; provider describes it as the cost-sensitive, high-volume tier.",
+        "availability": "Listed in the current API catalogue. Access in this environment was not tested.",
+        "context": {
+          "windowTokens": 1050000,
+          "maxInputTokens": 922000,
+          "maxOutputTokens": 128000
+        },
+        "pricing": {
+          "currency": "USD",
+          "unit": "per_1000000_tokens",
+          "scope": "First-party text API, Standard or Batch, input at most 272000 tokens; no tools or regional/priority modifiers.",
+          "standard": {
+            "input": 0.2,
+            "cacheRead": 0.02,
+            "cacheWrite": 0.25,
+            "output": 1.2
+          },
+          "batch": {
+            "input": 0.1,
+            "cacheRead": 0.01,
+            "cacheWrite": 0.125,
+            "output": 0.6
+          },
+          "longContextStandard": {
+            "inputAboveTokens": 272000,
+            "input": 0.4,
+            "cacheRead": 0.04,
+            "cacheWrite": 0.5,
+            "output": 1.8
+          }
+        },
+        "cache": {
+          "minimumPrefixTokens": 1024,
+          "minimumLifetimeMinutes": 30,
+          "note": "A matching eligible prefix is required. Writes replace the ordinary input rate for those tokens; they are not an additional charge on top of it."
+        },
+        "benchmarkStart": "Compare reasoning.effort none and low while keeping the input, rule scope and output contract fixed; measure reasoning-inclusive usage.",
+        "sourceIds": [
+          "openai-models",
+          "openai-luna",
+          "openai-pricing",
+          "openai-cache",
+          "openai-reasoning"
+        ]
+      },
+      {
+        "id": "claude-haiku",
+        "provider": "Anthropic",
+        "modelId": "claude-haiku-4-5-20251001",
+        "alias": "claude-haiku-4-5",
+        "documentedSnapshot": "claude-haiku-4-5-20251001",
+        "role": "Anthropic efficiency-tier candidate for a separate provider baseline.",
+        "availability": "Official page marks this snapshot active; account access was not tested. The page gives no retirement sooner than 2026-10-15, not a promised retirement date.",
+        "context": {
+          "windowTokens": 200000,
+          "maxInputTokens": null,
+          "maxOutputTokens": 64000
+        },
+        "pricing": {
+          "currency": "USD",
+          "unit": "per_1000000_tokens",
+          "scope": "First-party Claude API; no partner, residency or other modifiers.",
+          "standard": {
+            "input": 1,
+            "cacheRead": 0.1,
+            "cacheWrite5m": 1.25,
+            "cacheWrite1h": 2,
+            "output": 5
+          },
+          "batch": {
+            "input": 0.5,
+            "output": 2.5,
+            "cacheRead": 0.05,
+            "cacheWrite5m": 0.625,
+            "cacheWrite1h": 1
+          },
+          "batchCacheBasis": "Derived from the documented 50% Batch discount stacking with cache multipliers, not measured invoices."
+        },
+        "cache": {
+          "minimumPrefixTokens": 4096,
+          "lifetimeMinutes": [
+            5,
+            60
+          ],
+          "note": "Shorter marked prefixes do not cache. Concurrent requests may miss until the first response starts; Batch cache hits are best effort."
+        },
+        "benchmarkStart": "Start without optional extended thinking; test a separate, explicitly configured thinking condition only if it improves judged quality enough to justify its measured cost.",
+        "sourceIds": [
+          "claude-haiku",
+          "claude-pricing",
+          "claude-cache",
+          "claude-batch"
+        ]
+      },
+      {
+        "id": "google-flash-lite",
+        "provider": "Google",
+        "modelId": "gemini-3.5-flash-lite",
+        "documentedSnapshot": null,
+        "role": "Google high-throughput candidate for short reviews and structured findings.",
+        "availability": "Listed with a model code and paid API pricing; account access and an immutable snapshot ID were not established.",
+        "context": {
+          "windowTokens": null,
+          "maxInputTokens": 1048576,
+          "maxOutputTokens": 65536
+        },
+        "pricing": {
+          "currency": "USD",
+          "unit": "per_1000000_tokens",
+          "scope": "Paid Gemini Developer API text requests; no grounding, priority or other tools. Output pricing includes thinking tokens.",
+          "standard": {
+            "input": 0.3,
+            "cacheRead": 0.03,
+            "cacheWrite": null,
+            "output": 2.5,
+            "cacheStoragePerHour": 1
+          },
+          "batch": {
+            "input": 0.15,
+            "cacheRead": null,
+            "cacheWrite": null,
+            "output": 1.25,
+            "cacheStoragePerHour": 1
+          },
+          "unknowns": "No separate cache-write rate was established. Batch pricing lists cache reads at 0.02, but the Batch guide says standard cache rates (0.03 here); confirm this discrepancy before assuming either rate. Storage price applies when explicitly retaining cached content."
+        },
+        "cache": {
+          "minimumPrefixTokens": null,
+          "note": "Implicit caching is documented for Gemini 2.5 and later, but the reviewed minimum-token table does not list this Flash-Lite model. Do not infer its threshold from Flash. Explicit cache objects require generateContent; Interactions supports implicit caching only."
+        },
+        "benchmarkStart": "Use the documented model code and a provider-supported low-thinking configuration as a recorded condition; verify exact request parameters before a paid run.",
+        "sourceIds": [
+          "google-flash-lite",
+          "google-pricing",
+          "google-cache",
+          "google-batch"
+        ]
+      },
+      {
+        "id": "openai-astra-reference",
+        "provider": "OpenAI",
+        "modelId": "gpt-6-astra",
+        "documentedSnapshot": "gpt-6-astra",
+        "role": "Higher-capability reference candidate, selected from the provider's flagship tier. Its judgments are not ground truth.",
+        "availability": "Listed in the current API catalogue. Access in this environment was not tested.",
+        "context": {
+          "windowTokens": 1050000,
+          "maxInputTokens": 922000,
+          "maxOutputTokens": 128000
+        },
+        "pricing": {
+          "currency": "USD",
+          "unit": "per_1000000_tokens",
+          "scope": "First-party text API, Standard or Batch, input at most 272000 tokens; no tools or regional/priority modifiers.",
+          "standard": {
+            "input": 10,
+            "cacheRead": 1,
+            "cacheWrite": 12.5,
+            "output": 50
+          },
+          "batch": {
+            "input": 5,
+            "cacheRead": 0.5,
+            "cacheWrite": 6.25,
+            "output": 25
+          },
+          "longContextStandard": {
+            "inputAboveTokens": 272000,
+            "input": 20,
+            "cacheRead": 2,
+            "cacheWrite": 25,
+            "output": 75
+          }
+        },
+        "cache": {
+          "minimumPrefixTokens": 1024,
+          "minimumLifetimeMinutes": 30,
+          "note": "Use a stable eligible prefix; retain actual write/read counters instead of presuming a warm cache."
+        },
+        "benchmarkStart": "Start with reasoning.effort low on the same held-out cases as cheaper candidates. Use human review to adjudicate disagreements; escalate production cases only after that policy is qualified.",
+        "sourceIds": [
+          "openai-models",
+          "openai-astra",
+          "openai-pricing",
+          "openai-cache",
+          "openai-reasoning"
+        ]
+      }
+    ],
+    "pricingNotes": [
+      {
+        "id": "billing-formula",
+        "text": "Estimate USD from disjoint billed categories: ordinary input × its rate + cache writes × their applicable rate + cache reads × their rate + billed output × its rate, all divided by 1000000; add explicit cache storage and tool fees separately. Normalize each provider's usage fields before applying this formula.",
+        "sourceIds": [
+          "openai-cache",
+          "claude-cache",
+          "google-pricing"
+        ]
+      },
+      {
+        "id": "measure-actual-tokens",
+        "text": "Character counts and one tokenizer cannot establish cross-provider cost. Record the provider's input, cached, written and output usage, including billed reasoning/thinking. Keep visible answer length separate; an incomplete response may consume tokens without a usable finding.",
+        "sourceIds": [
+          "openai-reasoning",
+          "openai-cache",
+          "google-pricing"
+        ]
+      },
+      {
+        "id": "cache-economics",
+        "text": "Cache reuse depends on an unchanged prefix, eligibility, lifetime and scheduling. Put a useful stable rubric before changing source passages and mark its boundary where supported. Measure cold runs and repeated runs separately. Adding filler merely to reach a cache threshold changes both cost and model behavior.",
+        "sourceIds": [
+          "openai-cache",
+          "claude-cache",
+          "google-cache"
+        ]
+      },
+      {
+        "id": "provider-batch-versus-rule-bundle",
+        "text": "Bundling six rules into one synchronous request reduces repeated request content. Provider Batch APIs instead schedule many independent requests asynchronously at discounted token rates. Their roughly 24-hour processing windows suit offline evaluation and queued CI work, not an immediate review interaction; requests can expire.",
+        "sourceIds": [
+          "openai-batch",
+          "claude-batch",
+          "google-batch"
+        ]
+      },
+      {
+        "id": "excluded-costs",
+        "text": "These are public API list prices, not Codex/Claude subscription allowances, a spend authorization or an invoice estimate. Output size, retries, cache misses, storage, tools, regional processing, taxes and negotiated terms can change the total. Unknown values are null rather than zero.",
+        "sourceIds": [
+          "openai-pricing",
+          "claude-pricing",
+          "google-pricing"
+        ]
+      }
+    ],
+    "benchmarkRecommendations": {
+      "status": "Proposed protocol; no model-quality results exist from this task.",
+      "selectionDecision": "Use the three efficiency candidates and the flagship reference as an experimental cohort only after canonical Token Economy resolution and explicit host admission. Unknown or unsupported identities require a catalogue/policy update there or no execution. Choose a production route from matched-coverage quality, latency and actual total cost; provider price or positioning does not establish the winner.",
+      "variants": [
+        {
+          "id": "single-rule-calls",
+          "shape": "One selected rule per call, sharing the same source and task context. Run six calls for a six-rule profile or twenty calls for full coverage.",
+          "hypothesis": "Narrow instructions may improve focus, while repeated source/context and per-call output can increase cost.",
+          "fairComparison": "Compare against a bundle containing the identical rule set; deduplicate overlapping findings and count all calls, retries and tokens."
+        },
+        {
+          "id": "bundled-six",
+          "shape": "One call with an existing six-rule profile, audience, goal, complete relevant passage and evidence.",
+          "hypothesis": "A small bundle may offer a useful cost/quality balance; this is unmeasured.",
+          "fairComparison": "State the six covered rules. Do not compare its total recall directly with all twenty rules or report omitted rules as passed."
+        },
+        {
+          "id": "full-twenty",
+          "shape": "One call with all twenty rules and the same evidence/context.",
+          "hypothesis": "It increases instruction coverage; extra prompt length or competing instructions could affect cost and review quality.",
+          "fairComparison": "Use per-rule labels and the same response constraints; record findings suppressed by output/findings limits as a coverage limitation."
+        },
+        {
+          "id": "lexical-prefilter-and-semantic-review",
+          "shape": "Run local surface matching first, then supply exact candidate spans with context and a separately scheduled semantic review for the requested scope.",
+          "hypothesis": "Local matching can avoid model work for deterministic cue discovery; reduced paid scope must still be validated for missed issues.",
+          "fairComparison": "Only eight catalogue rules have surface patterns. Zero lexical matches does not clear those rules semantically or the other twelve. Sample negative cases and retain a semantic pass for uncued issues."
+        }
+      ],
+      "referenceEscalation": "As a separate variant, let a cheaper reviewer propose findings and send only defined uncertain or conflicting cases to the reference model. Count both stages and independently sample non-escalated cases to measure routing misses.",
+      "fixtures": "Use Git-owned EN/DE passages with source hashes, audience, goal, supporting facts and accepted decisions. Include problematic cases, valid uses of each pattern, clear keep decisions, long-page context and human-edited AI drafts. Keep a held-out set outside prompt tuning.",
+      "judgment": "Human reviewers label rule-specific problems and acceptable keep/change outcomes. Rate false alarms, missed issues, preserved facts/intent and distinct warranted alternatives separately. Resolve or record disagreement; neither a larger model nor author acceptance alone supplies ground truth.",
+      "measurements": [
+        "Per-rule precision and recall with denominators and coverage",
+        "False changes on legitimate counterexamples",
+        "Fact and author-intent preservation",
+        "Structured-output validity and exact quoted-span alignment",
+        "Input/cache-write/cache-read/billed-output usage and total USD",
+        "Latency p50/p95, retries, incomplete responses and provider errors"
+      ],
+      "controls": "Record exact requested and returned model IDs, date, API endpoint, provider settings, rule IDs/catalogue version, prompt hash, cache mode, source hash, output cap and retry policy. Run repeated cases to expose variation. Compare both cold and reused prefixes; keep prompt and model changes separate when attributing effects.",
+      "releaseGate": "Set acceptable false-change and missed-issue thresholds before reviewing results. Publish fixture coverage and observed failures with the selected configuration. Preserve the keep-as-written option and host validation in production. No benchmark result should become an AI-authorship score."
+    },
+    "runtimeIntegration": {
+      "status": "research-only",
+      "canonicalReference": "docs/model-strategy.md",
+      "boundary": "This dated official-documentation snapshot is not a runtime model catalogue, price resolver, allowlist, access grant or qualification record. Resolve candidates against the installed Token Economy catalogue; the host explicitly admits provisional experiments. Unknown or unsupported identities require an update to that catalogue/policy or no execution. API list prices can differ from CLI/subscription routing."
+    }
+  },
+  "organizationResearch": {
+    "schemaVersion": 1,
+    "checkedAt": "2026-09-12",
+    "scope": "Research on prompt organization and model-cost trade-offs; API uses are Voice's assessment, not results established by the papers.",
+    "sources": [
+      {
+        "id": "batch-prompting-2023",
+        "title": "Batch Prompting: Efficient Inference with Large Language Model APIs",
+        "url": "https://aclanthology.org/2023.emnlp-industry.74.pdf",
+        "kind": "peer-reviewed industry paper",
+        "read": "Sections 2–4, section 6 and Appendix B/Table 6; checked 2026-09-12.",
+        "finding": "Groups independent questions under shared demonstrations and returns indexed answers. Main experiments use code-davinci-002 and ten QA, arithmetic and NLI/NLU datasets. Reusing demonstrations reduces repeated input. Larger batches often reduce accuracy; the best size varies by task.",
+        "limits": "No EN/DE editorial review, current-model comparison or rewrite-quality measurement. Output-heavy work and long inputs can weaken the benefit. This tests multiple samples, not multiple rules on one sample.",
+        "apiUse": {
+          "availableNow": [
+            "selectWritingRules",
+            "composeWritingReviewPrompt"
+          ],
+          "currentUse": "Freeze a consistent rubric and reproduce the prompt for each condition.",
+          "proposed": "composeWritingReviewBatch needs passage IDs and per-passage results; evaluateReviewPrompts should measure omissions, wrong assignments, quality and total cost across batch sizes.",
+          "releaseFunctionIds": [
+            "review-batching",
+            "prompt-benchmarks"
+          ]
+        }
+      },
+      {
+        "id": "lost-middle-2024",
+        "title": "Lost in the Middle: How Language Models Use Long Contexts",
+        "url": "https://aclanthology.org/2024.tacl-1.9.pdf",
+        "kind": "peer-reviewed TACL paper",
+        "read": "Sections 2–4 and section 5 retrieval case study; checked 2026-09-12.",
+        "finding": "Moves relevant information within controlled multi-document QA and key-value retrieval inputs. Models include MPT, LongChat, GPT-3.5 and Claude-1.3. QA performance commonly declines for central evidence. Claude performs almost perfectly on synthetic retrieval; repeating the query helps retrieval more than QA.",
+        "limits": "Older models and retrieval tasks do not establish failure of a twenty-rule editorial prompt. Context-window capacity alone does not establish that every relevant constraint is used.",
+        "apiUse": {
+          "availableNow": [
+            "selectWritingRules",
+            "composeWritingReviewPrompt"
+          ],
+          "currentUse": "Make intended coverage explicit and reproduce the selected instructions.",
+          "proposed": "evaluateReviewPrompts should move important facts, rules and keep cases between beginning, middle and end while holding content constant. composeWritingReviewBatch should retain page context and measure position sensitivity.",
+          "releaseFunctionIds": [
+            "prompt-benchmarks",
+            "review-batching"
+          ]
+        }
+      },
+      {
+        "id": "robatch-2026",
+        "title": "Towards Cost-effective LLMs Routing with Batch Prompting",
+        "url": "https://arxiv.org/html/2605.28268v1",
+        "kind": "May 2026 preprint",
+        "read": "Sections 2–6, including implementation and ablations; checked 2026-09-12.",
+        "finding": "Jointly selects the model and number of independent queries per prompt. Tests Qwen3 4B/14B/32B and Gemma3 4B/12B/27B on six benchmarks with separate training, validation and test partitions. Reports improved cost–accuracy trade-offs in many settings. Batching tolerance varies by model and task; larger batches can produce malformed outputs.",
+        "limits": "Not validation of Voice reviews or current proprietary models. Calibration requires evidence. Scheduling time excludes model API latency, and incomplete batches complicate shared-input cost accounting.",
+        "apiUse": {
+          "availableNow": [
+            "selectWritingRules",
+            "composeWritingReviewPrompt"
+          ],
+          "currentUse": "Freeze rules and prompt versions across paired model comparisons.",
+          "proposed": "evaluateReviewPrompts should compare model and prompt structure jointly. composeWritingReviewBatch can produce execution candidates; routing remains in Token Economy and the host.",
+          "releaseFunctionIds": [
+            "prompt-benchmarks",
+            "review-batching",
+            "usage-budget"
+          ]
+        }
+      }
+    ]
+  }
+}

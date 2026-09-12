@@ -1,0 +1,180 @@
+[
+  {
+    "id": "length-regularized-dpo",
+    "title": "Disentangling Length from Quality in Direct Preference Optimization",
+    "authors": [
+      "Ryan Park",
+      "Rafael Rafailov",
+      "Stefano Ermon",
+      "Chelsea Finn"
+    ],
+    "date": "2024-08",
+    "url": "https://aclanthology.org/2024.findings-acl.297/",
+    "kind": "strategy-evidence",
+    "method": "Pythia 2.8B was trained with standard and length-regularized DPO on dialogue and summarization preferences. Evaluation compared 256 generated answers per setting using GPT-4 judgments.",
+    "finding": "Regularization reduced answer length and improved preference results against settings producing similarly long answers. Uncontrolled preference optimization amplified verbosity.",
+    "limits": "One model size, two datasets and a model judge. This training intervention does not establish that a shortness prompt improves documentation.",
+    "application": "Voice implication: compare alternatives at similar lengths and assess task completion separately. Treat length as a diagnostic, preserving explanations and qualifications the reader needs.",
+    "readingDepth": "Methods and results read in the ACL proceedings PDF: sections 3–4, Figure 3, section 7 and Appendix C. Reviewed 2026-09-12.",
+    "relatedRuleIds": [
+      "repetition",
+      "task-relevance",
+      "exhaustive-checklist",
+      "format-fit"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "State the reader task and select relevance or repetition guidance."
+        }
+      ],
+      "currentUse": "A host can request alternatives without imposing a blanket shortness rule. The API does not optimize a model, judge completion or compare answer lengths.",
+      "missingCapability": "Compare alternatives using explicit task completion and retained qualifications alongside length, with fixtures that distinguish useful explanation from unnecessary expansion.",
+      "releaseFunctionIds": [
+        "alternative-comparison",
+        "prompt-benchmarks"
+      ]
+    }
+  },
+  {
+    "id": "self-refine",
+    "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "authors": [
+      "Aman Madaan",
+      "Niket Tandon",
+      "Prakhar Gupta",
+      "Skyler Hallinan",
+      "Luyu Gao",
+      "Sarah Wiegreffe",
+      "Uri Alon",
+      "Nouha Dziri",
+      "Shrimai Prabhumoye",
+      "Yiming Yang",
+      "Shashank Gupta",
+      "Bodhisattwa Prasad Majumder",
+      "Katherine Hermann",
+      "Sean Welleck",
+      "Amir Yazdanbakhsh",
+      "Peter Clark"
+    ],
+    "date": "2023",
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2023/file/91edff07232fb1b55a505a9e9f6c0ff3-Paper-Conference.pdf",
+    "kind": "strategy-evidence",
+    "method": "The same model generated, critiqued and revised outputs using task-specific prompts across seven tasks. Evaluation combined task metrics, model judgments and blinded author judgments.",
+    "finding": "Refinement improved the tested task results; human judges preferred refined outputs in dialogue, sentiment reversal, acronym generation and code readability.",
+    "limits": "English tasks and mainly proprietary 2023 models. Human evaluation usually used one author judgment per example. Better dialogue can also mean more elaborate text.",
+    "application": "Voice implication: request a specific, evidence-linked critique before alternatives. Keep revision bounded, compare against the original and allow the reviewer to retain it.",
+    "readingDepth": "NeurIPS 2023 full-text sections 2–3 and 6, Appendix C human evaluation and Appendix P dialogue results read. Reviewed 2026-09-12.",
+    "relatedRuleIds": [
+      "reader-goal",
+      "repetition",
+      "claims-evidence",
+      "task-relevance"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Prepare a bounded critique request with grounded alternatives."
+        },
+        {
+          "symbol": "selectWritingRules",
+          "purpose": "Narrow a subsequent review to the relevant rule IDs."
+        }
+      ],
+      "currentUse": "Hosts must submit prompts and manage any revision loop themselves. maxFindings requests an output limit; it neither enforces compliance nor bounds inference spending.",
+      "missingCapability": "Validate each critique and compose scoped review batches with explicit usage budgets before a host runs another round.",
+      "releaseFunctionIds": [
+        "result-validation",
+        "review-batching",
+        "usage-budget"
+      ]
+    }
+  },
+  {
+    "id": "self-correction-counterevidence",
+    "title": "Large Language Models Cannot Self-Correct Reasoning Yet",
+    "authors": [
+      "Jie Huang",
+      "Xinyun Chen",
+      "Swaroop Mishra",
+      "Huaixiu Steven Zheng",
+      "Adams Wei Yu",
+      "Xinying Song",
+      "Denny Zhou"
+    ],
+    "date": "2024-03-14",
+    "url": "https://arxiv.org/html/2310.01798v2",
+    "kind": "strategy-evidence",
+    "method": "Experiments compared initial answers and up to two self-correction rounds on reasoning benchmarks, separating feedback with known correct answers from model-only feedback.",
+    "finding": "Without correctness labels, the tested models often changed correct answers into errors. Stronger initial prompts also reduced apparent benefits attributed to refinement.",
+    "limits": "The ICLR 2024 study tests older models and reasoning tasks. Its authors explicitly distinguish style preferences, where self-correction may help.",
+    "application": "Voice implication: a model's critique is a proposal, not verification. Check revised claims against source evidence and retain the original when the critique lacks support.",
+    "readingDepth": "Version 2, dated 2024-03-14: experimental setup, Tables 2–6, prompt comparison in section 5 and section 7 limits read. Reviewed 2026-09-12.",
+    "relatedRuleIds": [
+      "claims-evidence",
+      "reported-evidence",
+      "unsupported-causality",
+      "calibrated-uncertainty"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Ask for missing evidence and justified keep decisions."
+        },
+        {
+          "symbol": "getWritingRule",
+          "purpose": "Retrieve claims-evidence and reported-evidence requirements."
+        }
+      ],
+      "currentUse": "These instructions can guide a second opinion, but the library has no fact checker and cannot establish that a revised answer is better.",
+      "missingCapability": "Verify each proposed claim change against supplied evidence and compare the revision with the original before accepting any correction.",
+      "releaseFunctionIds": [
+        "claim-evidence",
+        "alternative-comparison",
+        "result-validation"
+      ]
+    }
+  },
+  {
+    "id": "coauthor-writer-control",
+    "title": "CoAuthor: Designing a Human-AI Collaborative Writing Dataset for Exploring Language Model Capabilities",
+    "authors": [
+      "Mina Lee",
+      "Percy Liang",
+      "Qian Yang"
+    ],
+    "date": "2022-01-25",
+    "url": "https://arxiv.org/html/2201.06796v2",
+    "kind": "strategy-evidence",
+    "method": "Sixty-three writers completed 1,445 English writing sessions with GPT-3 suggestions. The interface logged requests, selections, dismissals and edits; surveys measured ownership and satisfaction.",
+    "finding": "Perceived ownership correlated with the fraction written by the writer. Editing activity alone showed little relationship with ownership; collaboration varied considerably between writers.",
+    "limits": "This CHI 2022 dataset offers correlations, not a randomized test of intent preservation. Participants were qualified crowd workers writing short assigned stories and essays.",
+    "application": "Voice implication: make alternatives optional and record keep, accept and edit decisions. Evaluate author intent directly instead of treating acceptance rate as success.",
+    "readingDepth": "Version 2, dated 2022-01-25: interface and recruitment in section 4, ownership analysis in 5.2 and discussion in section 6 read. Reviewed 2026-09-12.",
+    "relatedRuleIds": [
+      "reader-goal",
+      "claims-evidence"
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Expose selection and finding callbacks to the host's review interface."
+        },
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Request optional alternatives or a justified decision to keep."
+        }
+      ],
+      "currentUse": "Hosts provide the choice panel and persist its actions; mounting the library alone does not record acceptance, dismissal or editing history.",
+      "missingCapability": "Preserve author decisions with source versions and compare alternatives against stated intent, without treating acceptance counts as a quality measure.",
+      "releaseFunctionIds": [
+        "decision-preservation",
+        "alternative-comparison"
+      ]
+    }
+  }
+]

@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed",
+  "target": "next release planning",
+  "title": "Contextual writing review and measured execution cost",
+  "baseline": {
+    "catalogueVersion": "voice-writing-rules/0.2.0",
+    "implemented": [
+      "getWritingRule",
+      "selectWritingRules",
+      "composeWritingReviewPrompt",
+      "findWritingSignals",
+      "mountVoiceReview"
+    ],
+    "limits": "The scanner finds lexical candidates for eight rules. Prompt composition does not execute or validate model analysis. Hosts own model configuration, durable decisions and source writes."
+  },
+  "functions": [
+    {
+      "id": "contextual-review",
+      "apiProposal": "buildReviewContext",
+      "packageProposal": "@voice/writing-rules",
+      "priority": "P0",
+      "problem": "A lexical match cannot decide whether a page serves its reader or whether an explanation is necessary.",
+      "input": "Audience, reader task, genre, language, versioned text units, approved claims and prior decisions.",
+      "output": "A bounded context object identifying authoritative facts, source material, constraints and missing context.",
+      "acceptance": [
+        "Preserve the distinction between source text and host instructions.",
+        "Identify missing reader goals instead of inventing them.",
+        "Keep input source versions and accepted decisions traceable.",
+        "Include short UI labels, public documentation and positive keep cases in EN/DE evaluation."
+      ],
+      "dependencies": [],
+      "researchSourceIds": [
+        "furze-problem-patterns",
+        "gorrie-rhetorical-slop",
+        "hughes-negative-contrast",
+        "wikipedia-signs",
+        "shaib-slop-2025",
+        "juzek-lexical-2025",
+        "kobak-excess-vocabulary-2025",
+        "liang-detector-bias-2023"
+      ]
+    },
+    {
+      "id": "result-validation",
+      "apiProposal": "validateReviewFindings",
+      "packageProposal": "@voice/writing-rules",
+      "priority": "P0",
+      "problem": "A model can invent quotes, offsets, rule coverage or evidence even when its prose sounds convincing.",
+      "input": "Unknown model output, the selected rule set, exact source snapshot and permitted evidence IDs.",
+      "output": "Validated advisory findings or structured validation failures, plus explicit reviewed and unreviewed scope.",
+      "acceptance": [
+        "Reject unknown rule/evidence IDs and mismatched quotes.",
+        "Validate UTF-16 positions after emoji and German characters.",
+        "Reject stale or ambiguous source assignments.",
+        "Distinguish an empty valid result from incomplete, malformed or failed analysis."
+      ],
+      "dependencies": [
+        "contextual-review"
+      ],
+      "researchSourceIds": [
+        "furze-problem-patterns",
+        "wikipedia-signs",
+        "shaib-slop-2025",
+        "miklian-accusations-2026",
+        "dugan-raid-2024",
+        "zhang-mixset-2024",
+        "self-refine",
+        "self-correction-counterevidence",
+        "vale",
+        "textlint",
+        "languagetool",
+        "harper"
+      ]
+    },
+    {
+      "id": "review-batching",
+      "apiProposal": "composeWritingReviewBatch",
+      "packageProposal": "@voice/writing-rules",
+      "priority": "P0",
+      "problem": "One call per rule repeats source and instructions; an unbounded combined prompt can dilute attention or exceed the context budget.",
+      "input": "Versioned units, review context, selected rule IDs and a host-supplied request budget.",
+      "output": "Review jobs grouped by compatible goal, language and rule scope, retaining per-unit IDs and coverage.",
+      "acceptance": [
+        "Compare six separate rules with the same six rules combined.",
+        "Do not discard semantic review because lexical scanning found no match.",
+        "Keep whole-page context available across chunk boundaries.",
+        "Avoid duplicate findings when jobs overlap.",
+        "Never choose a provider, credential or paid fallback from repository policy.",
+        "Take route and token limits from the host; obtain fresh capacity/admission for every executed attempt, including retries.",
+        "Preserve evidence-cohort and Voice qualification checks; pure job planning grants no model execution permission."
+      ],
+      "dependencies": [
+        "contextual-review",
+        "usage-budget"
+      ],
+      "researchSourceIds": [
+        "self-refine"
+      ],
+      "localEvidence": [
+        "benchmarks/writing-review/fixtures.json",
+        "benchmarks/writing-review/run.mjs",
+        "website/research/review-economics.json",
+        "benchmarks/writing-review/prepare-model-comparison.mjs",
+        "benchmarks/writing-review/model-comparison.md"
+      ]
+    },
+    {
+      "id": "usage-budget",
+      "apiProposal": "estimateReviewUsage",
+      "packageProposal": "Token Economy integration adapter",
+      "priority": "P0",
+      "problem": "Character counts, cache assumptions and model prices can misrepresent the actual cost of a review.",
+      "input": "Canonically resolved route, Token Economy price resolution/version, UTC execution date, serialized jobs, identified tokenizer and output/reasoning limits.",
+      "output": "Usage estimates or explicit unknown values, shared price/cost resolution and reconciliation with provider-reported usage. The host enforces the spending ceiling.",
+      "acceptance": [
+        "Never present UTF-8 bytes or character estimates as measured model tokens.",
+        "Account for cache writes, cache reads, output/reasoning and relevant context tiers.",
+        "Require a host prelaunch check before any launch or retry that could exceed the authorized ceiling.",
+        "Record retries and unsuccessful paid attempts.",
+        "Report cost per accepted complete review as the primary economic result; include every attempt once and report useful findings separately.",
+        "Extend missing pricing dimensions in Token Economy or return unsupported; do not maintain a parallel Voice runtime price catalogue."
+      ],
+      "dependencies": [],
+      "researchSourceIds": [
+        "self-refine",
+        "promptfoo"
+      ],
+      "localEvidence": [
+        "benchmarks/writing-review/fixtures.json",
+        "benchmarks/writing-review/run.mjs",
+        "website/research/review-economics.json"
+      ]
+    },
+    {
+      "id": "prompt-benchmarks",
+      "apiProposal": "evaluateReviewPrompts",
+      "packageProposal": "Voice adapters for Token Economy benchmark contracts",
+      "priority": "P0",
+      "problem": "A shorter prompt or a cheaper model may lose relevant findings or rewrite legitimate wording.",
+      "input": "Git-owned labelled cases and prompt versions mapped to BenchmarkDefinition/IBenchmarkInvoker, exact canonically resolved routes and explicit host experiment admission.",
+      "output": "Reproducible results with precision/recall by selected rule and locale, harmful edits, abstentions, latency, usage and cost.",
+      "acceptance": [
+        "Separate deterministic local measurements from model results.",
+        "Preserve negative examples and deliberately acceptable wording.",
+        "Compare equivalent rule coverage before claiming savings.",
+        "Use blinded human adjudication and a held-out set for effectiveness claims.",
+        "Record unavailable models and failed requests without substituting another model silently.",
+        "Reuse BenchmarkRunner and RoutingEvidenceAggregator/Report with explicit Voice locale/profile and meaning-preservation gates.",
+        "Preserve unknown usage and allocate attempt cost once when deriving per-finding metrics from accepted-delivery evidence.",
+        "Compare model and prompt organization on paired cases; separate quality from price and keep the no-change outcome eligible for acceptance."
+      ],
+      "dependencies": [
+        "result-validation",
+        "usage-budget"
+      ],
+      "researchSourceIds": [
+        "ossama-tropes",
+        "slopt-prompt-market",
+        "juzek-lexical-2025",
+        "sharma-sycophancy-2023",
+        "liang-detector-bias-2023",
+        "dugan-raid-2024",
+        "length-regularized-dpo",
+        "write-good",
+        "proselint",
+        "promptfoo"
+      ],
+      "localEvidence": [
+        "benchmarks/writing-review/fixtures.json",
+        "benchmarks/writing-review/run.mjs",
+        "website/research/review-economics.json",
+        "benchmarks/writing-review/prepare-model-comparison.mjs",
+        "benchmarks/writing-review/model-comparison.md"
+      ]
+    },
+    {
+      "id": "claim-evidence",
+      "apiProposal": "checkClaimEvidence",
+      "packageProposal": "host semantic-review adapter",
+      "priority": "P1",
+      "problem": "A rewrite can turn limited evidence into assured outcomes or attach a source that does not support the claim.",
+      "input": "Exact claims, approved evidence excerpts, source identifiers and the review context.",
+      "output": "Supported, unsupported or unresolved claim assessments with quoted evidence and missing facts.",
+      "acceptance": [
+        "Preserve numerical and causal qualifications.",
+        "Do not treat a valid URL or a model's agreement as proof of support.",
+        "Allow unresolved outcomes when evidence is absent.",
+        "Evaluate both original and proposed wording against the same facts."
+      ],
+      "dependencies": [
+        "contextual-review",
+        "result-validation",
+        "prompt-benchmarks"
+      ],
+      "researchSourceIds": [
+        "amatriain-assisted-writing",
+        "wikipedia-signs",
+        "miklian-accusations-2026",
+        "sharma-sycophancy-2023",
+        "self-correction-counterevidence"
+      ]
+    },
+    {
+      "id": "alternative-comparison",
+      "apiProposal": "compareReviewAlternatives",
+      "packageProposal": "host semantic-review adapter",
+      "priority": "P1",
+      "problem": "Several fluent rewrites may repeat the same framing, add unsupported claims or weaken a strong original.",
+      "input": "Original passage, one to three proposals, reader goal, evidence and accepted decisions.",
+      "output": "A comparison of task fit, factual preservation, distinctness and reasons to keep the original.",
+      "acceptance": [
+        "Compare alternatives at similar lengths where possible.",
+        "Recognize paraphrases that offer no material choice.",
+        "Do not fill a requested count with weak alternatives.",
+        "Retain deliberate contrasts, rhythms and terminology when they serve the goal."
+      ],
+      "dependencies": [
+        "contextual-review",
+        "claim-evidence",
+        "decision-preservation"
+      ],
+      "researchSourceIds": [
+        "gorrie-rhetorical-slop",
+        "amatriain-assisted-writing",
+        "hughes-negative-contrast",
+        "slopt-prompt-market",
+        "juzek-lexical-2025",
+        "doshi-creativity-diversity-2024",
+        "length-regularized-dpo",
+        "self-correction-counterevidence",
+        "coauthor-writer-control",
+        "textlint",
+        "retext-simplify",
+        "languagetool"
+      ]
+    },
+    {
+      "id": "decision-preservation",
+      "apiProposal": "protectReviewDecisions",
+      "packageProposal": "@voice/writing-rules",
+      "priority": "P1",
+      "problem": "Repeated review can undo intentional wording or treat agreement with the requester as sufficient evidence.",
+      "input": "Host-provided keep/accept/edit decisions, reasons, source versions and updated context.",
+      "output": "Applicable decision constraints and decisions requiring renewed review after source or context changes.",
+      "acceptance": [
+        "Reuse existing Studio decision records through a host adapter.",
+        "Keep durable storage and authorization with the host.",
+        "Do not suppress unrelated findings after a keep decision.",
+        "Distinguish retained author intent from factual validation."
+      ],
+      "dependencies": [
+        "contextual-review",
+        "result-validation"
+      ],
+      "researchSourceIds": [
+        "amatriain-assisted-writing",
+        "ossama-tropes",
+        "shaib-slop-2025",
+        "zhang-mixset-2024",
+        "coauthor-writer-control",
+        "retext-simplify",
+        "harper",
+        "promptfoo"
+      ]
+    },
+    {
+      "id": "project-consistency",
+      "apiProposal": "reviewProjectConsistency",
+      "packageProposal": "host project-review adapter",
+      "priority": "P1",
+      "problem": "Pages may individually read well while repeating the same framing or contradicting terminology, positioning and claims across the project.",
+      "input": "Explicitly selected Git or working-copy snapshots, page goals, approved terminology, claims and decisions.",
+      "output": "Cross-file findings with source locators, compared evidence and bounded follow-up tasks.",
+      "acceptance": [
+        "Pin each context repository independently, including marketing sources.",
+        "Identify cross-page contradictions without rewriting files.",
+        "Keep SEO and visual checks as separately reported capabilities.",
+        "Avoid claiming complete project coverage from a partial file selection."
+      ],
+      "dependencies": [
+        "contextual-review",
+        "result-validation",
+        "review-batching"
+      ],
+      "researchSourceIds": [
+        "gorrie-rhetorical-slop",
+        "kobak-excess-vocabulary-2025",
+        "doshi-creativity-diversity-2024"
+      ]
+    },
+    {
+      "id": "engine-adapters",
+      "apiProposal": "adaptEngineFindings",
+      "packageProposal": "optional engine adapters",
+      "priority": "P2",
+      "problem": "Existing prose tools have different scopes, positions, language coverage, licenses and proposed-fix semantics.",
+      "input": "Named engine/version, native diagnostics, exact source and its parsed prose mapping.",
+      "output": "Voice findings retaining engine IDs, original messages, verified spans, proposed fixes and coverage limits.",
+      "acceptance": [
+        "Qualify one adapter before adding a broad engine catalogue.",
+        "Preserve markup-aware input required by the engine.",
+        "Convert offsets explicitly and test Unicode, quotes and code exclusions.",
+        "Check selected rule-pack licenses separately.",
+        "Never interpret an engine match as AI authorship or automatic source-write permission."
+      ],
+      "dependencies": [
+        "result-validation",
+        "prompt-benchmarks"
+      ],
+      "researchSourceIds": [
+        "vale",
+        "textlint",
+        "retext-simplify",
+        "write-good",
+        "languagetool",
+        "harper",
+        "proselint"
+      ]
+    }
+  ],
+  "tokenEconomyIntegration": {
+    "status": "proposed",
+    "reference": "docs/model-strategy.md",
+    "ownership": {
+      "voice": "Rubrics, authored fixtures, locale/profile cohorts and editorial acceptance criteria.",
+      "tokenEconomy": "Canonical model/provider/CLI identities, dated price knowledge, general routing and benchmark evidence.",
+      "host": "Admission, credentials, hard prelaunch budgets, capacity and actual execution."
+    },
+    "existingContracts": [
+      "ModelPriceCatalog.ResolvePrice",
+      "ModelPriceCatalog.ComputeCost",
+      "TokenUsage",
+      "CostBreakdown",
+      "BenchmarkDefinition",
+      "IBenchmarkInvoker",
+      "BenchmarkRunner",
+      "RoutingEvidenceAggregator",
+      "RoutingEvidenceReport",
+      "OutcomeEfficiency.ComputeObserved"
+    ],
+    "gaps": [
+      "ModelPrice has input/output/cache-read/cache-write rates and validity dates; Batch, long-context tiers, cache TTL/storage need explicit shared modelling or an unsupported result.",
+      "ComputeCost currently falls back to input rates for missing cache rates; unknown provider-specific charges must remain explicit rather than silently declared accurate.",
+      "BenchmarkRunner checks CostCaps after InvokeAsync; a host guard is required for a hard prelaunch or total spend ceiling.",
+      "Benchmark token usage is not nullable; preserve unknown usage through an adapter or shared contract extension rather than supplying zero.",
+      "OutcomeEfficiency measures accepted deliveries. Define the review-to-delivery mapping and allocate each attempt cost once, even when it produces several findings.",
+      "RequiredBenchmarkCapability selects an evidence cohort; validate the actual chosen route and provisional experiment admission separately.",
+      "BenchmarkRunner.Compare orders success rate, primary outcome, token count and latency, not actual monetary efficiency; use accepted-review outcome and cost evidence for economic selection.",
+      "The concrete CLI benchmark invokers request broad filesystem permissions and coerce missing usage to zero. Reuse the read-only Voice Runner boundary and preserve unknown usage instead."
+    ],
+    "inspectedSource": {
+      "repository": "coding-agent-token-economy",
+      "commit": "fe5f536a62deb4bdb9e851db6c4a71acf641816f",
+      "checkedAt": "2026-09-12",
+      "files": [
+        "src/TokenEconomy/ModelPriceCatalog.cs",
+        "src/TokenEconomy/ModelPrice.cs",
+        "src/TokenEconomy/BenchmarkDefinition.cs",
+        "src/TokenEconomy/BenchmarkRunner.cs",
+        "src/TokenEconomy/OutcomeEfficiency.cs",
+        "src/TokenEconomy/RoutingEvidence.cs",
+        "src/TokenEconomy.Benchmarks/Program.cs"
+      ]
+    }
+  },
+  "economicObjective": {
+    "primary": "Minimize observed total cost per accepted complete review, subject to predeclared meaning/fact preservation, false-change, missed-issue and latency criteria for the exact locale/profile cohort.",
+    "comparisonAxes": [
+      "Canonical model/version and inference settings",
+      "One rule, related rule groups, fixed profile and complete-catalogue prompts",
+      "Stable rubric/context organization and examples",
+      "Cheap-first escalation with independently audited non-escalated cases"
+    ],
+    "secondary": [
+      "Useful accepted findings with deduplication",
+      "Incomplete and invalid outcomes",
+      "Latency p50/p95",
+      "Cold versus reused-prefix cost"
+    ],
+    "constraint": "A spending ceiling bounds execution; it does not select the best model or prompt. Research candidates remain unqualified until comparable model results exist.",
+    "research": "docs/research/prompt-organization-sources-2026-09-12.json"
+  }
+}

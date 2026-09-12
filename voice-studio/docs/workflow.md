@@ -1,21 +1,25 @@
-# Voice Studio: two workspaces, one review workflow
+# Review a file in Studio
 
-Preview 0.3 distinguishes a running application from a folder of documents.
-Both retain the original source, durable feedback, explicit source tasks and
-version-checked proposals. The rule wiki explains the shared local checks.
+## Start your first review
 
-The [language, navigation and review-choice guide](usability.md) covers English/
-German UI, compact and overlay navigation, keep decisions, alternatives and current
-file/Git provenance. The [holistic review design](holistic-review.md) describes
-planned page/project tasks and portable Git context; those evaluators are not part
-of the implemented file workflow below.
+From the Voice Studio checkout, start the app:
 
-## Open and resume Studio
+```sh
+npm start
+# Open http://127.0.0.1:5188/
+```
 
-Pair once with the current code and leave **Remember this browser for 7 days**
-selected to return after reloading or reopening the browser. **Log out** revokes
-this browser’s access. The lifetime is fixed; use the same local app address.
-See [browser sessions and the HTTP contract](browser-session.md).
+1. Enter the pairing code printed by the backend. Run `npm run pairing-code` in a second terminal to display it again.
+2. Open **Projects and files**, register your source folder and select a Markdown or HTML file.
+3. Select a mapped passage in the rendered view, or open a finding in the review panel.
+4. Choose **Keep as written**, inspect an existing suggestion, or add feedback. A keep decision records the passage and its source version.
+5. For a replacement, inspect the source diff and choose **Apply**. Check the resulting file and rendered page before committing.
+
+Generated alternatives and semantic tasks use the configured Runner and require an explicit start. Reading a file and saving a decision do not call a model.
+
+To review a running application, connect its development server as described below. For saved records, go to [file storage and JSON examples](#saved-tasks-and-decisions).
+
+**Remember this browser for 7 days** keeps access on the same Studio address. **Log out** revokes it. See [browser sessions](browser-session.md) for expiry and the HTTP contract.
 
 ## Angular applications: browse the running app
 
@@ -148,6 +152,129 @@ review. A separate manual resolution needs a written reason and current source
 and feedback state; it is visibly distinguished from an applied fix. Even a
 validated `already_satisfied` statement is the model’s judgment, not independent
 proof that the editorial task was solved.
+
+### Files beside the source
+
+Today's tasks and decisions live under the **registered source project's** hidden
+`.voice-lint/` folder. That project can be a Git checkout or an ordinary folder;
+the registered root can also be a subfolder of a larger repository.
+
+```text
+<registered source project>/
+  guide.md
+  voice.config.json                         # optional route/source configuration
+  .voice-lint/
+    reviews/<document-id>.voice-meta.json    # feedback, decisions, proposals
+    tasks/<document-id>/<task-id>.json       # task, prepared prompt, fingerprints
+    semantic-runs/<run-id>/
+      request.claim                         # duplicate-start protection
+      input.json                            # staged source and related context
+      run.json                              # state, findings/alternatives, usage
+      output.txt                            # collected model output
+    backups/<document-id>/<proposal-id>.md   # original source before apply
+    transactions/<document-id>-<proposal-id>.json
+```
+
+The backup extension follows the source file: `.md`, `.html`, `.ts`, etc.
+Keep decisions are items in the sidecar's `decisions` array; proposals are in
+`proposals`. They do not get individual decision/proposal files. A task also
+retains its linked proposal in `task.proposal`.
+
+| Action | Persistent change |
+| --- | --- |
+| Open a document | May create the reviews directory. Existing metadata can be rewritten for source reanchoring or interrupted-write recovery; an untouched new document needs no sidecar file yet. |
+| Save feedback / Keep as written | Create/update the review sidecar and its revision. No source edit or model call. |
+| Save a task | Create its JSON with `queued`, prepared prompt and current source/review/context fingerprints. No model call. |
+| Explicitly start | Update the task with `runId`; after admission checks, create the run claim, input and running record. A failure before admission can leave a failed task without a run folder. |
+| Finish or cancel | Persist run outcome and collected output. A successful task can prepare a sidecar proposal and retain it in its task record. Source remains unchanged. |
+| Explicitly apply | Write the original-source backup and pending transaction journal, apply the checked source change, update metadata, then mark the journal completed. |
+
+### Stored JSON and the reference chain
+
+The linked files show **synthetic examples of current storage**, not real user
+records, API requests or the planned holistic schema. The fictional source is
+`guide.md` with exactly `Clear copy.\n`:
+
+- [Complete task JSON](examples/stored-source-task.example.json): a `ready`
+  task and proposal changing `copy` to `instructions`. Its prepared prompt is
+  an explicitly labeled placeholder; no model generated this example.
+- [Complete review-sidecar JSON](examples/stored-selection-decision.example.json):
+  the earlier sidecar state after keeping `Clear`, before a proposal exists.
+
+The stored task is a wrapper around the API's `ImprovementTask`. This excerpt
+shows its links; the download includes all fields:
+
+```json
+{
+  "task": {
+    "status": "ready",
+    "documentId": "doc-dc0dbe13416a77d1",
+    "id": "4354b61ec302dd4963c5264d0e313b25",
+    "runId": "644e8e50d6185aee1c92635408fe1af8",
+    "proposalId": "1edf21d420d5a71fa53e5a7395988f91"
+  }
+}
+```
+
+Follow `documentId` to the review sidecar and its `documentPath` to the source
+file. Follow `runId` to `semantic-runs/<run-id>/run.json`; that task-generated
+run carries `taskId` back. `proposalId` selects the sidecar proposal, whose
+`taskId`/`runId` must match. The proposal retains `sourceBefore`,
+`sourceAfter`, exact edit quotes and mapped source spans. The saved diff is not
+the current Git diff.
+
+The wrapper also stores `prompt`, `creationFingerprint`,
+`contextFingerprint`, `startRequestId` and `startFingerprint`.
+The start fields are null before start; fingerprints reject changed input under
+the same request ID and bind the task to its source, review and component context.
+These are storage fields, not extra task API inputs. JSON property names are
+camelCase, including null fields, as emitted by the current backend serializer.
+
+| Identifier or version | Meaning |
+| --- | --- |
+| `project-<12 hex>` | Hash-derived from the absolute registration path; moving the checkout can change it. Built-in examples use named IDs. |
+| `doc-<16 hex>` | SHA-256 prefix of the project-relative path with forward slashes. A rename changes it; a text edit does not. |
+| Task/run/proposal/decision IDs | 32-character identifiers derived from request/owner identity; manual proposals use random GUIDs. None is a Git commit. |
+| `sourceVersion`, proposal `expectedVersion` | SHA-256 of decoded source text encoded as UTF-8, not a Git SHA or necessarily the original byte hash including BOM. |
+| Sidecar `revision` / task `reviewRevision` | Document review-state counter; task `revision` is a separate task-state counter. |
+| `unitsFingerprint`, `contextFingerprint` | Backend-owned hashes of serialized source mapping/context, not user settings. |
+
+Keep entries retain their quote, unit-local UTF-16 range and original source
+version. Source/mapping changes mark them stale. Sidecars and task/run files are
+mutable operational records with revision checks, not an append-only decision
+ledger. The legacy `improvementRequests` array is separate from today's task store.
+
+### Private storage and Git
+
+Studio's installation keeps the local project registry in
+`.voice-studio/projects.json` and a credential-file pointer in
+`.voice-studio/session-location.json`. Credentials, browser trust and CLI
+scratch work are separate from the source-side records:
+
+```text
+<user LocalApplicationData>/VoiceStudio/sessions/<installation-hash>/
+  session.json                            # private credentials
+  trusted-browsers.json                    # hashed browser trust
+  checks.json                             # host-owned check configuration
+  runner/workspaces/<run-id>/
+    review-context.json                   # CLI staging copy
+    .git/                                 # scratch init, no source commit
+```
+
+**Studio does not auto-commit, push or synchronize these records, and does not add
+`.voice-lint/` to each project's ignore rules.** Inspect what Git would include:
+source-side tasks and runs can contain full source, prompts and model output;
+transaction journals contain a local absolute backup path. Preserve source and
+relevant metadata/backups together when retaining work. A hash cannot restore
+content, source Git history cannot recover ignored metadata, and a proposal
+backup covers one file only. The journal detects interrupted writes and refuses
+to overwrite an unrelated source version. Moving a checkout can also require an
+identity migration that is not automated. Use backend operations rather than
+editing active metadata; keep credentials and installation registry files private.
+
+The `.voice-review/contexts/` and `.voice-review/reviews/` layout in
+[holistic-review.md](holistic-review.md) is the **planned** portable Git format,
+not today's storage. Automatic export/migration to it is not implemented.
 
 ## Semantic review is a Runner task
 

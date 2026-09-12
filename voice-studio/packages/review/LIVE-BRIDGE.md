@@ -3,7 +3,6 @@
 The live bridge runs inside a website that explicitly integrates it. Studio
 embeds that site's actual development-server URL. The site's scripts, CSS,
 native links, framework rendering and router continue to run on its own origin.
-Studio does not copy, proxy or inject the application's HTML.
 
 ## Add the bridge to the site's development entry point
 
@@ -89,7 +88,7 @@ opener window; after connection it retains that peer.
 
 Malformed reviews or a review for an outdated page URL produce a scoped
 `voice-studio:error`; messages from other origins, windows or sessions are
-ignored. No backend token belongs in any protocol message or URL.
+ignored.
 
 The Studio host currently uses an iframe. The target site's CSP/frame headers
 must allow the Studio origin to embed it and its development CSP must allow the

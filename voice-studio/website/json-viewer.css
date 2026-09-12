@@ -1,0 +1,16 @@
+/* Read-only JSON records use the native modal focus boundary. */
+html.json-viewer-open{overflow:hidden}
+.json-viewer{padding:0;border:1px solid #cfd3d0;border-radius:10px;width:min(1000px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;background:#fff;color:#252a27;box-shadow:0 20px 70px #17221c33;overflow:hidden}
+.json-viewer[open]{display:flex;flex-direction:column}
+.json-viewer::backdrop{background:#18201b73}
+.json-viewer-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding:22px 24px;border-bottom:1px solid #e1e4e1;background:#fafbf9}
+.json-viewer-header>div{min-width:0}.json-viewer h2{font-size:22px;line-height:1.3;letter-spacing:normal;margin:0 0 8px;overflow-wrap:anywhere}
+.json-viewer-filename{margin:0;font:12px/1.5 ui-monospace,Consolas,monospace;color:#646c66;overflow-wrap:anywhere}
+.json-viewer-close,.json-viewer-retry{font:600 14px/1.4 system-ui,sans-serif;padding:8px 13px;border:1px solid #b6bfb9;border-radius:5px;background:#fff;color:#2c4034;cursor:pointer;flex-shrink:0}
+.json-viewer-close:hover,.json-viewer-retry:hover{background:#edf1ed}.json-viewer :focus-visible{outline:3px solid #476c57;outline-offset:3px}
+.json-viewer-body{min-height:0;min-width:0;display:flex;flex-direction:column;overflow:auto;padding:0 24px 24px}
+.json-viewer-status{margin:16px 0;font-size:13px;line-height:1.5;color:#616a63}.json-viewer-status.is-error{color:#983829}
+.json-viewer-retry{align-self:flex-start;margin:0 0 20px}.json-viewer-retry[hidden]{display:none}
+.json-viewer pre{min-height:0;max-height:none;margin:0;padding:20px;background:#f6f7f5;color:#202b24;border:1px solid #e1e4de;border-radius:5px;overflow:auto;white-space:pre;overflow-wrap:normal;line-height:1.65;font:13px/1.65 ui-monospace,Consolas,monospace;tab-size:2}
+.json-viewer pre[hidden]{display:none}.json-viewer pre code{font:inherit;white-space:inherit;overflow-wrap:normal;background:none;padding:0;color:inherit}
+@media(max-width:600px){.json-viewer{width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:7px}.json-viewer-header{padding:17px 16px;gap:12px}.json-viewer h2{font-size:19px}.json-viewer-body{padding:0 16px 16px}.json-viewer pre{padding:14px;font-size:12px}}

@@ -1,14 +1,13 @@
 # Voice Studio command catalogue
 
 Run these commands from the Voice Studio workspace. Node.js, Bash and .NET
-requirements are in the [main README](../README.md). No command below runs merely
-because Studio opens a page. No helper commits or deploys automatically.
+requirements are in the [main README](../README.md).
 
 | Command | Purpose and prerequisites | Writes / output |
 | --- | --- | --- |
 | `npm start` | Build and start the local Studio and example website | Generated builds and private local session state |
 | `npm run pairing-code` | Recover the running installation's local pairing code | Prints the pairing code, never the bearer token |
-| `npm run build` | Build library, Angular frontend and .NET backend | `dist/`, `bin/`, `obj/` |
+| `npm run build` | Build both libraries, Angular frontend and .NET backend | `dist/`, `bin/`, `obj/` |
 | `npm run build:frontend:staged` | Build frontend without replacing currently served assets | `frontend/dist/voice-studio-next/` |
 | `npm run frontend:publish-local` | Copy an already completed staged frontend, entry point last | Replaces the local served frontend; no backend restart or remote publication |
 | `npm run website:build` | Build bilingual product pages, the library demo and styled HTML technical guides | `website/dist/voice/`; no deployment |
@@ -19,6 +18,10 @@ because Studio opens a page. No helper commits or deploys automatically.
 | `npm run test:dossier` | Verify the served dossier and desktop/mobile layout | `test-results/dossier-integration/`; no API mutation |
 | `npm run test:evidence` | Check all curated evidence manifests, path containment and file hashes | Read-only; does not rerun historical tests |
 | `npm run test:holistic-schema` | Validate the proposed JSON examples, references and hashes; reject malformed variants | Offline only; no repository/site review and no model |
+| `npm run build:writing-rules` | Build the local writing catalogue, prompt composer and surface-cue API | Package ESM files, JSON and declarations under `packages/writing-rules/dist/` |
+| `npm run test:writing-rules` | Check rule/source consistency, prompt boundaries, signals and typed consumers | Offline fixtures; no model call |
+| `npm run test:json-viewer` | Check JSON dialogs with an isolated loopback fixture | Browser report under `test-results/voice-website/`; no Studio access |
+| `npm run test:writing-patterns` | Check the published writing catalogue and actual local package demo | Browser report; requires website preview on 5187 |
 | `npm run test:website` | Browser-check website routes, EN/DE, mobile layout and actual library demo | Ignored screenshots/report; requires the local website preview |
 | `npm run test:library-types` | Compile isolated TS/JS consumers and check real IntelliSense completions/hover documentation | Offline package fixtures; no VS Code UI automation |
 | `npm run test:session` | Backend browser trust, expiry, restart and revocation contracts | Isolated temporary session state; no live backend |
@@ -38,7 +41,7 @@ running API could otherwise lock its build files.
 an evidence exporter. `publish-built-frontend.mjs` is a local deployment helper,
 not the public ecosystem website deployer.
 
-## Scoped scenarios and historical pilot tools
+## Scenario scripts
 
 Existing `pilot-*.mjs`, `import-website-review.mjs` and
 `reconcile-website-review.mjs` are scenario-specific workflows with their own
@@ -48,10 +51,16 @@ script and the associated [review record](../docs/reviews/) before an authorized
 run. Older `verify-*.mjs` files may target a recorded German pilot interface.
 The current supported entry points are listed above and in `package.json`.
 
-The former `verify-final-handoff.mjs` and `verify-dossier.mjs` embedded historical
-counts, source commits and rollout assumptions. Their observations remain in the
-curated verification record and local maintenance archive. Continuing dossier
-verification uses the current maintained fragment and identity instead.
+See [file ownership and retention](../docs/maintaining.md) for tracked sources,
+generated output and private runtime files.
 
-See [file ownership and retention](../docs/maintaining.md) for what belongs in Git,
-what is generated, and how useful maintenance work becomes supported tooling.
+## Writing-review measurements
+
+`npm run benchmark:writing-review` builds the writing-rules package and runs
+`benchmarks/writing-review/run.mjs` over the maintained EN/DE fixtures. It writes
+`test-results/writing-review/report.json` and makes no provider requests.
+
+After reviewing the result, `npm run benchmark:writing-review:retain` verifies
+its input hashes and updates the website measurement summary. Rebuild the site
+to display it. The retained record distinguishes bytes from tokens and local
+scanner candidates from model effectiveness.

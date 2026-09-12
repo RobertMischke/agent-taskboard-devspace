@@ -1,12 +1,9 @@
 # Semantic review and source tasks through CodingAgentRunner
 
-Preview 0.3 uses one backend Runner adapter for full-file semantic reviews and
-explicitly started, durable improvement tasks. The backend contains a semantic-review adapter for the existing
-`CodingAgentRunner` .NET library. It launches the operator's configured coding
-agent CLI; it does not call a provider SDK or require another API-key workflow.
-The adapter is disabled until a server-side route is explicitly configured.
-Implementation tests use fake Runner streams and spend no model tokens. A
-successful fake-stream test is not a live-model acceptance result.
+Voice Studio uses the `CodingAgentRunner` .NET library for full-file semantic
+reviews and saved improvement tasks. It launches the configured coding agent
+CLI using that CLI's existing authentication. Configure a server-side route
+before starting either kind of run.
 
 ## Dependency
 
@@ -16,12 +13,9 @@ Pin the portable NuGet package in `VoiceStudio.Api.csproj`:
 <PackageReference Include="CodingAgentRunner" Version="0.7.0" />
 ```
 
-Version 0.7.0 is available in the local NuGet cache used during implementation.
-It exposes the streaming, permission and clean-context APIs used here. The
-adjacent source checkout is the `coding-agent-runner` repository; its newer model
-discovery API is not assumed to exist in the pinned package. Restore/build use
-normal `dotnet restore` and `dotnet build`. No absolute project reference or
-external checkout is required for consumers.
+Restore and build with `dotnet restore` and `dotnet build`. The pinned package
+provides the streaming, permission and clean-context APIs used by the adapter;
+an external source checkout is not required.
 
 ## Server configuration
 
@@ -33,9 +27,10 @@ export VOICE_REVIEW_MODEL=gpt-5.6-sol
 export VOICE_REVIEW_THINKING=medium
 ```
 
-These values are an explicit provisional operator route, not a measured Voice
-ranking. The other supported CLI selection is `claude`; its model and effort
-must be compatible with the pinned Runner. `VOICE_REVIEW_CLI_PATH` optionally
+The example route is provisional; choose a model and effort supported by the
+installed CLI and pinned Runner. The other supported CLI selection is `claude`.
+Routing uses this server configuration, without Token Economy admission or
+automatic model fallback. `VOICE_REVIEW_CLI_PATH` optionally
 names the trusted local CLI executable. `VOICE_REVIEW_TIMEOUT_SECONDS` controls
 the bounded run duration (15-1800 seconds, default 300). Request bodies cannot
 provide a CLI path, model endpoint, credential, permission bypass or model route.
@@ -104,11 +99,9 @@ The host stages `review-context.json` in its own per-run workspace and
 initializes that scratch directory with `git init` for CLI compatibility. It
 does not use the original source checkout as the agent working directory.
 Runner runs with explicit `CliPermissionModes.ReadOnly` and clean context;
-delegation and automatic quota waiting/retries are disabled. Omitting the
-permission mode would select Runner's permissive default, so the adapter always
-sets it. Clean context isolates CLI state; it is not a general filesystem or
-network sandbox. Claude's read-only mapping is plan mode, Codex's is its native
-read-only sandbox.
+delegation and automatic quota waiting/retries are disabled. Clean context
+isolates CLI state; it is not a general filesystem or network sandbox. Claude's
+read-only mapping is plan mode, Codex's is its native read-only sandbox.
 
 Time and output-size bounds, cancellation and the Runner watchdog stop runaway
 runs. They are not a guaranteed token or monetary cap. The UI must describe this
@@ -182,30 +175,15 @@ reason and current source/feedback state.
 
 ## Local build/test verification
 
-After applying a proposal, the user can explicitly start the project's configured
-local check in Studio. The Angular pilot runs its existing `npm run check`.
-`ProjectCheckService` is a separate bounded local process, with no model call or
-Coding-Agent-Runner launch. The panel exposes running/cancelling and final
-completed/failed/cancelled states, bounded logs and exit code. Persisted results
-are tied to the configured source fingerprint and become `stale` after source
-or profile changes, while retaining the original outcome.
+After applying a proposal, explicitly start the project's configured local check
+in Studio. `ProjectCheckService` runs the host-configured build/test command and
+retains its logs, exit code and source fingerprint. Results become `stale` when
+the configured inputs or command profile change.
 
-Executable, arguments, working directory and input scope come solely from private
-host configuration outside the target repository. Neither HTTP nor
-`voice.config.json` chooses a command. The process executes trusted repository
-code with the host user's permissions; it is not covered by the semantic Runner's
-read-only mode. Missing dependency prerequisites block start, and applying source
-never starts the command automatically. See [local project checks](../backend/CHECKS.md)
-for the configuration and API.
-
-## Token Economy boundary
-
-This first adapter uses a visibly explicit server-configured provisional route.
-It does not claim to call Token Economy's admission API or to enforce a
-Voice-qualified candidate set. The future adapter should pass Token Economy's
-admitted attempt route here, while preserving the Voice prelaunch qualification
-check described in [model-strategy.md](model-strategy.md). No second price table,
-general model router or automatic fallback is introduced.
+This process runs with the host user's permissions, outside the semantic Runner's
+read-only mode. Missing prerequisites block start; source application does not
+start a check. See [local project checks](../backend/CHECKS.md) to configure the
+command and input scope or use the check API.
 
 ## Verification
 
@@ -223,10 +201,9 @@ context drift, dispositions, combined proposals and the explicit apply boundary.
 The separate project-check suite uses fake processes and tiny executable fixtures
 to test status, persistence, source drift, logs and process-tree cancellation
 without running a model or building the target website.
-Updated result counts belong in the current dossier after that verification run;
-the previously recorded baseline was 81 backend assertions and 30 fake-Runner
-checks. Live CLI authentication and actual model quality remain separate
-operator acceptance work.
+These tests do not verify live CLI authentication or editorial quality. Verify
+the configured route with an explicit review and inspect its findings before
+using its output for source changes.
 
 The four non-LLM local rules and their wiki use `knowledge/rules.json`. Evaluated
 LanguageTool/Vale/CSpell/Hunspell/textlint adapters are not part of Runner and are

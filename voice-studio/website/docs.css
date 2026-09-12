@@ -36,3 +36,25 @@
 .product-pair{row-gap:0}.product-pane{row-gap:0}.hero{margin-bottom:42px}.product-pair+.prose{margin-top:0}
 @media(min-width:1000px){.hero{padding:42px 48px 30px}.hero h1{font-size:64px;margin-bottom:20px}.hero .lead{font-size:21px;max-width:820px}.hero .actions{margin:24px 0 20px}}
 @media(max-width:700px){.product-pair{row-gap:24px}}
+
+/* Quiet technical pages: neutral code/table surfaces and grouped navigation. */
+.guide-page { --ink:#252b27; --line:#dedfda; background:#fff; }
+.guide-page .guide-group-details>summary { font-size:12px; list-style:revert; margin:0 0 10px; color:#565e58; letter-spacing:0; }
+.guide-page .guide-group { margin-bottom:20px; }
+.guide-page .guide-group>p { letter-spacing:.5px; color:#565e58; }
+.guide-page .guide-group a[aria-current] { background:#f0f1ed; color:#293d2e; border-color:#607064; }
+.guide-page .guide-group a:hover,.guide-page .mobile-outline { background:#f4f4f1; }
+.guide-page .code-block,.guide-page .code-block pre { background:#f5f5f2; color:#252b27; border-color:#dedfda; }
+.guide-page .code-block figcaption { background:#eeeeea; color:#565e58; border-color:#dedfda; }
+.guide-page .syntax-keyword { color:#252b27; font-weight:600; }
+.guide-page .syntax-string { color:#405747; }
+.guide-page .syntax-comment { color:#565e58; }
+.guide-page .syntax-number { color:#252b27; }
+.guide-page .copy-code { background:#fff; color:#252b27; border-color:#a9b2aa; }
+.guide-page .copy-code:hover { background:#e9ebe5; }
+.guide-page .table-scroll th { background:#eeeeea; color:#252b27; }
+.guide-page .table-scroll tbody tr:nth-child(even) { background:#f8f8f5; }
+.guide-page .guide-content :not(pre)>code { background:#f0f1ed; color:#344c3b; }
+.guide-page .guide-content blockquote,.guide-page .next-guide { background:#f4f4f1; border-color:#dedfda; }
+.guide-page .next-guide:hover { background:#eceee8; }
+.guide-status { margin-bottom:18px; }

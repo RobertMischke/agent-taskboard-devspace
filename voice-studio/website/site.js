@@ -41,3 +41,6 @@ if('IntersectionObserver' in window){
   const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){sectionLinks.forEach(a=>{if(a.hash==='#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});}},{rootMargin:'-5% 0px -70% 0px'});
   document.querySelectorAll('.guide-content h2').forEach(el=>observer.observe(el));
 }
+
+// JSON remains a normal link without JavaScript; enhanced views stay on this page.
+import('./json-viewer.js').then(module=>module.installJsonViewer()).catch(()=>{});

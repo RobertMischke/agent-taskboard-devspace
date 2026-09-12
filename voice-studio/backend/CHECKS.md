@@ -1,6 +1,6 @@
 # Local project checks
 
-After applying a source proposal, a user can explicitly run the project's configured local build/test command and inspect its result. This is a separate local process, with no model call and no Coding-Agent-Runner invocation. Saving feedback, creating tasks, applying proposals, opening a project and polling results never start a check automatically.
+After applying a source proposal, explicitly run the project's configured local build/test command and inspect its result. Checks run as a separate local process, with no model call or Coding-Agent-Runner invocation. They start only on request.
 
 The host selects one fixed command per exact registered project root. The HTTP API accepts a source fingerprint and an idempotency key, never an executable, arguments, working directory or environment. `voice.config.json` has no command configuration.
 
@@ -8,13 +8,13 @@ The host selects one fixed command per exact registered project root. The HTTP A
 
 Read `.voice-studio/session-location.json` to locate the session file. Place `checks.json` beside that session file in its existing user-owned session directory, outside every target project. The API reads this file on startup; changing a profile requires a controlled service restart. There is no HTTP endpoint to create or edit it.
 
-The Angular pilot uses the existing `npm run check`: TypeScript/template/style lint, content validation and the static build with its configured npm lifecycle hooks. On Windows, select the absolute Node executable and npm CLI JavaScript path so the host does not construct a shell command:
+For an Angular project with an `npm run check` script, a Windows profile can use the absolute Node executable and npm CLI JavaScript path:
 
 ```json
 {
   "version": 1,
   "profiles": [{
-    "projectPath": "C:/path/to/agent-studio-for-software-website/04-angular-static-final",
+    "projectPath": "C:/path/to/website",
     "label": "npm run check",
     "executable": "C:/Program Files/nodejs/node.exe",
     "arguments": ["C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js", "run", "check"],
@@ -30,7 +30,7 @@ The Angular pilot uses the existing `npm run check`: TypeScript/template/style l
 }
 ```
 
-Use the real executable paths installed on the host. `inputDirectories` and `inputFiles` contain fixed relative paths, without globs, and must exist completely. Directories are recursive. The required-file check is repeated immediately before launch and includes its files in the fingerprint. The pilot's dependency marker prevents starting when Angular dependencies are absent, avoiding its normal missing-dependency installation hook in that case. The command still executes trusted repository code with the host user's permissions; repository scripts may perform network requests, package operations or other writes. This is not a process sandbox or an offline guarantee.
+Use the real executable paths installed on the host. `inputDirectories` and `inputFiles` contain fixed relative paths, without globs, and must exist completely. Directories are recursive. The required-file check is repeated immediately before launch and includes its files in the fingerprint. The example's dependency marker blocks start when Angular's build package is missing. The command still executes trusted repository code with the host user's permissions; repository scripts may perform network requests, package operations or other writes. This is not a process sandbox or an offline guarantee.
 
 Host configuration and executable must be outside the target project. Project roots, configuration files, executables, inputs and persisted results reject symbolic links and junctions. Executable arguments use `ProcessStartInfo.ArgumentList`; the service never infers a command from project files.
 
@@ -43,8 +43,6 @@ This is an optimistic before/after comparison, not an immutable snapshot. It doe
 States are `running`, `cancelling`, `completed`, `failed`, `cancelled` and `stale`. Timeout is `failed` with an explicit timeout reason. A persisted unfinished run after restart is `failed` with an interruption reason, or `stale` if its source/profile also changed. It is never restarted automatically. Cancellation kills the process tree and waits for process exit. Completion never changes task acceptance, source files, Git state or an earlier proposal's status.
 
 Results are atomically persisted in `.voice-lint/check-runs/<32-hex-run-id>.json`, with the request ID, timestamps, checked fingerprints, input size/count, outcome, exit code and bounded combined output. Both process streams continue to drain after truncation. Limits are 65,536 stored log characters, 2,000 input files, 64 MiB total input bytes, 8 MiB per file, depth 20 and at most 1,200 seconds. One check runs at a time per Voice Studio service. The API returns the newest 50 runs; after 200 persisted runs it requires explicit host-side archival and never silently deletes history.
-
-The real Angular pilot's initial configured scope measured 172 files / 10,896,725 bytes, including its dependency marker, within these limits.
 
 ## API
 

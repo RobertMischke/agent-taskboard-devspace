@@ -1,73 +1,48 @@
-# Review choices, language and source provenance
+# Decisions and source versions
 
-Implemented local Preview 0.3 update, 12 September 2026. This guide describes
-the Studio controls, not the planned holistic page/project evaluator.
+## Keep a passage or review a change
 
-## Language and available space
+Select a mapped passage or open a finding. **Keep as written** saves the exact
+quote and source version; add a reason when it helps future reviewers. The source
+and rule remain unchanged. An edit to the source makes the old decision stale.
 
-English is the default, independently of the browser language. Select **EN** or
-**DE** in the header. The preference survives reopening when browser storage is
-available. Interface labels, rule explanations and the rule wiki switch language;
-source quotations, personal feedback, decisions and agent prose retain their
-original language. The document language and title follow the interface choice.
+**Generate alternatives** requests one to three replacements with reasons from
+the configured Runner. An optional direction can guide the request. If no model
+route is available, configure one using the [Runner guide](runner-integration.md).
+Choose **Review this change** to prepare a diff, then inspect and apply it as a
+separate action. Use your own feedback or wording when needed.
 
-**Full** keeps the normal navigation. **Compact** reduces its height. **Website
-focus** gives the live page the viewport and opens navigation and review as
-overlays. The floating controls reopen them. Escape closes an overlay; the
-navigation dialog supports keyboard focus. The chosen display mode is saved.
+Runs remain visible and cancellable after changing the selection. If a start is
+unconfirmed, retry the existing request rather than starting another generation.
+Review saved candidates against the current selection and source version.
 
-## Keep or compare a change
+## Check which source you are reviewing
 
-Select a mapped passage or open a finding. **Keep as written** stores a durable
-decision tied to the exact passage and source version. A reason is optional.
-This does not edit the source or disable a local rule or future CI check. Changed
-source makes the old decision stale rather than a current approval.
+**File and Git** shows the file, content version and optional repository details.
+File and repository change states are separate. Refresh after external edits;
+the displayed branch does not identify the revision deployed online.
 
-An existing rule suggestion is shown when one is available. **Generate
-alternatives** explicitly asks the configured Runner route for one to three
-distinct replacements with reasons. It does not invent three variants merely
-to fill the interface. No route is configured by default. Failed or incomplete
-output is reported; a useful replacement is not guaranteed. Model output stays
-in its original language. An optional direction can guide generation.
+A saved task result includes its file, task/run IDs, time, original source version
+and recorded edits. That is the saved proposal's diff, even if today's source has
+changed. The [storage reference](workflow.md#files-beside-the-source) shows where
+these records live and how their references connect.
 
-**Review this change** prepares a proposal through the existing backend. It
-does not apply it. Read the diff, then explicitly apply and verify the source and
-rendered result. A removal is labeled as removal. **Your feedback (optional)**
-and **Your wording (optional)** remain collapsed until needed.
+## If marks are missing
 
-Runs persist independently of the selected passage. Active runs in the current
-document remain visible and cancellable after selection or source changes, while
-candidate application requires the exact current selection and source version.
-An unconfirmed start retains its request ID and exact payload for an idempotent
-retry. Tab storage preserves this across reload when available; blocked storage
-provides only an in-memory fallback. Opening pages never starts a paid review.
+Check that marks are enabled, then read the browser panel's mapping count. A file
+assignment alone does not establish a text match. Open a finding to locate its
+text; it may be outside the viewport. Text inside an image cannot be underlined
+as mapped DOM text. For a mismatch, check the source adapter's unit ID and exact
+text using the [bridge guide](../packages/review/LIVE-BRIDGE.md).
 
-## Current working copy versus historical results
+If the same page shows marks in a normal browser but not in an embedded browser,
+use the normal browser for that review. The VS Code-specific rendering issue has
+not been reproduced or fixed.
 
-**Local working copy** identifies the file and content version. Optional Git
-details show repository path, branch, resolved commit and separate file/repository
-change state. A current branch name is not proof of the revision deployed online.
-Refresh the source context after external changes.
+## Language and layout
 
-A saved task result shows its file, task and run IDs, time and source version.
-Its recorded edits belong to that task's saved proposal. They are neither a live
-Git diff nor a claim about the currently published site. A historical task may
-still be useful evidence even when the current file has changed.
-
-Studio persistence under `.voice-lint` is not an automatic Git commit. Which
-project metadata enters Git is an explicit repository decision. Credentials and
-host configuration stay private. The [holistic review design](holistic-review.md)
-specifies the proposed portable Git context, results and decision records.
-
-## Missing underlines
-
-The browser panel reports whether marks are enabled and how many source sections
-and findings are actually mapped. A configured file alone is not a successful
-mapping. Off-screen findings become visible only when their text enters the
-viewport; text inside a screenshot is not DOM text and cannot be source-mapped.
-
-Direct Chrome and a real nested local iframe wrapper were checked on 12 September.
-Nesting alone did not reproduce the reported VS Code embedded-browser rendering
-issue. No VS Code-specific rendering fix is claimed. If the embedded browser still
-omits marks, the normal browser remains a verified route; the visible diagnostics
-help distinguish disabled marks, unsupported source and an embedding problem.
+English is the default. Choose EN/DE for the interface and rule explanations;
+source quotes, feedback and model prose keep their original language. Compact
+reduces navigation height; Website focus opens navigation and review as overlays.
+The floating controls reopen them and Escape closes an overlay. Language and
+display preferences are saved when browser storage is available.

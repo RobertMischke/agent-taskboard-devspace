@@ -1,0 +1,568 @@
+[
+  {
+    "id": "vale",
+    "name": "Vale",
+    "url": "https://github.com/vale-cli/vale",
+    "kind": "library",
+    "license": {
+      "id": "MIT",
+      "url": "https://github.com/vale-cli/vale/blob/v3/LICENSE"
+    },
+    "languageSupport": "English defaults; German requires appropriate rules and a Hunspell dictionary.",
+    "execution": "Local Go CLI; files or stdin, JSON diagnostics; no model required.",
+    "capabilities": [
+      "Versioned YAML rules, terminology vocabularies and configurable severity.",
+      "Markup scopes distinguish prose, headings and code; substitution rules supply suggestions."
+    ],
+    "limits": [
+      "Style consistency is its stated focus, rather than comprehensive grammar checking.",
+      "Assessment: pattern matches cannot establish factual truth, page strategy or AI authorship."
+    ],
+    "voiceFit": "Assessment: suitable for Git-owned style packs and CI; adapt its diagnostics to Voice findings and preserve human decisions.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest GitHub release: v3.21.0, published 2026-09-09; release API checked."
+    },
+    "relatedRuleIds": [
+      "word-choice",
+      "repetition",
+      "invented-labels",
+      "format-fit"
+    ],
+    "refs": [
+      {
+        "title": "Vale overview and scope",
+        "url": "https://docs.vale.sh/"
+      },
+      {
+        "title": "Command-line input and JSON output",
+        "url": "https://docs.vale.sh/topics/cli"
+      },
+      {
+        "title": "Hunspell dictionaries and English default",
+        "url": "https://docs.vale.sh/checks/spelling"
+      },
+      {
+        "title": "Rule scopes, exceptions and substitutions",
+        "url": "https://docs.vale.sh/guides/faq"
+      },
+      {
+        "title": "MIT license",
+        "url": "https://github.com/vale-cli/vale/blob/v3/LICENSE"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/vale-cli/vale/releases/latest"
+      },
+      {
+        "title": "Vale v3.21.0 release",
+        "url": "https://github.com/vale-cli/vale/releases/tag/v3.21.0"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Render findings after a host maps external diagnostics to Voice units."
+        }
+      ],
+      "currentUse": "There is no bundled Vale adapter. A host can already display manually converted results, provided the unit text matches the rendered document exactly.",
+      "missingCapability": "Adapt Vale diagnostics with rule provenance, severity and markup-aware source positions; validate UTF-16 spans and attach suggestions to the reviewed source version.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "result-validation"
+      ]
+    }
+  },
+  {
+    "id": "textlint",
+    "name": "textlint",
+    "url": "https://github.com/textlint/textlint",
+    "kind": "library",
+    "license": {
+      "id": "MIT",
+      "url": "https://github.com/textlint/textlint/blob/master/LICENSE"
+    },
+    "languageSupport": "Language coverage comes from plugins; English rules are listed, but no bundled German grammar pack was verified.",
+    "execution": "Local JavaScript CLI, createLinter/lintText API, or universal @textlint/kernel; plugins determine external calls.",
+    "capabilities": [
+      "Markdown/plain-text parsing, custom rules, filters and formatters.",
+      "Fix APIs return proposed results without writing files."
+    ],
+    "limits": [
+      "No rules ship in the core; each plugin needs separate quality and license review.",
+      "Assessment: AST rules alone do not judge positioning or authorship."
+    ],
+    "voiceFit": "Assessment: a close JavaScript integration fit for reusable rule packs, source diagnostics and reviewable fixes.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest release v15.8.0: 2026-08-01; API documentation updated 2026-09-09."
+    },
+    "relatedRuleIds": [
+      "word-choice",
+      "meta-framing",
+      "repetition",
+      "format-fit"
+    ],
+    "refs": [
+      {
+        "title": "textlint core and plugin architecture",
+        "url": "https://github.com/textlint/textlint"
+      },
+      {
+        "title": "Current Node APIs and immutable fix results",
+        "url": "https://textlint.org/docs/use-as-modules/"
+      },
+      {
+        "title": "Maintainer-hosted rule collection",
+        "url": "https://github.com/textlint/textlint/wiki/Collection-of-textlint-rule"
+      },
+      {
+        "title": "MIT license",
+        "url": "https://github.com/textlint/textlint/blob/master/LICENSE"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/textlint/textlint/releases/latest"
+      },
+      {
+        "title": "textlint v15.8.0 release",
+        "url": "https://github.com/textlint/textlint/releases/tag/v15.8.0"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Display host-converted lint findings without modifying source text."
+        }
+      ],
+      "currentUse": "Voice does not currently load textlint rules or call its fix API. A consumer owns parsing, plugin selection and conversion before supplying findings.",
+      "missingCapability": "Convert textlint messages and proposed fixes into validated Voice findings, retaining plugin identity, exact ranges and source-version preconditions for later review.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "result-validation",
+        "alternative-comparison"
+      ]
+    }
+  },
+  {
+    "id": "retext-simplify",
+    "name": "retext / retext-simplify",
+    "url": "https://github.com/retextjs/retext-simplify",
+    "kind": "library",
+    "license": {
+      "id": "MIT",
+      "url": "https://github.com/retextjs/retext-simplify/blob/main/license"
+    },
+    "languageSupport": "English simplification examples; Latin-script parsing also accepts German, but no German simplification pack was verified.",
+    "execution": "Local ESM plugin for unified/retext in Node, Deno or browsers; no model required.",
+    "capabilities": [
+      "Emits positioned VFile messages with ruleId, actual wording and expected alternatives.",
+      "Supports ignored phrases and composition with other prose plugins."
+    ],
+    "limits": [
+      "Assessment: phrase substitutions cannot determine whether a technical term is necessary or a claim is supported."
+    ],
+    "voiceFit": "Assessment: reuse the suggestion/message structure for optional word-choice hints; retain source spans and a keep-as-written choice.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest simplify release: 8.0.0, published 2023-09-10; no newer GitHub release observed."
+    },
+    "relatedRuleIds": [
+      "word-choice",
+      "concrete-subject",
+      "invented-labels"
+    ],
+    "refs": [
+      {
+        "title": "retext language parsers and plugin model",
+        "url": "https://github.com/retextjs/retext"
+      },
+      {
+        "title": "Simplify API, alternatives and ignore configuration",
+        "url": "https://github.com/retextjs/retext-simplify"
+      },
+      {
+        "title": "MIT license",
+        "url": "https://github.com/retextjs/retext-simplify/blob/main/license"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/retextjs/retext-simplify/releases/latest"
+      },
+      {
+        "title": "Simplify release history",
+        "url": "https://github.com/retextjs/retext-simplify/releases"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "getWritingRule",
+          "purpose": "Retrieve word-choice guidance for technical terms and acceptable originals."
+        },
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Display a suggestion after host conversion to a finding."
+        }
+      ],
+      "currentUse": "No retext plugin runs inside Voice. Consumers currently need their own VFile-message conversion and decision interface.",
+      "missingCapability": "Adapt positioned suggestions into validated UTF-16 findings and compare replacements with the original meaning, preserving an explicit decision to keep the phrase.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "alternative-comparison",
+        "decision-preservation"
+      ]
+    }
+  },
+  {
+    "id": "write-good",
+    "name": "write-good",
+    "url": "https://github.com/btford/write-good",
+    "kind": "library",
+    "license": {
+      "id": "MIT",
+      "url": "https://github.com/btford/write-good/blob/master/LICENSE"
+    },
+    "languageSupport": "English defaults; README links a separate basic German extension, schreib-gut, not evaluated here.",
+    "execution": "Local Node function writeGood(text, options) and CLI; no model required.",
+    "capabilities": [
+      "Flags passive voice, repeated words, clichés, adverbs and wordy phrases.",
+      "Returns reason, index and length; supports disabled checks, custom checks and whitelists."
+    ],
+    "limits": [
+      "The project describes its method as naive.",
+      "Assessment: blanket passive/adverb warnings can reject useful prose and cannot establish AI authorship."
+    ],
+    "voiceFit": "Assessment: useful as a small comparison baseline for local signals, with context-sensitive review outside the engine.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "GitHub releases page contains no releases; latest package publication date remains unverified."
+    },
+    "relatedRuleIds": [
+      "word-choice",
+      "repetition",
+      "calibrated-uncertainty",
+      "forced-template"
+    ],
+    "refs": [
+      {
+        "title": "write-good API, checks and German extension boundary",
+        "url": "https://github.com/btford/write-good"
+      },
+      {
+        "title": "MIT license",
+        "url": "https://github.com/btford/write-good/blob/master/LICENSE"
+      },
+      {
+        "title": "GitHub releases page",
+        "url": "https://github.com/btford/write-good/releases"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "findWritingSignals",
+          "purpose": "Provide Voice's own local cue results as a comparison baseline."
+        },
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Render externally supplied findings after host mapping."
+        }
+      ],
+      "currentUse": "Voice neither calls write-good nor inherits its passive-voice or adverb checks. Its published patterns form a separate, limited rule set.",
+      "missingCapability": "Adapt enabled checks with engine attribution and evaluate their false positives on useful passive constructions, necessary qualifications and accepted wording.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "prompt-benchmarks"
+      ]
+    }
+  },
+  {
+    "id": "languagetool",
+    "name": "LanguageTool",
+    "url": "https://github.com/languagetool-org/languagetool",
+    "kind": "library",
+    "license": {
+      "id": "LGPL-2.1-or-later",
+      "url": "https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt"
+    },
+    "languageSupport": "English and German language modules, plus additional languages and regional variants.",
+    "execution": "Local Java engine or self-hosted HTTP JSON API; cloud service is a separate option.",
+    "capabilities": [
+      "Grammar, spelling and style diagnostics with offsets and replacement candidates.",
+      "Annotated text preserves position relationships around markup."
+    ],
+    "limits": [
+      "Self-hosted server excludes cloud AI rules and synonyms.",
+      "Assessment: proofreading does not establish project strategy or AI authorship."
+    ],
+    "voiceFit": "Assessment: a bilingual proofreading adapter candidate alongside Voice's contextual review; declare the chosen local/cloud mode.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Changelog dates 6.8 to 2026-05-05 and marks 6.9 unreleased; ZIP distribution switched to snapshots after 6.6."
+    },
+    "relatedRuleIds": [
+      "complete-sentences",
+      "word-choice",
+      "repetition",
+      "format-fit"
+    ],
+    "refs": [
+      {
+        "title": "LanguageTool languages and core license",
+        "url": "https://github.com/languagetool-org/languagetool"
+      },
+      {
+        "title": "Local HTTP server and cloud-only features",
+        "url": "https://dev.languagetool.org/http-server"
+      },
+      {
+        "title": "Java API, language modules, offsets and annotated text",
+        "url": "https://dev.languagetool.org/java-api"
+      },
+      {
+        "title": "Core license",
+        "url": "https://github.com/languagetool-org/languagetool/blob/master/COPYING.txt"
+      },
+      {
+        "title": "Changelog and snapshot distribution change",
+        "url": "https://github.com/languagetool-org/languagetool/blob/master/languagetool-standalone/CHANGES.md"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Display proofreading findings converted by the host."
+        }
+      ],
+      "currentUse": "The review library starts no Java process or LanguageTool request. A consumer must currently choose the engine mode and supply mapped findings itself.",
+      "missingCapability": "Add an explicit local or cloud adapter with locale selection, validated positions across annotated markup and reviewable replacements bound to the source version.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "result-validation",
+        "alternative-comparison"
+      ]
+    }
+  },
+  {
+    "id": "harper",
+    "name": "Harper",
+    "url": "https://github.com/Automattic/harper",
+    "kind": "library",
+    "license": {
+      "id": "Apache-2.0",
+      "url": "https://github.com/Automattic/harper/blob/master/LICENSE"
+    },
+    "languageSupport": "English only; German is not currently supported.",
+    "execution": "Local Rust engine and harper.js WebAssembly package; WorkerLinter is recommended for interactive browsers.",
+    "capabilities": [
+      "Async lint API, replacement suggestions, configurable rules and custom dictionaries.",
+      "Context-sensitive ignored-lint hashes can be exported and imported."
+    ],
+    "limits": [
+      "Documentation still labels harper.js early access with an unstable API.",
+      "Assessment: verify Unicode span conversion against Voice's UTF-16 contract; grammar findings are not authorship evidence."
+    ],
+    "voiceFit": "Assessment: promising for English browser-local proofreading and explicit dismissals; German needs another engine.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest GitHub release: v2.10.0, published 2026-09-09; release API checked."
+    },
+    "relatedRuleIds": [
+      "complete-sentences",
+      "word-choice",
+      "repetition"
+    ],
+    "refs": [
+      {
+        "title": "Harper scope and English-only support",
+        "url": "https://github.com/Automattic/harper"
+      },
+      {
+        "title": "harper.js architecture and API stability caveat",
+        "url": "https://writewithharper.com/docs/harperjs/introduction"
+      },
+      {
+        "title": "Linter API, worker recommendation and ignored findings",
+        "url": "https://writewithharper.com/docs/harperjs/linting"
+      },
+      {
+        "title": "Span representation",
+        "url": "https://writewithharper.com/docs/harperjs/spans"
+      },
+      {
+        "title": "Apache-2.0 license",
+        "url": "https://github.com/Automattic/harper/blob/master/LICENSE"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/Automattic/harper/releases/latest"
+      },
+      {
+        "title": "Harper v2.10.0 release",
+        "url": "https://github.com/Automattic/harper/releases/tag/v2.10.0"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Render host-supplied proofreading findings on matching text units."
+        }
+      ],
+      "currentUse": "Voice currently starts no Harper worker and imports no ignored-lint state. English proofreading requires a consumer-owned integration.",
+      "missingCapability": "Adapt worker results with tested Unicode-to-UTF-16 conversion and preserve ignore decisions alongside engine and source versions, so changed passages can be reviewed again.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "result-validation",
+        "decision-preservation"
+      ]
+    }
+  },
+  {
+    "id": "proselint",
+    "name": "proselint",
+    "url": "https://github.com/amperser/proselint",
+    "kind": "library",
+    "license": {
+      "id": "BSD-3-Clause",
+      "url": "https://github.com/amperser/proselint/blob/main/LICENSE.md"
+    },
+    "languageSupport": "English prose; German coverage is not documented in the reviewed README.",
+    "execution": "Local Python LintFile API and CLI; JSON diagnostics and pre-commit integration; no model required.",
+    "capabilities": [
+      "Checks clichés, corporate jargon, metadiscourse, repetition and typography.",
+      "Granular per-file configuration; diagnostic spans and optional replacements."
+    ],
+    "limits": [
+      "Assessment: advice against hedging can conflict with necessary uncertainty; evaluate selected checks on Voice examples.",
+      "Heuristic matches do not establish authorship or factual correctness."
+    ],
+    "voiceFit": "Assessment: useful reference and CI baseline for explicit negative writing patterns, especially jargon and empty narration.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest GitHub release: v0.16.0, published 2025-11-14; repository currently describes itself as a mirror."
+    },
+    "relatedRuleIds": [
+      "word-choice",
+      "meta-framing",
+      "repetition",
+      "calibrated-uncertainty"
+    ],
+    "refs": [
+      {
+        "title": "proselint checks, Python API, configuration and wire output",
+        "url": "https://github.com/amperser/proselint"
+      },
+      {
+        "title": "BSD three-clause license",
+        "url": "https://github.com/amperser/proselint/blob/main/LICENSE.md"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/amperser/proselint/releases/latest"
+      },
+      {
+        "title": "proselint v0.16.0 release",
+        "url": "https://github.com/amperser/proselint/releases/tag/v0.16.0"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "getWritingRule",
+          "purpose": "Retrieve calibrated-uncertainty exceptions when assessing a hedging warning."
+        },
+        {
+          "symbol": "mountVoiceReview",
+          "purpose": "Display host-converted diagnostics for contextual review."
+        }
+      ],
+      "currentUse": "No Python engine or proselint configuration is included in the review library. Consumers must currently convert and attribute its results.",
+      "missingCapability": "Adapt enabled checks and benchmark jargon, metadiscourse and hedging warnings against examples where technical terminology or uncertainty is necessary.",
+      "releaseFunctionIds": [
+        "engine-adapters",
+        "prompt-benchmarks"
+      ]
+    }
+  },
+  {
+    "id": "promptfoo",
+    "name": "promptfoo",
+    "url": "https://github.com/promptfoo/promptfoo",
+    "kind": "library",
+    "license": {
+      "id": "MIT",
+      "url": "https://github.com/promptfoo/promptfoo/blob/main/LICENSE"
+    },
+    "languageSupport": "Language-neutral test fixtures; English/German evaluation quality depends on the chosen assertions and models.",
+    "execution": "Local Node CLI/evaluate API; deterministic assertions or model-assisted grading. Configured remote providers receive evaluation inputs.",
+    "capabilities": [
+      "Compares prompt/model outputs using regex, JSON schemas, custom functions and rubrics.",
+      "Supports saved-output evaluation and CI integration."
+    ],
+    "limits": [
+      "An evaluation framework, not a prose linter or validated authorship detector.",
+      "Assessment: scores inherit fixture coverage and judge limitations."
+    ],
+    "voiceFit": "Assessment: regression-test Voice counter-prompts against Git-owned examples and accepted decisions; separate deterministic checks from model judgments.",
+    "maintenance": {
+      "checkedAt": "2026-09-12",
+      "observation": "Latest GitHub release: 0.123.0, published 2026-09-10; release API checked."
+    },
+    "relatedRuleIds": [
+      "claims-evidence",
+      "reported-evidence",
+      "task-relevance",
+      "false-balance"
+    ],
+    "refs": [
+      {
+        "title": "Promptfoo evaluation and CI scope",
+        "url": "https://github.com/promptfoo/promptfoo"
+      },
+      {
+        "title": "Node evaluate API and provider functions",
+        "url": "https://www.promptfoo.dev/docs/usage/node-package/"
+      },
+      {
+        "title": "Deterministic, model-assisted and saved-output assertions",
+        "url": "https://www.promptfoo.dev/docs/configuration/expected-outputs/"
+      },
+      {
+        "title": "MIT license",
+        "url": "https://github.com/promptfoo/promptfoo/blob/main/LICENSE"
+      },
+      {
+        "title": "Latest release metadata checked on the research date",
+        "url": "https://api.github.com/repos/promptfoo/promptfoo/releases/latest"
+      },
+      {
+        "title": "Promptfoo 0.123.0 release",
+        "url": "https://github.com/promptfoo/promptfoo/releases/tag/0.123.0"
+      }
+    ],
+    "apiUse": {
+      "availableNow": [
+        {
+          "symbol": "composeWritingReviewPrompt",
+          "purpose": "Generate versioned prompt text for a consumer-owned evaluation fixture."
+        },
+        {
+          "symbol": "selectWritingRules",
+          "purpose": "Choose a stable rule subset for comparisons."
+        }
+      ],
+      "currentUse": "Voice prepares inputs but has no promptfoo adapter or evaluation runner. Provider calls, assertions and saved-output comparisons remain host responsibilities.",
+      "missingCapability": "Run Git-owned fixtures that record catalogue and provider settings, preservation decisions, separate deterministic and model judgments, and measured usage.",
+      "releaseFunctionIds": [
+        "prompt-benchmarks",
+        "decision-preservation",
+        "usage-budget"
+      ]
+    }
+  }
+]

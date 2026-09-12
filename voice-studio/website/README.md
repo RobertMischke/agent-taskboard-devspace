@@ -1,97 +1,89 @@
-# Voice public website and technical guides
+# Voice website
 
-The site has five product pages and sixteen HTML guides: **21 static routes**.
-The homepage gives the Studio UI and typed Library equal space, using an actual
-local Studio screenshot alongside a complete TypeScript example. It explains
-working with Git repositories and ordinary source folders.
+Six product pages with EN/DE navigation and sixteen English HTML guides form 22 content routes.
+The homepage pairs a genuine Studio screenshot with a typed review-library example.
+The native Research area renders maintained source records from `website/research/`,
+with English analysis, methods, limits and reusable JSON. It is separate from the
+technical guide system. The writing-patterns page uses the same versioned JSON catalogue as the Library.
 
-- `/voice/`: Library + UI, source ownership and current availability.
-- `/voice/studio/`: local start, seven-day browser access, logout and review.
-- `/voice/library/`: supplied annotations, actual demo, typed API and host-owned AI/persistence.
-- `/voice/docs/`: API, UTF-16 coordinates, source versions, callbacks and write preconditions.
-- `/voice/project-reviews/`: planned page/project review and Git records.
-- `/voice/guides/{slug}/`: the sixteen entries in [guides.mjs](guides.mjs),
-  including typed integration, browser sessions, commands, evidence and the AGT plan.
+| Route | Content |
+| --- | --- |
+| /voice/research/ | Practice articles, original studies, counter-strategies and library comparison |
+| /voice/ | Studio, libraries and Git-backed source/review files |
+| /voice/writing-patterns/ | Twenty AI writing anti-patterns, reader costs, counter-prompts, sources and actual local Library playground |
+| /voice/studio/ | Local startup and three real Studio views |
+| /voice/library/ | Review annotations, native selection and typed integration |
+| /voice/docs/ | Studio, Library and agent workflow entry points |
+| /voice/guides/{slug}/ | The explicit [guide catalogue](guides.mjs) |
 
-Product content defaults to English and offers saved German. Technical guide
-bodies remain English and say so explicitly; surrounding navigation controls,
-copy buttons and source-reference controls support EN/DE. Switching interface
-language does not translate code, evidence or technical guide prose.
+Studio and Library form the tool group in the header. Research, AI anti-patterns
+and Docs form the resource group. Existing `/voice/project-reviews/` bookmarks
+redirect to the homepage; the redirect is absent from the sitemap.
 
-## Build and preview
+## Build and serve
 
-From the Voice Studio workspace:
+Run from the Voice Studio workspace:
 
 ```sh
-npm run website:build
 npm run website:preview
-# In another terminal, with the preview running:
-npm run test:website
-npm run test:library-types
+# http://127.0.0.1:5187/voice/
 ```
 
-The preview binds only `127.0.0.1:5187`; open
-[Voice](http://127.0.0.1:5187/voice/) or
-[Technical docs](http://127.0.0.1:5187/voice/docs/).
-Studio is a separate service on port 5188. The static public site contains no
-Studio API, pairing data or backend credentials. Its Library demo uses supplied
-findings and temporary browser state.
+The command builds both libraries and the website, then serves only loopback
+port 5187. Studio runs separately on port 5188. The static website has no Studio
+session or backend credentials. Playground text stays in browser memory;
+surface checks and prompt composition call no model.
 
-The maintained CLI entry is `scripts/build-website.mjs`; rendering and templates
-live in this folder. `guides.mjs` explicitly lists document sources and example
-downloads. The build does not recursively publish the workspace or ignored
-maintenance archive. Curated evidence is included through its integrity manifest.
+## Content and publication
 
-Guides render maintained Markdown as HTML with navigation, section links, typed
-code highlighting, copy controls, tables and source references. Main navigation
-opens HTML guides, not raw Markdown. A collapsed source section offers optional
-Markdown downloads. References outside the publication catalogue remain repository
-references rather than broken website links.
+`guides.mjs` lists public sources. Internal planning under `docs/plans/`
+is excluded. The builder copies current storage JSON examples explicitly;
+historical evidence is selected through its integrity manifest. Guide links
+open HTML; source downloads remain in a collapsed reference section.
+Verification links open formatted JSON dialogs with keyboard navigation,
+loading/error states and a normal-link fallback when JavaScript is disabled.
 
-The build stages a complete new `website/dist/voice/` tree before replacing the
-local output, removing obsolete files from the published subset. All 21 routes
-have HTML files, relative assets, canonical URLs, a sitemap and a build record.
-English content and navigation remain readable without JavaScript.
-`build-info.json` records input hashes, routes and the checkout's commit/dirty
-state; it does not establish a public deployment revision.
+Product content and controls support EN/DE with a saved language choice.
+Guide prose and research references remain English. The rule catalogue provides
+English and German examples, rule names and prompts; detailed source notes stay
+in their original English.
 
-## Capture and verification scope
+The build stages a complete output tree and replaces `website/dist/voice/`.
+Old files outside the allowlist cannot survive the swap. The build record contains
+the source commit, scoped dirty state, routes and hashes for publication inputs.
+It identifies a local build, not a public deployment.
 
-`assets/studio-review.png` is a real local Studio capture reviewing the
-registered Agent Studio homepage in English with compact navigation. Its adjacent
-`studio-review.capture.json` records time, viewport, source, selection and scope.
-It is separate from the old screenshots in the historical verification catalogue.
-The capture made no source, feedback, proposal, task or model writes.
+## Screenshots
 
-The Library type test compiles isolated TS/checkJs and classic-global consumers
-against distributed files. NodeNext/Bundler verify positive and intentionally
-invalid fixtures. The actual TypeScript language service supplies tested
-completions, signatures and JSDoc hover text. This does not automate VS Code's UI.
+`assets/studio-review.png` shows an actual local Studio homepage review.
+The Studio tour uses `studio-live-review.png`, `studio-source.png` and
+`studio-focus.png` for passage review, original TypeScript and a narrow-screen
+page view. Adjacent `.capture.json` files record capture scope. Captures preserve
+the source and review state and expose no private absolute-path panel.
 
-Run `npm run test:website` for routes, languages, viewports, links, copy controls,
-guide navigation and the actual Library demo. Earlier twenty-view results belong
-to the old five-page site. The expanded site passed 84 route/language/viewport combinations and 168 local
-links/assets/fragments, exact code copy with native Windows newline normalization,
-responsive guides, the actual Library demo and the no-JavaScript fallback. The
-[separate follow-up evidence](../docs/verification/2026-09-12-browser-and-website/README.md)
-retains the report and tested build-input hashes.
+## Verify
 
-## Integrate into agent-orchestrator.dev
+```sh
+# Website preview running:
+npm run test:website
+npm run test:writing-patterns
+# Isolated or offline:
+npm run test:json-viewer
+npm run test:writing-rules
+npm run test:evidence
+```
 
-The target is **https://agent-orchestrator.dev/voice/**; it has not been published.
-The ecosystem uses static product subtrees, so this output needs no runtime service.
+Browser checks cover desktop/mobile EN/DE routes, assets and fragments, code copy,
+no-JavaScript content, the actual annotation bundle and writing-rule package.
+JSON viewer checks use an isolated fixture, including invalid records and safe
+text rendering. Generated reports and screenshots are in ignored `test-results/`.
+Retained evidence has its own timestamp and build-input hashes in
+[verification records](../docs/verification.md).
 
-1. Build and verify from an identified source revision.
-2. Publish only `website/dist/voice/` to the explicitly selected deployment
-   repository/branch mounted at `/voice/`.
-3. Add the central Voice entry with Studio, Library and technical docs links where supported.
-4. Retain host routing, legal information and caching policy; integrate the sitemap.
-5. Verify public routes, assets and the deployed build record.
+## Ecosystem hosting
 
-Central host configuration and the selected deployment repository remain external
-inputs. The build issues no push or deployment. [deployment-manifest.json](deployment-manifest.json)
-lists routes from the product-page and guide catalogues. Publishing a source
-repository is a separate explicit decision.
-
-The public Studio page starts an installed local copy. A hosted Studio service
-would require a separate product, authentication and operating design.
+Target: https://agent-orchestrator.dev/voice/. Public deployment is not configured.
+Publish only `website/dist/voice/` through the selected central hosting repository,
+then verify its routes and build record. The source build performs no deployment.
+[deployment-manifest.json](deployment-manifest.json) records route and host inputs.
+The hosted static site does not include the local Studio backend.

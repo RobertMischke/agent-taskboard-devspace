@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-09-12T11:52:52.675Z",
+  "filename": "studio-source",
+  "width": 1180,
+  "height": 780,
+  "scope": "Actual read-only TypeScript source view for the same homepage, relative file path, visible current Git branch summary and retained review context. Private Git path details remain closed; no project writes.",
+  "source": "src/app/content/home.ts",
+  "locale": "en",
+  "navigation": "compact",
+  "realProject": true,
+  "readOnly": true,
+  "sourceAndReviewUnchanged": true
+}

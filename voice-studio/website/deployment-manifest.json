@@ -7,11 +7,14 @@
   "mountPath": "/voice/",
   "runtimeRequired": false,
   "routes": [
+    "/voice/research/",
+    "/voice/writing-patterns/",
     "/voice/",
     "/voice/studio/",
     "/voice/library/",
     "/voice/docs/",
-    "/voice/project-reviews/",
+    "/voice/guides/writing-rules/",
+    "/voice/guides/ai-text-signals/",
     "/voice/guides/workflow/",
     "/voice/guides/session/",
     "/voice/guides/usability/",
@@ -22,8 +25,6 @@
     "/voice/guides/checks/",
     "/voice/guides/agent-integration/",
     "/voice/guides/holistic-review/",
-    "/voice/guides/model-strategy/",
-    "/voice/guides/language-tooling/",
     "/voice/guides/maintaining/",
     "/voice/guides/commands/",
     "/voice/guides/verification/",
@@ -37,7 +38,9 @@
     "studioHref": "/voice/studio/",
     "libraryHref": "/voice/library/",
     "docsHref": "/voice/docs/",
-    "typedLibraryHref": "/voice/guides/library-types/"
+    "typedLibraryHref": "/voice/guides/library-types/",
+    "patternsHref": "/voice/writing-patterns/",
+    "researchHref": "/voice/research/"
   },
   "existingDeploymentPattern": "Static website build to an explicitly selected deploy branch; host mounts the artifact at the product path.",
   "unresolvedHostInputs": [
@@ -47,7 +50,7 @@
   ],
   "applicationUrl": "http://127.0.0.1:5188/",
   "publishApplicationBackend": false,
-  "publicPageCount": 5,
+  "publicPageCount": 6,
   "htmlGuideCount": 16,
   "pageCatalogue": "website/site.mjs",
   "guideCatalogue": "website/guides.mjs",
@@ -55,5 +58,13 @@
   "interfaceLanguages": [
     "en",
     "de"
+  ],
+  "researchContentLanguage": "en",
+  "redirects": [
+    {
+      "from": "/voice/project-reviews/",
+      "to": "/voice/",
+      "kind": "static-html-refresh"
+    }
   ]
 }

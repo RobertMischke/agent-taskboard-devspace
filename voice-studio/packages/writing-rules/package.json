@@ -1,0 +1,30 @@
+{
+  "name": "@voice/writing-rules",
+  "version": "0.1.0",
+  "description": "Contextual writing-review rules and local prompt composition for Voice hosts",
+  "type": "module",
+  "private": true,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./catalogue.json": "./dist/catalogue.json",
+    "./surface-patterns.json": "./dist/surface-patterns.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node build.mjs",
+    "test": "npm run build && node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

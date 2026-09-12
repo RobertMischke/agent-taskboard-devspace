@@ -5,7 +5,7 @@ proposals remain available without an LLM. Semantic review now has an explicitly
 configured CodingAgentRunner 0.7.0 adapter with read-only staged context, durable
 run history and structured result validation. It was tested using fake streams,
 without model calls. The adapter is unconfigured by default. Qualification storage,
-benchmark execution and Token Economy admission remain planned. No model has
+model benchmark execution and Token Economy admission remain planned. No model has
 passed a Voice-specific benchmark. See [Runner integration](runner-integration.md).
 
 Voice should know which model is best supported by evidence for this editorial
@@ -227,3 +227,17 @@ Read on 2026-09-06 in the `coding-agent-token-economy` repository:
 These establish existing routing/admission behavior. Voice-specific
 capabilities, evidence export and the prelaunch adapter are the design here,
 not claimed implementations in either project.
+
+## Current offline measurement and next functions
+
+The economic objective is total cost per accepted complete review, subject to
+meaning preservation, missed-issue, false-change and latency criteria for the
+exact locale/profile. Compare model choice and prompt organization together.
+Useful findings are secondary; unnecessary edits do not improve efficiency.
+
+The maintained `benchmarks/writing-review/` runner measures actual prompt volume
+and lexical candidates on 30 authored EN/DE cases. It sends no model requests
+and grants no qualification. See [the next-release function collection](plans/writing-review-next-release.md)
+for context, validation, batching and Token Economy adapter work. The dated
+official model/rate snapshot in `docs/research/` is research material, separate
+from the canonical runtime catalogue and host admission.

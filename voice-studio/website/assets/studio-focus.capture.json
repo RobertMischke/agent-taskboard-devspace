@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-09-12T11:52:55.096Z",
+  "filename": "studio-focus",
+  "width": 430,
+  "height": 860,
+  "scope": "Actual Agent Studio homepage in the full mobile website viewport with floating Navigation and Open review controls. The real review overlay was opened and closed and retains the mapped lead selection; no project writes.",
+  "source": "src/app/content/home.ts",
+  "locale": "en",
+  "navigation": "focus",
+  "realProject": true,
+  "readOnly": true,
+  "sourceAndReviewUnchanged": true
+}
