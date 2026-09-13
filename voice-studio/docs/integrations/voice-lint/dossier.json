@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "id": "voice-concept-revision",
-  "key": "VL-W1",
-  "title": "Voice Lint and Voice Studio: readiness",
-  "statusText": "2026-09-12: local Studio; API-linked writing research; 30-case offline prompt-economics benchmark",
-  "summary": "Voice Studio remains a supervised local preview. The website separates Studio/Library tools from Research, AI anti-patterns and Docs; Git-backed storage is on the homepage. All 28 research records identify available API functions and missing capabilities. A proposed next-release collection defines ten functions, including context, validation, batching, usage budgets and prompt evaluation. An actual 30-case EN/DE offline benchmark measured 58.8% fewer UTF-8 input bytes when combining the same 20 rules and 51.2% for the same six rules. These are not measured model tokens, costs or recognition quality. Lexical keep cases and missed semantic issues are retained as limits. Official model/pricing candidates are documented; real model comparison awaits runtime access and a cost ceiling. No new automatic semantic analyzer, third-party engine integration, authorship probability or public deployment is claimed."
-}
