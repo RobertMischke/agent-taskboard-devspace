@@ -132,4 +132,66 @@ done
 echo "PASS: Valid release installs complete artifacts and restarts"
 run_update || { cat "$CASE_ROOT/result.log"; exit 1; }
 echo "PASS: Identical immutable release may be reused"
+# Exercise transient Windows rename locks without waiting or moving real releases.
+move_fixture() {
+  export FIXTURE_REAL_MV
+  FIXTURE_REAL_MV="$(command -v mv)"
+  cat > "$CASE_ROOT/fake-bin/mv" <<'MV'
+#!/usr/bin/env bash
+set -euo pipefail
+source_arg="${@: -2:1}"
+destination="${@: -1}"
+component="${source_arg##*/}"
+count_file="$FIXTURE_CASE/mv-$component-attempts"
+count=0
+[[ ! -f "$count_file" ]] || count="$(cat "$count_file")"
+count=$((count + 1))
+printf '%s\n' "$count" > "$count_file"
+if [[ "${FIXTURE_MOVE_RACE:-0}" == 1 && "$component" == backend ]]; then
+  mkdir -p "$destination"
+  printf concurrent > "$destination/OrchestratorApi.dll"
+  echo 'mv: fixture concurrent destination' >&2
+  exit 1
+fi
+if (( count <= FIXTURE_MOVE_FAILURES )); then
+  echo 'mv: fixture Permission denied' >&2
+  exit 1
+fi
+exec "$FIXTURE_REAL_MV" "$@"
+MV
+  cat > "$CASE_ROOT/fake-bin/sleep" <<'SLEEP'
+#!/usr/bin/env bash
+[[ "$*" == 1 ]] || { echo "Unexpected retry delay: $*" >&2; exit 1; }
+printf '%s\n' "$*" >> "$FIXTURE_CASE/retry-delays"
+SLEEP
+  chmod +x "$CASE_ROOT/fake-bin/mv" "$CASE_ROOT/fake-bin/sleep"
+}
+fixture transient-move-lock
+export FIXTURE_MOVE_FAILURES=2 FIXTURE_MOVE_RACE=0
+move_fixture
+pack
+run_update || { echo 'FAIL: Transient artifact lock was not retried' >&2; cat "$CASE_ROOT/result.log"; exit 1; }
+for component in backend frontend; do
+  [[ "$(cat "$CASE_ROOT/mv-$component-attempts")" == 3 ]] || { echo "FAIL: Incorrect $component retry count" >&2; exit 1; }
+  if [[ "$component" == backend ]]; then output=backend/bin; else output=frontend/dist; fi
+  diff -qr "$CASE_ROOT/input/$component" "$CASE_ROOT/agent-taskboard-stable/$output/remote-publish/$FIXTURE_SHA"
+done
+[[ "$(wc -l < "$CASE_ROOT/retry-delays")" == 4 ]] || { echo 'FAIL: Incorrect retry delay count' >&2; exit 1; }
+echo 'PASS: Transient artifact locks retry with bounded one-second delays'
+fixture permanent-move-lock
+export FIXTURE_MOVE_FAILURES=99 FIXTURE_MOVE_RACE=0
+move_fixture
+pack
+assert_refused 'persistent artifact lock'
+[[ "$(cat "$CASE_ROOT/mv-backend-attempts")" == 5 ]] || { echo 'FAIL: Persistent lock did not stop after five attempts' >&2; exit 1; }
+[[ "$(wc -l < "$CASE_ROOT/retry-delays")" == 4 ]] || { echo 'FAIL: Persistent lock delay is not bounded' >&2; exit 1; }
+fixture concurrent-release
+export FIXTURE_MOVE_FAILURES=0 FIXTURE_MOVE_RACE=1
+move_fixture
+pack
+assert_refused 'concurrently created immutable release'
+installed="$CASE_ROOT/agent-taskboard-stable/backend/bin/remote-publish/$FIXTURE_SHA"
+[[ "$(cat "$installed/OrchestratorApi.dll")" == concurrent ]] || { echo 'FAIL: Concurrent immutable runtime was overwritten' >&2; exit 1; }
+[[ "$(cat "$CASE_ROOT/mv-backend-attempts")" == 1 ]] || { echo 'FAIL: Retried rename over concurrent immutable release' >&2; exit 1; }
+echo 'PASS: Concurrent immutable destination is preserved'
 echo "All artifact preflight contract tests passed."

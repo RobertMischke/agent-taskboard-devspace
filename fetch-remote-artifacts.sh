@@ -78,11 +78,31 @@ for component in backend frontend; do
     }
   fi
 done
+install_component() {
+  local component="$1" destination="$2" attempt
+  for attempt in 1 2 3 4 5; do
+    # A concurrent installer may have published this SHA since preflight.
+    if [[ -e "$destination" || -L "$destination" ]]; then
+      [[ -d "$destination" && ! -L "$destination" ]] && diff -qr -- "$UNPACK/$component" "$destination" >/dev/null || {
+        echo "ERROR: Existing $component artifacts differ for immutable release $SHA." >&2; return 1;
+      }
+      return 0
+    fi
+    # Windows scanners may briefly lock a freshly unpacked directory. Never
+    # replace a destination that appeared between our check and the rename.
+    if mv -T --no-clobber -- "$UNPACK/$component" "$destination" && [[ ! -e "$UNPACK/$component" ]]; then
+      return 0
+    fi
+    if [[ "$attempt" == 5 ]]; then
+      echo "ERROR: Could not install $component artifacts after 5 attempts." >&2; return 1
+    fi
+    echo "Retrying $component artifact installation in 1 second ($attempt/5)." >&2
+    sleep 1
+  done
+}
 for component in backend frontend; do
   if [[ "$component" == backend ]]; then destination="$BACKEND"; else destination="$FRONTEND"; fi
-  if [[ ! -d "$destination" ]]; then
-    mkdir -p "$(dirname "$destination")"
-    mv -T -- "$UNPACK/$component" "$destination"
-  fi
+  mkdir -p "$(dirname "$destination")"
+  install_component "$component" "$destination"
 done
 echo "Verified remote artifacts staged for $SHA."
