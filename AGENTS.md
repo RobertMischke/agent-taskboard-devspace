@@ -39,10 +39,10 @@ Both environments can run in parallel without port conflicts.
 
 ## Starting and stopping Dev or Stable
 
-All workspace-root scripts are `sh` (Git Bash on Windows, WSL, any POSIX shell). There is **no PowerShell**. Run them in a VS Code terminal (`bash` profile) so `ng serve` output stays visible.
+All workspace-root scripts are `sh` (Git Bash on Windows, WSL, any POSIX shell). There is **no PowerShell**. Run them in a VS Code terminal (`bash` profile) for the shell lifecycle scripts. Builds and tests must execute remotely; local launchers use commit-pinned artifacts. See `README.md`.
 
 ```sh
-# Start (backend daemonised via api.sh, then ng serve in foreground)
+# Start remotely built backend and frontend artifacts
 ./start-dev.sh
 ./start-stable.sh
 
@@ -50,18 +50,15 @@ All workspace-root scripts are `sh` (Git Bash on Windows, WSL, any POSIX shell).
 ./stop-dev.sh
 ./stop-stable.sh
 
-# Roll Stable forward to origin/main (stop → ff-pull → conditional npm install → start)
+# Roll Stable forward after validating exact-commit remote artifacts
 ./update-stable.sh
 ```
 
-Each start script:
-1. Changes into the respective checkout folder.
-2. Passes `PORT` env var to `./api.sh start` — starts the .NET backend and waits for the health check.
-3. Generates a temporary proxy config (`.proxy-{dev,stable}.tmp.json`) in this workspace root and passes it to `ng serve` together with `--port`.
+Each start script requires matching remote backend and frontend artifacts for the checkout HEAD. It starts the published .NET DLL and a lightweight frontend proxy without restoring, installing, compiling, or running `ng serve`. Configure the immutable remote gate worker in `.remote-execution.env`; see `README.md`.
 
 Shared plumbing lives in `start.sh`, `stop.sh`, and `_lib.sh` (port-listener helpers); the `*-dev.sh` / `*-stable.sh` files are thin wrappers that only set env vars.
 
-To control only the backend of one checkout independently, call `api.sh` directly from within that checkout:
+For direct backend lifecycle commands, source the root `remote-execution.sh` first and supply `API_PREBUILT_DIR` for the exact checkout HEAD. Never use an implicit local source build:
 
 ```sh
 cd agent-taskboard-dev  && ./api.sh start   # or stop / restart / status
@@ -93,7 +90,7 @@ The override mechanism:
 
 ### Bringing Stable up to `origin/main`
 
-Use `./update-stable.sh` (workspace root). It performs, in order: preflight (must be on `main`, worktree clean) → stop Stable → `git pull --ff-only origin main` → `npm install` (only if `package-lock.json` changed) → start Stable. Aborts before touching anything if Stable is dirty or not fast-forwardable.
+Use `./update-stable.sh` (workspace root). It performs, in order: preflight (must be on `main`, worktree clean, main fast-forwardable) → fetch and validate remote artifacts for the pinned main commit → stop Stable → fast-forward to that commit → start from the published artifacts. Aborts before touching anything if Stable is dirty or not fast-forwardable.
 
 ---
 

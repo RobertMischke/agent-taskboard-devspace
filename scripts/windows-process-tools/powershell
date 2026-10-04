@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# api.sh may try this fallback after an empty WMI result. Never execute PowerShell.
+echo "ERROR: PowerShell fallback is disabled; lifecycle inspection uses the read-only WMI adapter." >&2
+exit 1

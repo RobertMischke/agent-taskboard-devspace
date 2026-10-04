@@ -13,6 +13,7 @@ set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 CHECKOUT="${ROOT}/agent-taskboard-stable"
+. "${ROOT}/remote-execution.sh"
 LOG="${ROOT}/.watchdog-stable.log"
 PORT="${STABLE_BACKEND_PORT:-5031}"
 INTERVAL="${WATCHDOG_INTERVAL:-30}"
@@ -37,7 +38,7 @@ while true; do
     # only a genuinely dead process triggers a restart — never a momentary blip.
     if [ "${fails}" -ge 3 ]; then
       log "restarting backend via api.sh ..."
-      ( cd "${CHECKOUT}" && PORT="${PORT}" ./api.sh start >> "${LOG}" 2>&1 )
+      ( cd "${CHECKOUT}" && export API_PREBUILT_DIR="${CHECKOUT}/backend/bin/remote-publish/$(git rev-parse HEAD)" && PORT="${PORT}" ./api.sh start >> "${LOG}" 2>&1 )
       log "restart attempt complete"
       fails=0
     fi

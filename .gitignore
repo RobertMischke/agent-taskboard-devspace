@@ -31,3 +31,7 @@ _*
 # handoffs that carry incident details or secret fingerprints - never in a public repo
 /artifacts/*secret*
 /artifacts/*incident*
+
+# Remote execution configuration and downloaded build outputs
+/.remote-execution.env
+/.remote-artifacts/

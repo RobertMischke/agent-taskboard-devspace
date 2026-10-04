@@ -1,128 +1,37 @@
 #!/usr/bin/env bash
-# Shared launcher — called by start-dev.sh and start-stable.sh.
-# Required env vars (set by the caller):
-#   CHECKOUT      — subfolder name, e.g. "agent-taskboard-dev"
-#   BACKEND_PORT  — e.g. 5030
-#   FRONTEND_PORT — e.g. 4010
-#   PROXY_SUFFIX  — used for the temp proxy file name, e.g. "dev"
+# Start from remote artifacts. Never install or compile on the workstation.
 set -euo pipefail
-
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 TARGET_DIR="${ROOT_DIR}/${CHECKOUT}"
-
 . "${ROOT_DIR}/_lib.sh"
-
-if [[ ! -d "${TARGET_DIR}" ]]; then
-  echo "ERROR: Missing directory: ${TARGET_DIR}"
-  exit 1
+. "${ROOT_DIR}/remote-execution.sh"
+[[ -d "${TARGET_DIR}" ]] || { echo "ERROR: Missing checkout: ${TARGET_DIR}" >&2; exit 1; }
+HEAD_SHA="$(git -C "${TARGET_DIR}" rev-parse HEAD)"
+export API_PREBUILT_DIR="${TARGET_DIR}/backend/bin/remote-publish/${HEAD_SHA}"
+FRONTEND_PREBUILT_DIR="${TARGET_DIR}/frontend/dist/remote-publish/${HEAD_SHA}"
+[[ -n "${RemoteGate__WorkerPath:-}" ]] || { echo "ERROR: Configure RemoteGate__WorkerPath in .remote-execution.env before starting." >&2; exit 1; }
+export RemoteGate__WorkerPath
+[[ -f "${FRONTEND_PREBUILT_DIR}/index.html" && -f "${FRONTEND_PREBUILT_DIR}/RELEASE-SHA" && "$(tr -d '\r\n' < "${FRONTEND_PREBUILT_DIR}/RELEASE-SHA")" == "${HEAD_SHA}" ]] || { echo "ERROR: Missing or mismatched remote frontend artifacts for ${HEAD_SHA}." >&2; exit 1; }
+# The independent update service survives restarts. Do not build it from source.
+if ! curl -fsS --max-time 2 http://127.0.0.1:5039/health >/dev/null 2>&1; then
+  echo "WARN: Independent update service is unavailable; deploy its remote artifact separately." >&2
 fi
-
-echo "=== ${CHECKOUT} — backend :${BACKEND_PORT}, frontend :${FRONTEND_PORT} ==="
-
-cd "${TARGET_DIR}"
-
-# Self-heal half-installed npm CLI shims (claude, gemini) before the backend
-# boots. A broken claude.exe stub used to silently drain the entire 2-ready
-# lane through 3a-failed-pickup; this pre-flight repairs what it can.
-# See ${TARGET_DIR}/docs/agent-contract-pattern.md (worked example: pickup-failed)
-# and ${TARGET_DIR}/docs/loop-inventory.md.
-#
-# Set ATP_CLI_SHIM_STRICT=1 to abort the boot when the shim is unrepairable
-# (the old behaviour). The default is now a loud warning that lets the rest
-# of the stack come up — without this, a Windows machine that never had
-# claude globally installed (or whose npm cache got corrupted between a
-# stop+start cycle, e.g. during an update-service-driven restart) gets stuck
-# unable to boot stable, even though only claude-backed jobs are affected.
-if [[ -x "${TARGET_DIR}/tools/check-cli-shims.sh" ]]; then
-  echo "--- CLI health ---"
-  if ! "${TARGET_DIR}/tools/check-cli-shims.sh"; then
-    if [[ "${ATP_CLI_SHIM_STRICT:-0}" == "1" ]]; then
-      echo "ERROR: CLI shim check failed (strict mode). Aborting startup before backend." >&2
-      echo "       Inspect ${TARGET_DIR}/tools/check-cli-shims.sh output above," >&2
-      echo "       fix the underlying npm install, then re-run." >&2
-      exit 1
-    fi
-    echo "WARN: CLI shim check failed. Boot continuing without claude available;" >&2
-    echo "      claude-backed jobs will fail at pickup until the shim is repaired." >&2
-    echo "      Set ATP_CLI_SHIM_STRICT=1 to make this fatal again." >&2
-  fi
-fi
-
-echo "--- Update service ---"
-# Standalone update-service (port 5039 by default). ADR-0021 / ADR-0031:
-# this is the one .NET process that must outlive the main backend — it owns
-# the stop-stable / pull / restart / verify pipeline, so anything that stops
-# the backend (a crash, a manual ./api.sh stop, a verification failure) must
-# leave update-service running. We start it here, but stop.sh deliberately
-# does NOT take it down; use ./update-service.sh stop explicitly when you
-# really want to take it offline (e.g. before pruning the workspace).
-#
-# Idempotent: the script's listener check skips the start when the port is
-# already bound, so calling this from both checkouts is safe.
-if [[ -x "${TARGET_DIR}/update-service.sh" ]]; then
-  ( cd "${TARGET_DIR}" && ./update-service.sh start ) || \
-    echo "WARN: update-service start failed; continuing with backend." >&2
-fi
-
-echo "--- Backend ---"
-PORT=${BACKEND_PORT} ./api.sh start
-
-echo "--- Frontend ---"
+(cd "${TARGET_DIR}" && PORT="${BACKEND_PORT}" ./api.sh start)
 kill_port "${FRONTEND_PORT}"
-
-PROXY_CONF="${ROOT_DIR}/.proxy-${PROXY_SUFFIX}.tmp.json"
-cat > "${PROXY_CONF}" <<EOF
-{
-  "/api":  { "target": "http://localhost:${BACKEND_PORT}", "secure": false, "changeOrigin": true },
-  "/hubs": { "target": "http://localhost:${BACKEND_PORT}", "secure": false, "changeOrigin": true, "ws": true }
-}
-EOF
-
-cd "${TARGET_DIR}/frontend"
-
-# DETACH=1 → run ng serve in the background, survive parent shell exit, log to file.
-# Default → exec in foreground (so output streams into the user's VS Code terminal).
-if [[ "${DETACH:-0}" == "1" ]]; then
-  FE_LOG="${TARGET_DIR}/.frontend.log"
-  FE_PID_FILE="${TARGET_DIR}/.frontend.pid"
-  : > "${FE_LOG}"
-  echo "Starting frontend (detached) on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
-  echo "  log: ${FE_LOG}"
-  # Pass the project name explicitly: angular.json now declares multiple
-  # applications (frontend + next-gen-chat-mockup), so a bare `ng serve`
-  # aborts with "Cannot determine project for command".
-  nohup npx ng serve frontend --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}" \
-    > "${FE_LOG}" 2>&1 &
-  FE_PID=$!
-  disown "${FE_PID}" 2>/dev/null || true
-  echo "${FE_PID}" > "${FE_PID_FILE}"
-  # Wait for the port to come up so callers know it's ready. This app's COLD
-  # ng-serve compile (main.js ~5 MB) routinely takes longer than a minute, so
-  # wait generously (override via FE_READY_TIMEOUT).
-  FE_READY_TIMEOUT="${FE_READY_TIMEOUT:-240}"
-  for _ in $(seq 1 "${FE_READY_TIMEOUT}"); do
-    sleep 1
-    if [[ -n "$(listener_pid "${FRONTEND_PORT}")" ]]; then
-      echo "Frontend listening on :${FRONTEND_PORT} (PID: ${FE_PID})."
-      exit 0
-    fi
-    # Fail FAST on a real compile error (e.g. a missing dependency after a
-    # pull that skipped `npm install`) instead of waiting the full window —
-    # ng serve stays alive in watch mode after a failed build, so the port
-    # would never come up and the timeout below would be the only signal.
-    if grep -q "bundle generation failed" "${FE_LOG}" 2>/dev/null; then
-      echo "ERROR: Frontend build FAILED (see ${FE_LOG})." >&2
-      echo "       Most likely a missing dependency — run 'npm install' in ${TARGET_DIR}/frontend and retry." >&2
-      exit 1
-    fi
-  done
-  # No build error, just slow: do NOT fail the restart over ng-serve compile
-  # time. The frontend is detached (nohup + disown) and the browser SPA
-  # reconnects once it finishes compiling, and the backend — health-checked
-  # above — is the service this (re)start actually delivers.
-  echo "WARN: Frontend not yet listening on :${FRONTEND_PORT} after ${FE_READY_TIMEOUT}s (no build error); ng serve (PID ${FE_PID}) is detached and should come up. Not failing the restart. Tail log: ${FE_LOG}" >&2
-  exit 0
-else
-  echo "Starting frontend on :${FRONTEND_PORT} -> backend :${BACKEND_PORT} ..."
-  exec npx ng serve frontend --port "${FRONTEND_PORT}" --proxy-config "${PROXY_CONF}"
+if [[ "${DETACH:-0}" != 1 ]]; then
+  exec node "${ROOT_DIR}/serve-prebuilt-frontend.mjs" "${FRONTEND_PREBUILT_DIR}" "${FRONTEND_PORT}" "http://127.0.0.1:${BACKEND_PORT}"
 fi
+FE_LOG="${TARGET_DIR}/.frontend.log"
+nohup node "${ROOT_DIR}/serve-prebuilt-frontend.mjs" "${FRONTEND_PREBUILT_DIR}" "${FRONTEND_PORT}" "http://127.0.0.1:${BACKEND_PORT}" > "${FE_LOG}" 2>&1 < /dev/null &
+FE_PID=$!
+disown "${FE_PID}" 2>/dev/null || true
+printf '%s\n' "${FE_PID}" > "${TARGET_DIR}/.frontend.pid"
+for ((i=0; i<30; i++)); do
+  if curl -fsS --max-time 2 "http://127.0.0.1:${FRONTEND_PORT}/" >/dev/null; then
+    echo "Prebuilt frontend ready on :${FRONTEND_PORT}."
+    exit 0
+  fi
+  sleep 1
+done
+echo "ERROR: Prebuilt frontend did not become healthy; see ${FE_LOG}." >&2
+exit 1

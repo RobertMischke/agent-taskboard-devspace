@@ -10,6 +10,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 TARGET_DIR="${ROOT_DIR}/${CHECKOUT}"
 
 . "${ROOT_DIR}/_lib.sh"
+. "${ROOT_DIR}/remote-execution.sh"
 
 if [[ ! -d "${TARGET_DIR}" ]]; then
   echo "ERROR: Missing directory: ${TARGET_DIR}"

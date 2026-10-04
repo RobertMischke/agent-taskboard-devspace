@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Read-only WMIC compatibility for lifecycle scripts on Windows without WMIC.
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+command -v cygpath >/dev/null 2>&1 || { echo "ERROR: WMI process inspection requires Git Bash cygpath." >&2; exit 1; }
+WINDOWS_ROOT="${SystemRoot:-${SYSTEMROOT:-C:/Windows}}"
+CSCRIPT="$(cygpath -u "$WINDOWS_ROOT")/System32/cscript.exe"
+[[ -x "$CSCRIPT" ]] || { echo "ERROR: Windows cscript.exe is unavailable." >&2; exit 1; }
+SCRIPT_NATIVE="$(cygpath -w "$SCRIPT_DIR/wmic.js")"
+MSYS_NO_PATHCONV=1 exec "$CSCRIPT" //nologo "$SCRIPT_NATIVE" "$@"

@@ -3,9 +3,9 @@
 #   1. Preflight (must be on `main`, worktree clean)
 #   2. Wait for stable's runner to be quiescent (active=null on every project)
 #   3. Stop stable
-#   4. git pull --ff-only origin main
-#   5. npm install   (only if package-lock.json changed)
-#   6. Start stable  (foreground — ng serve runs in this terminal)
+#   4. Fast-forward to the preflight-pinned main SHA
+#   5. Start exact-SHA remote backend and frontend artifacts
+# Artifacts and full-gate proof are fetched before the stop step.
 #
 # Aborts before touching anything if stable is dirty or not fast-forwardable.
 # Aborts at step 2 if stable still has an active CLI run after the wait
@@ -15,6 +15,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+. "${ROOT_DIR}/remote-execution.sh"
 CHECKOUT="${ROOT_DIR}/agent-taskboard-stable"
 FRONTEND="${CHECKOUT}/frontend"
 LOCK="${FRONTEND}/package-lock.json"
@@ -43,10 +44,10 @@ if [[ -n "${dirty}" ]]; then
 fi
 echo "  Worktree: clean"
 
-lock_before=""
-if [[ -f "${LOCK}" ]]; then
-  lock_before="$(git hash-object "${LOCK}")"
-fi
+git -C "${CHECKOUT}" fetch origin main
+CANDIDATE_SHA="$(git -C "${CHECKOUT}" rev-parse origin/main)"
+git -C "${CHECKOUT}" merge-base --is-ancestor HEAD "${CANDIDATE_SHA}" || { echo "ERROR: Stable is not fast-forwardable." >&2; exit 1; }
+"${ROOT_DIR}/fetch-remote-artifacts.sh" "${CANDIDATE_SHA}"
 
 # ─── wait for quiescence ─────────────────────────────────────────────────────
 # Stable's stop step kills any in-flight CLI process. Block here until every
@@ -98,30 +99,10 @@ done
 
 section "Pulling origin/main"
 
-git -C "${CHECKOUT}" fetch origin main
-git -C "${CHECKOUT}" pull --ff-only origin main
+git -C "${CHECKOUT}" merge --ff-only "${CANDIDATE_SHA}"
 
 head_now="$(git -C "${CHECKOUT}" log -1 --format='%h %s')"
 echo "  HEAD now: ${head_now}"
 
-# ─── npm install if lock changed ─────────────────────────────────────────────
-
-# Always run npm install (idempotent: fast when the dep tree already matches
-# the lock, installs anything missing otherwise). The previous "only if
-# package-lock.json changed in this pull" optimisation skipped installs when
-# node_modules had drifted from the lock (a dependency added in a commit window
-# a prior update skipped), which left the frontend build failing on a missing
-# module after a successful-looking update (the 2026-06-02 @microsoft/signalr
-# incident). npm install IS the cheap check-and-fix; abort if it fails so a
-# broken dep tree is never carried into the restart.
-section "npm install (frontend deps)"
-if ! ( cd "${FRONTEND}" && npm install ); then
-  echo "ERROR: npm install failed — aborting before restart so a broken dep tree is not deployed." >&2
-  exit 1
-fi
-
-# ─── start ───────────────────────────────────────────────────────────────────
-# Detach the frontend so update-stable.sh exits cleanly while ng serve
-# keeps running in the background. Backend is already daemonised by api.sh.
-
+# Remote artifacts were verified before stopping. No local dependency install or build.
 DETACH=1 exec "${ROOT_DIR}/start-stable.sh"
