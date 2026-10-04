@@ -18,5 +18,15 @@ export DOTNET_ThreadPool_ForceMinWorkerThreads="${DOTNET_ThreadPool_ForceMinWork
 case "$(uname -s 2>/dev/null)" in
   MINGW*|MSYS*|CYGWIN*)
     export PATH="${REMOTE_CONFIG_DIR}/scripts/windows-process-tools:${PATH}"
+    # These values name paths on Linux, not paths in the Git Bash installation.
+    # Preserve other exclusions and leave native argument conversion untouched.
+    for remote_path_variable in RemoteGate__WorkerPath RemoteGate__Root; do
+      case ";${MSYS2_ENV_CONV_EXCL:-};" in
+        *";$remote_path_variable;"*) ;;
+        *) MSYS2_ENV_CONV_EXCL="${MSYS2_ENV_CONV_EXCL:+${MSYS2_ENV_CONV_EXCL};}$remote_path_variable" ;;
+      esac
+    done
+    export MSYS2_ENV_CONV_EXCL
+    unset remote_path_variable
     ;;
 esac

@@ -10,6 +10,8 @@ export RemoteGate__WorkerPath=/absolute/release/worker/OrchestratorApi.dll
 export REMOTE_RELEASE_ROOT=/absolute/releases
 ```
 
+On Git Bash, the launcher excludes only `RemoteGate__WorkerPath` and `RemoteGate__Root` from MSYS environment path conversion, so their Linux paths reach the native .NET process unchanged. Existing exclusions and native argument conversion are preserved.
+
 SSH must already work non-interactively with a verified host key. The backend's temporary SSH gate bridge exports the exact commit and accepts only a matching remote result. Missing configuration or transport failure blocks the gate. Source-control integration remains in the control plane.
 
 `./update-stable.sh` fetches and pins `origin/main`, verifies that Stable can fast-forward, and downloads that exact commit's remote artifacts before stopping Stable. The remote directory must contain `<SHA>/release.tar.gz` and `release.sha256` (the lowercase SHA-256 digest only). The archive contains regular files and directories under `backend/` and `frontend/`. Both components require:
@@ -30,5 +32,6 @@ Verification commands belong on the remote host:
 node --test serve-prebuilt-frontend.test.mjs
 bash fetch-remote-artifacts.test.sh
 bash watchdog-stable.test.sh
+bash remote-execution.test.sh
 bash -n start.sh update-stable.sh remote-execution.sh fetch-remote-artifacts.sh
 ```
