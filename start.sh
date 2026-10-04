@@ -13,7 +13,7 @@ FRONTEND_PREBUILT_DIR="${TARGET_DIR}/frontend/dist/remote-publish/${HEAD_SHA}"
 export RemoteGate__WorkerPath
 [[ -f "${FRONTEND_PREBUILT_DIR}/index.html" && -f "${FRONTEND_PREBUILT_DIR}/RELEASE-SHA" && "$(tr -d '\r\n' < "${FRONTEND_PREBUILT_DIR}/RELEASE-SHA")" == "${HEAD_SHA}" ]] || { echo "ERROR: Missing or mismatched remote frontend artifacts for ${HEAD_SHA}." >&2; exit 1; }
 # The independent update service survives restarts. Do not build it from source.
-if ! curl -fsS --max-time 2 http://127.0.0.1:5039/health >/dev/null 2>&1; then
+if ! curl -fsS --max-time 2 http://127.0.0.1:5039/healthz >/dev/null 2>&1; then
   echo "WARN: Independent update service is unavailable; deploy its remote artifact separately." >&2
 fi
 (cd "${TARGET_DIR}" && PORT="${BACKEND_PORT}" ./api.sh start)
