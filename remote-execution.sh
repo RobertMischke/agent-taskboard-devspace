@@ -5,6 +5,8 @@ if [[ -f "${REMOTE_CONFIG_DIR}/.remote-execution.env" ]]; then
   source "${REMOTE_CONFIG_DIR}/.remote-execution.env"
 fi
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) export PATH="/c/Program Files/Git/usr/bin:$PATH" ;; esac
+# Preserve the environment previously selected by dotnet run launchSettings.
+export ASPNETCORE_ENVIRONMENT="${ASPNETCORE_ENVIRONMENT:-Development}"
 export API_REQUIRE_PREBUILT=1
 export RemoteGate__SshHost="${RemoteGate__SshHost:-agent-runner}"
 export RemoteGate__Root="${RemoteGate__Root:-/var/tmp/agentstudio-remote-gates}"
