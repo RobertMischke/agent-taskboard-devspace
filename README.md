@@ -22,10 +22,13 @@ Generated files are installed beneath Stable's ignored `backend/bin/remote-publi
 
 `./start-stable.sh` and `./start-dev.sh` require matching artifacts. The shared launcher sets `API_REQUIRE_PREBUILT=1`. Dev still requires the project-specific authorization rules. The frontend uses the dependency-free Node server in `serve-prebuilt-frontend.mjs`, bound to loopback, with API and WebSocket proxying. The independent update service is left running; its own installation must also use remote artifacts.
 
+Create the ignored `.stable-maintenance` file in this workspace before a planned stop or rollout. The watchdog skips probes and restarts until the file is removed. Outside maintenance, it restarts only an exact-commit backend artifact with full-gate proof and a launcher that supports the prebuilt-only contract.
+
 Verification commands belong on the remote host:
 
 ```sh
 node --test serve-prebuilt-frontend.test.mjs
 bash fetch-remote-artifacts.test.sh
+bash watchdog-stable.test.sh
 bash -n start.sh update-stable.sh remote-execution.sh fetch-remote-artifacts.sh
 ```

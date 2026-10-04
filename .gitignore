@@ -35,3 +35,4 @@ _*
 # Remote execution configuration and downloaded build outputs
 /.remote-execution.env
 /.remote-artifacts/
+/.stable-maintenance

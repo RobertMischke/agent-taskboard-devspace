@@ -17,12 +17,49 @@ CHECKOUT="${ROOT}/agent-taskboard-stable"
 LOG="${ROOT}/.watchdog-stable.log"
 PORT="${STABLE_BACKEND_PORT:-5031}"
 INTERVAL="${WATCHDOG_INTERVAL:-30}"
+MAINTENANCE_FILE="${STABLE_MAINTENANCE_FILE:-${ROOT}/.stable-maintenance}"
 
 log() { echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') $*" >> "${LOG}"; }
+
+maintenance_active() { [[ -e "${MAINTENANCE_FILE}" || -L "${MAINTENANCE_FILE}" ]]; }
+
+restart_prebuilt_backend() {
+  local sha artifact file
+  maintenance_active && { log "restart skipped: stable maintenance is active"; return 0; }
+  sha="$(git -C "${CHECKOUT}" rev-parse HEAD 2>/dev/null)" || {
+    log "restart refused: checkout HEAD is unavailable"; return 1;
+  }
+  [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { log "restart refused: invalid checkout SHA"; return 1; }
+  artifact="${CHECKOUT}/backend/bin/remote-publish/${sha}"
+  for file in RELEASE-SHA FULL-GATE OrchestratorApi.dll OrchestratorApi.deps.json OrchestratorApi.runtimeconfig.json; do
+    [[ -f "$artifact/$file" && -s "$artifact/$file" ]] || {
+      log "restart refused: missing prebuilt artifact $file for $sha"; return 1;
+    }
+  done
+  [[ "$(tr -d '\r\n' < "$artifact/RELEASE-SHA")" == "$sha" ]] || {
+    log "restart refused: prebuilt release SHA does not match checkout HEAD"; return 1;
+  }
+  [[ "$(tr -d '\r\n' < "$artifact/FULL-GATE")" == "PROMOTION_FULL_GATE=passed:$sha" ]] || {
+    log "restart refused: exact-commit full gate proof is missing"; return 1;
+  }
+  # Legacy api.sh ignores the prebuilt environment and would run a local build.
+  grep -Fq 'api-prebuilt-required:' "${CHECKOUT}/api.sh" || {
+    log "restart refused: api.sh does not support the prebuilt-only contract"; return 1;
+  }
+  maintenance_active && { log "restart skipped: stable maintenance is active"; return 0; }
+  log "restarting backend from verified prebuilt artifacts for $sha"
+  ( cd "${CHECKOUT}" && export API_PREBUILT_DIR="$artifact" API_REQUIRE_PREBUILT=1 \
+    && PORT="${PORT}" ./api.sh start >> "${LOG}" 2>&1 )
+}
 
 log "watchdog started (port ${PORT}, interval ${INTERVAL}s)"
 fails=0
 while true; do
+  if maintenance_active; then
+    fails=0
+    sleep "${INTERVAL}"
+    continue
+  fi
   # IMPORTANT: probe the LIGHT /healthz (returns ~0.2s), never /api/tasks.
   # /api/tasks serializes hundreds of tasks and takes 1.5-4s+ when the backend
   # is busy (RegressionRadar, CLI spawns) — with a tight timeout that read as
@@ -37,9 +74,11 @@ while true; do
     # Require THREE consecutive /healthz misses (~90s) before restarting, so
     # only a genuinely dead process triggers a restart — never a momentary blip.
     if [ "${fails}" -ge 3 ]; then
-      log "restarting backend via api.sh ..."
-      ( cd "${CHECKOUT}" && export API_PREBUILT_DIR="${CHECKOUT}/backend/bin/remote-publish/$(git rev-parse HEAD)" && PORT="${PORT}" ./api.sh start >> "${LOG}" 2>&1 )
-      log "restart attempt complete"
+      if restart_prebuilt_backend; then
+        log "restart attempt complete"
+      else
+        log "restart refused or failed; no source-build fallback"
+      fi
       fails=0
     fi
   fi
