@@ -6,6 +6,8 @@ Reusable headless browser checks for pages produced in this devspace (Dossiers, 
 
 ```sh
 node browser-qa/dossier.mjs <path/to/docs/.../index.html>   # one Dossier page
+node browser-qa/studio.mjs /workspace/settings/execution-hosts --scope app-remote-hosts-panel --wait-for app-remote-hosts-panel
+                                                             # one Agent Studio view (Stable 4011)
 node browser-qa/selftest.mjs                                 # after every change in this folder
 ```
 
@@ -16,6 +18,7 @@ Exit code 0 means no findings. Findings print as `FAIL ...` lines. Screenshots a
 | Script | Checks |
 |--------|--------|
 | `dossier.mjs` | Desktop light and dark, phone width: horizontal overflow with the elements causing it, explicit body background. Per SVG figure: text outside the viewBox, text overlapping text, text spilling out of its box or badge, a line or path running through text (strokes hidden behind a later filled rect are ignored). Screenshots per page and per figure. |
+| `studio.mjs` | A running Agent Studio view by hash route (or a local HTML file), per `--viewport WxH[:dark]`, layout checks limited to `--scope`: visible text or controls overlapping, content spilling out of its box, a second scrollbar around a nested scroller with the element that escapes its clipping parent (e.g. an absolute sr-only caption), failed `/api/` calls (deduplicated) and page errors. `--wait-for`, `--click`, `--scroll-to` reach the state to check. Hash routes, boot-time tab restore and Git Bash path mangling are handled. |
 
 ## Base (`lib.mjs`)
 
