@@ -36,3 +36,6 @@ _*
 /.remote-execution.env
 /.remote-artifacts/
 /.stable-maintenance
+
+# browser-qa screenshots and reports
+/artifacts/*-qa/
