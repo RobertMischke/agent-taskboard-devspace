@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dossier defects fixture</title>
+<style>
+  /* Deliberately broken: no body background, an unbreakable code path. */
+  main { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+  figure svg { width: 100%; height: auto; display: block; }
+  .label { font: 600 13px system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<main>
+<h1>Fixture with one defect per check class</h1>
+<p><code style="white-space: nowrap">backend/Features/Tasks/Acceptance/AVeryLongPathThatCannotWrapOnAPhoneScreen.cs</code></p>
+<figure>
+<svg viewBox="0 0 600 200" role="img">
+  <title>Defects</title>
+  <!-- text-overlap: two labels on the same spot -->
+  <text class="label" x="20" y="40">first label here</text>
+  <text class="label" x="40" y="44">second label here</text>
+  <!-- spills-out-of-box: text wider than its badge -->
+  <rect x="20" y="70" width="60" height="22" rx="11" fill="#eee" stroke="#999"/>
+  <text class="label" x="26" y="86">a label far too long for its badge</text>
+  <!-- stroke-through-text: a line crossing a label -->
+  <text class="label" x="300" y="140">crossed by a line</text>
+  <line x1="280" y1="136" x2="460" y2="136" stroke="#333" stroke-width="2"/>
+  <!-- covered stroke: hidden behind a later filled rect, must NOT be reported -->
+  <line x1="300" y1="60" x2="460" y2="60" stroke="#333" stroke-width="2"/>
+  <rect x="290" y="40" width="180" height="40" fill="#ddd"/>
+  <text class="label" x="300" y="64">covered line, no finding</text>
+  <!-- outside-viewbox: label past the right edge -->
+  <text class="label" x="560" y="180">outside the viewBox</text>
+</svg>
+</figure>
+</main>
+</body>
+</html>
