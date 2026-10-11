@@ -47,9 +47,17 @@ export function createReport(subject) {
 /** Horizontal overflow of the page and the elements causing it (scroll containers excluded). */
 export async function pageOverflow(page) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
-  const culprits = overflow > 1 ? await page.evaluate(() => [...document.body.querySelectorAll('*')]
-    .filter(e => e.getBoundingClientRect().right > innerWidth + 1 && !e.parentElement.closest('.tablewrap, pre, svg'))
-    .filter((e, _, all) => !all.some(o => o !== e && o.contains(e)) || e.children.length === 0)
-    .slice(0, 6).map(e => `${e.tagName.toLowerCase()} "${(e.textContent || '').trim().slice(0, 40)}"`)) : [];
+  const culprits = overflow > 1 ? await page.evaluate(() => {
+    // Content inside a scroll or clip container cannot widen the page, whatever the container's class.
+    const clipped = e => {
+      for (let p = e.parentElement; p && p !== document.body; p = p.parentElement)
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(getComputedStyle(p).overflowX)) return true;
+      return false;
+    };
+    return [...document.body.querySelectorAll('*')]
+      .filter(e => e.getBoundingClientRect().right > innerWidth + 1 && !e.parentElement.closest('pre, svg') && !clipped(e))
+      .filter((e, _, all) => !all.some(o => o !== e && o.contains(e)) || e.children.length === 0)
+      .slice(0, 6).map(e => `${e.tagName.toLowerCase()} "${(e.textContent || '').trim().slice(0, 40)}"`);
+  }) : [];
   return { overflow, culprits };
 }

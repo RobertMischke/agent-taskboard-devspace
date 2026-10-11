@@ -19,7 +19,7 @@ const CASES = [
       /390\/light: horizontal overflow \d+px from code "backend\/Features/,
       /1280\/light: body has no background/,
     ],
-    forbid: [/covered line, no finding/],
+    forbid: [/covered line, no finding/, /wide table in a scroll box/],
   },
   {
     check: 'studio.mjs',

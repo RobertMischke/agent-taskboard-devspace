@@ -14,6 +14,8 @@
 <body>
 <main>
 <h1>Fixture with one defect per check class</h1>
+<!-- scroll container with a class the check does not know: the wide table scrolls inside it and must NOT be blamed -->
+<div class="scroll-box" style="overflow-x: auto"><table style="width: 900px"><tr><td>wide table in a scroll box, no finding</td></tr></table></div>
 <p><code style="white-space: nowrap">backend/Features/Tasks/Acceptance/AVeryLongPathThatCannotWrapOnAPhoneScreen.cs</code></p>
 <figure>
 <svg viewBox="0 0 600 200" role="img">

@@ -17,7 +17,7 @@ Exit code 0 means no findings. Findings print as `FAIL ...` lines. Screenshots a
 
 | Script | Checks |
 |--------|--------|
-| `dossier.mjs` | Desktop light and dark, phone width: horizontal overflow with the elements causing it, explicit body background. Per SVG figure: text outside the viewBox, text overlapping text, text spilling out of its box or badge, a line or path running through text (strokes hidden behind a later filled rect are ignored). Screenshots per page and per figure. |
+| `dossier.mjs` | Desktop light and dark, phone width: horizontal overflow with the elements causing it (content inside any scroll or clip container is never blamed, whatever its class), explicit body background. Per SVG figure: text outside the viewBox, text overlapping text, text spilling out of its box or badge, a line or path running through text (strokes hidden behind a later filled rect are ignored). Screenshots per page and per figure. |
 | `studio.mjs` | A running Agent Studio view by hash route (or a local HTML file), per `--viewport WxH[:dark]`, layout checks limited to `--scope`: visible text or controls overlapping, content spilling out of its box, a second scrollbar around a nested scroller with the element that escapes its clipping parent (e.g. an absolute sr-only caption), failed `/api/` calls (deduplicated) and page errors. `--wait-for`, `--click`, `--scroll-to` reach the state to check. Hash routes, boot-time tab restore and Git Bash path mangling are handled. |
 
 ## Base (`lib.mjs`)
