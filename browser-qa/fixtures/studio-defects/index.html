@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Studio QA defects</title>
+<!-- One defect per check class of studio.mjs, plus cases that must stay silent. -->
+<style>
+  body { margin: 0; font: 13px sans-serif; background: #fff; color: #222; }
+  /* Outer editor area: scrolls only because the caption below escapes the inner scroller. */
+  /* Positioned, like studio-editor__main: the caption below takes it as containing block. */
+  .outer { position: relative; height: 300px; overflow: auto; }
+  .outer > div { height: 100%; }
+  .inner { height: 100%; overflow: auto; }
+  .spacer { height: 500px; }
+  /* Visually hidden caption without a positioned ancestor: the defect. */
+  caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .row { position: relative; width: 320px; height: 40px; }
+  .release { position: absolute; left: 0; top: 10px; font-family: monospace; }
+  .actions { position: absolute; left: 90px; top: 6px; }
+  .narrow { width: 100px; white-space: nowrap; }
+  .ellipsis { width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<div class="outer"><div><main class="inner">
+  <section id="panel">
+    <div class="row">
+      <code class="release">20260928T1211Z-release-id</code>
+      <span class="actions"><button type="button">Reconnect</button></span>
+    </div>
+    <div class="narrow">a nowrap label far too long for its column</div>
+    <div class="ellipsis">ellipsis label stays silent because it is clipped</div>
+    <button type="button"><span>nested control, no finding</span></button>
+    <div class="spacer"></div>
+    <table><caption>Hidden table caption</caption><tr><td>cell</td></tr></table>
+  </section>
+</main></div></div>
+</body>
+</html>

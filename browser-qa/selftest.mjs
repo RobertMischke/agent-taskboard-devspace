@@ -21,11 +21,22 @@ const CASES = [
     ],
     forbid: [/covered line, no finding/],
   },
+  {
+    check: 'studio.mjs',
+    fixture: 'fixtures/studio-defects/index.html',
+    args: ['--scope', '#panel', '--viewport', '800x600'],
+    expect: [
+      /overlap "(20260928T1211Z-release-id|Reconnect)" .* x "(Reconnect|20260928T1211Z-release-id)"/,
+      /spills-out-of-box \+\d+px "a nowrap label far too long for its column"/,
+      /double-scroll div\.outer scrolls \d+px because absolute element caption escapes its clipping parent/,
+    ],
+    forbid: [/ellipsis label stays silent/, /nested control, no finding/],
+  },
 ];
 
 let failed = 0;
 for (const c of CASES) {
-  const run = spawnSync(process.execPath, [join(here, c.check), join(here, c.fixture), join(tmpdir(), `browser-qa-selftest-${c.check}`)], { encoding: 'utf8' });
+  const run = spawnSync(process.execPath, [join(here, c.check), join(here, c.fixture), join(tmpdir(), `browser-qa-selftest-${c.check}`), ...(c.args ?? [])], { encoding: 'utf8' });
   const out = run.stdout + run.stderr;
   const missing = c.expect.filter(re => !re.test(out));
   const leaked = c.forbid.filter(re => re.test(out));
